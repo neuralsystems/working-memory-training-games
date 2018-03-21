@@ -1,0 +1,928 @@
+fileFormatVersion: 2
+guid: bf4d737c9970dbc4087f44f8f9142e81
+timeCreated: 1516619470
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: TapSpriteSheet_0
+    21300002: TapSpriteSheet_1
+    21300004: TapSpriteSheet_2
+    21300006: TapSpriteSheet_3
+    21300008: TapSpriteSheet_4
+    21300010: TapSpriteSheet_5
+    21300012: TapSpriteSheet_6
+    21300014: TapSpriteSheet_7
+    21300016: TapSpriteSheet_8
+    21300018: TapSpriteSheet_9
+    21300020: TapSpriteSheet_10
+    21300022: TapSpriteSheet_11
+    21300024: TapSpriteSheet_12
+    21300026: TapSpriteSheet_13
+    21300028: TapSpriteSheet_14
+    21300030: TapSpriteSheet_15
+    21300032: TapSpriteSheet_16
+    21300034: TapSpriteSheet_17
+    21300036: TapSpriteSheet_18
+    21300038: TapSpriteSheet_19
+    21300040: TapSpriteSheet_20
+    21300042: TapSpriteSheet_21
+    21300044: TapSpriteSheet_22
+    21300046: TapSpriteSheet_23
+    21300048: TapSpriteSheet_24
+    21300050: TapSpriteSheet_25
+    21300052: TapSpriteSheet_26
+    21300054: TapSpriteSheet_27
+    21300056: TapSpriteSheet_28
+    21300058: TapSpriteSheet_29
+    21300060: TapSpriteSheet_30
+    21300062: TapSpriteSheet_31
+    21300064: TapSpriteSheet_32
+    21300066: TapSpriteSheet_33
+    21300068: TapSpriteSheet_34
+    21300070: TapSpriteSheet_35
+    21300072: TapSpriteSheet_36
+    21300074: TapSpriteSheet_37
+    21300076: TapSpriteSheet_38
+    21300078: TapSpriteSheet_39
+    21300080: TapSpriteSheet_40
+    21300082: TapSpriteSheet_41
+    21300084: TapSpriteSheet_42
+    21300086: TapSpriteSheet_43
+    21300088: TapSpriteSheet_44
+    21300090: TapSpriteSheet_45
+    21300092: TapSpriteSheet_46
+    21300094: TapSpriteSheet_47
+    21300096: TapSpriteSheet_48
+    21300098: TapSpriteSheet_49
+    21300100: TapSpriteSheet_50
+    21300102: TapSpriteSheet_51
+    21300104: TapSpriteSheet_52
+    21300106: TapSpriteSheet_53
+    21300108: TapSpriteSheet_54
+    21300110: TapSpriteSheet_55
+    21300112: TapSpriteSheet_56
+    21300114: TapSpriteSheet_57
+    21300116: TapSpriteSheet_58
+    21300118: TapSpriteSheet_59
+    21300120: TapSpriteSheet_60
+    21300122: TapSpriteSheet_61
+    21300124: TapSpriteSheet_62
+    21300126: TapSpriteSheet_63
+    21300128: TapSpriteSheet_64
+    21300130: TapSpriteSheet_65
+    21300132: TapSpriteSheet_66
+    21300134: TapSpriteSheet_67
+    21300136: TapSpriteSheet_68
+    21300138: TapSpriteSheet_69
+    21300140: TapSpriteSheet_70
+    21300142: TapSpriteSheet_71
+    21300144: TapSpriteSheet_72
+    21300146: TapSpriteSheet_73
+    21300148: TapSpriteSheet_74
+    21300150: TapSpriteSheet_75
+    21300152: TapSpriteSheet_76
+    21300154: TapSpriteSheet_77
+    21300156: TapSpriteSheet_78
+    21300158: TapSpriteSheet_79
+    21300160: TapSpriteSheet_80
+    21300162: TapSpriteSheet_81
+    21300164: TapSpriteSheet_82
+    21300166: TapSpriteSheet_83
+    21300168: TapSpriteSheet_84
+    21300170: TapSpriteSheet_85
+    21300172: TapSpriteSheet_86
+    21300174: TapSpriteSheet_87
+    21300176: TapSpriteSheet_88
+    21300178: TapSpriteSheet_89
+    21300180: TapSpriteSheet_90
+    21300182: TapSpriteSheet_91
+    21300184: TapSpriteSheet_92
+    21300186: TapSpriteSheet_93
+    21300188: TapSpriteSheet_94
+    21300190: TapSpriteSheet_95
+    21300192: TapSpriteSheet_96
+    21300194: TapSpriteSheet_97
+    21300196: TapSpriteSheet_98
+    21300198: TapSpriteSheet_99
+    21300200: TapSpriteSheet_100
+    21300202: TapSpriteSheet_101
+    21300204: TapSpriteSheet_102
+    21300206: TapSpriteSheet_103
+    21300208: TapSpriteSheet_104
+    21300210: TapSpriteSheet_105
+    21300212: TapSpriteSheet_106
+    21300214: TapSpriteSheet_107
+    21300216: TapSpriteSheet_108
+    21300218: TapSpriteSheet_109
+    21300220: TapSpriteSheet_110
+    21300222: TapSpriteSheet_111
+    21300224: TapSpriteSheet_112
+    21300226: TapSpriteSheet_113
+    21300228: TapSpriteSheet_114
+    21300230: TapSpriteSheet_115
+    21300232: TapSpriteSheet_116
+    21300234: TapSpriteSheet_117
+    21300236: TapSpriteSheet_118
+    21300238: TapSpriteSheet_119
+    21300240: TapSpriteSheet_120
+    21300242: TapSpriteSheet_121
+    21300244: TapSpriteSheet_122
+    21300246: TapSpriteSheet_123
+    21300248: TapSpriteSheet_124
+    21300250: TapSpriteSheet_125
+    21300252: TapSpriteSheet_126
+    21300254: TapSpriteSheet_127
+    21300256: TapSpriteSheet_128
+    21300258: TapSpriteSheet_129
+    21300260: TapSpriteSheet_130
+    21300262: TapSpriteSheet_131
+    21300264: TapSpriteSheet_132
+    21300266: TapSpriteSheet_133
+    21300268: TapSpriteSheet_134
+    21300270: TapSpriteSheet_135
+    21300272: TapSpriteSheet_136
+    21300274: TapSpriteSheet_137
+    21300276: TapSpriteSheet_138
+    21300278: TapSpriteSheet_139
+    21300280: TapSpriteSheet_140
+    21300282: TapSpriteSheet_141
+    21300284: TapSpriteSheet_142
+    21300286: TapSpriteSheet_143
+    21300288: TapSpriteSheet_144
+    21300290: TapSpriteSheet_145
+    21300292: TapSpriteSheet_146
+    21300294: TapSpriteSheet_147
+    21300296: TapSpriteSheet_148
+    21300298: TapSpriteSheet_149
+    21300300: TapSpriteSheet_150
+    21300302: TapSpriteSheet_151
+    21300304: TapSpriteSheet_152
+    21300306: TapSpriteSheet_153
+    21300308: TapSpriteSheet_154
+    21300310: TapSpriteSheet_155
+    21300312: TapSpriteSheet_156
+    21300314: TapSpriteSheet_157
+    21300316: TapSpriteSheet_158
+    21300318: TapSpriteSheet_159
+    21300320: TapSpriteSheet_160
+    21300322: TapSpriteSheet_161
+    21300324: TapSpriteSheet_162
+    21300326: TapSpriteSheet_163
+    21300328: TapSpriteSheet_164
+    21300330: TapSpriteSheet_165
+    21300332: TapSpriteSheet_166
+    21300334: TapSpriteSheet_167
+    21300336: TapSpriteSheet_168
+    21300338: TapSpriteSheet_169
+    21300340: TapSpriteSheet_170
+    21300342: TapSpriteSheet_171
+    21300344: TapSpriteSheet_172
+    21300346: TapSpriteSheet_173
+    21300348: TapSpriteSheet_174
+    21300350: TapSpriteSheet_175
+    21300352: TapSpriteSheet_176
+    21300354: TapSpriteSheet_177
+    21300356: TapSpriteSheet_178
+    21300358: TapSpriteSheet_179
+    21300360: TapSpriteSheet_180
+    21300362: TapSpriteSheet_181
+    21300364: TapSpriteSheet_182
+    21300366: TapSpriteSheet_183
+    21300368: TapSpriteSheet_184
+    21300370: TapSpriteSheet_185
+    21300372: TapSpriteSheet_186
+    21300374: TapSpriteSheet_187
+    21300376: TapSpriteSheet_188
+    21300378: TapSpriteSheet_189
+    21300380: TapSpriteSheet_190
+    21300382: TapSpriteSheet_191
+    21300384: TapSpriteSheet_192
+    21300386: TapSpriteSheet_193
+    21300388: TapSpriteSheet_194
+    21300390: TapSpriteSheet_195
+    21300392: TapSpriteSheet_196
+    21300394: TapSpriteSheet_197
+    21300396: TapSpriteSheet_198
+    21300398: TapSpriteSheet_199
+    21300400: TapSpriteSheet_200
+    21300402: TapSpriteSheet_201
+    21300404: TapSpriteSheet_202
+    21300406: TapSpriteSheet_203
+    21300408: TapSpriteSheet_204
+    21300410: TapSpriteSheet_205
+    21300412: TapSpriteSheet_206
+    21300414: TapSpriteSheet_207
+    21300416: TapSpriteSheet_208
+    21300418: TapSpriteSheet_209
+    21300420: TapSpriteSheet_210
+    21300422: TapSpriteSheet_211
+    21300424: TapSpriteSheet_212
+    21300426: TapSpriteSheet_213
+    21300428: TapSpriteSheet_214
+    21300430: TapSpriteSheet_215
+    21300432: TapSpriteSheet_216
+    21300434: TapSpriteSheet_217
+    21300436: TapSpriteSheet_218
+    21300438: TapSpriteSheet_219
+    21300440: TapSpriteSheet_220
+    21300442: TapSpriteSheet_221
+    21300444: TapSpriteSheet_222
+    21300446: TapSpriteSheet_223
+    21300448: TapSpriteSheet_224
+    21300450: TapSpriteSheet_225
+    21300452: TapSpriteSheet_226
+    21300454: TapSpriteSheet_227
+    21300456: TapSpriteSheet_228
+    21300458: TapSpriteSheet_229
+    21300460: TapSpriteSheet_230
+    21300462: TapSpriteSheet_231
+    21300464: TapSpriteSheet_232
+    21300466: TapSpriteSheet_233
+    21300468: TapSpriteSheet_234
+    21300470: TapSpriteSheet_235
+    21300472: TapSpriteSheet_236
+    21300474: TapSpriteSheet_237
+    21300476: TapSpriteSheet_238
+    21300478: TapSpriteSheet_239
+    21300480: TapSpriteSheet_240
+    21300482: TapSpriteSheet_241
+    21300484: TapSpriteSheet_242
+    21300486: TapSpriteSheet_243
+    21300488: TapSpriteSheet_244
+    21300490: TapSpriteSheet_245
+    21300492: TapSpriteSheet_246
+    21300494: TapSpriteSheet_247
+    21300496: TapSpriteSheet_248
+    21300498: TapSpriteSheet_249
+    21300500: TapSpriteSheet_250
+    21300502: TapSpriteSheet_251
+    21300504: TapSpriteSheet_252
+    21300506: TapSpriteSheet_253
+    21300508: TapSpriteSheet_254
+    21300510: TapSpriteSheet_255
+    21300512: TapSpriteSheet_256
+    21300514: TapSpriteSheet_257
+    21300516: TapSpriteSheet_258
+    21300518: TapSpriteSheet_259
+    21300520: TapSpriteSheet_260
+    21300522: TapSpriteSheet_261
+    21300524: TapSpriteSheet_262
+    21300526: TapSpriteSheet_263
+    21300528: TapSpriteSheet_264
+    21300530: TapSpriteSheet_265
+    21300532: TapSpriteSheet_266
+    21300534: TapSpriteSheet_267
+    21300536: TapSpriteSheet_268
+    21300538: TapSpriteSheet_269
+    21300540: TapSpriteSheet_270
+    21300542: TapSpriteSheet_271
+    21300544: TapSpriteSheet_272
+    21300546: TapSpriteSheet_273
+    21300548: TapSpriteSheet_274
+    21300550: TapSpriteSheet_275
+    21300552: TapSpriteSheet_276
+    21300554: TapSpriteSheet_277
+    21300556: TapSpriteSheet_278
+    21300558: TapSpriteSheet_279
+    21300560: TapSpriteSheet_280
+    21300562: TapSpriteSheet_281
+    21300564: TapSpriteSheet_282
+    21300566: TapSpriteSheet_283
+    21300568: TapSpriteSheet_284
+    21300570: TapSpriteSheet_285
+    21300572: TapSpriteSheet_286
+    21300574: TapSpriteSheet_287
+    21300576: TapSpriteSheet_288
+    21300578: TapSpriteSheet_289
+    21300580: TapSpriteSheet_290
+    21300582: TapSpriteSheet_291
+    21300584: TapSpriteSheet_292
+    21300586: TapSpriteSheet_293
+    21300588: TapSpriteSheet_294
+    21300590: TapSpriteSheet_295
+    21300592: TapSpriteSheet_296
+    21300594: TapSpriteSheet_297
+    21300596: TapSpriteSheet_298
+    21300598: TapSpriteSheet_299
+    21300600: TapSpriteSheet_300
+    21300602: TapSpriteSheet_301
+    21300604: TapSpriteSheet_302
+    21300606: TapSpriteSheet_303
+    21300608: TapSpriteSheet_304
+    21300610: TapSpriteSheet_305
+    21300612: TapSpriteSheet_306
+    21300614: TapSpriteSheet_307
+    21300616: TapSpriteSheet_308
+    21300618: TapSpriteSheet_309
+    21300620: TapSpriteSheet_310
+    21300622: TapSpriteSheet_311
+    21300624: TapSpriteSheet_312
+    21300626: TapSpriteSheet_313
+    21300628: TapSpriteSheet_314
+    21300630: TapSpriteSheet_315
+    21300632: TapSpriteSheet_316
+    21300634: TapSpriteSheet_317
+    21300636: TapSpriteSheet_318
+    21300638: TapSpriteSheet_319
+    21300640: TapSpriteSheet_320
+    21300642: TapSpriteSheet_321
+    21300644: TapSpriteSheet_322
+    21300646: TapSpriteSheet_323
+    21300648: TapSpriteSheet_324
+    21300650: TapSpriteSheet_325
+    21300652: TapSpriteSheet_326
+    21300654: TapSpriteSheet_327
+    21300656: TapSpriteSheet_328
+    21300658: TapSpriteSheet_329
+    21300660: TapSpriteSheet_330
+    21300662: TapSpriteSheet_331
+    21300664: TapSpriteSheet_332
+    21300666: TapSpriteSheet_333
+    21300668: TapSpriteSheet_334
+    21300670: TapSpriteSheet_335
+    21300672: TapSpriteSheet_336
+    21300674: TapSpriteSheet_337
+    21300676: TapSpriteSheet_338
+    21300678: TapSpriteSheet_339
+    21300680: TapSpriteSheet_340
+    21300682: TapSpriteSheet_341
+    21300684: TapSpriteSheet_342
+    21300686: TapSpriteSheet_343
+    21300688: TapSpriteSheet_344
+    21300690: TapSpriteSheet_345
+    21300692: TapSpriteSheet_346
+    21300694: TapSpriteSheet_347
+    21300696: TapSpriteSheet_348
+    21300698: TapSpriteSheet_349
+    21300700: TapSpriteSheet_350
+    21300702: TapSpriteSheet_351
+    21300704: TapSpriteSheet_352
+    21300706: TapSpriteSheet_353
+    21300708: TapSpriteSheet_354
+    21300710: TapSpriteSheet_355
+    21300712: TapSpriteSheet_356
+    21300714: TapSpriteSheet_357
+    21300716: TapSpriteSheet_358
+    21300718: TapSpriteSheet_359
+    21300720: TapSpriteSheet_360
+    21300722: TapSpriteSheet_361
+    21300724: TapSpriteSheet_362
+    21300726: TapSpriteSheet_363
+    21300728: TapSpriteSheet_364
+    21300730: TapSpriteSheet_365
+    21300732: TapSpriteSheet_366
+    21300734: TapSpriteSheet_367
+    21300736: TapSpriteSheet_368
+    21300738: TapSpriteSheet_369
+    21300740: TapSpriteSheet_370
+    21300742: TapSpriteSheet_371
+    21300744: TapSpriteSheet_372
+    21300746: TapSpriteSheet_373
+    21300748: TapSpriteSheet_374
+    21300750: TapSpriteSheet_375
+    21300752: TapSpriteSheet_376
+    21300754: TapSpriteSheet_377
+    21300756: TapSpriteSheet_378
+    21300758: TapSpriteSheet_379
+    21300760: TapSpriteSheet_380
+    21300762: TapSpriteSheet_381
+    21300764: TapSpriteSheet_382
+    21300766: TapSpriteSheet_383
+    21300768: TapSpriteSheet_384
+    21300770: TapSpriteSheet_385
+    21300772: TapSpriteSheet_386
+    21300774: TapSpriteSheet_387
+    21300776: TapSpriteSheet_388
+    21300778: TapSpriteSheet_389
+    21300780: TapSpriteSheet_390
+    21300782: TapSpriteSheet_391
+    21300784: TapSpriteSheet_392
+    21300786: TapSpriteSheet_393
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: WebGL
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: TapSpriteSheet_0
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 3736
+        width: 265
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TapSpriteSheet_1
+      rect:
+        serializedVersion: 2
+        x: 1055
+        y: 3738
+        width: 264
+        height: 317
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TapSpriteSheet_2
+      rect:
+        serializedVersion: 2
+        x: 1855
+        y: 3738
+        width: 260
+        height: 319
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TapSpriteSheet_3
+      rect:
+        serializedVersion: 2
+        x: 2654
+        y: 3740
+        width: 259
+        height: 317
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TapSpriteSheet_4
+      rect:
+        serializedVersion: 2
+        x: 3454
+        y: 3740
+        width: 256
+        height: 317
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TapSpriteSheet_5
+      rect:
+        serializedVersion: 2
+        x: 263
+        y: 3141
+        width: 253
+        height: 316
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TapSpriteSheet_6
+      rect:
+        serializedVersion: 2
+        x: 1063
+        y: 3143
+        width: 250
+        height: 314
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TapSpriteSheet_7
+      rect:
+        serializedVersion: 2
+        x: 1859
+        y: 3141
+        width: 254
+        height: 316
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TapSpriteSheet_8
+      rect:
+        serializedVersion: 2
+        x: 2656
+        y: 3141
+        width: 256
+        height: 316
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TapSpriteSheet_9
+      rect:
+        serializedVersion: 2
+        x: 3452
+        y: 3139
+        width: 258
+        height: 318
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TapSpriteSheet_10
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 2538
+        width: 261
+        height: 318
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TapSpriteSheet_11
+      rect:
+        serializedVersion: 2
+        x: 1055
+        y: 2538
+        width: 264
+        height: 318
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TapSpriteSheet_12
+      rect:
+        serializedVersion: 2
+        x: 1853
+        y: 2536
+        width: 264
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TapSpriteSheet_13
+      rect:
+        serializedVersion: 2
+        x: 2652
+        y: 2538
+        width: 263
+        height: 351
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TapSpriteSheet_14
+      rect:
+        serializedVersion: 2
+        x: 3452
+        y: 2538
+        width: 260
+        height: 352
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TapSpriteSheet_15
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 1939
+        width: 258
+        height: 351
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TapSpriteSheet_16
+      rect:
+        serializedVersion: 2
+        x: 1061
+        y: 1941
+        width: 254
+        height: 349
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TapSpriteSheet_17
+      rect:
+        serializedVersion: 2
+        x: 1859
+        y: 1941
+        width: 254
+        height: 349
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TapSpriteSheet_18
+      rect:
+        serializedVersion: 2
+        x: 2660
+        y: 1943
+        width: 250
+        height: 347
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TapSpriteSheet_19
+      rect:
+        serializedVersion: 2
+        x: 3446
+        y: 1943
+        width: 262
+        height: 375
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TapSpriteSheet_20
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 1342
+        width: 265
+        height: 376
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TapSpriteSheet_21
+      rect:
+        serializedVersion: 2
+        x: 1051
+        y: 1340
+        width: 266
+        height: 378
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TapSpriteSheet_22
+      rect:
+        serializedVersion: 2
+        x: 1849
+        y: 1340
+        width: 266
+        height: 378
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TapSpriteSheet_23
+      rect:
+        serializedVersion: 2
+        x: 2648
+        y: 1338
+        width: 267
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TapSpriteSheet_24
+      rect:
+        serializedVersion: 2
+        x: 3446
+        y: 1338
+        width: 268
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TapSpriteSheet_25
+      rect:
+        serializedVersion: 2
+        x: 253
+        y: 737
+        width: 269
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TapSpriteSheet_26
+      rect:
+        serializedVersion: 2
+        x: 1055
+        y: 737
+        width: 264
+        height: 353
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TapSpriteSheet_27
+      rect:
+        serializedVersion: 2
+        x: 1853
+        y: 737
+        width: 264
+        height: 353
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TapSpriteSheet_28
+      rect:
+        serializedVersion: 2
+        x: 2650
+        y: 737
+        width: 266
+        height: 351
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TapSpriteSheet_29
+      rect:
+        serializedVersion: 2
+        x: 3448
+        y: 737
+        width: 266
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TapSpriteSheet_30
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 136
+        width: 265
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TapSpriteSheet_31
+      rect:
+        serializedVersion: 2
+        x: 1055
+        y: 136
+        width: 264
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TapSpriteSheet_32
+      rect:
+        serializedVersion: 2
+        x: 1853
+        y: 136
+        width: 264
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: TapSpriteSheet_33
+      rect:
+        serializedVersion: 2
+        x: 2650
+        y: 136
+        width: 266
+        height: 279
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
