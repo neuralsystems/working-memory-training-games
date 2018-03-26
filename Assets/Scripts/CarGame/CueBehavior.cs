@@ -6,8 +6,15 @@ public class CueBehavior : MonoBehaviour {
 
 	float waitTime = .1f;
 	public float speed = 1f;
+	public Vector3 velocity = Vector3.zero;
+	public float smoothTime = .5f;
 	// Use this for initialization
 	void Start () {
+		var screenWidth = Camera.main.pixelWidth;
+		var screenHeight = Camera.main.pixelHeight;
+		var cue_start_position = Camera.main.ScreenToWorldPoint (new Vector3 (0 , screenHeight * .4f, Camera.main.nearClipPlane));
+		transform.position = cue_start_position;
+		var cue_end_postion = Camera.main.ScreenToWorldPoint (new Vector3 (screenWidth/2 , screenHeight * .4f, Camera.main.nearClipPlane));
 		GameObject[] go = GameObject.FindGameObjectsWithTag ("OptionTileTag");
 		int x;
 		if (go.Length > 1) {
@@ -17,7 +24,7 @@ public class CueBehavior : MonoBehaviour {
 		}
 		Debug.Log ("choosing " + x + " image");
 		GetComponent<SpriteRenderer> ().sprite = go [x].GetComponent<ImageEffect> ().oldSprite;
-		StartCoroutine(MoveCue (CarGame_SceneVariables.stopVector));
+		StartCoroutine(MoveCue (cue_end_postion));
 	}
 	
 	// Update is called once per frame
@@ -29,10 +36,10 @@ public class CueBehavior : MonoBehaviour {
 		
 		var step = CarGame_SceneVariables.speed * Time.deltaTime;
 //		var velocity = Vector3.zero;
-		transform.position = Vector3.MoveTowards (transform.position, target,  step);
-		if (transform.position != target) {
+		if (Vector3.Distance(transform.position, target) >  CarGame_SceneVariables.MIN_DISTANCE) {
+			transform.position = Vector3.SmoothDamp (transform.position, target, ref velocity, smoothTime);
 			yield return null;
-			yield return StartCoroutine(MoveCue (target));
+			StartCoroutine(MoveCue (target));
 		}else  {
 			Debug.Log ("timer started");
 			Camera.main.GetComponent<Timer>().startTimer ();

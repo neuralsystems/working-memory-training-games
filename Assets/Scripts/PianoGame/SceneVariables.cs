@@ -155,11 +155,15 @@ public class SceneVariables : MonoBehaviour {
 
 	public void ShowRewardSquares(){
 		var userSquares = GameObject.FindGameObjectsWithTag (USER_INPUT_SQUARE_TAG);
+		var x = REWARD_INDEX;
+		var reward_square_parent_object = GameObject.Find (REWARD_SQUARE_PARENT);
 		foreach (var userSquare in userSquares) {
-			GameObject.Find (REWARD_SQUARE_PARENT).transform.GetChild (REWARD_INDEX).GetComponent<SpriteRenderer>().sprite =userSquare.GetComponent<SpriteRenderer>().sprite;
-			REWARD_INDEX++;
+//			GameObject.Find (REWARD_SQUARE_PARENT).transform.GetChild (x).GetComponent<SpriteRenderer>().sprite =userSquare.GetComponent<SpriteRenderer>().sprite;
+//			REWARD_INDEX++;
+			StartCoroutine(userSquare.GetComponent<KeySquareBehavior>().MoveToTarget(reward_square_parent_object.transform.GetChild (x).transform.position));
+			x++;
 		}
-		REWARD_INDEX -= 1;
+		REWARD_INDEX += 1;
 	}
 
 	public void ShowSquares(){

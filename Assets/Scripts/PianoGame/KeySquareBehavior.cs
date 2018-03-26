@@ -61,13 +61,20 @@ public class KeySquareBehavior : MonoBehaviour
 			transform.position = target;
 //			tag = tagForGameObject;
 			if (tagForGameObject == Camera.main.GetComponent<SceneVariables> ().USER_INPUT_SQUARE_TAG) {
+				if (GameObject.FindGameObjectsWithTag (Camera.main.GetComponent<SceneVariables> ().USER_INPUT_SQUARE_TAG).Length == 1) {
+					GameObject.Find (Camera.main.GetComponent<SceneVariables> ().USER_INPUT_SQUARE_PARENT).gameObject.transform.position = transform.position;
+				}
 				transform.parent = GameObject.Find (Camera.main.GetComponent<SceneVariables> ().USER_INPUT_SQUARE_PARENT).gameObject.transform;
 			} else {
+				if (GameObject.FindGameObjectsWithTag (Camera.main.GetComponent<SceneVariables> ().SAMPLE_SQUARE_TAG).Length == 1) {
+					GameObject.Find (Camera.main.GetComponent<SceneVariables> ().SAMPLE_SQUARE_PARENT).gameObject.transform.position = transform.position;
+				}
 				transform.parent = GameObject.Find (Camera.main.GetComponent<SceneVariables> ().SAMPLE_SQUARE_PARENT).gameObject.transform;
-			}
-			if (tagForGameObject == Camera.main.GetComponent<SceneVariables> ().SAMPLE_SQUARE_TAG) {
 				GetComponent<SpriteRenderer> ().sprite = GameObject.Find (Camera.main.GetComponent<SceneVariables> ().questionSquare).gameObject.GetComponent<SpriteRenderer> ().sprite;
 			}
+//			if (tagForGameObject == Camera.main.GetComponent<SceneVariables> ().SAMPLE_SQUARE_TAG) {
+//				GetComponent<SpriteRenderer> ().sprite = GameObject.Find (Camera.main.GetComponent<SceneVariables> ().questionSquare).gameObject.GetComponent<SpriteRenderer> ().sprite;
+//			}
 //			yield return new WaitForSeconds (0.4f);
 //			if (Camera.main.GetComponent<SceneVariables> ().correctMatch ) {
 ////				var userSquares = GameObject.FindGameObjectsWithTag (Camera.main.GetComponent<SceneVariables> ().USER_INPUT_SQUARE_TAG);
@@ -86,7 +93,7 @@ public class KeySquareBehavior : MonoBehaviour
 					if (matched) {
 						sample_squares_gameobject [i].gameObject.GetComponent<KeySquareBehavior> ().ResetSquare ();
 						yield return new WaitForSeconds (0.5f);
-						StartCoroutine(user_squares_gameobject [i].gameObject.GetComponent<KeySquareBehavior> ().MergeOnMatch (sample_squares_gameobject [i].position));
+						StartCoroutine(user_squares_gameobject [i].gameObject.GetComponent<KeySquareBehavior> ().MoveToTarget (sample_squares_gameobject [i].position));
 						yield return new WaitForSeconds (0.5f);
 
 					}
@@ -113,13 +120,13 @@ public class KeySquareBehavior : MonoBehaviour
 
 	}
 
-	public IEnumerator MergeOnMatch (Vector3 target)
+	public IEnumerator MoveToTarget (Vector3 target)
 	{
 		if (Vector3.Distance (transform.position, target) > Mathf.Min(SceneVariables.MIN_DISTANCE,0.0001f)) {
 			//			Debug.Log ("first if");
 			transform.position = Vector3.SmoothDamp (transform.position, target, ref velocity, smoothTime);
 			yield return null;
-			StartCoroutine (MergeOnMatch (target));
+			StartCoroutine (MoveToTarget (target));
 		} else {
 			transform.position = target;
 

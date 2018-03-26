@@ -26,6 +26,10 @@ public class ArrangeTiles : MonoBehaviour
 	int MAX_NUMBER_OF_OBJECTS = 9;
 	public Transform PARKING_SLOT;
 	public GameObject PARKING_SLOT_PARENT_GAMEOBJECT;
+	List<Vector3> Option_Tile_Positions = new List<Vector3>();
+	public float scaleDownFactor = .6f;
+	int numofRows = 2;
+	int numofColumns = 5;
 	//	Control controlScript = new Control ();
 	// Use this for initialization
 	void Start ()
@@ -141,7 +145,7 @@ public class ArrangeTiles : MonoBehaviour
 
 	void SetOptionTilesNew(){
 		string category = GetCategory();
-		GameObject.Find (Camera.main.GetComponent<CarGame_SceneVariables>().blockObject).GetComponent<SpriteRenderer> ().sprite = Resources.Load (game_name + "/"  + ImageFolder + category+ "/" + "Block "+ category, typeof(Sprite)) as Sprite;
+//		GameObject.Find (Camera.main.GetComponent<CarGame_SceneVariables>().blockObject).GetComponent<SpriteRenderer> ().sprite = Resources.Load (game_name + "/"  + ImageFolder + category+ "/" + "Block "+ category, typeof(Sprite)) as Sprite;
 		var isOutlined = "WithoutOutline/";
 		if (Camera.main.GetComponent<CarGame_SceneVariables> ().outline) {
 			isOutlined = "WithOutline/";
@@ -155,7 +159,7 @@ public class ArrangeTiles : MonoBehaviour
 
 	public void PlaceParkingSlots(int n){
 		string category = GetCategory();
-		GameObject.Find (Camera.main.GetComponent<CarGame_SceneVariables>().blockObject).GetComponent<SpriteRenderer> ().sprite = Resources.Load (game_name + "/"  + ImageFolder + category+ "/" + "Block "+ category, typeof(Sprite)) as Sprite;
+//		GameObject.Find (Camera.main.GetComponent<CarGame_SceneVariables>().blockObject).GetComponent<SpriteRenderer> ().sprite = Resources.Load (game_name + "/"  + ImageFolder + category+ "/" + "Block "+ category, typeof(Sprite)) as Sprite;
 		var isOutlined = "WithoutOutline/";
 		if (Camera.main.GetComponent<CarGame_SceneVariables> ().outline) {
 			isOutlined = "WithOutline/";
@@ -193,7 +197,7 @@ public class ArrangeTiles : MonoBehaviour
 			position_for_parking_slot.x -= length_span * .1f;
 			option_tile_gameobject.GetComponent<ImageEffect> ().position_in_parking = option_tile_gameobject.transform.position;
 		}
-		StartCoroutine(MoveObjectsOutOfParking(7));
+		StartCoroutine(MoveObjectsOutOfParking(1));
 	}
 	
 	public void ShuffleImages (string ImageTag)
@@ -243,11 +247,12 @@ public class ArrangeTiles : MonoBehaviour
 	}
 
 	IEnumerator MoveObjectsOutOfParking(int numOfObjects){
+		DivideScreen ();
 		yield return new WaitForSeconds (5f);
 		var screen_width = Screen.width;
 		var screen_height = Screen.height;
 		float height_percentage = .8f, width_percentage = .95f, margin = .05f;
-		var percent_for_one_object = (width_percentage - margin) / numOfObjects;
+		var percent_for_one_object = (width_percentage - margin) / numofColumns;
 		var max_allowed_size = 1f;
 		var length_span = Camera.main.ScreenToWorldPoint (new Vector3 (Screen.width * percent_for_one_object , 0f, Camera.main.nearClipPlane)).x - Camera.main.ScreenToWorldPoint (new Vector3 (0f, 0f, Camera.main.nearClipPlane)).x;
 		Debug.Log ("length span "+ length_span);
@@ -256,8 +261,10 @@ public class ArrangeTiles : MonoBehaviour
 		var num_of_gameobject_in_parking = PARKING_SLOT_PARENT_GAMEOBJECT.transform.childCount;
 		for (int i = 0; i < numOfObjects; i++) {
 			var option_tile_gameobject = PARKING_SLOT_PARENT_GAMEOBJECT.transform.GetChild (num_of_gameobject_in_parking - i - 1);
-			option_tile_gameobject.transform.position = new Vector3 (origin_point + ((i + 1) * length_span *.95f) , option_gameobject_height.y, option_gameobject_height.z);
+//			option_tile_gameobject.transform.position = new Vector3 (origin_point + ((i + 1) * length_span *.95f) , option_gameobject_height.y, option_gameobject_height.z);
+			option_tile_gameobject.transform.position = Option_Tile_Positions[i];
 			option_tile_gameobject.tag = CarGame_SceneVariables.OptionTileTag;
+//			option_tile_gameobject.transform.parent = null;
 //			PARKING_SLOT_PARENT_GAMEOBJECT.transform.GetChild (num_of_gameobject_in_parking - i - 1).GetComponent<
 //			AddScripts(PARKING_SLOT_PARENT_GAMEOBJECT.transform.GetChild (num_of_gameobject_in_parking - i - 1).gameObject);
 			yield return new WaitForSeconds (.5f);
@@ -271,6 +278,28 @@ public class ArrangeTiles : MonoBehaviour
 			AddScripts(PARKING_SLOT_PARENT_GAMEOBJECT.transform.GetChild (num_of_gameobject_in_parking - i - 1).gameObject);
 		}
 	
+	}
+
+
+	void DivideScreen(){
+		Debug.Log ("Screen width: " + Camera.main.pixelWidth + "Screne height: "+ Camera.main.pixelHeight);
+		//		var x = 
+		var screenWidth = Camera.main.pixelWidth;
+		var screenHeight = Camera.main.pixelHeight;
+		var xGrad = (screenWidth / (numofColumns + 1) );
+		var yGrad = ((screenHeight /(2f* (numofRows + 1 ))));
+		var dist = Vector3.Distance(Camera.main.ScreenToWorldPoint (new Vector3 (0,  0, Camera.main.nearClipPlane)),Camera.main.ScreenToWorldPoint (new Vector3 (0,  yGrad, Camera.main.nearClipPlane))) * scaleDownFactor;
+		//		maxSize = dist * scaleDownFactor;
+		Debug.Log (dist + " far apart ");
+		var cueRow = UnityEngine.Random.Range (1, numofRows);
+		//		Debug.Log ("screen positions are for Level " + GameObject.Find (SceneVariables.permanentGameObject).GetComponent<PersistantDataOnLoad> ().level);
+		for (int i = 1; i <= numofColumns; i++) {
+			for (int j = 1; j <= numofRows; j++) {
+				Vector3 location = Camera.main.ScreenToWorldPoint (new Vector3 (i*xGrad,(screenHeight/2) +j*yGrad, Camera.main.nearClipPlane));
+				Option_Tile_Positions.Add (location);
+			}
+		}
+		Option_Tile_Positions = RandomizingArray.RandomizeVector3 (Option_Tile_Positions);
 	}
 }
 

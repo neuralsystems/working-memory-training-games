@@ -51,7 +51,8 @@ public class CarGame_DetectTouch : MonoBehaviour {
 	}
 
 	public void SetTouch( bool value){
-		GetComponent<CarGame_DetectTouch> ().enabled = value;
-		GetComponent<BoxCollider2D> ().enabled = value;
+		Debug.Log ("Set Values with "+ value);
+		GetComponent<CarGame_DetectTouch> ().enabled = true;
+		GetComponent<BoxCollider2D> ().enabled = true;
 	}
 }

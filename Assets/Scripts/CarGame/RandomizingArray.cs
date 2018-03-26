@@ -61,8 +61,30 @@ class RandomizingArray
 		return result.ToList();
 	}
 
-//	static void Main()
-//	{
-//		
-//	}
+	public static List<Vector3> RandomizeVector3(List<Vector3> arr)
+	{
+		List<KeyValuePair<int, Vector3>> list =
+			new List<KeyValuePair<int, Vector3>>();
+		// Add all strings from array.
+		// ... Add new random int each time.
+		foreach (var s in arr)
+		{
+			list.Add(new KeyValuePair<int, Vector3>(_random.Next(), s));
+		}
+		// Sort the list by the random number.
+		var sorted = from item in list
+			orderby item.Key
+			select item;
+		// Allocate new string array.
+		Vector3[] result = new Vector3[arr.Count];
+		// Copy values to array.
+		int index = 0;
+		foreach (KeyValuePair<int, Vector3> pair in sorted)
+		{
+			result[index] = pair.Value;
+			index++;
+		}
+		// Return copied array.
+		return result.ToList();
+	}
 }

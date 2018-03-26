@@ -13,7 +13,7 @@ public class CarGame_SceneVariables : MonoBehaviour {
 	public const string Game_Name = "CarGame";
 	public const string scoretext = "Score";
 	public static bool presentCue = false;
-	public static Vector3 stopVector = new Vector3 (0f, -1.5f,0f);
+//	public static Vector3 stopVector = new Vector3 (0f, -1.5f,0f);
 	public static Vector3 initVector = new Vector3 (-11f, -1.5f,0f);
 	public static float speed = 20f;
 	public static string targetTile = "TargetPosition";
@@ -21,7 +21,7 @@ public class CarGame_SceneVariables : MonoBehaviour {
 	public int minScoreToShow = 0;
 	public int match_value = 2;		// set 1 for match and 0 for mismatch
 	public static float minDistance = 0.05f;
-
+	public static float MIN_DISTANCE = 0.001f;
 	public string blockObject = "Block";
 	public Vector3[] screenCorners = new Vector3[4];
 	public bool  outline = false;
@@ -99,5 +99,6 @@ public class CarGame_SceneVariables : MonoBehaviour {
 		return Camera.main.ScreenToWorldPoint (new Vector3 (screen_width * width_percentage, screen_height * height_percentage, Camera.main.nearClipPlane));
 
 	}
+
 
 }

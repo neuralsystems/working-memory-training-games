@@ -40,6 +40,9 @@ public class ImageEffect : MonoBehaviour {
 
 	}
 
+	void OnMouseDown(){
+		Debug.Log ("tapped me image effect?");
+	}
 	void Start()
 	{
 		sprite = this.gameObject.GetComponent<SpriteRenderer> ();
@@ -109,7 +112,6 @@ public class ImageEffect : MonoBehaviour {
 		spriteColor.a = fade;
 		sprite.color = spriteColor;
 		yield return new WaitForSeconds(delayToFadeOut);
-//		GetComponent<DetectTouch>().SetTouch(true);
 		CarGame_SceneVariables.presentCue = true;
 		Debug.Log ("presentCue " + CarGame_SceneVariables.presentCue);
 }

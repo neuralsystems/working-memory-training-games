@@ -49,12 +49,13 @@ public class PlayTone : MonoBehaviour {
 
 	public void Next(){
 		Debug.Log ("called next");
-		previous = (current_length -1);
+//		previous = (current_length -1);
 		if (SceneVariables.error_count > SceneVariables.max_allowed_error) {
 			current_length = Mathf.Max (current_length - gradient, SceneVariables.min_tone_length);
 		} else {
 			SceneVariables.error_count -= Mathf.Max (SceneVariables.error_count - 1, 0);
 			current_length += gradient;
+			previous += gradient;
 		}
 		consequtive_correct++;
 		sample = "";
@@ -69,7 +70,7 @@ public class PlayTone : MonoBehaviour {
 		consequtive_correct = 0;
 		initial_length += incrementForNextLevel;
 		current_length = initial_length;
-		gradient = initial_length - 1;
+		gradient = 1;
 		previous = 0;
 		Camera.main.GetComponent<SceneVariables> ().Reset ();
 		GameObject.Find (Camera.main.GetComponent<SceneVariables> ().playSound).GetComponent<SpriteRenderer> ().enabled = true;

@@ -36,7 +36,7 @@ public class iTweenPath : MonoBehaviour
 		
 	void OnEnable(){
 		if(!paths.ContainsKey(pathName)){
-			paths.Add(pathName.ToLower(), this);
+			paths[pathName.ToLower()]= this;
 		}
 	}
 	

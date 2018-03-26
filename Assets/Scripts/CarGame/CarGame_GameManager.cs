@@ -26,7 +26,8 @@ public class CarGame_GameManager : MonoBehaviour {
 			Debug.Log ("created ");
 			CarGame_SceneVariables.presentCue = false;
 			Debug.Log ("presentCue " + CarGame_SceneVariables.presentCue);
-			Instantiate (demoTile, CarGame_SceneVariables.initVector, Quaternion.identity);
+
+			Instantiate (demoTile, new Vector3(0f,0f,0f), Quaternion.identity);
 
 		}
 
