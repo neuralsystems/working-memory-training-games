@@ -25,7 +25,7 @@ public class BasketBehavior : MonoBehaviour {
 		foreach (Transform child in transform) {
 			child.gameObject.transform.localScale = new Vector3 (.4f, .4f, 1f);
 		}
-		num_of_fruits = 1f;
+		num_of_fruits = 2f;
 		reduce_height_by = (transform.position.y - lowerBound) / num_of_fruits;
 
 	}

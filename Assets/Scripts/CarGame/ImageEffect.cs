@@ -9,7 +9,7 @@ public class ImageEffect : MonoBehaviour {
 	SpriteRenderer spriteRenderer;
 	public Color spriteColor = Color.white;
 	public Vector3 position_in_parking, position_in_game;
-
+	public Transform COVER_PREFAB;
 
 	public static float fadeInTime = 1.5f;
 	public static float fadeOutTime = 1.5f;
@@ -118,7 +118,22 @@ public class ImageEffect : MonoBehaviour {
 
 	// this function initiates the toggle effect
 	public void Initiate (){
-		StartCoroutine("FadeCycle");
+//		StartCoroutine("FadeCycle");
+		CoverGameObject();
+	}
+
+
+	public void CoverGameObject(){
+		if (transform.childCount == 0) {
+			var target_for_cover_gameobject = transform.position;
+			target_for_cover_gameobject.y += 1f;
+			var cover_gameobject = Instantiate (COVER_PREFAB, target_for_cover_gameobject, Quaternion.identity);
+			cover_gameobject.transform.localScale = transform.localScale;
+			StartCoroutine (cover_gameobject.GetComponent<CarGame_OptionTileCoverBehavior> ().MoveToCoveTheObject (transform.gameObject));
+		} else {
+			CarGame_SceneVariables.presentCue = true;
+		}
+//		cover_gameobject.transform.parent = transform;
 	}
 
 	// this function increase the time variables in the fade in fade out showing images to user for a longer duration

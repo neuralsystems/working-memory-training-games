@@ -29,6 +29,7 @@ public class CarGame_DetectTouch : MonoBehaviour {
 		}
 
 	void OnMouseDown(){
+		GetComponentInChildren<SpriteRenderer> ().enabled = false;
 		Debug.Log ("tapped me?");
 		GameObject cueObject = GameObject.FindGameObjectWithTag (CarGame_SceneVariables.cueTag);
 //		Debug.Log (cueObject.name);
@@ -40,7 +41,7 @@ public class CarGame_DetectTouch : MonoBehaviour {
 			tag = CarGame_SceneVariables.matchedTag;
 			GetComponent<MergeOptionCue> ().enabled = true;
 //			GetComponent<Scalling> ().SetScale (false);
-			Camera.main.GetComponent<CarGame_GameManager>();
+//			var gmCamera.main.GetComponent<CarGame_GameManager>();
 			gm.UpdateScoreText (1);
 			gm.Match();
 		} else {

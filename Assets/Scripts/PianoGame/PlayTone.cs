@@ -86,7 +86,8 @@ public class PlayTone : MonoBehaviour {
 		DestroyCueSquares (Camera.main.GetComponent<SceneVariables> ().SAMPLE_SQUARE_TAG);
 
 		GameObject.Find (GetComponent<SceneVariables> ().REWARD_SQUARE_PARENT).transform.position = GameObject.Find (GetComponent<SceneVariables> ().USER_INPUT_SQUARE_PARENT).transform.position;
-//		yield return new WaitForSeconds(.5f);
+		yield return StartCoroutine(RepeatTone ());
+		//		yield return new WaitForSeconds(.5f);
 		var rain_particle_system_object = GameObject.FindGameObjectWithTag (Camera.main.GetComponent<SceneVariables> ().RAIN_PARTICLE_SYSTEM_TAG);
 		rain_particle_system_object.GetComponent<ParticleSystem> ().Play ();
 //		Debug.Log (rain_particle_system_object.GetComponent<ParticleSystem> ().main.duration);
@@ -114,7 +115,7 @@ public class PlayTone : MonoBehaviour {
 //	at the start the audiosource is played which calls the overrided function OnAudioFilterRead in the Sinus script
 // 	to play sound of a note, the frequency in the sinus script is set to frequency of that note. 
 
-	public IEnumerator PlaySomeTone(string notes, string delimeter, int start, int end){
+	public IEnumerator PlaySomeTone(string notes, string delimeter, int start, int end, bool isRepeat = false){
 		OnKeyPress.numOfKeysPressed = 0;
 		SceneVariables.IS_USER_MODE = false;
 		Debug.Log (notes + "is played");
@@ -125,17 +126,25 @@ public class PlayTone : MonoBehaviour {
 				string token1 =token.ToUpper ();
 				var g = GameObject.Find (token1).gameObject;
 //				yield return new WaitForSeconds (SceneVariables.PLAY_TIME);
-				g.GetComponent<OnKeyPress> ().PlaySound();
+				g.GetComponent<OnKeyPress> ().PlaySound(isRepeat);
 				yield return new WaitForSeconds (SceneVariables.WAIT_TIME);
 			} else {
 				yield return new WaitForSeconds (SceneVariables.WAIT_TIME);
 			}
 		}
 		yield return new WaitForSeconds (SceneVariables.PLAY_TIME);
-		SceneVariables.IS_USER_MODE = true;
+		if (!isRepeat) {
+			SceneVariables.IS_USER_MODE = true;
+		}
 //		HideSquares ();
 	}
 
+	public IEnumerator RepeatTone(){
+		string delimeter = tones.GetDelimeter ();
+		sample = GetFirstnNotes (original_tone, delimeter,current_length);
+		yield return StartCoroutine(PlaySomeTone (sample,tones.GetDelimeter(), 0, current_length-gradient,true));
+		GameObject.Find (Camera.main.GetComponent<SceneVariables> ().playSound).GetComponent<SpriteRenderer> ().enabled = true;
+	}
 	public void HideSquares(){
 		GameObject[] keySquares = GameObject.FindGameObjectsWithTag (Camera.main.GetComponent<SceneVariables> ().SAMPLE_SQUARE_TAG);
 		foreach (GameObject keySquare in keySquares) {
@@ -227,5 +236,15 @@ public class PlayTone : MonoBehaviour {
 
 	}
 
+	public void CheckOnComplete(){
+		Debug.Log ("Checked for level complete");
+		if (consequtive_correct >= Camera.main.GetComponent<SceneVariables> ().CONSECUTIVE_CORRECT_THRESHOLD) {
+			SceneVariables.IS_USER_MODE = false;
+			StartCoroutine (DisplayOnLevelComplete ());
+		} else {
+			StartCoroutine(RepeatTone ());
 
+		}
+
+	}
 }

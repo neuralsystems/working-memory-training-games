@@ -15,7 +15,8 @@ public class MergeOptionCue : MonoBehaviour {
 	void Start () {
 		step = CarGame_SceneVariables.speed * Time.deltaTime;
 		target = GameObject.FindGameObjectWithTag (CarGame_SceneVariables.cueTag).transform.position;
-		target1 = GameObject.Find (CarGame_SceneVariables.targetTile).transform.position;
+//		target1 = GameObject.Find (CarGame_SceneVariables.targetTile).transform.position;
+		target1 = GetComponent<ImageEffect>().position_in_parking;
 		StartCoroutine (MoveToCue (target,afterReachingTarget ));
 	}
 	

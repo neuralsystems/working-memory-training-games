@@ -36,20 +36,21 @@ public class CarGame_HomeScreenButtons : MonoBehaviour {
 		Debug.Log ("Called for" + this.gameObject.name);
 		if (this.gameObject.name == "Close") {
 			Application.Quit ();
-		}else if (this.gameObject.name == "Test") {
-			SceneManager.LoadScene ("Test");
-		}else if (this.gameObject.name == "level_1") {
-			SceneManager.LoadScene ("Scene1");
-		}else if (this.gameObject.name == "level_1") {
-			SceneManager.LoadScene ("Scene2");
-		}else if (this.gameObject.name == "level_1") {
-			SceneManager.LoadScene ("Scene3");
-		}else if (this.gameObject.name == "level_1") {
-			SceneManager.LoadScene ("Scene4");
+//		}else if (this.gameObject.name == "Test") {
+//			SceneManager.LoadScene ("Test");
+//		}else if (this.gameObject.name == "level_1") {
+//			SceneManager.LoadScene ("Scene1");
+//		}else if (this.gameObject.name == "level_1") {
+//			SceneManager.LoadScene ("Scene2");
+//		}else if (this.gameObject.name == "level_1") {
+//			SceneManager.LoadScene ("Scene3");
+//		}else if (this.gameObject.name == "level_1") {
+//			SceneManager.LoadScene ("Scene4");
 		} 
-		else if (this.gameObject.name == "Home") {
+//		else if (this.gameObject.name == "Home") {
 			
-		} else {
+//		} 
+	else {
 			SceneManager.LoadScene (sceneToLoad);
 		}
 

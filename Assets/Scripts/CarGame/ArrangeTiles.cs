@@ -158,7 +158,9 @@ public class ArrangeTiles : MonoBehaviour
 	}
 
 	public void PlaceParkingSlots(int n){
-		string category = GetCategory();
+		category = "Bus";
+		categoryId = 2;
+//		string category = GetCategory();
 //		GameObject.Find (Camera.main.GetComponent<CarGame_SceneVariables>().blockObject).GetComponent<SpriteRenderer> ().sprite = Resources.Load (game_name + "/"  + ImageFolder + category+ "/" + "Block "+ category, typeof(Sprite)) as Sprite;
 		var isOutlined = "WithoutOutline/";
 		if (Camera.main.GetComponent<CarGame_SceneVariables> ().outline) {

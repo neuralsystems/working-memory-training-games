@@ -107,10 +107,12 @@ public class OnKeyPress : MonoBehaviour {
 	}
 
 
-	public void PlaySound()
+	public void PlaySound(bool isRepeat = false)
 	{
-		var tappinghand = GameObject.Find (Camera.main.GetComponent<SceneVariables> ().tappingHand).gameObject;
-		StartCoroutine(tappinghand.GetComponent<FingerBehavior> ().SetPositionAndPlay(transform.position, keyName));
+		if (!isRepeat) {
+			var tappinghand = GameObject.Find (Camera.main.GetComponent<SceneVariables> ().tappingHand).gameObject;
+			StartCoroutine (tappinghand.GetComponent<FingerBehavior> ().SetPositionAndPlay (transform.position, keyName));
+		}
 		GetComponent<SpriteRenderer> ().color = SceneVariables.PRESSED_COLOR;
 		GetComponent<AudioSource> ().Play ();
 		StartCoroutine (DelayedCallback (SceneVariables.PLAY_TIME, AudioFinished));

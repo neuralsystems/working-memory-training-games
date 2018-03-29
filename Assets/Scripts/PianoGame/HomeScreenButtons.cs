@@ -35,7 +35,7 @@ public class HomeScreenButtons : MonoBehaviour {
 		if (this.gameObject.name == "Close") {
 			Application.Quit ();
 		} else if (this.gameObject.name == "Play") {
-			SceneManager.LoadScene ("Scene2");
+			SceneManager.LoadScene (sceneToLoad);
 		} else if (this.gameObject.name == "Home") {
 			
 		}else if (this.gameObject.name == Camera.main.GetComponent<SceneVariables>().playSound) {

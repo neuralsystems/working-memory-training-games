@@ -94,7 +94,7 @@ public class SceneVariables : MonoBehaviour {
 		Debug.Log (width + " "+widthInPixels+ " "+Camera.main.GetComponent<PlayTone>().GetTuneLength());
 		var normalizedWidth = GetNormalizedWidth ( widthInPixels, Camera.main.GetComponent<PlayTone>().GetTuneLength());
 //		Debug.Log ("normalizedWidth "+normalizedWidth);
-		target = Camera.main.ScreenToWorldPoint (new Vector3 (SCREEN_WIDTH* normalizedWidth, SCREEN_HEIGHT * heightPercentage, Camera.main.nearClipPlane));
+		target = Camera.main.ScreenToWorldPoint (new Vector3 (SCREEN_WIDTH* normalizedWidth, SCREEN_HEIGHT * heightPercentage, 100f));
 		targetUserSquare = target;
 	}
 
@@ -143,7 +143,7 @@ public class SceneVariables : MonoBehaviour {
 		SCREEN_HEIGHT = Camera.main.pixelHeight;
 		var width = Camera.main.ScreenToWorldPoint (new Vector3 (SCREEN_WIDTH, SCREEN_HEIGHT * heightPercentageForRewardSquare, Camera.main.nearClipPlane)).x - Camera.main.ScreenToWorldPoint (new Vector3 (0, SCREEN_HEIGHT * heightPercentageForRewardSquare, Camera.main.nearClipPlane)).x;
 		Debug.Log ("value is " + (width - (blockNumbers * blockPercent)) / (width * 2.0f));
-		return Mathf.Max(.1f,(width - (blockNumbers * blockPercent)) / (width *2.0f ));
+		return Mathf.Max(.1f,(width - (blockNumbers * blockPercent)) / (width * 2.0f ));
 	}
 
 	public Vector3 GetPointOnScreen(float width_percentage, float height_percentage){
@@ -160,10 +160,14 @@ public class SceneVariables : MonoBehaviour {
 		foreach (var userSquare in userSquares) {
 //			GameObject.Find (REWARD_SQUARE_PARENT).transform.GetChild (x).GetComponent<SpriteRenderer>().sprite =userSquare.GetComponent<SpriteRenderer>().sprite;
 //			REWARD_INDEX++;
-			StartCoroutine(userSquare.GetComponent<KeySquareBehavior>().MoveToTarget(reward_square_parent_object.transform.GetChild (x).transform.position));
+//			StartCoroutine(userSquare.GetComponent<KeySquareBehavior>().MoveToTarget(reward_square_parent_object.transform.GetChild (x).transform.localPosition));
+			userSquare.transform.parent = null;
+//			StartCoroutine(Camera.main.GetComponent<Shared_ScriptForGeneralFunctions>().MoveToTarget(userSquare, reward_square_parent_object.transform.GetChild(x).transform.position));
+			StartCoroutine(userSquare.GetComponent<KeySquareBehavior>().MoveToReward(reward_square_parent_object.transform.GetChild(x).gameObject));
 			x++;
 		}
 		REWARD_INDEX += 1;
+		GameObject.Find (USER_INPUT_SQUARE_PARENT).GetComponent<PianoGame_UserInputSquareParentBehavior> ().ResetPosition ();
 	}
 
 	public void ShowSquares(){
