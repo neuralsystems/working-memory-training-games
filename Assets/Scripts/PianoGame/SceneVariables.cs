@@ -14,7 +14,7 @@ public class SceneVariables : MonoBehaviour {
 	public string USER_INPUT_SQUARE_TAG = "UserInputSquareTag";							// tag for the keys spawned when user presses a piano key
 	public string REWARD_SQUARE_TAG = "RewardSquareTag";									// // tag for the square spawned at the top of screen 
 	public string RAIN_PARTICLE_SYSTEM_TAG = "RainParticleSystemTag";
-
+	public string REWARD_SQUARE_CHILD_TAG = "RewardSquareChildTag";
 
 	// gameobject position related variables 
 	float heightPercentageForRewardSquare = .95f, widthPercentageForRewardSquare = .50f; // for position of squares on top
@@ -24,7 +24,7 @@ public class SceneVariables : MonoBehaviour {
 	// gameplay related variables 
 	public static bool IS_PRESSED = false;												// to check that only one key is presses = true if any key is pressed, false otherwise
 	public static float PLAY_TIME = .3f;													// time in sec for which a frequency is played	
-	public static float WAIT_TIME = 1f;													// minimum time gap between two consequtive press 
+	public static float WAIT_TIME = .5f;													// minimum time gap between two consequtive press 
 	public static float delayAfterCorrect = 2.0f, delayAfterIncorrect = 2.0f;			// not used yet and not sure why added	
 	public static string USER_STRING = "";												// not used yet and not sure why added
 	public static bool IS_USER_MODE = false;												// to chek if press can be enabled for the user, is false when the computer is playing a tune, true at other time

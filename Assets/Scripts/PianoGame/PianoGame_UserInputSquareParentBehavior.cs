@@ -29,7 +29,6 @@ public class PianoGame_UserInputSquareParentBehavior : MonoBehaviour {
 			transform.position = target;
 			if (All_Match) {
 				GetComponentInParent<ParticleSystem> ().Play ();
-				Camera.main.GetComponent<SceneVariables> ().GetRandomClapping ();
 				Camera.main.GetComponent<SceneVariables> ().ShowSquares ();
 			}
 //			ResetPosition ();

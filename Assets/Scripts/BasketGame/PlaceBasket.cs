@@ -11,8 +11,8 @@ public class PlaceBasket : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		var numOfBaskets = 5;
-		PlaceNBaskets (numOfBaskets-1);
+		var numOfBaskets = 1;
+		PlaceNBaskets (numOfBaskets);
 
 		int i = 0;
 //		GameObject[] baskets = GameObject.FindGameObjectsWithTag (BasketGame_SceneVariables.basketTag);
@@ -35,11 +35,12 @@ public class PlaceBasket : MonoBehaviour {
 
 
 	public void PlaceNBaskets(int n){
+//		n += 1;
 		string[] basketArray = BasketGame_SceneVariables.GetBaskets (n);
 		float height_percentage = .00f, width_percentage = 1f, left_margin = .2f, right_margin = 0.05f;
-		var percent_for_one_object = (width_percentage - left_margin - right_margin) / n;
+		var percent_for_one_object = (width_percentage - left_margin - right_margin) / (n +1);
 		var max_allowed_size = 1f;
-		var position_for_parking_slot = GetComponent<Shared_ScriptForGeneralFunctions> ().GetPointOnScreen (width_percentage, height_percentage);
+		var position_for_parking_slot = Shared_ScriptForGeneralFunctions.GetPointOnScreen (width_percentage, height_percentage);
 		var length_span = Camera.main.ScreenToWorldPoint (new Vector3 (Screen.width * percent_for_one_object , 0f, Camera.main.nearClipPlane)).x - Camera.main.ScreenToWorldPoint (new Vector3 (0f, 0f, Camera.main.nearClipPlane)).x;
 		for (int i = 0; i < n; i++) {
 			var basket_gameobject = Instantiate (Basket_Prefab, position_for_parking_slot, Quaternion.identity);

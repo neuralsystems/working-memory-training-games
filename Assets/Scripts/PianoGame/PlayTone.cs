@@ -23,7 +23,8 @@ public class PlayTone : MonoBehaviour {
 //		Debug.Log ("playing..1" );
 		tones = Camera.main.GetComponent<Tones>();
 //		initial_length = 50;
-		gradient = initial_length -1;
+//		gradient = initial_length -1;
+		gradient =1;
 		current_length = initial_length;
 		sample = "";
 		original_tone  = tones.GetToneAtRandom ();
@@ -87,15 +88,10 @@ public class PlayTone : MonoBehaviour {
 
 		GameObject.Find (GetComponent<SceneVariables> ().REWARD_SQUARE_PARENT).transform.position = GameObject.Find (GetComponent<SceneVariables> ().USER_INPUT_SQUARE_PARENT).transform.position;
 		yield return StartCoroutine(RepeatTone ());
-		//		yield return new WaitForSeconds(.5f);
 		var rain_particle_system_object = GameObject.FindGameObjectWithTag (Camera.main.GetComponent<SceneVariables> ().RAIN_PARTICLE_SYSTEM_TAG);
 		rain_particle_system_object.GetComponent<ParticleSystem> ().Play ();
-//		Debug.Log (rain_particle_system_object.GetComponent<ParticleSystem> ().main.duration);
 		yield return StartCoroutine(WaitForRainToStop(rain_particle_system_object.GetComponent<ParticleSystem>()));
-//		yield return null;
-//		StartCoroutine(LoadNextLevel ());
-//		LoadNextLevel();
-//		yield return new WaitForSeconds(.5f);
+
 
 	}
 
@@ -116,6 +112,10 @@ public class PlayTone : MonoBehaviour {
 // 	to play sound of a note, the frequency in the sinus script is set to frequency of that note. 
 
 	public IEnumerator PlaySomeTone(string notes, string delimeter, int start, int end, bool isRepeat = false){
+//		var tapping_hand_gameobject = GameObject.Find (Camera.main.GetComponent<SceneVariables> ().tappingHand);
+//		tapping_hand_gameobject.GetComponent<SpriteRenderer> ().enabled = true;
+		var reward_square_parent = GameObject.Find(Camera.main.GetComponent<SceneVariables>().REWARD_SQUARE_PARENT);
+//		var reward_square_objects = reward_square_parent.transform.childCount ();
 		OnKeyPress.numOfKeysPressed = 0;
 		SceneVariables.IS_USER_MODE = false;
 		Debug.Log (notes + "is played");
@@ -125,24 +125,35 @@ public class PlayTone : MonoBehaviour {
 				var token = toneTOBePlayed [i];
 				string token1 =token.ToUpper ();
 				var g = GameObject.Find (token1).gameObject;
-//				yield return new WaitForSeconds (SceneVariables.PLAY_TIME);
+				if (isRepeat) {
+					var reward_square_child_object = reward_square_parent.transform.GetChild (i).transform.GetChild (0);
+					reward_square_child_object.GetComponent<KeySquareBehavior> ().ChangeColor (SceneVariables.PRESSED_COLOR);
+				}
 				g.GetComponent<OnKeyPress> ().PlaySound(isRepeat);
+				if (isRepeat) {
+					var reward_square_child_object = reward_square_parent.transform.GetChild (i).transform.GetChild (0);
+					reward_square_child_object.GetComponent<KeySquareBehavior> ().ResetColor();
+				}
 				yield return new WaitForSeconds (SceneVariables.WAIT_TIME);
+
 			} else {
 				yield return new WaitForSeconds (SceneVariables.WAIT_TIME);
 			}
 		}
 		yield return new WaitForSeconds (SceneVariables.PLAY_TIME);
+//		tapping_hand_gameobject.GetComponent<SpriteRenderer> ().enabled = false;
 		if (!isRepeat) {
 			SceneVariables.IS_USER_MODE = true;
 		}
 //		HideSquares ();
 	}
+		
 
 	public IEnumerator RepeatTone(){
 		string delimeter = tones.GetDelimeter ();
 		sample = GetFirstnNotes (original_tone, delimeter,current_length);
 		yield return StartCoroutine(PlaySomeTone (sample,tones.GetDelimeter(), 0, current_length-gradient,true));
+		Camera.main.GetComponent<SceneVariables> ().GetRandomClapping ();
 		GameObject.Find (Camera.main.GetComponent<SceneVariables> ().playSound).GetComponent<SpriteRenderer> ().enabled = true;
 	}
 	public void HideSquares(){

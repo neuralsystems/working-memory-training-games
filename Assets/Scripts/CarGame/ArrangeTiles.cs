@@ -11,7 +11,7 @@ using SQLite4Unity3d;
 public class ArrangeTiles : MonoBehaviour
 {
 
-	public static int[] numOptionTile = new int[]{0, 1,2,3,4, 5, 6, 7, 8, 9 };
+	public static int[] numOptionTile = new int[]{0,1,2,3,4, 5, 6, 7, 8, 9 };
 	public int level = 1;
 	public Transform optionTile;
 	string  optionTileTag = "OptionTileTag";
@@ -34,6 +34,7 @@ public class ArrangeTiles : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		level = CarGame_FileForPersistantData.level;
 		game_name = CarGame_SceneVariables.Game_Name;
 		ImageList = new List<String> ();
 		PlaceParkingSlots (MAX_NUMBER_OF_OBJECTS);
@@ -158,10 +159,10 @@ public class ArrangeTiles : MonoBehaviour
 	}
 
 	public void PlaceParkingSlots(int n){
-		category = "Bus";
-		categoryId = 2;
-//		string category = GetCategory();
-//		GameObject.Find (Camera.main.GetComponent<CarGame_SceneVariables>().blockObject).GetComponent<SpriteRenderer> ().sprite = Resources.Load (game_name + "/"  + ImageFolder + category+ "/" + "Block "+ category, typeof(Sprite)) as Sprite;
+//		category = "Bus";
+//		categoryId = 2;
+		string category = GetCategory();
+		GameObject.Find (Camera.main.GetComponent<CarGame_SceneVariables>().blockObject).GetComponent<SpriteRenderer> ().sprite = Resources.Load (game_name + "/"  + ImageFolder + category+ "/" + "Block "+ category, typeof(Sprite)) as Sprite;
 		var isOutlined = "WithoutOutline/";
 		if (Camera.main.GetComponent<CarGame_SceneVariables> ().outline) {
 			isOutlined = "WithOutline/";
@@ -176,7 +177,7 @@ public class ArrangeTiles : MonoBehaviour
 		float height_percentage = .00f, width_percentage = .95f, margin = .05f;
 		var percent_for_one_object = (width_percentage - margin) / n;
 		var max_allowed_size = 1f;
-		var position_for_parking_slot = GetComponent<CarGame_SceneVariables> ().GetPointOnScreen (width_percentage, height_percentage);
+		var position_for_parking_slot = Shared_ScriptForGeneralFunctions.GetPointOnScreen (width_percentage, height_percentage);
 		Debug.Log (percent_for_one_object +"percent_for_one_object");
 		var length_span = Camera.main.ScreenToWorldPoint (new Vector3 (Screen.width * percent_for_one_object , 0f, Camera.main.nearClipPlane)).x - Camera.main.ScreenToWorldPoint (new Vector3 (0f, 0f, Camera.main.nearClipPlane)).x;
 		for (int i = 0; i < n-1; i++) {
@@ -199,7 +200,8 @@ public class ArrangeTiles : MonoBehaviour
 			position_for_parking_slot.x -= length_span * .1f;
 			option_tile_gameobject.GetComponent<ImageEffect> ().position_in_parking = option_tile_gameobject.transform.position;
 		}
-		StartCoroutine(MoveObjectsOutOfParking(1));
+//		StartCoroutine(MoveObjectsOutOfParking(numOptionTile[level]));
+		StartCoroutine(MoveObjectsOutOfParking(6));
 	}
 	
 	public void ShuffleImages (string ImageTag)
@@ -256,7 +258,8 @@ public class ArrangeTiles : MonoBehaviour
 		float height_percentage = .8f, width_percentage = .95f, margin = .05f;
 		var percent_for_one_object = (width_percentage - margin) / numofColumns;
 		var max_allowed_size = 1f;
-		var length_span = Camera.main.ScreenToWorldPoint (new Vector3 (Screen.width * percent_for_one_object , 0f, Camera.main.nearClipPlane)).x - Camera.main.ScreenToWorldPoint (new Vector3 (0f, 0f, Camera.main.nearClipPlane)).x;
+//		var length_span = Camera.main.ScreenToWorldPoint (new Vector3 (Screen.width * percent_for_one_object , 0f, Camera.main.nearClipPlane)).x - Camera.main.ScreenToWorldPoint (new Vector3 (0f, 0f, Camera.main.nearClipPlane)).x;
+		var length_span = Shared_ScriptForGeneralFunctions.GetPointOnScreen(percent_for_one_object,0f).x - Shared_ScriptForGeneralFunctions.GetPointOnScreen(0f,0f).x;
 		Debug.Log ("length span "+ length_span);
 		var origin_point = Camera.main.ScreenToWorldPoint (new Vector3 (0f, 0f, Camera.main.nearClipPlane)).x;
 		var option_gameobject_height = GetComponent<CarGame_SceneVariables> ().GetPointOnScreen (0, height_percentage);
@@ -297,7 +300,7 @@ public class ArrangeTiles : MonoBehaviour
 		//		Debug.Log ("screen positions are for Level " + GameObject.Find (SceneVariables.permanentGameObject).GetComponent<PersistantDataOnLoad> ().level);
 		for (int i = 1; i <= numofColumns; i++) {
 			for (int j = 1; j <= numofRows; j++) {
-				Vector3 location = Camera.main.ScreenToWorldPoint (new Vector3 (i*xGrad,(screenHeight/2) +j*yGrad, Camera.main.nearClipPlane));
+				Vector3 location = Camera.main.ScreenToWorldPoint (new Vector3 (i*xGrad,(screenHeight/2) +j*yGrad, Camera.main.nearClipPlane + 100f));
 				Option_Tile_Positions.Add (location);
 			}
 		}

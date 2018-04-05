@@ -29,7 +29,9 @@ public class CarGame_DetectTouch : MonoBehaviour {
 		}
 
 	void OnMouseDown(){
-		GetComponentInChildren<SpriteRenderer> ().enabled = false;
+//		Debug.Log (GetComponentInChildren<SpriteRenderer> ().sprite.name);
+//		GetComponent<SpriteRenderer> ().enabled = false;
+		transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = false;
 		Debug.Log ("tapped me?");
 		GameObject cueObject = GameObject.FindGameObjectWithTag (CarGame_SceneVariables.cueTag);
 //		Debug.Log (cueObject.name);
@@ -53,7 +55,7 @@ public class CarGame_DetectTouch : MonoBehaviour {
 
 	public void SetTouch( bool value){
 		Debug.Log ("Set Values with "+ value);
-		GetComponent<CarGame_DetectTouch> ().enabled = true;
-		GetComponent<BoxCollider2D> ().enabled = true;
+		GetComponent<CarGame_DetectTouch> ().enabled = value;
+		GetComponent<BoxCollider2D> ().enabled = value;
 	}
 }

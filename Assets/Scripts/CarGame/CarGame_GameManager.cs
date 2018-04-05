@@ -34,8 +34,8 @@ public class CarGame_GameManager : MonoBehaviour {
 	}
 
 	public void Match(){
-		GameObject.FindGameObjectWithTag (CarGame_SceneVariables.matchedTag).GetComponent<CarGame_DetectTouch> ().SetTouch (false);
-		GameObject.FindGameObjectWithTag (CarGame_SceneVariables.matchedTag).GetComponent<Scalling> ().SetScale(false);
+//		GameObject.FindGameObjectWithTag (CarGame_SceneVariables.matchedTag).GetComponent<CarGame_DetectTouch> ().SetTouch (false);
+//		GameObject.FindGameObjectWithTag (CarGame_SceneVariables.matchedTag).GetComponent<Scalling> ().SetScale(false);
 		AfterSelection ();
 
 	}
@@ -166,10 +166,11 @@ public class CarGame_GameManager : MonoBehaviour {
 			selected.transform.position = Vector3.SmoothDamp (selected.transform.position, cuePosition, ref velocity ,CarGame_SceneVariables.speed * Time.deltaTime);
 //			yield return new WaitForSeconds (selected.GetComponent<MergeOptionCue> ().waitTime);
 			yield return null;
-			if (selected.transform.position == cuePosition)
+			if (Vector3.Distance(selected.transform.position, cuePosition) < CarGame_SceneVariables.MIN_DISTANCE)
 				break;
 		}
 		selected.tag = CarGame_SceneVariables.OptionTileTag;
+		selected.transform.GetChild(0).GetComponent<SpriteRenderer> ().enabled = true;
 		Camera.main.GetComponent<CarGame_SceneVariables> ().ResetorRestart ();
 		Destroy(GameObject.FindGameObjectWithTag(CarGame_SceneVariables.cueTag));
 	}

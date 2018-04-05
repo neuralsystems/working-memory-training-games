@@ -38,6 +38,8 @@ public class CarGame_SceneVariables : MonoBehaviour {
 		screenCorners[2] = Camera.main.ScreenToWorldPoint (new Vector3 (0, 0, Camera.main.nearClipPlane));
 		screenCorners[3] = Camera.main.ScreenToWorldPoint (new Vector3 (screenWidth , 0  , Camera.main.nearClipPlane));
 		DivideScreenAndPlaceOptionTiles ();
+//		GameObject.Find (scoretext).GetComponent<Text> ().text = GetComponent<ArrangeTiles> ().level + " " + CarGame_FileForPersistantData.level; 
+
 	}
 	
 	// Update is called once per frame
@@ -49,7 +51,7 @@ public class CarGame_SceneVariables : MonoBehaviour {
 
 	public void ResetGame(){
 		Camera.main.GetComponent<Timer>().ResetTimer ();
-		Camera.main.GetComponent<CarGame_GameManager> ().RandomizeObjects ();
+//		Camera.main.GetComponent<CarGame_GameManager> ().RandomizeObjects ();
 		GameObject[] go = GameObject.FindGameObjectsWithTag (OptionTileTag);
 		foreach (GameObject g in go) {
 			g.GetComponent<ImageEffect> ().Initiate ();
@@ -63,16 +65,20 @@ public class CarGame_SceneVariables : MonoBehaviour {
 			var scoreText = GameObject.Find (scoretext).GetComponent<Text> ().text;
 			var totalScore = Convert.ToInt32 (scoreText);
 			CarGame_DataService ds = new CarGame_DataService (databaseName);
-			var scenes = ds.GetNextLevelToLoad (SceneManager.GetActiveScene().name);
+			var scenes = ds.GetNextLevelToLoad (CarGame_FileForPersistantData.level);
 			foreach (var scene in scenes) {
 				//remaining in the same level
 				if (scene.GetUpperLimit () > totalScore && scene.GetLowerLimit () < totalScore) {
-					SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+					CarGame_FileForPersistantData.level += 0;
 				} else if (scene.GetUpperLimit () <= totalScore) {
-					SceneManager.LoadScene (scene.GetNextLevel ());
+					CarGame_FileForPersistantData.level = scene.GetNextLevel ();
+//					SceneManager.LoadScene (scene.GetNextLevel ());
 				} else {
-					SceneManager.LoadScene (scene.GetPreviousLevel ());
+					CarGame_FileForPersistantData.level = scene.GetPreviousLevel ();
+//					SceneManager.LoadScene (scene.GetPreviousLevel ());
 				}
+				Debug.Log ("loading the game again");
+				SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
 			}
 		} else {
 			ResetGame ();

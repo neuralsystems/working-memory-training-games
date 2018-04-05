@@ -13,11 +13,13 @@ public class KeySquareBehavior : MonoBehaviour
 	public Sprite originalSprite;
 	string intermediate_1 = "Intermediate1";
 	float overlapfraction = 0.1f;
+	Color original_color;
 	// Use this for initialization
 	void Start ()
 	{
 
 		originalSprite = GetComponent<SpriteRenderer> ().sprite;
+		original_color = GetComponent<SpriteRenderer> ().color;
 //		blockSprite = GameObject.Find (Camera.main.GetComponent<SceneVariables> ().blockSquare).gameObject.GetComponent<SpriteRenderer> ().sprite;
 		widthPercentage = Camera.main.GetComponent<SceneVariables> ().widthPercentage;
 		heightPercentage = Camera.main.GetComponent<SceneVariables> ().heightPercentage;
@@ -105,24 +107,7 @@ public class KeySquareBehavior : MonoBehaviour
 				target_for_parent.y -= shift;
 				user_input_parent_object.GetComponent<PianoGame_UserInputSquareParentBehavior> ().All_Match = all_matched;
 				StartCoroutine(user_input_parent_object.GetComponent<PianoGame_UserInputSquareParentBehavior>().MoveToTarget(target_for_parent));
-//				if (all_matched) {
-//					user_input_parent_object.GetComponentInParent<ParticleSystem> ().Play ();
-//	//					Camera.main.GetComponent<AudioSource> ().Play ();
-//	//					Camera.main.GetComponent<PlayTone>().PlayTillComplete();
-////					user_input_parent_object.transform.position = target_for_parent;
-//					Camera.main.GetComponent<SceneVariables> ().GetRandomClapping ();
-//					Camera.main.GetComponent<SceneVariables> ().ShowSquares ();
-//				}
-
-//				yield return new WaitForSeconds (1f);
-//				if (Camera.main.GetComponent<PlayTone> ().consequtive_correct >= Camera.main.GetComponent<SceneVariables> ().CONSECUTIVE_CORRECT_THRESHOLD) {
-//					SceneVariables.IS_USER_MODE = false;
-//					StartCoroutine (Camera.main.GetComponent<PlayTone> ().DisplayOnLevelComplete ());
-//				} else {
-//					GameObject.Find (Camera.main.GetComponent<SceneVariables> ().playSound).GetComponent<SpriteRenderer> ().enabled = true;
-//				}
 			}
-//			}
 		}
 
 	}
@@ -162,8 +147,11 @@ public class KeySquareBehavior : MonoBehaviour
 			StartCoroutine (MoveToReward (rewardTile));
 		} else {
 			transform.position = target;
-			rewardTile.GetComponent<SpriteRenderer> ().sprite = GetComponent<SpriteRenderer> ().sprite;
-			GetComponent<SpriteRenderer> ().enabled = false;
+//			rewardTile.GetComponent<SpriteRenderer> ().sprite = GetComponent<SpriteRenderer> ().sprite;
+			transform.localScale = rewardTile.transform.localScale;
+			transform.parent = rewardTile.transform;
+			tag = Camera.main.GetComponent<SceneVariables> ().REWARD_SQUARE_CHILD_TAG;
+//			GetComponent<SpriteRenderer> ().enabled = false;
 //			yield return new WaitForSeconds (1f);
 			Camera.main.GetComponent<PlayTone>().CheckOnComplete ();
 		}
@@ -171,5 +159,11 @@ public class KeySquareBehavior : MonoBehaviour
 
 	}
 
+	public void ChangeColor(Color color_value){
+		GetComponent<SpriteRenderer> ().color = color_value;
+	}
 
+	public void ResetColor(){
+		GetComponent<SpriteRenderer> ().color = original_color;
+	}
 }

@@ -129,6 +129,7 @@ public class ImageEffect : MonoBehaviour {
 			target_for_cover_gameobject.y += 1f;
 			var cover_gameobject = Instantiate (COVER_PREFAB, target_for_cover_gameobject, Quaternion.identity);
 			cover_gameobject.transform.localScale = transform.localScale;
+			cover_gameobject.GetComponent<SpriteRenderer> ().sprite = GameObject.Find (Camera.main.GetComponent<CarGame_SceneVariables> ().blockObject).GetComponent<SpriteRenderer> ().sprite;
 			StartCoroutine (cover_gameobject.GetComponent<CarGame_OptionTileCoverBehavior> ().MoveToCoveTheObject (transform.gameObject));
 		} else {
 			CarGame_SceneVariables.presentCue = true;

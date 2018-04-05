@@ -104,7 +104,7 @@ public class CarGame_DataService  {
 //		return _connection.Query<NextLevelToLoad> (command, currentLevel, score, score);
 //		}
 
-		public IEnumerable<NextLevelToLoad> GetNextLevelToLoad(string currentLevel){
+		public IEnumerable<NextLevelToLoad> GetNextLevelToLoad(int currentLevel){
 			const string command = "SELECT * FROM NextLevelToLoad WHERE CurrentLevel = ? ";
 			return _connection.Query<NextLevelToLoad> (command, currentLevel);
 		}

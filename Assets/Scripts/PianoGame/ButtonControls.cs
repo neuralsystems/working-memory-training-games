@@ -32,7 +32,7 @@ public class ButtonControls : MonoBehaviour {
 	}
 
 	void ExitGame(){
-		SceneManager.LoadScene ("HomeScreen");
+		SceneManager.LoadScene (Camera.main.GetComponent<SceneVariables>().Game_Name+"_HomeScreen");
 	}
 
 

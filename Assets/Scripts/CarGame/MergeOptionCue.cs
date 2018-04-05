@@ -17,6 +17,8 @@ public class MergeOptionCue : MonoBehaviour {
 		target = GameObject.FindGameObjectWithTag (CarGame_SceneVariables.cueTag).transform.position;
 //		target1 = GameObject.Find (CarGame_SceneVariables.targetTile).transform.position;
 		target1 = GetComponent<ImageEffect>().position_in_parking;
+		GetComponent<Scalling> ().SetScale(false);
+		GetComponent<CarGame_DetectTouch> ().SetTouch (false);
 		StartCoroutine (MoveToCue (target,afterReachingTarget ));
 	}
 	
@@ -55,13 +57,12 @@ public class MergeOptionCue : MonoBehaviour {
 //	}
 	public IEnumerator MoveToCue(Vector3 target, string afterCompletionCall){
 
-		if (transform.position != target) {
+		if (Vector3.Distance(transform.position ,target) > CarGame_SceneVariables.MIN_DISTANCE) {
 			transform.position = Vector3.SmoothDamp (transform.position, target, ref velocity, step);
 			yield return null;
 			StartCoroutine (MoveToCue (target, afterCompletionCall));
 		} else { 
 			transform.position = target;
-
 			Invoke(afterCompletionCall,GetComponent<ParticleSystem> ().main.duration);
 		}
 

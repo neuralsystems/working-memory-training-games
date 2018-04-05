@@ -39,11 +39,10 @@ public class HomeScreenButtons : MonoBehaviour {
 		} else if (this.gameObject.name == "Home") {
 			
 		}else if (this.gameObject.name == Camera.main.GetComponent<SceneVariables>().playSound) {
-//			PlayTone.sample = "";
 			if (GetComponent<SpriteRenderer> ().enabled) {
 				OnKeyPress.userString = "";
 				Debug.Log ("Clicked me?");
-//			Camera.main.GetComponent<SceneVariables> ().ShowNeutral();
+				Camera.main.GetComponent<AudioSource>().Stop();
 				Camera.main.GetComponent<PlayTone> ().PlayToneFromExternal ();
 				GetComponent<SpriteRenderer> ().enabled = false;
 			}

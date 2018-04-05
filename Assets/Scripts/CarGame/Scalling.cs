@@ -8,13 +8,13 @@ public class Scalling : MonoBehaviour {
 	public float maxSize = 1f;
 	public float minSize = .9f;
 	public float growFactor = .1f;
-	public float waitTime = .5f;
+	public float waitTime = .05f;
 	public bool shouldScale = false;
 
 	void Start()
 	{
 		minSize = .5f * maxSize;
-		growFactor = .2f * (maxSize - minSize);
+		growFactor = .5f * (maxSize - minSize);
 		if (shouldScale) {
 			StartCoroutine (Scale ());
 		}
@@ -48,7 +48,7 @@ public class Scalling : MonoBehaviour {
 			}
 
 			timer = 0;
-			yield return new WaitForSeconds(waitTime);
+			yield return new WaitForSeconds(10*waitTime);
 		if (shouldScale) {
 			StartCoroutine (Scale ());
 		}
@@ -56,7 +56,7 @@ public class Scalling : MonoBehaviour {
 
 
 	public void SetScale(bool value){
-		transform.localScale = new Vector3(maxSize,maxSize,1);
+//		transform.localScale = new Vector3(maxSize,maxSize,1);
 		shouldScale = value;
 		if (shouldScale) {
 			StartCoroutine (Scale ());

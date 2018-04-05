@@ -4,9 +4,9 @@ public class NextLevelToLoad  {
 
 	[PrimaryKey, AutoIncrement]
 	public int Id { get; set; }
-	public string CurrentLevel { get; set; }
-	public string NextLevel { get; set; }
-	public string PreviousLevel { get; set; }
+	public int CurrentLevel { get; set; }
+	public int NextLevel { get; set; }
+	public int PreviousLevel { get; set; }
 
 	// both the limits are inclusive Score in [LowerLimit, UpperLimit]
 	public int UpperLimit { get; set; }		
@@ -18,19 +18,19 @@ public class NextLevelToLoad  {
 		return string.Format ("[NextLevelToLoad: Id={0}, CurrentLevel={1}, NextLevel={2}, UpperLimit={3}, LowerLimit={4}]", Id, CurrentLevel, NextLevel, UpperLimit, LowerLimit);
 	}
 
-	public string GetNextLevel()
+	public int GetNextLevel()
 	{
 		return this.NextLevel;
 	}
 
 
-	public string GetCurrentLevel()
+	public int GetCurrentLevel()
 	{
 		return this.CurrentLevel;
 	}
 
 
-	public string GetPreviousLevel()
+	public int GetPreviousLevel()
 	{
 		return this.PreviousLevel;
 	}
