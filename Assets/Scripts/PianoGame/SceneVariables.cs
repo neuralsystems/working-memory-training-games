@@ -73,13 +73,8 @@ public class SceneVariables : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-//		ResetSmilies ();
-//				source = GameObject.Find("Source").transform.position;
 		SCREEN_WIDTH = Camera.main.pixelWidth;
 		SCREEN_HEIGHT = Camera.main.pixelHeight;
-
-//		Debug.Log (source);
-
 		DivideScreen ();
 
 	}
@@ -93,7 +88,6 @@ public class SceneVariables : MonoBehaviour {
 		var widthInPixels = GameObject.Find(questionSquare).GetComponent<SpriteRenderer> ().bounds.size.x;
 		Debug.Log (width + " "+widthInPixels+ " "+Camera.main.GetComponent<PlayTone>().GetTuneLength());
 		var normalizedWidth = GetNormalizedWidth ( widthInPixels, Camera.main.GetComponent<PlayTone>().GetTuneLength());
-//		Debug.Log ("normalizedWidth "+normalizedWidth);
 		target = Camera.main.ScreenToWorldPoint (new Vector3 (SCREEN_WIDTH* normalizedWidth, SCREEN_HEIGHT * heightPercentage, 100f));
 		targetUserSquare = target;
 	}
@@ -101,41 +95,49 @@ public class SceneVariables : MonoBehaviour {
 	public IEnumerator PlaceEmptyRewardSquare(int n){
 		
 		GameObject[] oldSquares = GameObject.FindGameObjectsWithTag (REWARD_SQUARE_TAG);
-		foreach (GameObject oldSquare in oldSquares) {
-			Destroy (oldSquare);
+		foreach (GameObject old_square_object in oldSquares) {
+			old_square_object.GetComponent<PianoGame_RewardSquareBehavior> ().SetVisibility(true);
+			foreach (Transform child in old_square_object.transform) {
+				Destroy (child.gameObject);
+			}
 		}
+		Debug.Log("already have "+ oldSquares.Length + "squares ");
 		var SCREEN_WIDTH = Camera.main.pixelWidth;
 		var SCREEN_HEIGHT = Camera.main.pixelHeight;
-//		targetRewardSquare = Camera.main.ScreenToWorldPoint (new Vector3 (SCREEN_WIDTH* widthPercentageForRewardSquare, SCREEN_HEIGHT * heightPercentageForRewardSquare, Camera.main.nearClipPlane));
-//		Debug.Log ("targetRewardSquare "+targetRewardSquare);
+		var init_position = Shared_ScriptForGeneralFunctions.GetPointOnScreen (1, heightPercentageForRewardSquare);
 		var originalPosition = targetRewardSquare;
-		var alredayPresent = GameObject.FindGameObjectsWithTag (REWARD_SQUARE_TAG).Length;
-		//		target.x += shift * alredayPresent;
-//		tag = rewardSquareTag;
-//		StartCoroutine(MoveRewardToTarget 
+		var reward_square_parent_gameobject = GameObject.Find (Camera.main.GetComponent<SceneVariables> ().REWARD_SQUARE_PARENT);
+		var size_of_one_object = rewardSquare.GetComponent<SpriteRenderer> ().bounds.size;
+		int old =  oldSquares.Length;
+		var widthInPixels = size_of_one_object.x;
+		var normalizedWidth = GetNormalizedWidth ( widthInPixels, n);
+		Debug.Log (normalizedWidth+" "+ width);
+		targetRewardSquare = Shared_ScriptForGeneralFunctions.GetPointOnScreen(normalizedWidth, heightPercentageForRewardSquare);
+		originalPosition = targetRewardSquare;
 		for (int i = 0; i < n; i++) {
-			var rs = Instantiate (rewardSquare, targetRewardSquare, Quaternion.identity);
-			if (i == 0) {
-				var widthInPixels = rs.GetComponent<SpriteRenderer> ().bounds.size.x;
-//				Debug.Log (widthInPixels*n+ " "+SCREEN_WIDTH);
-//				GameObject.Find (REWARD_SQUARE_PARENT).transform.position = rs.transform.position;
-				var normalizedWidth = GetNormalizedWidth ( widthInPixels, n);
-				Debug.Log (normalizedWidth+" "+ width);
-				targetRewardSquare = Camera.main.ScreenToWorldPoint (new Vector3 (SCREEN_WIDTH* normalizedWidth, SCREEN_HEIGHT * heightPercentageForRewardSquare, Camera.main.nearClipPlane));
-				rs.transform.position = targetRewardSquare;
-				originalPosition = targetRewardSquare;
-//				Debug.Log ("targetRewardSquare1 "+targetRewardSquare);
+			if (i < old) {
+				StartCoroutine (oldSquares [i].GetComponent<PianoGame_RewardSquareBehavior> ().MoveToTarget (targetRewardSquare));
+			} else {
+				if (i == old) {
+					yield return new WaitForSeconds (1f);
+				}
+				var rs = Instantiate (rewardSquare, init_position, Quaternion.identity);
+				StartCoroutine(rs.GetComponent<PianoGame_RewardSquareBehavior>().MoveToTarget(targetRewardSquare));
+				rs.gameObject.tag = REWARD_SQUARE_TAG;
+//				rs.transform.localScale = reward_square_parent_gameobject.transform.localScale;
+				rs.transform.parent = reward_square_parent_gameobject.transform;
 			}
-			rs.transform.parent = GameObject.Find (REWARD_SQUARE_PARENT).transform;
-			rs.gameObject.tag = REWARD_SQUARE_TAG;
-//			Debug.Log (rs.GetComponent<SpriteRenderer> ().bounds.size.x);
-			targetRewardSquare.x += rs.GetComponent<SpriteRenderer> ().bounds.size.x;
-			if(targetRewardSquare.x > Camera.main.ScreenToWorldPoint (new Vector3 (SCREEN_WIDTH* .9f, SCREEN_HEIGHT , Camera.main.nearClipPlane)).x){
+//			Debug.Log (rs.transform.localScale + " is the size before");
+//			rs.transform.parent = GameObject.Find (REWARD_SQUARE_PARENT).transform;
+//			Debug.Log (rs.transform.localScale + " is the size after");
+			targetRewardSquare.x += size_of_one_object.x;
+			if(targetRewardSquare.x > Camera.main.ScreenToWorldPoint (new Vector3 (SCREEN_WIDTH* .95f, SCREEN_HEIGHT , Camera.main.nearClipPlane)).x){
 				targetRewardSquare.x = originalPosition.x;
-				targetRewardSquare.y -= rs.GetComponent<SpriteRenderer> ().bounds.size.y;
+				targetRewardSquare.y -= size_of_one_object.y;
 			}
 			yield return null;
 		}
+		GameObject.Find (Camera.main.GetComponent<SceneVariables> ().playSound).GetComponent<HomeScreenButtons> ().SetHaloToggle(true);
 	}
 
 	float GetNormalizedWidth( float blockPercent, float blockNumbers){
@@ -157,15 +159,19 @@ public class SceneVariables : MonoBehaviour {
 		var userSquares = GameObject.FindGameObjectsWithTag (USER_INPUT_SQUARE_TAG);
 		var x = REWARD_INDEX;
 		var reward_square_parent_object = GameObject.Find (REWARD_SQUARE_PARENT);
-		foreach (var userSquare in userSquares) {
-//			GameObject.Find (REWARD_SQUARE_PARENT).transform.GetChild (x).GetComponent<SpriteRenderer>().sprite =userSquare.GetComponent<SpriteRenderer>().sprite;
-//			REWARD_INDEX++;
-//			StartCoroutine(userSquare.GetComponent<KeySquareBehavior>().MoveToTarget(reward_square_parent_object.transform.GetChild (x).transform.localPosition));
-			userSquare.transform.parent = null;
-//			StartCoroutine(Camera.main.GetComponent<Shared_ScriptForGeneralFunctions>().MoveToTarget(userSquare, reward_square_parent_object.transform.GetChild(x).transform.position));
-			StartCoroutine(userSquare.GetComponent<KeySquareBehavior>().MoveToReward(reward_square_parent_object.transform.GetChild(x).gameObject));
+		int last = userSquares.Length - 1;
+		for(int i=0;i<=last;i++){
+//		foreach (var userSquare in userSquares) {
+			userSquares[i].transform.parent = null;
+			var shouldCall = false;
+			if (i == last) {
+				shouldCall = true;
+			}
+			StartCoroutine(userSquares[i].GetComponent<KeySquareBehavior>().MoveToReward(reward_square_parent_object.transform.GetChild(x).gameObject, shouldCall));
+			
 			x++;
 		}
+
 		REWARD_INDEX += 1;
 		GameObject.Find (USER_INPUT_SQUARE_PARENT).GetComponent<PianoGame_UserInputSquareParentBehavior> ().ResetPosition ();
 	}
@@ -186,7 +192,6 @@ public class SceneVariables : MonoBehaviour {
 
 	public void GetRandomClapping(){
 		var r_x = Random.Range (0, Audio_Clips.Length);
-//		Audio_Clips.cl
 		GetComponent<AudioSource> ().PlayOneShot(Audio_Clips [r_x]);
 	}
 

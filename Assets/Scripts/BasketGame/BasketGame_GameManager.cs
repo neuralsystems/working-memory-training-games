@@ -27,8 +27,12 @@ public class BasketGame_GameManager : MonoBehaviour {
 	public IEnumerator MakeFruit(){
 //		yield return new WaitForSeconds (2f);
 		var fruits = GameObject.FindGameObjectsWithTag (BasketGame_SceneVariables.fruitTag).ToList();
+		var offset = 1f;
 		if (fruits.Count <= 1) {
-			Instantiate (fruit, BasketGame_SceneVariables.initVector, Quaternion.identity);
+			var spawn_position = Shared_ScriptForGeneralFunctions.GetPointOnScreen (.2f, 0f);
+			var basket_gameobject = GameObject.FindGameObjectsWithTag (BasketGame_SceneVariables.basketTag) [0];
+			spawn_position.y = basket_gameobject.transform.position.y+ basket_gameobject.GetComponent<SpriteRenderer>().bounds.size.y + offset;
+			Instantiate (fruit,spawn_position , Quaternion.identity);
 		}
 		yield return new WaitForSeconds (BasketGame_SceneVariables.waitTime);
 

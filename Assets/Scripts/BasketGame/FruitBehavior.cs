@@ -5,7 +5,7 @@ using UnityEngine;
 public class FruitBehavior : MonoBehaviour {
 
 	// Use this for initialization
-	public int speed = 13;
+	int speed = 20;
 	public float lowerLimit = -10f;
 	public string fruitName;
 	public string fruitPath;

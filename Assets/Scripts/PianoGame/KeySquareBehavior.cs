@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using cakeslice;
 public class KeySquareBehavior : MonoBehaviour
 {
 
@@ -14,29 +14,26 @@ public class KeySquareBehavior : MonoBehaviour
 	string intermediate_1 = "Intermediate1";
 	float overlapfraction = 0.1f;
 	Color original_color;
+
 	// Use this for initialization
 	void Start ()
 	{
 
 		originalSprite = GetComponent<SpriteRenderer> ().sprite;
 		original_color = GetComponent<SpriteRenderer> ().color;
-//		blockSprite = GameObject.Find (Camera.main.GetComponent<SceneVariables> ().blockSquare).gameObject.GetComponent<SpriteRenderer> ().sprite;
 		widthPercentage = Camera.main.GetComponent<SceneVariables> ().widthPercentage;
 		heightPercentage = Camera.main.GetComponent<SceneVariables> ().heightPercentage;
 		var shift = GetComponent<SpriteRenderer> ().bounds.size;
 		if (tagForGameObject == Camera.main.GetComponent<SceneVariables> ().USER_INPUT_SQUARE_TAG) {
-//			transform.parent = GameObject.Find (Camera.main.GetComponent<SceneVariables> ().USER_INPUT_SQUARE_PARENT).gameObject.transform;
 			target = Camera.main.GetComponent<SceneVariables> ().targetUserSquare;
 			target.y += (shift.y) * (1-overlapfraction);
 			Camera.main.GetComponent<SceneVariables> ().targetUserSquare.x += shift.x;
 		} else {
-//			transform.parent = GameObject.Find (Camera.main.GetComponent<SceneVariables> ().SAMPLE_SQUARE_PARENT).gameObject.transform;
 			target = Camera.main.GetComponent<SceneVariables> ().target;
 			Camera.main.GetComponent<SceneVariables> ().target.x += shift.x;
 			GetComponent<SpriteRenderer> ().sortingLayerName = intermediate_1;
 		}
 		StartCoroutine (MoveUp (target, tagForGameObject));
-//		ChangeTag ();
 	}
 
 
@@ -57,49 +54,31 @@ public class KeySquareBehavior : MonoBehaviour
 		var Sample_square_parent_object = GameObject.Find (Camera.main.GetComponent<SceneVariables> ().SAMPLE_SQUARE_PARENT);
 		var user_input_parent_object = GameObject.Find (Camera.main.GetComponent<SceneVariables> ().USER_INPUT_SQUARE_PARENT);
 		if (Vector3.Distance (transform.position, target) > SceneVariables.MIN_DISTANCE) {
-//			Debug.Log ("first if");
 			transform.position = Vector3.SmoothDamp (transform.position, target, ref velocity, smoothTime);
 			yield return null;
 			StartCoroutine (MoveUp (target, tagForGameObject));
 		} else {
 			transform.position = target;
-//			tag = tagForGameObject;
 			if (tagForGameObject == Camera.main.GetComponent<SceneVariables> ().USER_INPUT_SQUARE_TAG) {
-//				if (GameObject.FindGameObjectsWithTag (Camera.main.GetComponent<SceneVariables> ().USER_INPUT_SQUARE_TAG).Length == 1) {
-//					GameObject.Find (Camera.main.GetComponent<SceneVariables> ().USER_INPUT_SQUARE_PARENT).gameObject.transform.position = transform.position;
-//				}
 				transform.parent = user_input_parent_object.gameObject.transform;
 			} else {
-//				if (GameObject.FindGameObjectsWithTag (Camera.main.GetComponent<SceneVariables> ().SAMPLE_SQUARE_TAG).Length == 1) {
-//					GameObject.Find (Camera.main.GetComponent<SceneVariables> ().SAMPLE_SQUARE_PARENT).gameObject.transform.position = transform.position;
-//				}
 				transform.parent = Sample_square_parent_object.gameObject.transform;
 				GetComponent<SpriteRenderer> ().sprite = GameObject.Find (Camera.main.GetComponent<SceneVariables> ().questionSquare).gameObject.GetComponent<SpriteRenderer> ().sprite;
 			}
-//			if (tagForGameObject == Camera.main.GetComponent<SceneVariables> ().SAMPLE_SQUARE_TAG) {
-//				GetComponent<SpriteRenderer> ().sprite = GameObject.Find (Camera.main.GetComponent<SceneVariables> ().questionSquare).gameObject.GetComponent<SpriteRenderer> ().sprite;
-//			}
-//			yield return new WaitForSeconds (0.4f);
-//			if (Camera.main.GetComponent<SceneVariables> ().correctMatch ) {
-////				var userSquares = GameObject.FindGameObjectsWithTag (Camera.main.GetComponent<SceneVariables> ().USER_INPUT_SQUARE_TAG);
-////				var computerSquares = GameObject.FindGameObjectsWithTag (Camera.main.GetComponent<SceneVariables> ().SAMPLE_SQUARE_TAG);
 			Transform[] user_squares_gameobject = GameObject.Find (Camera.main.GetComponent<SceneVariables> ().USER_INPUT_SQUARE_PARENT).GetComponentsInChildren<Transform>();
 			Transform[] sample_squares_gameobject = GameObject.Find (Camera.main.GetComponent<SceneVariables> ().SAMPLE_SQUARE_PARENT).GetComponentsInChildren<Transform>();
 			var num_of_user_squares = GameObject.Find (Camera.main.GetComponent<SceneVariables> ().USER_INPUT_SQUARE_PARENT).transform.childCount;
 			var num_of_sample_squares = GameObject.Find (Camera.main.GetComponent<SceneVariables> ().SAMPLE_SQUARE_PARENT).transform.childCount;
 			if (num_of_sample_squares == num_of_user_squares) {
-//				Camera.main.GetComponent<SceneVariables> ().correctMatch = false;
 				var all_matched = true;
 				for (int i = 1; i <= num_of_user_squares; i++) {
 					var matched = (user_squares_gameobject [i].gameObject.GetComponent<SpriteRenderer> ().sprite == sample_squares_gameobject [i].gameObject.GetComponent<KeySquareBehavior> ().originalSprite);
 					all_matched = all_matched && matched;
 					Debug.Log (all_matched + " all_matched");
 					sample_squares_gameobject [i].gameObject.GetComponent<KeySquareBehavior> ().ResetSquare ();
-//					yield return new WaitForSeconds (0.5f);
 					if (!matched) {
 						user_squares_gameobject[i].transform.parent =null;
 					}
-
 				}
 				yield return new WaitForSeconds (0.5f);
 				var shift = GetComponent<SpriteRenderer>().sprite.bounds.size.y * (1-overlapfraction);
@@ -115,7 +94,6 @@ public class KeySquareBehavior : MonoBehaviour
 	public IEnumerator MoveToTarget (Vector3 target)
 	{
 		if (Vector3.Distance (transform.position, target) > Mathf.Min(SceneVariables.MIN_DISTANCE,0.0001f)) {
-			//			Debug.Log ("first if");
 			transform.position = Vector3.SmoothDamp (transform.position, target, ref velocity, smoothTime);
 			yield return null;
 			StartCoroutine (MoveToTarget (target));
@@ -129,7 +107,6 @@ public class KeySquareBehavior : MonoBehaviour
 
 	void ChangeTag ()
 	{
-
 		if (!SceneVariables.IS_USER_MODE) {
 			tag = Camera.main.GetComponent<SceneVariables> ().USER_INPUT_SQUARE_TAG;
 		} else {
@@ -137,23 +114,28 @@ public class KeySquareBehavior : MonoBehaviour
 		}
 	}
 
-	public IEnumerator MoveToReward ( GameObject rewardTile)
+	public IEnumerator MoveToReward ( GameObject rewardTile, bool shouldCall)
 	{
 		var target = rewardTile.transform.position;
 		if (Vector3.Distance (transform.position, target) > SceneVariables.MIN_DISTANCE) {
-			//			Debug.Log ("first if");
 			transform.position = Vector3.SmoothDamp (transform.position, target, ref velocity, smoothTime);
 			yield return null;
-			StartCoroutine (MoveToReward (rewardTile));
+			StartCoroutine (MoveToReward (rewardTile,shouldCall));
 		} else {
 			transform.position = target;
-//			rewardTile.GetComponent<SpriteRenderer> ().sprite = GetComponent<SpriteRenderer> ().sprite;
-			transform.localScale = rewardTile.transform.localScale;
-			transform.parent = rewardTile.transform;
-			tag = Camera.main.GetComponent<SceneVariables> ().REWARD_SQUARE_CHILD_TAG;
-//			GetComponent<SpriteRenderer> ().enabled = false;
-//			yield return new WaitForSeconds (1f);
-			Camera.main.GetComponent<PlayTone>().CheckOnComplete ();
+			if (rewardTile.transform.childCount == 0) {
+				transform.localScale = rewardTile.transform.localScale;
+				transform.parent = rewardTile.transform;
+				tag = Camera.main.GetComponent<SceneVariables> ().REWARD_SQUARE_CHILD_TAG;
+				if (shouldCall) {
+					Camera.main.GetComponent<PlayTone> ().CheckOnComplete ();
+				}
+//				rewardTile.GetComponent<PianoGame_RewardSquareBehavior> ().SetVisibility(false);
+//				rewardTile.GetComponent<Outline> ().eraseRenderer = true;
+			} else {
+				Destroy (gameObject);
+			}
+
 		}
 
 

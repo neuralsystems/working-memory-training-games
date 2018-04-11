@@ -7,8 +7,6 @@ public class RainParticleSystemBehavior : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
-//		var width_percentage = .5f, height_percentage
 		transform.position = Camera.main.GetComponent<SceneVariables>().GetPointOnScreen(.5f,1.1f);
 	}
 	

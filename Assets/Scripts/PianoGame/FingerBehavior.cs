@@ -40,7 +40,6 @@ public class FingerBehavior : MonoBehaviour {
 		Debug.Log("came till here");
 		GetComponent<Animator>().SetBool("IsTapping",true);
 		AnimatorStateInfo asf = GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0);
-//		yield return new WaitForSeconds(asf.normalizedTime);
 		yield return null;
 		GetComponent<Animator>().SetBool("IsTapping",false);
 		var pianoKey = GameObject.Find (keyName);

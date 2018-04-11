@@ -59,21 +59,23 @@ public class CarGame_GameManager : MonoBehaviour {
 
 	// mismatch will cause the breaking of the cue sprite into 4 parts
 	public void Break(){
-		
-		string parentSprite = GameObject.FindGameObjectWithTag(CarGame_SceneVariables.cueTag).GetComponent<SpriteRenderer> ().sprite.name;
-		string folderName = Camera.main.GetComponent<ArrangeTiles> ().ImageFolder;
-		GameObject[] fragments = GameObject.FindGameObjectsWithTag (CarGame_SceneVariables.fragmentTag);
-		foreach (GameObject fragment in fragments) {
-			string imageName = parentSprite + "_" + fragment.name;
-			fragment.GetComponent<SpriteRenderer> ().sprite = Resources.Load (folderName + subFolder + parentSprite + "/" + imageName, typeof(Sprite)) as Sprite;
-			fragment.GetComponent<FragmentScript> ().enabled = true;
-		}
-		GameObject.FindGameObjectWithTag (CarGame_SceneVariables.cueTag).GetComponent<SpriteRenderer> ().sprite = null;
-		BreakUp ();
+		GameObject cueTile = GameObject.FindGameObjectWithTag(CarGame_SceneVariables.cueTag);
+		cueTile.GetComponent<CueBehavior> ().MoveBackCue ();
+		StartCoroutine(MoveBack ());
+//		string parentSprite = GameObject.FindGameObjectWithTag(CarGame_SceneVariables.cueTag).GetComponent<SpriteRenderer> ().sprite.name;
+//		string folderName = Camera.main.GetComponent<ArrangeTiles> ().ImageFolder;
+//		GameObject[] fragments = GameObject.FindGameObjectsWithTag (CarGame_SceneVariables.fragmentTag);
+//		foreach (GameObject fragment in fragments) {
+//			string imageName = parentSprite + "_" + fragment.name;
+//			fragment.GetComponent<SpriteRenderer> ().sprite = Resources.Load (folderName + subFolder + parentSprite + "/" + imageName, typeof(Sprite)) as Sprite;
+//			fragment.GetComponent<FragmentScript> ().enabled = true;
+//		}
+//		GameObject.FindGameObjectWithTag (CarGame_SceneVariables.cueTag).GetComponent<SpriteRenderer> ().sprite = null;
+//		BreakUp ();
 	}
 
 	public void DynamicBreak(){
-		BreakUp ();
+//		BreakUp ();
 //		Texture2D sourceTexture = GetComponent<SpriteRenderer>().sprite.texture;
 //		Debug.Log ("called the dynamic one");
 		var cueTile = GameObject.FindGameObjectWithTag(CarGame_SceneVariables.cueTag);
@@ -171,8 +173,9 @@ public class CarGame_GameManager : MonoBehaviour {
 		}
 		selected.tag = CarGame_SceneVariables.OptionTileTag;
 		selected.transform.GetChild(0).GetComponent<SpriteRenderer> ().enabled = true;
+		yield return new WaitForSeconds (1f);
 		Camera.main.GetComponent<CarGame_SceneVariables> ().ResetorRestart ();
-		Destroy(GameObject.FindGameObjectWithTag(CarGame_SceneVariables.cueTag));
+//		Destroy(GameObject.FindGameObjectWithTag(CarGame_SceneVariables.cueTag));
 	}
 
 	public void UpdateScoreText(int matched){

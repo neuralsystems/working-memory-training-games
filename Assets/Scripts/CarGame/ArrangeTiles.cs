@@ -23,7 +23,7 @@ public class ArrangeTiles : MonoBehaviour
 	public string ImageFolder = "GameImages/", game_name;
 	string category ;
 	int categoryId;
-	int MAX_NUMBER_OF_OBJECTS = 9;
+	int MAX_NUMBER_OF_OBJECTS = 5;
 	public Transform PARKING_SLOT;
 	public GameObject PARKING_SLOT_PARENT_GAMEOBJECT;
 	List<Vector3> Option_Tile_Positions = new List<Vector3>();
@@ -40,7 +40,7 @@ public class ArrangeTiles : MonoBehaviour
 		PlaceParkingSlots (MAX_NUMBER_OF_OBJECTS);
 //		ReadDatabase ();
 
-		CreateScene (numOptionTile [level]);
+//		CreateScene (numOptionTile [level]);
 	}
 	
 	// Update is called once per frame
@@ -201,7 +201,7 @@ public class ArrangeTiles : MonoBehaviour
 			option_tile_gameobject.GetComponent<ImageEffect> ().position_in_parking = option_tile_gameobject.transform.position;
 		}
 //		StartCoroutine(MoveObjectsOutOfParking(numOptionTile[level]));
-		StartCoroutine(MoveObjectsOutOfParking(6));
+		StartCoroutine(MoveObjectsOutOfParking(n-2));
 	}
 	
 	public void ShuffleImages (string ImageTag)

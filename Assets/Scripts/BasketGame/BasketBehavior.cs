@@ -14,9 +14,11 @@ public class BasketBehavior : MonoBehaviour {
 	public Vector3 originalPosition;
 	public float num_of_fruits;
 	public float reduce_height_by;
+
 	// Use this for initialization
 	void Start () {
 //		capacity = Camera.main.GetComponent<Scenevariables>().basketCapacity;
+
 		rotationHeight = GetRotationHeight ();
 		lowerBound = Camera.main.GetComponent<BasketGame_SceneVariables> ().GetPointOnScreen (0, 0).y;
 		Debug.Log ("lower bound is: "+ lowerBound);
@@ -25,7 +27,7 @@ public class BasketBehavior : MonoBehaviour {
 		foreach (Transform child in transform) {
 			child.gameObject.transform.localScale = new Vector3 (.4f, .4f, 1f);
 		}
-		num_of_fruits = 2f;
+		num_of_fruits = 3f;
 		reduce_height_by = (transform.position.y - lowerBound) / num_of_fruits;
 
 	}
@@ -76,6 +78,10 @@ public class BasketBehavior : MonoBehaviour {
 //				Debug.Log ("distance from lower bound " + Mathf.Abs (transform.position.y - lowerBound));
 				if (Mathf.Abs(transform.position.y - lowerBound) < BasketGame_SceneVariables.minDistance) {
 					Destroy (collision.gameObject);
+					var BasketLauncher = GameObject.Find("RocketLaunch");
+					BasketLauncher.transform.position = transform.position;
+					BasketLauncher.transform.parent = transform;
+					BasketLauncher.GetComponent<ParticleSystem>().Play();
 					BaksetAnimation ();
 				} else {
 					collision.gameObject.GetComponent<FruitBehavior> ().OnComplete ();
@@ -102,7 +108,7 @@ public class BasketBehavior : MonoBehaviour {
 	}
 
 	IEnumerator MoveBasket(Vector3 target){
-		if (Vector3.Distance (transform.position, target) > BasketGame_SceneVariables.minDistance && spaceLeft()) {
+		if ((Vector3.Distance (transform.position, target) > BasketGame_SceneVariables.minDistance) && spaceLeft()) {
 			//			Debug.Log ("first if");
 			transform.position = Vector3.SmoothDamp (transform.position, target, ref velocity, smoothTime);
 			yield return null;
@@ -112,7 +118,7 @@ public class BasketBehavior : MonoBehaviour {
 //			Debug.Log (transform.position.y + " " + rotationHeight + " "+ (transform.position.y - rotationHeight ));
 			if (Mathf.Abs (transform.position.y - rotationHeight) < .001f) {
 				Debug.Log ("start rotating the basket..");
-				StartCoroutine (RotateMe (Vector3.forward * 355, inTime));
+				StartCoroutine (RotateMe (Vector3.forward * 355 * numOfRounds, inTime));
 			} else {
 				if (tag == BasketGame_SceneVariables.basketTag) {
 					Debug.Log ("called make fruit from a basket");

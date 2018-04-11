@@ -11,7 +11,7 @@ public class PlaceBasket : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		var numOfBaskets = 1;
+		var numOfBaskets = 4;
 		PlaceNBaskets (numOfBaskets);
 
 		int i = 0;

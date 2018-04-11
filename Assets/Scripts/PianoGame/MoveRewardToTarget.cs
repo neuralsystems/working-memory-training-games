@@ -15,16 +15,12 @@ public class MoveRewardToTarget : MonoBehaviour {
 		if (target == null) {
 			target = GameObject.Find ("Target").transform;
 		}
-//		MoveObjectToTarget ();
 		StartCoroutine(DelayBeforeStart());
 	}
 		
 	// Update is called once per frame
 	void Update () {
 		
-//		if (source.position != target.position) {
-//			source.position = Vector3.MoveTowards (source.position, target.position, SceneVariables.speed * Time.deltaTime);
-//		}
 	}
 
 	IEnumerator DelayBeforeStart(){
@@ -34,10 +30,8 @@ public class MoveRewardToTarget : MonoBehaviour {
 	public void MoveObjectToTarget(){
 		source.position = Vector3.MoveTowards (source.position, target.position, SceneVariables.SPEED * Time.deltaTime);
 		if (source.position == target.position) {
-			// do anything you want after the reward car reaches to the target
 			target.position = new Vector3 (target.position.x + SceneVariables.stepSize, target.position.y, target.position.z);
 			SceneVariables.IS_READY = true;
-//			Camera.main.GetComponent<SceneVariables> ().ResetSmilies ();
 		} else {
 			StartCoroutine(DelayBeforeMove ());
 
