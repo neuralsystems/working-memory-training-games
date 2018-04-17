@@ -18,12 +18,12 @@ public class BasketBehavior : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 //		capacity = Camera.main.GetComponent<Scenevariables>().basketCapacity;
-
+//		originalPosition = transform.position;
 		rotationHeight = GetRotationHeight ();
 		lowerBound = Camera.main.GetComponent<BasketGame_SceneVariables> ().GetPointOnScreen (0, 0).y;
-		Debug.Log ("lower bound is: "+ lowerBound);
+//		Debug.Log ("lower bound is: "+ lowerBound);
 		lowerBound -= GetComponent<SpriteRenderer> ().bounds.size.y / 2;
-		Debug.Log ("lower bound is: "+ lowerBound);
+//		Debug.Log ("lower bound is: "+ lowerBound);
 		foreach (Transform child in transform) {
 			child.gameObject.transform.localScale = new Vector3 (.4f, .4f, 1f);
 		}
@@ -40,7 +40,8 @@ public class BasketBehavior : MonoBehaviour {
 	float GetRotationHeight(){
 		var screenWidth = Camera.main.pixelWidth;
 		var screenHeight = Camera.main.pixelHeight;
-		return Camera.main.ScreenToWorldPoint (new Vector3 (screenWidth, screenHeight*.5f, Camera.main.nearClipPlane)).y;	// return the 50% of the screen height as height of rotation for basket
+		return transform.position.y;
+//		return Camera.main.ScreenToWorldPoint (new Vector3 (screenWidth, screenHeight*.5f, Camera.main.nearClipPlane)).y;	// return the 50% of the screen height as height of rotation for basket
 	}
 
 	void OnCollisionEnter2D(Collision2D collision){
@@ -62,7 +63,7 @@ public class BasketBehavior : MonoBehaviour {
 				collision.gameObject.GetComponent<CircleCollider2D>().enabled = false;
 				GameObject[] gos = GameObject.FindGameObjectsWithTag (BasketGame_SceneVariables.basketTag);
 
-				Destroy(collision.gameObject);
+				Destroy (collision.gameObject);
 				foreach (GameObject g in gos) {
 //					Debug.Log ("in loop " + g.transform.localPosition.y );
 					if (Mathf.Abs(g.transform.position.y - lowerBound) > BasketGame_SceneVariables.minDistance) {
@@ -117,11 +118,11 @@ public class BasketBehavior : MonoBehaviour {
 			transform.position = target;
 //			Debug.Log (transform.position.y + " " + rotationHeight + " "+ (transform.position.y - rotationHeight ));
 			if (Mathf.Abs (transform.position.y - rotationHeight) < .001f) {
-				Debug.Log ("start rotating the basket..");
+//				Debug.Log ("start rotating the basket..");
 				StartCoroutine (RotateMe (Vector3.forward * 355 * numOfRounds, inTime));
 			} else {
 				if (tag == BasketGame_SceneVariables.basketTag) {
-					Debug.Log ("called make fruit from a basket");
+//					Debug.Log ("called make fruit from a basket");
 					StartCoroutine (Camera.main.GetComponent<BasketGame_GameManager> ().MakeFruit ());
 				}
 			}
@@ -134,7 +135,7 @@ public class BasketBehavior : MonoBehaviour {
 		for(var t = 0f; t < 1; t += Time.deltaTime/inTime) {
 //			Debug.Log ("rotating the basket..");
 //			transform.rotation = Quaternion.Lerp(fromAngle, Quaternion.Euler(fromAngle.eulerAngles +byAngles), t);
-			transform.Rotate (0,0,180*Time.deltaTime);
+//			transform.Rotate (0,0,180*Time.deltaTime);
 			yield return null;
 		}
 		transform.rotation = Quaternion.identity;

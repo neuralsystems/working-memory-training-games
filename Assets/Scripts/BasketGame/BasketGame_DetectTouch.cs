@@ -33,7 +33,7 @@ public class BasketGame_DetectTouch : MonoBehaviour {
 //		Debug.Log ("touched on the bubble");
 //		Destroy (this.gameObject);
 //		GetComponent<Rigidbody2D>().isKinematic = true;
-		this.gameObject.AddComponent<Rigidbody2D>();
+		gameObject.AddComponent<Rigidbody2D>();
 		GetComponent<SpriteRenderer>().sortingLayerName = "Game";
 		foreach (Transform child in gameObject.transform) {
 			
@@ -41,6 +41,6 @@ public class BasketGame_DetectTouch : MonoBehaviour {
 		}
 		GetComponent<ParticleSystem> ().Play();
 		iTween.Stop (gameObject);
-		StartCoroutine(GetComponent<FruitBehavior> ().Fall ());
+//		StartCoroutine(GetComponent<FruitBehavior> ().Fall ());
 	}
 }

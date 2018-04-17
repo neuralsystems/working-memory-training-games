@@ -17,7 +17,7 @@ public class SceneVariables : MonoBehaviour {
 	public string REWARD_SQUARE_CHILD_TAG = "RewardSquareChildTag";
 
 	// gameobject position related variables 
-	float heightPercentageForRewardSquare = .95f, widthPercentageForRewardSquare = .50f; // for position of squares on top
+	public float heightPercentageForRewardSquare = .95f, widthPercentageForRewardSquare = .50f; // for position of squares on top
 	public float widthPercentage, heightPercentage;										// not used yet 
 
 
@@ -131,10 +131,10 @@ public class SceneVariables : MonoBehaviour {
 //			rs.transform.parent = GameObject.Find (REWARD_SQUARE_PARENT).transform;
 //			Debug.Log (rs.transform.localScale + " is the size after");
 			targetRewardSquare.x += size_of_one_object.x;
-			if(targetRewardSquare.x > Camera.main.ScreenToWorldPoint (new Vector3 (SCREEN_WIDTH* .95f, SCREEN_HEIGHT , Camera.main.nearClipPlane)).x){
-				targetRewardSquare.x = originalPosition.x;
-				targetRewardSquare.y -= size_of_one_object.y;
-			}
+//			if(targetRewardSquare.x > Camera.main.ScreenToWorldPoint (new Vector3 (SCREEN_WIDTH* .95f, SCREEN_HEIGHT , Camera.main.nearClipPlane)).x){
+//				targetRewardSquare.x = originalPosition.x;
+//				targetRewardSquare.y -= size_of_one_object.y;
+//			}
 			yield return null;
 		}
 		GameObject.Find (Camera.main.GetComponent<SceneVariables> ().playSound).GetComponent<HomeScreenButtons> ().SetHaloToggle(true);
@@ -187,7 +187,7 @@ public class SceneVariables : MonoBehaviour {
 		REWARD_INDEX = 0;
 		IS_USER_MODE = false;	
 		IS_READY = true;
-		GameObject.Find (REWARD_SQUARE_PARENT).transform.position = GetPointOnScreen (.5f, .9f);
+		GameObject.Find (REWARD_SQUARE_PARENT).transform.position = GetPointOnScreen (widthPercentageForRewardSquare, heightPercentageForRewardSquare);
 	}
 
 	public void GetRandomClapping(){

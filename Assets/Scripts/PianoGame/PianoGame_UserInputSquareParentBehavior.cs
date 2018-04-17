@@ -28,6 +28,10 @@ public class PianoGame_UserInputSquareParentBehavior : MonoBehaviour {
 		} else {
 			transform.position = target;
 			if (All_Match) {
+				var reward_square_parent = GameObject.Find (Camera.main.GetComponent<SceneVariables> ().REWARD_SQUARE_PARENT);
+//				var new_position = reward_square_parent.transform.position;
+//				new_position.y += reward_square_parent.GetComponent<SpriteRenderer> ().bounds.size.y;
+				reward_square_parent.GetComponent<PG_RewardSquareParentBehavior> ().ResetPosition();
 				GetComponentInParent<ParticleSystem> ().Play ();
 				Camera.main.GetComponent<SceneVariables> ().ShowSquares ();
 			}

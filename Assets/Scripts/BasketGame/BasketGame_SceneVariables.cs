@@ -5,7 +5,7 @@ using System.Linq;
 public class BasketGame_SceneVariables : MonoBehaviour {
 
 	public const string Game_Name = "BasketGame";
-	public static string basketTag = "BasketTag", fruitTag ="FruitTag", fullBasket = "FullBasketTag";
+	public static string basketTag = "BasketTag", fruitTag ="FruitTag", fullBasket = "FullBasketTag", bubbleTag = "BubbleTag", hangingFruitTag = "HangingFruitTag";
 	public string RAIN_PARTICLE_SYSTEM_TAG = "RainParticleSystemTag";
 	public static Vector3 initVector = new Vector3(-5.6f,-1.5f,0f);
 	public int basketCapacity = 15; 				// max number of fruit in a basket
@@ -55,7 +55,7 @@ public class BasketGame_SceneVariables : MonoBehaviour {
 	};
 	// Use this for initialization
 	void Start () {
-		initVector = GameObject.Find ("InitBubble").gameObject.transform.position;
+//		initVector = GameObject.Find ("InitBubble").gameObject.transform.position;
 	}
 	
 	// Update is called once per frame
@@ -93,11 +93,19 @@ public class BasketGame_SceneVariables : MonoBehaviour {
 	public string GetColoredFruit(){
 //		Debug.Log ("till here");
 		string fruitColor = GetEmptyBasket();
-		Debug.Log (fruitColor);
+//		Debug.Log (fruitColor);
 		var fruits = objectColorMap [fruitColor];
 		int x = SafeRandom (0, fruits.Length);
 		return fruits [x];
 //		return fruits [i];
+	}
+
+	public string GetColoredFruit(string basket_color){
+		//		Debug.Log ("till here");
+		var fruits = objectColorMap [basket_color];
+		int x = SafeRandom (0, fruits.Length);
+		return fruits [x];
+		//		return fruits [i];
 	}
 
 	public string GetEmptyBasket(){

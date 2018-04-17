@@ -5,15 +5,16 @@ using UnityEngine;
 public class FruitBehavior : MonoBehaviour {
 
 	// Use this for initialization
-	int speed = 20;
+	int speed = 2;
 	public float lowerLimit = -10f;
 	public string fruitName;
 	public string fruitPath;
 	public Transform extrabubble, pivot;
 	public SpriteRenderer sprite;
-
+	public Vector3 original_position, original_size;
 	public Color spriteColor = Color.white;
-
+	Vector3 velocity = Vector3.zero; 
+	float smoothTime = .5f, minDistance = 0.01f;
 
 
 	public static float fadeInTime = 1.5f;
@@ -25,18 +26,10 @@ public class FruitBehavior : MonoBehaviour {
 	public string ps = "BubbleBurst";
 
 	void Start () {
-
-		StartCoroutine (FadeCycle());
-
+		original_position = transform.position;
+		original_size = transform.localScale;
+//		StartCoroutine (FadeCycle());
 		fruitPath = Camera.main.GetComponent<BasketGame_SceneVariables>().GetPath ();
-		fruitName = Camera.main.GetComponent<BasketGame_SceneVariables>().GetColoredFruit ();
-		GetComponent<SpriteRenderer> ().sprite = Resources.Load (BasketGame_SceneVariables.Game_Name+ "/" + Camera.main.GetComponent<BasketGame_SceneVariables>().GetFruitFolderName () + fruitName, typeof(Sprite)) as Sprite;
-		int x = Random.Range (1, 3);
-//		GameObject.Find (ps).GetComponent<ParticleSystem> ().Play ();
-//		extrabubble = GameObject.Find ("Pivot");
-//		iTween.MoveTo(gameObject,iTween.Hash("path",iTweenPath.GetPath("FruitPath2"),"time",5));
-//		GetComponent<Rigidbody2D> ().isKinematic = false;
-//		GetComponent<Rigidbody> ().detectCollisions = false;
 	}
 	
 	// Update is called once per frame
@@ -45,6 +38,8 @@ public class FruitBehavior : MonoBehaviour {
 	}
 
 
+
+	// change this function it is causing abnormal behavior
 	void DestroyWhenOutofLimit(){
 		if (transform.position.y <= lowerLimit || transform.position.x >= x_max || transform.position.x <= x_min) {
 			OnComplete ();
@@ -52,16 +47,27 @@ public class FruitBehavior : MonoBehaviour {
 	}
 
 	public void OnComplete(){
-		Debug.Log ("completed the fruit life cycle making a new one");
+		
 		StartCoroutine(Camera.main.GetComponent<BasketGame_GameManager> ().MakeFruit ());
-		Destroy (gameObject);
+//		Destroy (gameObject);
+	}
+
+
+	public void StartFall(){
+//		GetComponent<Rigidbody2D> ().isKinematic = false;
+		StartCoroutine(Fall());
 	}
 
 	public IEnumerator Fall(){
 //		transform.position = move
-	  transform.Translate(Vector3.down * speed * Time.deltaTime, Space.World);
-		yield return new WaitForSeconds (BasketGame_SceneVariables.waitTime);
-		StartCoroutine(Fall ());
+	  	transform.Translate(Vector3.down * speed * Time.deltaTime, Space.World);
+		yield return null;
+		GameObject bubble_gameobject = GameObject.FindGameObjectsWithTag (BasketGame_SceneVariables.bubbleTag)[0];
+		if (Mathf.Abs (transform.position.y - bubble_gameobject.transform.position.y) < 0.1f) {
+			bubble_gameobject.GetComponent<BasketGame_BubbleBehavior> ().MoveBubble (transform);
+		}else{
+			StartCoroutine(Fall ());
+		}
 	}
 
 	IEnumerator FadeCycle()
@@ -94,13 +100,61 @@ public class FruitBehavior : MonoBehaviour {
 //			yield return null;
 //		}
 
-		iTween.MoveTo(gameObject,iTween.Hash("path",iTweenPath.GetPath(fruitPath),"speed",speed,"easetype","linear","oncomplete","OnComplete"));
+//		iTween.MoveTo(gameObject,iTween.Hash("path",iTweenPath.GetPath(fruitPath),"speed",speed,"easetype","linear","oncomplete","OnComplete"));
 		GetComponent<BasketGame_DetectTouch>().enabled = true;
 		GetComponent<CircleCollider2D> ().enabled = true;
 	}
 
 	public void Projectile(){
 //			GetComponent<Rigidbody2D>().velocity = new Vector3(10,10,0);
-		OnComplete();
+		StartCoroutine(MovetoOriginalPosition());
+//		OnComplete();
+	}
+
+	public IEnumerator AfterTrappedinBubble(){
+		var path_speed = 20;
+		StartCoroutine(Shared_ScriptForGeneralFunctions.ScaleUp (gameObject, 1f, .3f));
+		iTween.MoveTo(gameObject,iTween.Hash("path",iTweenPath.GetPath(fruitPath),"speed",path_speed,"easetype","linear","oncomplete","MovetoOriginalPosition"));
+		yield return new WaitForSeconds (1f);
+		GetComponent<BasketGame_DetectTouch>().enabled = true;
+		GetComponent<CircleCollider2D> ().enabled = true;
+	}
+
+	public IEnumerator MovetoOriginalPosition(){
+		
+		ResetProperties ();
+//		GetComponent<Rigidbody2D>().isKinematic = true;
+
+		StartCoroutine(MoveToTarget (original_position));
+		yield return StartCoroutine(Shared_ScriptForGeneralFunctions.ScaleDown (this.gameObject, original_size.x, 0.3f));
+
+
+	}
+
+
+	void ResetProperties(){
+		if (transform.childCount > 0) {
+			foreach (Transform child in transform) {
+				Destroy (child.gameObject);
+			}
+		}
+		Destroy (GetComponent<Rigidbody2D>());
+	}
+
+	public IEnumerator MoveToTarget ( Vector3 target)
+	{
+		if (Vector3.Distance (transform.position, target) > Mathf.Min(minDistance,0.0001f)) {
+			//			Debug.Log ("first if");
+			transform.position = Vector3.SmoothDamp (transform.position, target, ref velocity, smoothTime);
+			yield return null;
+			//			yield return new WaitForSeconds(1f);
+			StartCoroutine (MoveToTarget (target));
+		} else {
+			transform.position = target;
+			tag = BasketGame_SceneVariables.hangingFruitTag;
+			OnComplete ();
+		}
+
+
 	}
 }

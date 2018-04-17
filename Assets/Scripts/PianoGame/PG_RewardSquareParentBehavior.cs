@@ -22,6 +22,7 @@ public class PG_RewardSquareParentBehavior : MonoBehaviour {
 
 		if (Vector3.Distance (transform.position, target) > 0.00001f) {
 			transform.position = Vector3.SmoothDamp (transform.position, target, ref velocity, smoothTime);
+//			yield return new WaitForSeconds(0.5f);
 			yield return null;
 			StartCoroutine (MoveToTarget (target));
 		} else {
@@ -32,5 +33,9 @@ public class PG_RewardSquareParentBehavior : MonoBehaviour {
 		}
 
 
+	}
+
+	public void ResetPosition(){
+		StartCoroutine(MoveToTarget(original_position));
 	}
 }

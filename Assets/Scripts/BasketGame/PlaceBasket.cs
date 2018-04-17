@@ -53,7 +53,7 @@ public class PlaceBasket : MonoBehaviour {
 //			Debug.Log(local_scale_for_one_object + "local_scale_for_one_object");
 			basket_gameobject.transform.localScale = new Vector3 (local_scale_for_one_object,local_scale_for_one_object,local_scale_for_one_object);
 			basket_gameobject.tag = BasketGame_SceneVariables.basketTag;
-			Debug.Log ("basket color set");
+//			Debug.Log ("basket color set");
 			basket_gameobject.GetComponent<BasketBehavior> ().enabled = true;
 			position_for_parking_slot.x -= basket_gameobject.GetComponent<SpriteRenderer>().sprite.bounds.size.x * basket_gameobject.transform.localScale.x;
 			if (i == 0) {
@@ -64,6 +64,7 @@ public class PlaceBasket : MonoBehaviour {
 			position_for_parking_slot.x -= length_span * .1f;
 		}
 //		StartCoroutine(MoveObjectsOutOfParking(1));
-		StartCoroutine(Camera.main.GetComponent<BasketGame_GameManager>().MakeFruit());
+//		StartCoroutine(Camera.main.GetComponent<BasketGame_GameManager>().MakeFruit());
+		Camera.main.GetComponent<BasketGame_GameManager>().HangFruitOnTree();
 	}
 }

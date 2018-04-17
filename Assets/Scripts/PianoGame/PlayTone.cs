@@ -99,12 +99,12 @@ public class PlayTone : MonoBehaviour {
 
 	public IEnumerator PlaySomeTone(string notes, string delimeter, int start, int end, bool isRepeat = false, bool isLastRepeat = false){
 		var reward_square_parent = GameObject.Find(Camera.main.GetComponent<SceneVariables>().REWARD_SQUARE_PARENT);
-		if (isRepeat) {
-			var shift =  reward_square_parent.transform.GetChild (0).transform.GetChild (0).GetComponent<SpriteRenderer> ().bounds.size;
-			Debug.Log ("moving camera down by " + shift);
-			
-			transform.position -= Vector3.down * shift.y ;
-		}
+//		if (isRepeat) {
+//			var shift =  reward_square_parent.transform.GetChild (0).transform.GetChild (0).GetComponent<SpriteRenderer> ().bounds.size;
+//			Debug.Log ("moving camera down by " + shift);
+//			
+//			transform.position -= Vector3.down * shift.y ;
+//		}
 		OnKeyPress.numOfKeysPressed = 0;
 		SceneVariables.IS_USER_MODE = false;
 		Debug.Log (notes + "is played");
@@ -144,12 +144,13 @@ public class PlayTone : MonoBehaviour {
 		yield return new WaitForSeconds (SceneVariables.PLAY_TIME);
 		if (!isRepeat) {
 			SceneVariables.IS_USER_MODE = true;
-		}else if (isRepeat) {
-			var shift =  reward_square_parent.transform.GetChild (0).transform.GetChild (0).GetComponent<SpriteRenderer> ().bounds.size;
-			Debug.Log ("moving camera down by " + shift);
-
-			transform.position -= Vector3.up * shift.y ;
 		}
+//		else if (isRepeat) {
+//			var shift =  reward_square_parent.transform.GetChild (0).transform.GetChild (0).GetComponent<SpriteRenderer> ().bounds.size;
+//			Debug.Log ("moving camera down by " + shift);
+//
+//			transform.position -= Vector3.up * shift.y ;
+//		}
 	}
 		
 
@@ -158,7 +159,9 @@ public class PlayTone : MonoBehaviour {
 		sample = GetFirstnNotes (original_tone, delimeter,current_length);
 		yield return StartCoroutine(PlaySomeTone (sample,tones.GetDelimeter(), 0, current_length-gradient,true, isLastRepeat));
 		Camera.main.GetComponent<SceneVariables> ().GetRandomClapping ();
-		GameObject.Find (Camera.main.GetComponent<SceneVariables> ().playSound).GetComponent<HomeScreenButtons> ().SetHaloToggle(true);
+		if (consequtive_correct < Camera.main.GetComponent<SceneVariables> ().CONSECUTIVE_CORRECT_THRESHOLD) {
+			GameObject.Find (Camera.main.GetComponent<SceneVariables> ().playSound).GetComponent<HomeScreenButtons> ().SetHaloToggle (true);
+		}
 	}
 	public void HideSquares(){
 		GameObject[] keySquares = GameObject.FindGameObjectsWithTag (Camera.main.GetComponent<SceneVariables> ().SAMPLE_SQUARE_TAG);
@@ -227,6 +230,11 @@ public class PlayTone : MonoBehaviour {
 		DestroyCueSquares (Camera.main.GetComponent<SceneVariables> ().SAMPLE_SQUARE_TAG);
 		DestroyCueSquares (Camera.main.GetComponent<SceneVariables> ().KEY_SQUARE_TAG);
 		Camera.main.GetComponent<SceneVariables> ().DivideScreen ();
+		var reward_square = GameObject.FindGameObjectsWithTag (Camera.main.GetComponent<SceneVariables> ().REWARD_SQUARE_TAG)[0];
+		var reward_square_parent = GameObject.Find (Camera.main.GetComponent<SceneVariables> ().REWARD_SQUARE_PARENT);
+		var new_position = Shared_ScriptForGeneralFunctions.GetPointOnScreen(Camera.main.GetComponent<SceneVariables>().widthPercentageForRewardSquare, Camera.main.GetComponent<SceneVariables> ().heightPercentageForRewardSquare);
+		new_position.y += reward_square_parent.GetComponent<SpriteRenderer> ().bounds.size.y;
+		StartCoroutine(reward_square_parent.GetComponent<PG_RewardSquareParentBehavior> ().MoveToTarget (new_position));
 		SceneVariables.IS_USER_MODE = false;
 		PlayGame (current_length);
 	}
