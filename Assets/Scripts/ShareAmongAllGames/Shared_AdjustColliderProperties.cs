@@ -31,4 +31,15 @@ public class Shared_AdjustColliderProperties : MonoBehaviour {
 		}
 	}
 
+
+	public void SetColliderSize(Vector2 new_size){
+		if(GetComponent<BoxCollider2D>()){
+			GetComponent<BoxCollider2D>().size = new_size;
+			//				GetComponent<BoxCollider2D>().center = new Vector2 ((S.x / 2), 0);
+		}else if(GetComponent<CircleCollider2D>()){
+			GetComponent<CircleCollider2D>().radius = new_size.x/2;
+		}
+	}
+
+
 }

@@ -25,32 +25,25 @@ public class Scalling : MonoBehaviour {
 
 	IEnumerator Scale()
 	{
-		float timer = 0;
+		// we scale all axis, so they will have the same value, 
+		// so we can work with a float instead of comparing vectors
 
-
-			// we scale all axis, so they will have the same value, 
-			// so we can work with a float instead of comparing vectors
-
-			while(maxSize > transform.localScale.x)
-			{
-//				timer += Time.deltaTime;
-				transform.localScale += new Vector3(1, 1, 1) * Time.deltaTime * growFactor;
-				yield return null;
-			}
-			// reset the timer
+		while(maxSize > transform.localScale.x)
+		{
+			transform.localScale += new Vector3(1, 1, 1) * Time.deltaTime * growFactor;
+			yield return null;
+		}
+		// reset the timer
 
 //			yield return new WaitForSeconds(waitTime);
 
-			timer = 0;
-			while(minSize < transform.localScale.x)
-			{
-//				timer += Time.deltaTime;
-				transform.localScale -= new Vector3(1, 1, 1) * Time.deltaTime * growFactor;
-				yield return null;
-			}
+		while(minSize < transform.localScale.x)
+		{
+			transform.localScale -= new Vector3(1, 1, 1) * Time.deltaTime * growFactor;
+			yield return null;
+		}
 
-			timer = 0;
-			yield return new WaitForSeconds(waitTime);
+		yield return new WaitForSeconds(waitTime);
 		if (shouldScale) {
 			StartCoroutine (Scale ());
 		} else {

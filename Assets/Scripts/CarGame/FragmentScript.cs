@@ -6,7 +6,6 @@ public class FragmentScript : MonoBehaviour {
 
 	string targetRoot = "EndofRoad", pathRoot = "Fragment";
 	string targetName, pathName ;
-	float speed = 2;
 	static bool[] reached = new bool[]{false,false,false,false};
 	Transform destination;
 	Vector3 velocity = Vector3.zero, target;

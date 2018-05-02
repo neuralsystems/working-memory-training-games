@@ -16,7 +16,7 @@ public class FruitBehavior : MonoBehaviour {
 	Vector3 velocity = Vector3.zero; 
 	float smoothTime = .5f, minDistance = 0.01f;
 
-
+	Coroutine fall_from_tree;
 	public static float fadeInTime = 1.5f;
 	public static float fadeOutTime = 1.5f;
 	public static float delayToFadeOut = 2f;
@@ -25,9 +25,14 @@ public class FruitBehavior : MonoBehaviour {
 	public static float x_min= -20f;
 	public string ps = "BubbleBurst";
 
+	public AudioClip FRUIT_FALLING;
+	public bool hasCollide = false;
+	string original_layer;
+
 	void Start () {
 		original_position = transform.position;
 		original_size = transform.localScale;
+		original_layer = GetComponent<SpriteRenderer> ().sortingLayerName;
 //		StartCoroutine (FadeCycle());
 		fruitPath = Camera.main.GetComponent<BasketGame_SceneVariables>().GetPath ();
 	}
@@ -41,33 +46,41 @@ public class FruitBehavior : MonoBehaviour {
 
 	// change this function it is causing abnormal behavior
 	void DestroyWhenOutofLimit(){
-		if (transform.position.y <= lowerLimit || transform.position.x >= x_max || transform.position.x <= x_min) {
-			OnComplete ();
+		var lower_limit = Shared_ScriptForGeneralFunctions.GetPointOnScreen (-1, -1);
+		var upper_limit = Shared_ScriptForGeneralFunctions.GetPointOnScreen (2, 2);
+		if (transform.position.y <= lower_limit.y || transform.position.x >= upper_limit.x || transform.position.x <= lower_limit.x) {
+			if (tag == BasketGame_SceneVariables.fruitTag) {
+				StartCoroutine(MovetoOriginalPosition ());
+			}
 		}
 	}
 
 	public void OnComplete(){
 		
+
 		StartCoroutine(Camera.main.GetComponent<BasketGame_GameManager> ().MakeFruit ());
+		GetComponent<FruitBehavior> ().enabled = false;
 //		Destroy (gameObject);
 	}
 
 
 	public void StartFall(){
 //		GetComponent<Rigidbody2D> ().isKinematic = false;
-		StartCoroutine(Fall());
+
+		fall_from_tree = StartCoroutine(Fall());
 	}
 
 	public IEnumerator Fall(){
 //		transform.position = move
-	  	transform.Translate(Vector3.down * speed * Time.deltaTime, Space.World);
-		yield return null;
+		GetComponent<AudioSource>().PlayOneShot(FRUIT_FALLING);
 		GameObject bubble_gameobject = GameObject.FindGameObjectsWithTag (BasketGame_SceneVariables.bubbleTag)[0];
-		if (Mathf.Abs (transform.position.y - bubble_gameobject.transform.position.y) < 0.1f) {
-			bubble_gameobject.GetComponent<BasketGame_BubbleBehavior> ().MoveBubble (transform);
-		}else{
-			StartCoroutine(Fall ());
+		while (Mathf.Abs (transform.position.y - bubble_gameobject.transform.position.y) > 0.1f) {
+			transform.Translate(Vector3.down * speed * Time.deltaTime, Space.World);
+			yield return null;
+
 		}
+		bubble_gameobject.GetComponent<BasketGame_BubbleBehavior> ().MoveBubble (transform);
+		GetComponent<AudioSource> ().Stop ();
 	}
 
 	IEnumerator FadeCycle()
@@ -101,8 +114,9 @@ public class FruitBehavior : MonoBehaviour {
 //		}
 
 //		iTween.MoveTo(gameObject,iTween.Hash("path",iTweenPath.GetPath(fruitPath),"speed",speed,"easetype","linear","oncomplete","OnComplete"));
-		GetComponent<BasketGame_DetectTouch>().enabled = true;
-		GetComponent<CircleCollider2D> ().enabled = true;
+//		GetComponent<BasketGame_DetectTouch>().enabled = true;
+//		GetComponent<CircleCollider2D> ().enabled = true;
+		SetTouch(true);
 	}
 
 	public void Projectile(){
@@ -112,19 +126,18 @@ public class FruitBehavior : MonoBehaviour {
 	}
 
 	public IEnumerator AfterTrappedinBubble(){
+		
 		var path_speed = 20;
+		GetComponent<BasketGame_DetectTouch>().SetBoxCollider();
 		StartCoroutine(Shared_ScriptForGeneralFunctions.ScaleUp (gameObject, 1f, .3f));
 		iTween.MoveTo(gameObject,iTween.Hash("path",iTweenPath.GetPath(fruitPath),"speed",path_speed,"easetype","linear","oncomplete","MovetoOriginalPosition"));
 		yield return new WaitForSeconds (1f);
-		GetComponent<BasketGame_DetectTouch>().enabled = true;
-		GetComponent<CircleCollider2D> ().enabled = true;
+		SetTouch (true);
 	}
 
 	public IEnumerator MovetoOriginalPosition(){
 		
 		ResetProperties ();
-//		GetComponent<Rigidbody2D>().isKinematic = true;
-
 		StartCoroutine(MoveToTarget (original_position));
 		yield return StartCoroutine(Shared_ScriptForGeneralFunctions.ScaleDown (this.gameObject, original_size.x, 0.3f));
 
@@ -132,29 +145,54 @@ public class FruitBehavior : MonoBehaviour {
 	}
 
 
-	void ResetProperties(){
+	public void ResetProperties(){
+		if (hasCollide == true) {
+			hasCollide = false;
+		}
 		if (transform.childCount > 0) {
 			foreach (Transform child in transform) {
 				Destroy (child.gameObject);
 			}
 		}
+		GetComponent<SpriteRenderer> ().sortingLayerName = original_layer;
 		Destroy (GetComponent<Rigidbody2D>());
+		SetTouch (false);
 	}
 
 	public IEnumerator MoveToTarget ( Vector3 target)
 	{
-		if (Vector3.Distance (transform.position, target) > Mathf.Min(minDistance,0.0001f)) {
+		while(Vector3.Distance (transform.position, target) > Mathf.Min(minDistance,0.0001f)) {
 			//			Debug.Log ("first if");
 			transform.position = Vector3.SmoothDamp (transform.position, target, ref velocity, smoothTime);
 			yield return null;
 			//			yield return new WaitForSeconds(1f);
-			StartCoroutine (MoveToTarget (target));
-		} else {
-			transform.position = target;
+//			StartCoroutine (MoveToTarget (target));
+		} 
+//		else {
+		transform.position = target;
+		if (transform.position == original_position) {
 			tag = BasketGame_SceneVariables.hangingFruitTag;
-			OnComplete ();
+
 		}
+		OnComplete ();
+//		}
 
 
+	}
+
+
+	void SetTouch(bool value){
+		GetComponent<BasketGame_DetectTouch>().enabled = value;
+		GetComponent<CircleCollider2D> ().enabled = value;
+	}
+
+
+	public IEnumerator PlayGirlAnimation(){
+		yield return StartCoroutine(Camera.main.GetComponent<Shared_ScriptForGeneralFunctions>().GetRandomClapping());
+		StartCoroutine (Camera.main.GetComponent<BasketGame_GameManager> ().MakeFruit ());
+	}
+
+	public bool HasCollided(){
+		return hasCollide;
 	}
 }

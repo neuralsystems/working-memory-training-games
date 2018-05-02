@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CueBehavior : MonoBehaviour {
 
-	float waitTime = .1f;
 	public float speed = 1f;
 	public Vector3 velocity = Vector3.zero, original_position;
 	public float smoothTime = .5f;

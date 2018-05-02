@@ -127,6 +127,7 @@ public class KeySquareBehavior : MonoBehaviour
 				transform.localScale = rewardTile.transform.localScale;
 				transform.parent = rewardTile.transform;
 				tag = Camera.main.GetComponent<SceneVariables> ().REWARD_SQUARE_CHILD_TAG;
+				GetComponentInParent<ParticleSystem> ().Play ();
 				if (shouldCall) {
 					Camera.main.GetComponent<PlayTone> ().CheckOnComplete ();
 				}

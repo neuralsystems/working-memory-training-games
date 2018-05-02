@@ -19,14 +19,7 @@ public class AlignedBasketBehavior : MonoBehaviour {
 
 	public void MoveToList(){
 		target = GameObject.Find (BasketGame_SceneVariables.targetObject).transform.position; 
-		StartCoroutine (MoveBasket ());
 	}
 
-	public IEnumerator MoveBasket(){
-		transform.position = Vector3.SmoothDamp (transform.position, target, ref velocity, smoothTime);
-		yield return new WaitForSeconds (Time.deltaTime);
-		if (transform.position != target) {
-			StartCoroutine (MoveBasket ());
-		}
-	}
+
 }

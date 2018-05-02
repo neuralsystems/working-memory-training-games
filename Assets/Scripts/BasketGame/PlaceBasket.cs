@@ -14,7 +14,6 @@ public class PlaceBasket : MonoBehaviour {
 		var numOfBaskets = 4;
 		PlaceNBaskets (numOfBaskets);
 
-		int i = 0;
 //		GameObject[] baskets = GameObject.FindGameObjectsWithTag (BasketGame_SceneVariables.basketTag);
 //		var isOutlined = "WithoutOutline/";
 //		foreach (GameObject basket in baskets) {
@@ -37,6 +36,7 @@ public class PlaceBasket : MonoBehaviour {
 	public void PlaceNBaskets(int n){
 //		n += 1;
 		string[] basketArray = BasketGame_SceneVariables.GetBaskets (n);
+		Debug.Log ("basketArray[0] "+basketArray[0]);
 		float height_percentage = .00f, width_percentage = 1f, left_margin = .2f, right_margin = 0.05f;
 		var percent_for_one_object = (width_percentage - left_margin - right_margin) / (n +1);
 		var max_allowed_size = 1f;
@@ -46,21 +46,20 @@ public class PlaceBasket : MonoBehaviour {
 			var basket_gameobject = Instantiate (Basket_Prefab, position_for_parking_slot, Quaternion.identity);
 //			option_tile_gameobject.transform.parent = PARKING_SLOT_PARENT_GAMEOBJECT.transform;
 			basket_gameobject.GetComponent<SpriteRenderer> ().sprite = Resources.Load (BasketGame_SceneVariables.Game_Name+ "/" + Camera.main.GetComponent<BasketGame_SceneVariables>().GetBasketFolderName() + basketArray [i], typeof(Sprite)) as Sprite;;
-			basket_gameobject.GetComponent<BasketBehavior> ().basketName = basketArray [i];
-			//			var local_scale_for_one_object = (Screen.width * percent_for_one_object * option_tile_gameobject.transform.localScale.x)/ (option_tile_gameobject.GetComponent<SpriteRenderer>().bounds.size.x * option_tile_gameobject.GetComponent<SpriteRenderer>().sprite.pixelsPerUnit);
+			var basketName = basketArray [i];
 			var local_scale_for_one_object = (length_span * basket_gameobject.transform.localScale.x )/ (basket_gameobject.GetComponent<SpriteRenderer>().bounds.size.x  );
 			local_scale_for_one_object = Mathf.Min (local_scale_for_one_object, max_allowed_size);
-//			Debug.Log(local_scale_for_one_object + "local_scale_for_one_object");
-			basket_gameobject.transform.localScale = new Vector3 (local_scale_for_one_object,local_scale_for_one_object,local_scale_for_one_object);
-			basket_gameobject.tag = BasketGame_SceneVariables.basketTag;
-//			Debug.Log ("basket color set");
+			var _scale = new Vector3 (local_scale_for_one_object,local_scale_for_one_object,local_scale_for_one_object);
+			var _tag = BasketGame_SceneVariables.basketTag;
 			basket_gameobject.GetComponent<BasketBehavior> ().enabled = true;
-			position_for_parking_slot.x -= basket_gameobject.GetComponent<SpriteRenderer>().sprite.bounds.size.x * basket_gameobject.transform.localScale.x;
+//			var _position = position_for_parking_slot;
+//			basket_gameobject.GetComponent<BasketBehavior> ().SetUpBasketProperties (basketName, _scale, _position, _tag);
+			position_for_parking_slot.x -= basket_gameobject.GetComponent<SpriteRenderer>().sprite.bounds.size.x * _scale.x;
 			if (i == 0) {
-//				Debug.Log ("option_tile_gameobject.GetComponent<SpriteRenderer> ().sprite.bounds.size.y " + basket_gameobject.GetComponent<SpriteRenderer> ().sprite.bounds.size.y);
 				position_for_parking_slot.y += basket_gameobject.GetComponent<SpriteRenderer> ().sprite.bounds.size.y/2;
 			}
-			basket_gameobject.transform.position = position_for_parking_slot;
+			var _position = position_for_parking_slot;
+			basket_gameobject.GetComponent<BasketBehavior> ().SetUpBasketProperties (basketName, _scale, _position, _tag);
 			position_for_parking_slot.x -= length_span * .1f;
 		}
 //		StartCoroutine(MoveObjectsOutOfParking(1));

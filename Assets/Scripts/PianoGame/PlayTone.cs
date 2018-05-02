@@ -158,7 +158,7 @@ public class PlayTone : MonoBehaviour {
 		string delimeter = tones.GetDelimeter ();
 		sample = GetFirstnNotes (original_tone, delimeter,current_length);
 		yield return StartCoroutine(PlaySomeTone (sample,tones.GetDelimeter(), 0, current_length-gradient,true, isLastRepeat));
-		Camera.main.GetComponent<SceneVariables> ().GetRandomClapping ();
+//		Camera.main.GetComponent<SceneVariables> ().GetRandomClapping ();
 		if (consequtive_correct < Camera.main.GetComponent<SceneVariables> ().CONSECUTIVE_CORRECT_THRESHOLD) {
 			GameObject.Find (Camera.main.GetComponent<SceneVariables> ().playSound).GetComponent<HomeScreenButtons> ().SetHaloToggle (true);
 		}

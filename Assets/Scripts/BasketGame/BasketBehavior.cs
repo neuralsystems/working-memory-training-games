@@ -19,19 +19,28 @@ public class BasketBehavior : MonoBehaviour {
 	void Start () {
 //		capacity = Camera.main.GetComponent<Scenevariables>().basketCapacity;
 //		originalPosition = transform.position;
+
+
+	}
+
+	public string GetBasketName(){
+		return basketName;
+	}
+
+	public void SetUpBasketProperties(string name, Vector3 scale, Vector3 basket_pos, string basket_tag) {
 		rotationHeight = GetRotationHeight ();
 		lowerBound = Camera.main.GetComponent<BasketGame_SceneVariables> ().GetPointOnScreen (0, 0).y;
-//		Debug.Log ("lower bound is: "+ lowerBound);
 		lowerBound -= GetComponent<SpriteRenderer> ().bounds.size.y / 2;
-//		Debug.Log ("lower bound is: "+ lowerBound);
 		foreach (Transform child in transform) {
 			child.gameObject.transform.localScale = new Vector3 (.4f, .4f, 1f);
 		}
 		num_of_fruits = 3f;
 		reduce_height_by = (transform.position.y - lowerBound) / num_of_fruits;
-
+		tag = basket_tag;
+		GetComponent<BasketBehavior> ().basketName = name;
+		transform.localScale = scale;
+		transform.position = basket_pos;
 	}
-	
 	// Update is called once per frame
 	void Update () {
 		
@@ -45,57 +54,63 @@ public class BasketBehavior : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D collision){
-//		Debug.Log ("till this point ");
-//		Debug.Log (collision.gameObject.GetComponent<FruitBehavior>().fruitName);
-		if (collision.gameObject.tag == BasketGame_SceneVariables.fruitTag) {
-			Debug.Log (basketName);
+		
+		if (collision.gameObject.tag == BasketGame_SceneVariables.fruitTag && (!collision.gameObject.GetComponent<FruitBehavior> ().hasCollide)) {
+			Debug.Log("Collision with: "+ basketName);
+//			if (collision.gameObject.GetComponent<FruitBehavior> ().hasCollide == false) {
+			collision.gameObject.GetComponent<FruitBehavior> ().hasCollide = true;
 			var fruitList = Camera.main.GetComponent<BasketGame_SceneVariables> ().objectColorMap [basketName];
 
 			if (fruitList.Contains (collision.gameObject.GetComponent<FruitBehavior> ().fruitName)) {
 
-
 				GetComponent<ParticleSystem> ().Play ();
 				currentIns += 1;
-//				Debug.Log (basketName + " " + currentIns);
+				//				Debug.Log (basketName + " " + currentIns);
 				transform.GetChild (currentIns - 1).GetComponent<SpriteRenderer> ().sprite = collision.gameObject.GetComponent<SpriteRenderer> ().sprite;
-//				
+				//				
 
-				collision.gameObject.GetComponent<CircleCollider2D>().enabled = false;
+				collision.gameObject.GetComponent<CircleCollider2D> ().enabled = false;
 				GameObject[] gos = GameObject.FindGameObjectsWithTag (BasketGame_SceneVariables.basketTag);
 
-				Destroy (collision.gameObject);
+				collision.gameObject.transform.position = transform.GetChild (currentIns - 1).transform.position;
+				collision.gameObject.transform.parent = transform.GetChild (currentIns - 1).transform;
+				collision.gameObject.transform.localScale = collision.gameObject.transform.parent.localScale;
+				collision.gameObject.tag = BasketGame_SceneVariables.inBasketFruitTag;
+				collision.gameObject.GetComponent<FruitBehavior> ().ResetProperties ();
+
 				foreach (GameObject g in gos) {
-//					Debug.Log ("in loop " + g.transform.localPosition.y );
-					if (Mathf.Abs(g.transform.position.y - lowerBound) > BasketGame_SceneVariables.minDistance) {
+					//					Debug.Log ("in loop " + g.transform.localPosition.y );
+					if (Mathf.Abs (g.transform.position.y - lowerBound) > BasketGame_SceneVariables.minDistance) {
 						Debug.Log ("in if");
 						var x = g.transform.position;
 						Debug.Log (g.transform.localPosition);
-						g.transform.position = new Vector3 (x.x, x.y - reduce_height_by , x.z);
+						g.transform.position = new Vector3 (x.x, x.y - reduce_height_by, x.z);
 						Debug.Log (g.transform.position);
 
 					} 
 				}
 				originalPosition = transform.position;
-//				Debug.Log ("distance from lower bound " + Mathf.Abs (transform.position.y - lowerBound));
-				if (Mathf.Abs(transform.position.y - lowerBound) < BasketGame_SceneVariables.minDistance) {
-					Destroy (collision.gameObject);
-					var BasketLauncher = GameObject.Find("RocketLaunch");
-					BasketLauncher.transform.position = transform.position;
-					BasketLauncher.transform.parent = transform;
-					BasketLauncher.GetComponent<ParticleSystem>().Play();
-					BaksetAnimation ();
+				//				Debug.Log ("distance from lower bound " + Mathf.Abs (transform.position.y - lowerBound));
+				if (Mathf.Abs (transform.position.y - lowerBound) < BasketGame_SceneVariables.minDistance) {
+					//					Destroy (collision.gameObject);
+					StartCoroutine (BaksetAnimation ());
+					StartCoroutine (collision.gameObject.GetComponent<FruitBehavior> ().PlayGirlAnimation ());
 				} else {
 					collision.gameObject.GetComponent<FruitBehavior> ().OnComplete ();
+				}
+				if (capacity <= currentIns) {
+					tag = BasketGame_SceneVariables.fullBasket;
+					//					Camera.main.GetComponent<BasketGame_GameManager> ().BasketFilled();
+					if (GameObject.FindGameObjectsWithTag (BasketGame_SceneVariables.hangingFruitTag).Length == 0) {
+						Camera.main.GetComponent<BasketGame_GameManager> ().FinalAnimation ();
+					}
 				}
 
 			} else {
 				collision.gameObject.GetComponent<FruitBehavior> ().Projectile ();
-			}
-			if (capacity <= currentIns) {
-				tag = BasketGame_SceneVariables.fullBasket;
-				Camera.main.GetComponent<BasketGame_GameManager> ().BasketFilled();
+			} 
 
-			}
+//			}
 		}
 
 
@@ -104,29 +119,34 @@ public class BasketBehavior : MonoBehaviour {
 		return capacity > currentIns;
 	}
 
-	public void BaksetAnimation(){
-		StartCoroutine (MoveBasket (new Vector3 (transform.position.x, rotationHeight, transform.position.z)));
+	public IEnumerator BaksetAnimation(){
+//		yield return 
+		yield return StartCoroutine (MoveBasket (new Vector3 (transform.position.x, rotationHeight, transform.position.z)));
+//		foreach (Transform fruit in transform) {
+//			
+//		}
 	}
 
 	IEnumerator MoveBasket(Vector3 target){
-		if ((Vector3.Distance (transform.position, target) > BasketGame_SceneVariables.minDistance) && spaceLeft()) {
+		while ((Vector3.Distance (transform.position, target) > BasketGame_SceneVariables.minDistance) && spaceLeft()) {
 			//			Debug.Log ("first if");
 			transform.position = Vector3.SmoothDamp (transform.position, target, ref velocity, smoothTime);
 			yield return null;
-			StartCoroutine (MoveBasket (target));
-		} else {
-			transform.position = target;
-//			Debug.Log (transform.position.y + " " + rotationHeight + " "+ (transform.position.y - rotationHeight ));
-			if (Mathf.Abs (transform.position.y - rotationHeight) < .001f) {
-//				Debug.Log ("start rotating the basket..");
-				StartCoroutine (RotateMe (Vector3.forward * 355 * numOfRounds, inTime));
-			} else {
-				if (tag == BasketGame_SceneVariables.basketTag) {
-//					Debug.Log ("called make fruit from a basket");
-					StartCoroutine (Camera.main.GetComponent<BasketGame_GameManager> ().MakeFruit ());
-				}
-			}
+//			StartCoroutine (MoveBasket (target));
 		}
+//		else {
+		transform.position = target;
+//			Debug.Log (transform.position.y + " " + rotationHeight + " "+ (transform.position.y - rotationHeight ));
+		if (Mathf.Abs (transform.position.y - rotationHeight) < .001f) {
+//				Debug.Log ("start rotating the basket..");
+			StartCoroutine (RotateMe (Vector3.forward * 355 * numOfRounds, inTime));
+		} else {
+//			if (tag == BasketGame_SceneVariables.basketTag) {
+////					Debug.Log ("called make fruit from a basket");
+//
+//			}
+		}
+//		}
 	}
 
 	IEnumerator RotateMe(Vector3 byAngles, float inTime) {

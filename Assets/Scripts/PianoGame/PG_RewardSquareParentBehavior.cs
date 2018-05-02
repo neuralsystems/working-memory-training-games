@@ -7,6 +7,7 @@ public class PG_RewardSquareParentBehavior : MonoBehaviour {
 	public float smoothTime = .0050F;
 	private Vector3 velocity = Vector3.zero;
 	Vector3 original_position;
+	Coroutine scroll_movement;
 	// Use this for initialization
 	void Start () {
 		original_position = transform.position;
@@ -37,5 +38,22 @@ public class PG_RewardSquareParentBehavior : MonoBehaviour {
 
 	public void ResetPosition(){
 		StartCoroutine(MoveToTarget(original_position));
+	}
+
+	public void ScrollRewardSquares(bool direction){
+		var target = original_position;
+		// right swipe
+		if (direction) {
+			var last_square_gameobject = transform.GetChild(transform.childCount);
+//			if(last_square_gameobject.x > Shared_ScriptForGeneralFunctions.GetPointOnScreen(
+
+		} else {
+			
+		}
+		scroll_movement = StartCoroutine(MoveToTarget(target));
+	}
+
+	public void OnMouseDown(){
+		StopCoroutine (scroll_movement);
 	}
 }

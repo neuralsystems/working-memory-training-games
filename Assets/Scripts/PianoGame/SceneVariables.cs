@@ -155,11 +155,13 @@ public class SceneVariables : MonoBehaviour {
 
 	}
 
-	public void ShowRewardSquares(){
+	public IEnumerator ShowRewardSquares(){
 		var userSquares = GameObject.FindGameObjectsWithTag (USER_INPUT_SQUARE_TAG);
 		var x = REWARD_INDEX;
 		var reward_square_parent_object = GameObject.Find (REWARD_SQUARE_PARENT);
 		int last = userSquares.Length - 1;
+
+		yield return GetRandomClapping();
 		for(int i=0;i<=last;i++){
 //		foreach (var userSquare in userSquares) {
 			userSquares[i].transform.parent = null;
@@ -171,7 +173,6 @@ public class SceneVariables : MonoBehaviour {
 			
 			x++;
 		}
-
 		REWARD_INDEX += 1;
 		GameObject.Find (USER_INPUT_SQUARE_PARENT).GetComponent<PianoGame_UserInputSquareParentBehavior> ().ResetPosition ();
 	}
@@ -181,7 +182,7 @@ public class SceneVariables : MonoBehaviour {
 		foreach (var sample_square in sample_squares) {
 			sample_square.GetComponent<KeySquareBehavior> ().ResetSquare ();
 		}
-		ShowRewardSquares ();
+		StartCoroutine(ShowRewardSquares ());
 	}
 	public void Reset(){
 		REWARD_INDEX = 0;
@@ -190,9 +191,10 @@ public class SceneVariables : MonoBehaviour {
 		GameObject.Find (REWARD_SQUARE_PARENT).transform.position = GetPointOnScreen (widthPercentageForRewardSquare, heightPercentageForRewardSquare);
 	}
 
-	public void GetRandomClapping(){
+	public IEnumerator GetRandomClapping(){
 		var r_x = Random.Range (0, Audio_Clips.Length);
 		GetComponent<AudioSource> ().PlayOneShot(Audio_Clips [r_x]);
+		yield return new WaitForSeconds (Audio_Clips [r_x].length); 
 	}
 
 

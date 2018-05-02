@@ -5,7 +5,7 @@ using System.Linq;
 public class BasketGame_SceneVariables : MonoBehaviour {
 
 	public const string Game_Name = "BasketGame";
-	public static string basketTag = "BasketTag", fruitTag ="FruitTag", fullBasket = "FullBasketTag", bubbleTag = "BubbleTag", hangingFruitTag = "HangingFruitTag";
+	public static string basketTag = "BasketTag", fruitTag ="FruitTag", fullBasket = "FullBasketTag", bubbleTag = "BubbleTag", hangingFruitTag = "HangingFruitTag", inBasketFruitTag = "InBasketFruitTag";
 	public string RAIN_PARTICLE_SYSTEM_TAG = "RainParticleSystemTag";
 	public static Vector3 initVector = new Vector3(-5.6f,-1.5f,0f);
 	public int basketCapacity = 15; 				// max number of fruit in a basket
@@ -65,14 +65,14 @@ public class BasketGame_SceneVariables : MonoBehaviour {
 
 	public static string[] GetBaskets(int n){
 //		RandomizingArray ra = new RandomizingArray ();
-		List <string> localBaskets = new List<string>();
-//		localBaskets = ra.RandomizeStrings (baskets);
-		localBaskets = baskets.ToList();
+		List <string> localBaskets = RandomizingArray.RandomizeStrings(baskets);
+////		localBaskets = ra.RandomizeStrings (baskets);
+//		localBaskets = baskets.ToList();
 		string[] localBasktetsArray = new string[n];
 		for (int i = 0; i < n; i++) {
 			localBasktetsArray [i] = localBaskets [i];
 		}
-		return RandomizingArray.RandomizeStrings(localBasktetsArray).ToArray();
+		return localBasktetsArray;
 	}
 
 	public string GetFruitFolderName(){
@@ -113,7 +113,7 @@ public class BasketGame_SceneVariables : MonoBehaviour {
 		List <string> emptyBaskets = new List <string> {};
 		foreach (GameObject g in go) {
 			if (g.GetComponent<BasketBehavior> ().spaceLeft ()) {
-				emptyBaskets.Add (g.GetComponent<BasketBehavior> ().basketName);
+				emptyBaskets.Add (g.GetComponent<BasketBehavior> ().GetBasketName());
 			}
 //			Debug.Log (g.GetComponent<BasketBehavior> ().basketName);
 		}

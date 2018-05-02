@@ -105,7 +105,6 @@ public class CarGame_GameManager : MonoBehaviour {
 		int width = Mathf.FloorToInt( cueTile.GetComponent<SpriteRenderer>().sprite.rect.width );
 		int height = Mathf.FloorToInt( cueTile.GetComponent<SpriteRenderer>().sprite.rect.height );
 
-		int partNumber = 0;
 		int k = 0;
 		for(int i = 0; i < width/size; i++)
 		{

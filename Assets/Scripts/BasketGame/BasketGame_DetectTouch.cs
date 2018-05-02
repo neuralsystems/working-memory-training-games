@@ -34,13 +34,21 @@ public class BasketGame_DetectTouch : MonoBehaviour {
 //		Destroy (this.gameObject);
 //		GetComponent<Rigidbody2D>().isKinematic = true;
 		gameObject.AddComponent<Rigidbody2D>();
-		GetComponent<SpriteRenderer>().sortingLayerName = "Game";
+//		GetComponent<SpriteRenderer>().sortingLayerName = "Game";
 		foreach (Transform child in gameObject.transform) {
 			
 			Destroy (child.gameObject);
 		}
 		GetComponent<ParticleSystem> ().Play();
 		iTween.Stop (gameObject);
+		SetBoxCollider (.2f);
 //		StartCoroutine(GetComponent<FruitBehavior> ().Fall ());
+	}
+
+	public void SetBoxCollider(float percent = 1f){
+		Vector2 s = GetComponent<SpriteRenderer> ().bounds.size;
+		s.x *= percent;
+		s.y *= percent;
+		GetComponent<CircleCollider2D>().radius = s.x;
 	}
 }
