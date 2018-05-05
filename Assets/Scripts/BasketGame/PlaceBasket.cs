@@ -8,22 +8,15 @@ using UnityEngine.UI;
 public class PlaceBasket : MonoBehaviour {
 
 	public Transform Basket_Prefab;
-
+	public GameObject persistent_go;
+	int capacity;
 	// Use this for initialization
 	void Start () {
-		var numOfBaskets = 4;
-		PlaceNBaskets (numOfBaskets);
-
-//		GameObject[] baskets = GameObject.FindGameObjectsWithTag (BasketGame_SceneVariables.basketTag);
-//		var isOutlined = "WithoutOutline/";
-//		foreach (GameObject basket in baskets) {
-//			basket.GetComponent<SpriteRenderer> ().sprite = Resources.Load (BasketGame_SceneVariables.Game_Name+ "/" + Camera.main.GetComponent<BasketGame_SceneVariables>().GetBasketFolderName() + basketArray [i], typeof(Sprite)) as Sprite;
-//			basket.GetComponent<BasketBehavior> ().basketName = basketArray[i];
-//			basket.GetComponent<BasketBehavior>().lowerBound -= basket.GetComponent<SpriteRenderer> ().bounds.size.y;
-//			i++;
-//		}
-
-
+		persistent_go = GameObject.Find ("PersistentGameObject");
+		var level_details = persistent_go.GetComponent<Shared_PersistentScript> ().GetNewLevelDetails ();
+		capacity = level_details.GetCapacity ();
+		PlaceNBaskets (level_details.GetNumofBaskets());
+		Debug.Log(capacity);
 	}
 		
 	// Update is called once per frame
@@ -59,11 +52,11 @@ public class PlaceBasket : MonoBehaviour {
 				position_for_parking_slot.y += basket_gameobject.GetComponent<SpriteRenderer> ().sprite.bounds.size.y/2;
 			}
 			var _position = position_for_parking_slot;
-			basket_gameobject.GetComponent<BasketBehavior> ().SetUpBasketProperties (basketName, _scale, _position, _tag);
+			basket_gameobject.GetComponent<BasketBehavior> ().SetUpBasketProperties (basketName, _scale, _position, _tag, capacity);
 			position_for_parking_slot.x -= length_span * .1f;
 		}
 //		StartCoroutine(MoveObjectsOutOfParking(1));
 //		StartCoroutine(Camera.main.GetComponent<BasketGame_GameManager>().MakeFruit());
-		Camera.main.GetComponent<BasketGame_GameManager>().HangFruitOnTree();
+		StartCoroutine(Camera.main.GetComponent<BasketGame_GameManager>().HangFruitOnTree());
 	}
 }

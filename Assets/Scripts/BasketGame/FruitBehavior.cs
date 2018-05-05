@@ -24,16 +24,14 @@ public class FruitBehavior : MonoBehaviour {
 	public static float x_max = 20f;
 	public static float x_min= -20f;
 	public string ps = "BubbleBurst";
-
+	public GameObject girl;
 	public AudioClip FRUIT_FALLING;
 	public bool hasCollide = false;
 	string original_layer;
 
 	void Start () {
-		original_position = transform.position;
-		original_size = transform.localScale;
-		original_layer = GetComponent<SpriteRenderer> ().sortingLayerName;
-//		StartCoroutine (FadeCycle());
+		
+		StartCoroutine (FadeCycle());
 		fruitPath = Camera.main.GetComponent<BasketGame_SceneVariables>().GetPath ();
 	}
 	
@@ -42,7 +40,11 @@ public class FruitBehavior : MonoBehaviour {
 		DestroyWhenOutofLimit ();
 	}
 
-
+	public void SetUp(){
+		original_position = transform.position;
+		original_size = transform.localScale;
+		original_layer = GetComponent<SpriteRenderer> ().sortingLayerName;
+	}
 
 	// change this function it is causing abnormal behavior
 	void DestroyWhenOutofLimit(){
@@ -59,7 +61,7 @@ public class FruitBehavior : MonoBehaviour {
 		
 
 		StartCoroutine(Camera.main.GetComponent<BasketGame_GameManager> ().MakeFruit ());
-		GetComponent<FruitBehavior> ().enabled = false;
+//		GetComponent<FruitBehavior> ().enabled = false;
 //		Destroy (gameObject);
 	}
 
@@ -116,7 +118,7 @@ public class FruitBehavior : MonoBehaviour {
 //		iTween.MoveTo(gameObject,iTween.Hash("path",iTweenPath.GetPath(fruitPath),"speed",speed,"easetype","linear","oncomplete","OnComplete"));
 //		GetComponent<BasketGame_DetectTouch>().enabled = true;
 //		GetComponent<CircleCollider2D> ().enabled = true;
-		SetTouch(true);
+//		SetTouch(true);
 	}
 
 	public void Projectile(){
@@ -149,6 +151,8 @@ public class FruitBehavior : MonoBehaviour {
 		if (hasCollide == true) {
 			hasCollide = false;
 		}
+//		transform.parent = null;
+//		transform.localScale = original_size;
 		if (transform.childCount > 0) {
 			foreach (Transform child in transform) {
 				Destroy (child.gameObject);
@@ -187,12 +191,22 @@ public class FruitBehavior : MonoBehaviour {
 	}
 
 
-	public IEnumerator PlayGirlAnimation(){
-		yield return StartCoroutine(Camera.main.GetComponent<Shared_ScriptForGeneralFunctions>().GetRandomClapping());
-		StartCoroutine (Camera.main.GetComponent<BasketGame_GameManager> ().MakeFruit ());
-	}
+
 
 	public bool HasCollided(){
 		return hasCollide;
+	}
+
+	public IEnumerator EatFruit(){
+		Debug.Log ("Eating fruits");
+		transform.parent = null;
+		girl = GameObject.Find ("Girl");
+		var target = girl.transform.position;
+		while(Vector3.Distance (transform.position, target) > Mathf.Min(minDistance,0.0001f)) {
+			//			Debug.Log ("first if");
+			transform.position = Vector3.SmoothDamp (transform.position, target, ref velocity, smoothTime);
+			yield return null;
+		}
+		Destroy (gameObject);
 	}
 }

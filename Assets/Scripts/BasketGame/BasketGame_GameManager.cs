@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.SceneManagement;
 public class BasketGame_GameManager : MonoBehaviour {
 
 	public Transform fruitprefab, alignedBasket, bubbleprefab;
 	public bool replaceBasket = false;
 	Vector3 positionForNewBasket;
 	public ParticleSystem rain_particlesystem_object;
+	public GameObject Girl, persistent_go;
 	// Use this for initialization
 	void Start () {
 		
@@ -42,8 +44,8 @@ public class BasketGame_GameManager : MonoBehaviour {
 				int x = Random.Range (0, random_fruit_array.Length);
 				var random_fruit = random_fruit_array [x];
 				random_fruit.tag = BasketGame_SceneVariables.fruitTag;
-				random_fruit.GetComponent<FruitBehavior> ().enabled = true;
-				var init_position = GameObject.Find ("BubbleBurst").transform.position;
+				random_fruit.GetComponent<FruitBehavior> ().SetUp();
+				var init_position = Girl.gameObject.transform.position;
 				var bubble_gameobject = Instantiate (bubbleprefab, init_position, Quaternion.identity);
 				//		bubble_gameobject.GetComponent<BasketGame_BubbleBehavior> ().MoveBubble (random_fruit.transform.position);
 				random_fruit.GetComponent<FruitBehavior> ().StartFall ();
@@ -51,6 +53,9 @@ public class BasketGame_GameManager : MonoBehaviour {
 			} else {
 				rain_particlesystem_object.Play ();
 				yield return new WaitForSeconds(rain_particlesystem_object.main.duration);
+				persistent_go = GameObject.Find ("PersistentGameObject");
+				persistent_go.GetComponent<Shared_PersistentScript>().IncreaseLevel();
+				SceneManager.LoadScene (SceneManager.GetActiveScene().name);
 			}
 
 	}
@@ -84,8 +89,8 @@ public class BasketGame_GameManager : MonoBehaviour {
 		
 	}
 
-	public void HangFruitOnTree(){
-		Debug.Log ("yo wass up?");
+	public IEnumerator HangFruitOnTree(){
+//		Debug.Log ("yo wass up?");
 		float max_height_percentage = .98f, min_height_percentage = 0.5f;
 		float max_width_percentage = .25f, min_width_percentage = 0.10f;
 		var all_baskets = GameObject.FindGameObjectsWithTag (BasketGame_SceneVariables.basketTag);
@@ -102,7 +107,41 @@ public class BasketGame_GameManager : MonoBehaviour {
 				fruit_gameobject.GetComponent<FruitBehavior> ().original_position = spawn_position;
 			}
 		}
+		yield return new WaitForSeconds (3f);
 		StartCoroutine(MakeFruit());
 	}
 
+	public IEnumerator PlayGirlAnimation(){
+		var value_for_play = 1; 
+		var value_for_pause = 2;
+		Girl.GetComponent<Animator>().SetInteger("StateValue", value_for_play);
+		yield return StartCoroutine(Camera.main.GetComponent<Shared_ScriptForGeneralFunctions>().GetRandomClapping());
+		Girl.GetComponent<Animator>().SetInteger("StateValue", value_for_pause);
+		yield return new WaitForSeconds (.5f);
+		StartCoroutine (MakeFruit ());
+	}
+
+	public IEnumerator EmptyBasket(){
+		var value_for_play_from_Stand = 1; 
+		var value_for_play_from_Clap = 4; 
+		var value_for_pause = 6;
+		var state_stand = "Stand";
+		var state_clap = "Clap";
+		var variable_name = "StateValue";
+		if (Girl.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName (state_stand)) {
+			Debug.Log ("State is "+ state_stand);
+			Girl.GetComponent<Animator> ().SetInteger (variable_name, value_for_play_from_Stand);
+		} else if (Girl.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName (state_clap)) {
+			Debug.Log ("State is "+ state_clap);
+			Girl.GetComponent<Animator> ().SetInteger (variable_name, value_for_play_from_Clap);
+		}
+		foreach (Transform slot in transform) {
+			foreach (Transform fruit in slot.transform) {
+				StartCoroutine(fruit.GetComponent<FruitBehavior> ().EatFruit ());
+				yield return new WaitForSeconds (.1f);
+			}
+		}
+//		Girl.GetComponent<Animator> ().SetInteger (variable_name, value_for_pause);
+
+	}
 }
