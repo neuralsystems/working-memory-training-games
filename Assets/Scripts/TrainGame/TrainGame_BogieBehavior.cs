@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class TrainGame_BogieBehavior : MonoBehaviour {
 	Vector3 velocity = Vector3.zero;
 	public Vector3 original_position; 
-	float smoothTime = .5f, minDistance = 0.01f;
+	float smoothTime = .5f, minDistance = 0.1f;
 	string original_tag ;
+	public GameObject BLOCK_TRAIN;
 	// Use this for initialization
 	void Start () {
 		// initial tag to be set
@@ -24,13 +25,18 @@ public class TrainGame_BogieBehavior : MonoBehaviour {
 	public IEnumerator MoveToTarget ( Vector3 target)
 	{
 		
-		while(Vector3.Distance (transform.position, target) > Mathf.Min(minDistance,0.0001f)) {
+		while(Vector3.Distance (transform.position, target) > Mathf.Min(minDistance,0.1f)) {
 			transform.position = Vector3.SmoothDamp (transform.position, target, ref velocity, smoothTime);
 			yield return null;
 		}
 		transform.position = target;
 		if (target == original_position) {
 			tag = original_tag;
+			var unattached_bogies = GameObject.FindGameObjectsWithTag (TrainGame_SceneVariables.BOGIE_TAG);
+			if (unattached_bogies.Length == 0) {
+				StartCoroutine(Camera.main.GetComponent<TrainGame_GameManager> ().BlockAndRandomize ());
+
+			}
 		}
 
 	}
@@ -66,13 +72,13 @@ public class TrainGame_BogieBehavior : MonoBehaviour {
 		var target = Shared_ScriptForGeneralFunctions.GetPointOnScreen (1.2f, 0f);
 		target.y = transform.position.y;
 //		StartCoroutine (MoveToTarget (target));
-		while (Vector3.Distance (transform.position, target) > Mathf.Min (minDistance, 0.0001f)) {
+		while (Vector3.Distance (transform.position, target) > Mathf.Min (minDistance, 0.1f)) {
 			transform.position = Vector3.SmoothDamp (transform.position, target, ref velocity, smoothTime);
 			yield return null;
 		}
 		transform.position = new Vector3 (transform.position.x, original_position.y, transform.position.z);
 		target = original_position;
-		while (Vector3.Distance (transform.position, target) > Mathf.Min (minDistance, 0.0001f)) {
+		while (Vector3.Distance (transform.position, target) > Mathf.Min (minDistance, 0.1f)) {
 			transform.position = Vector3.SmoothDamp (transform.position, target, ref velocity, smoothTime);
 			yield return null;
 		}
@@ -83,11 +89,16 @@ public class TrainGame_BogieBehavior : MonoBehaviour {
 
 		} else{
 			// code if it is a correct match
-			tag = TrainGame_SceneVariables.ATTACHED_BOGIE_TAG;
+			tag = original_tag;
 			yield return null;
-			foreach (Transform bogie in transform.parent) {
-				if (bogie.tag == TrainGame_SceneVariables.BOGIE_TAG) {
+			var unattached_bogies = GameObject.FindGameObjectsWithTag (TrainGame_SceneVariables.BOGIE_TAG);
+			if (unattached_bogies.Length == 0) {
+				SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+			} else{
+				foreach (var bogie in unattached_bogies) {
+//				if (bogie.tag == TrainGame_SceneVariables.BOGIE_TAG) {
 					StartCoroutine (bogie.GetComponent<TrainGame_BogieBehavior> ().SetTouch (true));
+//				}
 				}
 			}
 		}
@@ -101,6 +112,10 @@ public class TrainGame_BogieBehavior : MonoBehaviour {
 	}
 
 	bool correctMatch(){
-		return 1 != 1;
+		return 1 == 1;
+	}
+
+	public bool OnOriginalPosition(){
+		return transform.position == original_position;
 	}
 }

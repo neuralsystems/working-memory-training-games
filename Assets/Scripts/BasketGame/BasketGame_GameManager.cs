@@ -10,6 +10,7 @@ public class BasketGame_GameManager : MonoBehaviour {
 	Vector3 positionForNewBasket;
 	public ParticleSystem rain_particlesystem_object;
 	public GameObject Girl, persistent_go;
+	int Error_Count = 0, num_of_fruits;
 	// Use this for initialization
 	void Start () {
 		
@@ -26,6 +27,17 @@ public class BasketGame_GameManager : MonoBehaviour {
 //		}
 	}
 
+	public void IncreaseErrorCount(){
+		Error_Count++;
+	}
+
+	public int SetLevel(){
+		var allowed_error_percentage  = .2f;
+		if (num_of_fruits * allowed_error_percentage < Error_Count) {
+			return 0;
+		}
+		return 1;
+	}
 	public IEnumerator MakeFruit(){
 //		yield return new WaitForSeconds (2f);
 		Debug.Log("called me?");
@@ -54,7 +66,7 @@ public class BasketGame_GameManager : MonoBehaviour {
 				rain_particlesystem_object.Play ();
 				yield return new WaitForSeconds(rain_particlesystem_object.main.duration);
 				persistent_go = GameObject.Find ("PersistentGameObject");
-				persistent_go.GetComponent<Shared_PersistentScript>().IncreaseLevel();
+				persistent_go.GetComponent<Shared_PersistentScript>().IncreaseLevel(SetLevel());
 				SceneManager.LoadScene (SceneManager.GetActiveScene().name);
 			}
 
@@ -91,11 +103,13 @@ public class BasketGame_GameManager : MonoBehaviour {
 
 	public IEnumerator HangFruitOnTree(){
 //		Debug.Log ("yo wass up?");
+		num_of_fruits = 0;
 		float max_height_percentage = .98f, min_height_percentage = 0.5f;
 		float max_width_percentage = .25f, min_width_percentage = 0.10f;
 		var all_baskets = GameObject.FindGameObjectsWithTag (BasketGame_SceneVariables.basketTag);
 		foreach (var basket in all_baskets) {
 			var basket_capacity = basket.GetComponent<BasketBehavior> ().capacity;
+			num_of_fruits += basket_capacity;
 			for (int i = 0; i < basket_capacity; i++) {
 				var height_percentage = Random.Range (min_height_percentage, max_height_percentage);
 				var width_percentage = Random.Range (min_width_percentage, max_width_percentage);

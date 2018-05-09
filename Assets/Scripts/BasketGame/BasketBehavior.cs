@@ -57,6 +57,10 @@ public class BasketBehavior : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D collision){
+		StartCoroutine(AfterCollision(collision));
+	}
+	IEnumerator AfterCollision(Collision2D collision){
+		yield return null;
 		var has = collision.gameObject.GetComponent<FruitBehavior> ().hasCollide;
 		collision.gameObject.GetComponent<FruitBehavior> ().hasCollide = true;
 		if (collision.gameObject.tag == BasketGame_SceneVariables.fruitTag && (!has)) {
@@ -81,7 +85,7 @@ public class BasketBehavior : MonoBehaviour {
 				collision.gameObject.transform.localScale = new Vector3 (1f, 1f, 1f);
 				collision.gameObject.tag = BasketGame_SceneVariables.inBasketFruitTag;
 				collision.gameObject.GetComponent<FruitBehavior> ().ResetProperties ();
-
+				yield return new WaitForSeconds (2f);
 				foreach (GameObject g in gos) {
 					//					Debug.Log ("in loop " + g.transform.localPosition.y );
 					if (Mathf.Abs (g.transform.position.y - lowerBound) > BasketGame_SceneVariables.minDistance) {
@@ -130,7 +134,7 @@ public class BasketBehavior : MonoBehaviour {
 	}
 
 	IEnumerator MoveBasket(Vector3 target){
-		while ((Vector3.Distance (transform.position, target) > BasketGame_SceneVariables.minDistance) && spaceLeft()) {
+		while ((Vector3.Distance (transform.position, target) > BasketGame_SceneVariables.minDistance) ) {
 			//			Debug.Log ("first if");
 			transform.position = Vector3.SmoothDamp (transform.position, target, ref velocity, smoothTime);
 			yield return null;

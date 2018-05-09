@@ -52,7 +52,7 @@ public class FruitBehavior : MonoBehaviour {
 		var upper_limit = Shared_ScriptForGeneralFunctions.GetPointOnScreen (2, 2);
 		if (transform.position.y <= lower_limit.y || transform.position.x >= upper_limit.x || transform.position.x <= lower_limit.x) {
 			if (tag == BasketGame_SceneVariables.fruitTag) {
-				StartCoroutine(MovetoOriginalPosition ());
+				Projectile ();
 			}
 		}
 	}
@@ -123,6 +123,7 @@ public class FruitBehavior : MonoBehaviour {
 
 	public void Projectile(){
 //			GetComponent<Rigidbody2D>().velocity = new Vector3(10,10,0);
+		Camera.main.GetComponent<BasketGame_GameManager>().IncreaseErrorCount();
 		StartCoroutine(MovetoOriginalPosition());
 //		OnComplete();
 	}
@@ -132,7 +133,7 @@ public class FruitBehavior : MonoBehaviour {
 		var path_speed = 20;
 		GetComponent<BasketGame_DetectTouch>().SetBoxCollider();
 		StartCoroutine(Shared_ScriptForGeneralFunctions.ScaleUp (gameObject, 1f, .3f));
-		iTween.MoveTo(gameObject,iTween.Hash("path",iTweenPath.GetPath(fruitPath),"speed",path_speed,"easetype","linear","oncomplete","MovetoOriginalPosition"));
+		iTween.MoveTo(gameObject,iTween.Hash("path",iTweenPath.GetPath(fruitPath),"speed",path_speed,"easetype","linear","oncomplete","Projectile"));
 		yield return new WaitForSeconds (1f);
 		SetTouch (true);
 	}

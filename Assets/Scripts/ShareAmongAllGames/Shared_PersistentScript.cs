@@ -50,8 +50,8 @@ public class Shared_PersistentScript : MonoBehaviour {
 
 	}
 
-	public void IncreaseLevel(){
-		basketgame_currentLevel += 1;
+	public void IncreaseLevel( int val){
+		basketgame_currentLevel += val;
 	}
 
 }
