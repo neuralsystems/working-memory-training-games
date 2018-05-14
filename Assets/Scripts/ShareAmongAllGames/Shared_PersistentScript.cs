@@ -5,7 +5,7 @@ using UnityEngine;
 public class Shared_PersistentScript : MonoBehaviour {
 
 	public string GAME_NAME;
-	public int basketgame_currentLevel = 1;			// game with always start with this level
+	public int currentLevel = 1;			// game with always start with this level
 	public static Shared_PersistentScript Instance;
 
 	void Awake(){
@@ -34,9 +34,9 @@ public class Shared_PersistentScript : MonoBehaviour {
 		
 	}
 
-	public Levels GetNewLevelDetails(){
+	public Levels GetNewBasketGameLevelDetails(){
 		var ds = new BasketGame_DataService (BasketGame_SceneVariables.DATABASE_NAME);
-		var current_level_objects = ds.GetLevelsObject (basketgame_currentLevel);
+		var current_level_objects = ds.GetLevelsObject (currentLevel);
 		Levels x = new Levels ();
 		x.LevelNumber = 1;
 		x.NumBaskets = 1;
@@ -51,7 +51,24 @@ public class Shared_PersistentScript : MonoBehaviour {
 	}
 
 	public void IncreaseLevel( int val){
-		basketgame_currentLevel += val;
+		currentLevel += val;
+	}
+
+	public TrainGame_Levels GetNewTrainGameLevelDetails(){
+		var Value_For_Block = 1;
+		var ds = new TrainGame_DataServices (TrainGame_SceneVariables.DATABASE_NAME);
+		var current_level_objects = ds.GetLevelsObject (currentLevel);
+		TrainGame_Levels x = new TrainGame_Levels();
+		x.LevelNumber = 1;
+		x.NumOfBogie = 1;
+		x.ShouldBlock = 0;
+		foreach (var current_level in current_level_objects) {
+			x = current_level;
+			break;
+		}
+		Debug.Log ((x.ShouldBlock  == Value_For_Block)+" "+ x.NumOfBogie );
+		return x;
+
 	}
 
 }

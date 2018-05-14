@@ -13,7 +13,7 @@ public class PlaceBasket : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		persistent_go = GameObject.Find ("PersistentGameObject");
-		var level_details = persistent_go.GetComponent<Shared_PersistentScript> ().GetNewLevelDetails ();
+		var level_details = persistent_go.GetComponent<Shared_PersistentScript> ().GetNewBasketGameLevelDetails ();
 		capacity = level_details.GetCapacity ();
 		PlaceNBaskets (level_details.GetNumofBaskets());
 		Debug.Log(capacity);

@@ -74,6 +74,7 @@ public class FruitBehavior : MonoBehaviour {
 
 	public IEnumerator Fall(){
 //		transform.position = move
+		Debug.Log("fruit falling");
 		GetComponent<AudioSource>().PlayOneShot(FRUIT_FALLING);
 		GameObject bubble_gameobject = GameObject.FindGameObjectsWithTag (BasketGame_SceneVariables.bubbleTag)[0];
 		while (Mathf.Abs (transform.position.y - bubble_gameobject.transform.position.y) > 0.1f) {
@@ -131,7 +132,8 @@ public class FruitBehavior : MonoBehaviour {
 	public IEnumerator AfterTrappedinBubble(){
 		
 		var path_speed = 20;
-		GetComponent<BasketGame_DetectTouch>().SetBoxCollider();
+		var bubble_x = GetComponentInChildren<SpriteRenderer> ().bounds.size.x;
+		GetComponent<BasketGame_DetectTouch>().SetBoxCollider(GetComponent<SpriteRenderer> ().bounds.size.x/bubble_x);
 		StartCoroutine(Shared_ScriptForGeneralFunctions.ScaleUp (gameObject, 1f, .3f));
 		iTween.MoveTo(gameObject,iTween.Hash("path",iTweenPath.GetPath(fruitPath),"speed",path_speed,"easetype","linear","oncomplete","Projectile"));
 		yield return new WaitForSeconds (1f);
@@ -179,6 +181,7 @@ public class FruitBehavior : MonoBehaviour {
 			tag = BasketGame_SceneVariables.hangingFruitTag;
 
 		}
+		yield return new WaitForSeconds (0.5f);
 		OnComplete ();
 //		}
 
@@ -199,15 +202,37 @@ public class FruitBehavior : MonoBehaviour {
 	}
 
 	public IEnumerator EatFruit(){
-		Debug.Log ("Eating fruits");
-		transform.parent = null;
-		girl = GameObject.Find ("Girl");
-		var target = girl.transform.position;
-		while(Vector3.Distance (transform.position, target) > Mathf.Min(minDistance,0.0001f)) {
-			//			Debug.Log ("first if");
+		var value_for_pause = 6;
+		var variable_name = "StateValue";
+		yield return null;
+
+//		Debug.Log ("Eating fruits");
+//		transform.parent = null;
+		var Girl = GameObject.Find ("Girl");
+//		var value_for_play_from_Stand = 1; 
+//		var value_for_play_from_Clap = 4; 
+//		var state_stand = "Stand";
+//		var state_clap = "Clap";
+//		if (Girl.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName (state_stand)) {
+//			Debug.Log ("State is "+ state_stand);
+//			Girl.GetComponent<Animator> ().SetInteger (variable_name, value_for_play_from_Stand);
+//		} else if (Girl.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName (state_clap)) {
+//			Debug.Log ("State is "+ state_clap);
+//			Girl.GetComponent<Animator> ().SetInteger (variable_name, value_for_play_from_Clap);
+//		}
+		var target = Girl.transform.position;
+		target.y += 1f;
+		while(Vector3.Distance (transform.position, target) > Mathf.Max(minDistance,0.1f)) {
+
 			transform.position = Vector3.SmoothDamp (transform.position, target, ref velocity, smoothTime);
 			yield return null;
 		}
-		Destroy (gameObject);
+//		Destroy (gameObject);
+		GetComponent<SpriteRenderer>().enabled = false;
+
+		if(GameObject.FindGameObjectsWithTag(BasketGame_SceneVariables.inBasketFruitTag).Length <= 1){
+			Girl.GetComponent<Animator> ().SetInteger (variable_name, value_for_pause);
+		}
+		tag = BasketGame_SceneVariables.eatenFruitTag;
 	}
 }

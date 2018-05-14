@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BasketGame_DetectTouch : MonoBehaviour {
 	// Use this for initialization
+
+	public AudioClip bubbleBurst;
 	void Start () {
 //		Debug.Log ("in start");
 	}
@@ -36,9 +38,10 @@ public class BasketGame_DetectTouch : MonoBehaviour {
 		gameObject.AddComponent<Rigidbody2D>();
 //		GetComponent<SpriteRenderer>().sortingLayerName = "Game";
 		foreach (Transform child in gameObject.transform) {
-			
 			Destroy (child.gameObject);
+//			StartCoroutine(child.GetComponent<BasketGame_BubbleBehavior> ().BeforeGoDestroy ());
 		}
+		GetComponent<AudioSource> ().PlayOneShot (bubbleBurst);
 		GetComponent<ParticleSystem> ().Play();
 		iTween.Stop (gameObject);
 		SetBoxCollider (.2f);

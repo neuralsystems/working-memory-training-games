@@ -85,7 +85,7 @@ public class BasketBehavior : MonoBehaviour {
 				collision.gameObject.transform.localScale = new Vector3 (1f, 1f, 1f);
 				collision.gameObject.tag = BasketGame_SceneVariables.inBasketFruitTag;
 				collision.gameObject.GetComponent<FruitBehavior> ().ResetProperties ();
-				yield return new WaitForSeconds (2f);
+				yield return new WaitForSeconds (1f);
 				foreach (GameObject g in gos) {
 					//					Debug.Log ("in loop " + g.transform.localPosition.y );
 					if (Mathf.Abs (g.transform.position.y - lowerBound) > BasketGame_SceneVariables.minDistance) {

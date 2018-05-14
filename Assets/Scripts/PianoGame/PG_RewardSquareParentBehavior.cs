@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class PG_RewardSquareParentBehavior : MonoBehaviour {
 
-	public float smoothTime = .0050F;
+	public float smoothTime = 10.0050F;
 	private Vector3 velocity = Vector3.zero;
-	Vector3 original_position;
+	Vector3 original_position, camera_position;
 	Coroutine scroll_movement;
 	// Use this for initialization
 	void Start () {
+		camera_position = Camera.main.transform.position;
 		original_position = transform.position;
 	}
 	
@@ -21,17 +22,19 @@ public class PG_RewardSquareParentBehavior : MonoBehaviour {
 	public IEnumerator MoveToTarget ( Vector3 target)
 	{
 
-		if (Vector3.Distance (transform.position, target) > 0.00001f) {
+		while (Vector3.Distance (transform.position, target) > 0.00001f) {
 			transform.position = Vector3.SmoothDamp (transform.position, target, ref velocity, smoothTime);
-//			yield return new WaitForSeconds(0.5f);
+//			transform.position = Vector3.down * Time.deltaTime;
+			yield return new WaitForSeconds(0.005f);
 			yield return null;
-			StartCoroutine (MoveToTarget (target));
-		} else {
-			transform.position = target;
+//			StartCoroutine (MoveToTarget (target));
+		} 
+//		else {
+		transform.position = target;
 //			if (target == original_position) {
 //				
 //			}
-		}
+//		}
 
 
 	}
@@ -55,5 +58,10 @@ public class PG_RewardSquareParentBehavior : MonoBehaviour {
 
 	public void OnMouseDown(){
 		StopCoroutine (scroll_movement);
+	}
+
+	public void MoveCamera(Vector3 new_position){
+//		Camera.main.transform.position = camera_position;
+		StartCoroutine (MoveToTarget (new_position));
 	}
 }

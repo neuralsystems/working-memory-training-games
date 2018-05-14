@@ -40,7 +40,7 @@ public class BasketGame_GameManager : MonoBehaviour {
 	}
 	public IEnumerator MakeFruit(){
 //		yield return new WaitForSeconds (2f);
-		Debug.Log("called me?");
+//		Debug.Log("called me?");
 		var fruits = GameObject.FindGameObjectsWithTag (BasketGame_SceneVariables.fruitTag);
 //		var fallingfruits = GameObject.FindGameObjectsWithTag (BasketGame_SceneVariables);
 //		var offset = 1f;
@@ -50,7 +50,7 @@ public class BasketGame_GameManager : MonoBehaviour {
 //			spawn_position.y = basket_gameobject.transform.position.y+ basket_gameobject.GetComponent<SpriteRenderer>().bounds.size.y + offset;
 //			Instantiate (fruit,spawn_position , Quaternion.identity);
 //		}
-			Debug.Log("called me to fall ");
+//			Debug.Log("called me to fall ");
 			var random_fruit_array = GameObject.FindGameObjectsWithTag (BasketGame_SceneVariables.hangingFruitTag);
 			if (random_fruit_array.Length > 0) {
 				int x = Random.Range (0, random_fruit_array.Length);
@@ -136,7 +136,8 @@ public class BasketGame_GameManager : MonoBehaviour {
 	}
 
 	public IEnumerator EmptyBasket(){
-		var value_for_play_from_Stand = 1; 
+		yield return null;
+		var value_for_play_from_Stand = 5; 
 		var value_for_play_from_Clap = 4; 
 		var value_for_pause = 6;
 		var state_stand = "Stand";
@@ -149,13 +150,17 @@ public class BasketGame_GameManager : MonoBehaviour {
 			Debug.Log ("State is "+ state_clap);
 			Girl.GetComponent<Animator> ().SetInteger (variable_name, value_for_play_from_Clap);
 		}
-		foreach (Transform slot in transform) {
-			foreach (Transform fruit in slot.transform) {
-				StartCoroutine(fruit.GetComponent<FruitBehavior> ().EatFruit ());
-				yield return new WaitForSeconds (.1f);
-			}
+		var all_fruits = GameObject.FindGameObjectsWithTag (BasketGame_SceneVariables.inBasketFruitTag);
+//		foreach (Transform slot in transform) {
+//			foreach (Transform fruit in slot.transform) {
+//				StartCoroutine(fruit.GetComponent<FruitBehavior> ().EatFruit ());
+//				yield return new WaitForSeconds (.1f);
+//			}
+//		}
+		foreach (var fruit in all_fruits) {
+			StartCoroutine(fruit.GetComponent<FruitBehavior>().EatFruit());
+			StartCoroutine(Shared_ScriptForGeneralFunctions.ScaleDown (fruit, .1f, 0.1f));
 		}
-//		Girl.GetComponent<Animator> ().SetInteger (variable_name, value_for_pause);
-
+//		while
 	}
 }

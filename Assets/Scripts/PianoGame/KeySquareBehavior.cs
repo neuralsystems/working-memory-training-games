@@ -21,8 +21,8 @@ public class KeySquareBehavior : MonoBehaviour
 
 		originalSprite = GetComponent<SpriteRenderer> ().sprite;
 		original_color = GetComponent<SpriteRenderer> ().color;
-		widthPercentage = Camera.main.GetComponent<SceneVariables> ().widthPercentage;
-		heightPercentage = Camera.main.GetComponent<SceneVariables> ().heightPercentage;
+//		widthPercentage = Camera.main.GetComponent<SceneVariables> ().widthPercentage;
+//		heightPercentage = Camera.main.GetComponent<SceneVariables> ().heightPercentage;
 		var shift = GetComponent<SpriteRenderer> ().bounds.size;
 		if (tagForGameObject == Camera.main.GetComponent<SceneVariables> ().USER_INPUT_SQUARE_TAG) {
 			target = Camera.main.GetComponent<SceneVariables> ().targetUserSquare;
@@ -117,27 +117,28 @@ public class KeySquareBehavior : MonoBehaviour
 	public IEnumerator MoveToReward ( GameObject rewardTile, bool shouldCall)
 	{
 		var target = rewardTile.transform.position;
-		if (Vector3.Distance (transform.position, target) > SceneVariables.MIN_DISTANCE) {
+		transform.localScale = rewardTile.transform.localScale * (rewardTile.GetComponent<SpriteRenderer>().bounds.size.x / GetComponent<SpriteRenderer>().bounds.size.x);
+		while(Vector3.Distance (transform.position, target) > SceneVariables.MIN_DISTANCE) {
 			transform.position = Vector3.SmoothDamp (transform.position, target, ref velocity, smoothTime);
 			yield return null;
-			StartCoroutine (MoveToReward (rewardTile,shouldCall));
-		} else {
-			transform.position = target;
-			if (rewardTile.transform.childCount == 0) {
-				transform.localScale = rewardTile.transform.localScale;
-				transform.parent = rewardTile.transform;
-				tag = Camera.main.GetComponent<SceneVariables> ().REWARD_SQUARE_CHILD_TAG;
-				GetComponentInParent<ParticleSystem> ().Play ();
-				if (shouldCall) {
-					Camera.main.GetComponent<PlayTone> ().CheckOnComplete ();
-				}
+//			StartCoroutine (MoveToReward (rewardTile,shouldCall));
+		} 
+//		else {
+		transform.position = target;
+		if (rewardTile.transform.childCount == 0) {
+			transform.parent = rewardTile.transform;
+			tag = Camera.main.GetComponent<SceneVariables> ().REWARD_SQUARE_CHILD_TAG;
+			GetComponentInParent<ParticleSystem> ().Play ();
+			if (shouldCall) {
+				Camera.main.GetComponent<PlayTone> ().CheckOnComplete ();
+			}
 //				rewardTile.GetComponent<PianoGame_RewardSquareBehavior> ().SetVisibility(false);
 //				rewardTile.GetComponent<Outline> ().eraseRenderer = true;
-			} else {
-				Destroy (gameObject);
-			}
-
+		} else {
+			Destroy (gameObject);
 		}
+
+//		}
 
 
 	}

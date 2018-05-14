@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TrainGame_DetectTouch : MonoBehaviour {
 
+	public AudioClip TouchSound;
 	// Use this for initialization
 	void Start () {
 		
@@ -17,6 +18,9 @@ public class TrainGame_DetectTouch : MonoBehaviour {
 			Vector2 touchPos = new Vector2(wp.x, wp.y);
 			if (GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPos))
 			{
+				if (GetComponent<AudioSource> ()) {
+					GetComponent<AudioSource> ().PlayOneShot (TouchSound);
+				}
 				if(gameObject.tag == TrainGame_SceneVariables.BOGIE_TAG){
 					GetComponent<TrainGame_BogieBehavior> ().OnMouseDown ();
 				} else if(gameObject.tag == TrainGame_SceneVariables.KEYLOCK_TAG){

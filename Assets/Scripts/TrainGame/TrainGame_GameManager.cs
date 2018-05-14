@@ -5,12 +5,18 @@ using UnityEngine;
 public class TrainGame_GameManager : MonoBehaviour {
 
 	public Transform KEYLOCK_BOGIE_PREFAB, COLOR_BOGIE_PREFAB, ENGINE_PREFAB;
-	public GameObject BLOCK_TRAIN;
+	public GameObject BLOCK_TRAIN, static_game_object;
 	public bool Should_Block;
-	int numofBogies = 5;
+	int numofBogies = 2;
+	int error_count ;
+
 	// Use this for initialization
 	void Start () {
-		
+		static_game_object = GameObject.Find("StaticGameObject");
+		error_count = 0;
+		var level_details = static_game_object.GetComponent<Shared_PersistentScript> ().GetNewTrainGameLevelDetails ();
+		numofBogies = level_details.GetNumofBogie ();
+		Should_Block = level_details.ShouldBlockTrain ();
 		CreateTrain (true, numofBogies);
 	}
 	
@@ -55,12 +61,30 @@ public class TrainGame_GameManager : MonoBehaviour {
 
 
 	public IEnumerator BlockAndRandomize(){
-		GameObject.FindGameObjectWithTag(TrainGame_SceneVariables.ENGINE_TAG).GetComponent<TrainGame_Engine_Behavior> ().RandomizeBogies ();
-		yield return new WaitForSeconds (numofBogies * 1.5f);
+		GameObject.FindGameObjectWithTag(TrainGame_SceneVariables.ENGINE_TAG).GetComponent<TrainGame_Engine_Behavior> ().RandomizeBogies (!Should_Block);
+		yield return new WaitForSeconds (numofBogies * 2f);
 		if(Should_Block)  //condition if true show the block train
 		{
 			yield return StartCoroutine (BLOCK_TRAIN.GetComponent<TrainGame_BlockTrainBehavior> ().BlockView ());
 		}
 
+	}
+
+	public void FinalAnimation(){
+		ChangeGameLevel ();
+		StartCoroutine (GameObject.FindGameObjectWithTag (TrainGame_SceneVariables.ENGINE_TAG).GetComponent<TrainGame_Engine_Behavior> ().FinalAnimation ());
+		if (Should_Block) {
+			StartCoroutine (BLOCK_TRAIN.GetComponent<TrainGame_BlockTrainBehavior> ().UnBlockView ());	
+		}
+	}
+
+	public void ErrorDetected(){
+		error_count++;
+	}
+
+	void ChangeGameLevel(){
+		if (error_count < .2 * numofBogies) {
+			static_game_object.GetComponent<Shared_PersistentScript> ().IncreaseLevel (1);
+		}
 	}
 }

@@ -15,8 +15,10 @@ public class PlayTone : MonoBehaviour {
 	public int incrementForNextLevel = 1;
 	List <string> toneTOBePlayed = new List<string>(); 
 	public Transform blockSquare;
+	Vector3 camera_position;
 	void Awake(){
 		current_length = initial_length;
+		camera_position = Camera.main.transform.position;
 	}
 	// Use this for initialization
 	void Start () {
@@ -122,7 +124,7 @@ public class PlayTone : MonoBehaviour {
 					reward_square_child_object.GetComponent<SpriteRenderer> ().sortingLayerName = game_layer;
 					var y_index = reward_square_child_object.transform.localPosition;
 					y_index.y = y_index.y -  1f;
-					reward_square_child_object.transform.localScale += new Vector3(1,1,1) * 1;
+					reward_square_child_object.transform.localScale += new Vector3(1,1,1) * .3f;
 				}
 				g.GetComponent<OnKeyPress> ().PlaySound(isRepeat);
 				yield return new WaitForSeconds (SceneVariables.WAIT_TIME);
@@ -132,7 +134,7 @@ public class PlayTone : MonoBehaviour {
 					if (isLastRepeat) {
 						reward_square_child_object.GetComponent<Rigidbody2D> ().gravityScale = 2;
 					} else {
-						reward_square_child_object.transform.localScale -= new Vector3 (1, 1, 1) * 1;
+						reward_square_child_object.transform.localScale -= new Vector3 (1, 1, 1) * .3f;
 					}
 
 				}
@@ -233,8 +235,12 @@ public class PlayTone : MonoBehaviour {
 		var reward_square = GameObject.FindGameObjectsWithTag (Camera.main.GetComponent<SceneVariables> ().REWARD_SQUARE_TAG)[0];
 		var reward_square_parent = GameObject.Find (Camera.main.GetComponent<SceneVariables> ().REWARD_SQUARE_PARENT);
 		var new_position = Shared_ScriptForGeneralFunctions.GetPointOnScreen(Camera.main.GetComponent<SceneVariables>().widthPercentageForRewardSquare, Camera.main.GetComponent<SceneVariables> ().heightPercentageForRewardSquare);
-		new_position.y += reward_square_parent.GetComponent<SpriteRenderer> ().bounds.size.y;
-		StartCoroutine(reward_square_parent.GetComponent<PG_RewardSquareParentBehavior> ().MoveToTarget (new_position));
+		new_position.y += reward_square_parent.GetComponent<SpriteRenderer> ().bounds.size.y + .1f;
+//		new_position = camera_position;
+//		new_position.y -= reward_square_parent.GetComponent<SpriteRenderer> ().bounds.size.y;
+//		new_position.y -= .1f;
+//		StartCoroutine(reward_square_parent.GetComponent<PG_RewardSquareParentBehavior> ().MoveToTarget (new_position));
+		reward_square_parent.GetComponent<PG_RewardSquareParentBehavior> ().MoveCamera(new_position);
 		SceneVariables.IS_USER_MODE = false;
 		PlayGame (current_length);
 	}
