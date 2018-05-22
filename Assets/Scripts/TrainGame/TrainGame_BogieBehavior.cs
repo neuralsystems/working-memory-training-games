@@ -69,6 +69,12 @@ public class TrainGame_BogieBehavior : MonoBehaviour {
 	}
 
 	public IEnumerator ReAttachBogie(bool matched, Vector3 new_position){
+		var unattached_bogies = GameObject.FindGameObjectsWithTag (TrainGame_SceneVariables.BOGIE_TAG);
+		foreach (var bogie in unattached_bogies) {
+			//				if (bogie.tag == TrainGame_SceneVariables.BOGIE_TAG) {
+			StartCoroutine (bogie.GetComponent<TrainGame_BogieBehavior> ().SetTouch (true));
+			//				}
+		}
 		var _random_position = transform.position;
 		foreach (Transform bogie in transform.parent) {
 			if (bogie.tag == TrainGame_SceneVariables.BOGIE_TAG) {

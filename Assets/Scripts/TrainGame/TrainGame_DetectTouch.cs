@@ -18,18 +18,26 @@ public class TrainGame_DetectTouch : MonoBehaviour {
 			Vector2 touchPos = new Vector2(wp.x, wp.y);
 			if (GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPos))
 			{
-				if (GetComponent<AudioSource> ()) {
-					GetComponent<AudioSource> ().PlayOneShot (TouchSound);
+				if (Camera.main.GetComponent<AudioSource> ()) {
+					Camera.main.GetComponent<AudioSource> ().PlayOneShot (TouchSound);
 				}
-				if(gameObject.tag == TrainGame_SceneVariables.BOGIE_TAG){
+				if (gameObject.tag == TrainGame_SceneVariables.BOGIE_TAG) {
 					GetComponent<TrainGame_BogieBehavior> ().OnMouseDown ();
-				} else if(gameObject.tag == TrainGame_SceneVariables.KEYLOCK_TAG){
+				} else if (gameObject.tag == TrainGame_SceneVariables.KEYLOCK_TAG) {
 					GetComponentInParent<TrainGame_BogieBehavior> ().OnMouseDown ();
+				} else if (gameObject.tag == TrainGame_SceneVariables.COUNTER_SHAPE_OPTION_TAG) {
+					GetComponent<TrainGame_CounterShapeScript> ().OnMouseDown ();
 				}
 			}
 		}
 	}
 
+	public void SetTouch( bool value){
+		Debug.Log ("Set Values with "+ value);
+		GetComponent<TrainGame_DetectTouch> ().enabled = value;
+		GetComponent<BoxCollider2D> ().enabled = value;
+		GetComponent<Shared_AdjustColliderProperties> ().AdjustCollidersize ();
+	}
 
 			
 }

@@ -7,18 +7,19 @@ public class Scalling : MonoBehaviour {
 
 	public float maxSize = 1f;
 	public float minSize = .9f;
-	float growFactor = .3f;
+	public float growFactor = .5f;
 	public float waitTime = .1f;
 	public bool shouldScale = false;
 	public Vector3 original_scale;
+	Coroutine scaling;
 	void Start()
 	{
 		original_scale = transform.localScale;
 		transform.localScale = new Vector3 (1, 1, 1) * maxSize;
-		minSize = .5f * maxSize;
+//		minSize = .5f * maxSize;
 //		growFactor = .5f * (maxSize - minSize);
 		if (shouldScale) {
-			StartCoroutine (Scale ());
+			scaling = StartCoroutine (Scale ());
 		}
 	}
 
@@ -33,10 +34,6 @@ public class Scalling : MonoBehaviour {
 			transform.localScale += new Vector3(1, 1, 1) * Time.deltaTime * growFactor;
 			yield return null;
 		}
-		// reset the timer
-
-//			yield return new WaitForSeconds(waitTime);
-
 		while(minSize < transform.localScale.x)
 		{
 			transform.localScale -= new Vector3(1, 1, 1) * Time.deltaTime * growFactor;
@@ -45,7 +42,7 @@ public class Scalling : MonoBehaviour {
 
 		yield return new WaitForSeconds(waitTime);
 		if (shouldScale) {
-			StartCoroutine (Scale ());
+			scaling = StartCoroutine (Scale ());
 		} else {
 			transform.localScale = new Vector3(1,1,1) * maxSize;
 		}
@@ -54,10 +51,13 @@ public class Scalling : MonoBehaviour {
 
 	public void SetScale(bool value){
 //		StopCoroutine(Scale());
-		transform.localScale = new Vector3(1,1,1) * maxSize;
+
 		shouldScale = value;
 		if (shouldScale) {
 			StartCoroutine (Scale ());
+		} else if(scaling != null && (!shouldScale)){
+			StopCoroutine (scaling);
 		}
+		transform.localScale = new Vector3(1,1,1) * maxSize;
 	}
 }
