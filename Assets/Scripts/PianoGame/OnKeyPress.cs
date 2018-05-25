@@ -92,14 +92,15 @@ public class OnKeyPress : MonoBehaviour {
 
 	public void PlaySound(bool isRepeat = false)
 	{
+		SetTransparency (true);
 		if (!isRepeat) {
 			var tappinghand = GameObject.Find (Camera.main.GetComponent<SceneVariables> ().tappingHand).gameObject;
 			StartCoroutine (tappinghand.GetComponent<FingerBehavior> ().SetPositionAndPlay (transform.position, keyName));
 		}
-		GetComponent<SpriteRenderer> ().color = SceneVariables.PRESSED_COLOR;
+//		GetComponent<SpriteRenderer> ().color = SceneVariables.PRESSED_COLOR;
 		GetComponent<AudioSource> ().Play ();
 		StartCoroutine (DelayedCallback (SceneVariables.PLAY_TIME, AudioFinished));
-		spriteRenderer.color = SceneVariables.PRESSED_COLOR;
+//		spriteRenderer.color = SceneVariables.PRESSED_COLOR;
 	}
 
 
@@ -111,7 +112,14 @@ public class OnKeyPress : MonoBehaviour {
 
 	}
 
-
+	public void SetTransparency(bool val){
+		var all_keys = GameObject.FindGameObjectsWithTag(SceneVariables.PIANO_KEY_TAG);
+		foreach (var key in all_keys) {
+			if (key != gameObject) {
+				key.GetComponent<OnKeyPress> ().ChangeTransperancy (val);
+			}
+		}
+	}
 	// used in case if there is a clip to play and some code has to be executed at the end of the clip
 	public void PlaySoundWithCallBack(AudioClip clip, AudioCallback callback){
 
@@ -130,11 +138,23 @@ public class OnKeyPress : MonoBehaviour {
 		GetComponent<AudioSource> ().Pause ();
 		SceneVariables.IS_PRESSED = false;
 		spriteRenderer.color = originalColor;
+		SetTransparency (false);
 	}
 
 	void ResetGame()
 	{
 		
+	}
+
+	public void ChangeTransperancy( bool val){
+		var tem_color = gameObject.GetComponent<SpriteRenderer> ().material.color;
+		Debug.Log ("called for other keys " + val);
+		if (val) {
+			tem_color.a = .3f;
+		} else {
+			tem_color.a = 1;
+		}
+		gameObject.GetComponent<SpriteRenderer> ().material.color = tem_color;
 	}
 	
 }

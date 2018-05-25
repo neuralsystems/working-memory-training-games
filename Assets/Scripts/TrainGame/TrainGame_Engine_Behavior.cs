@@ -44,25 +44,25 @@ public class TrainGame_Engine_Behavior : MonoBehaviour {
 			bogie_object.GetComponent<TrainGame_BogieBehavior> ().enabled = true;
 			bogie_object.GetComponent<TrainGame_BogieBehavior> ().original_position = original_position;
 			var move_back_to = original_position;
-			move_back_to.x += x;
-			x-=1;
+			move_back_to.x = Shared_ScriptForGeneralFunctions.GetPointOnScreen(1.2f,0.1f).x;
+//			x-=1;
 			Debug.Log ("move_back_to " + move_back_to);
 			Debug.Log("to this point1");
 			yield return StartCoroutine(bogie_object.GetComponent<TrainGame_BogieBehavior> ().MoveToTargetAndSet (move_back_to, false, TrainGame_SceneVariables.BOGIE_TAG));
 //			yield return new WaitForSeconds (1f);
 		}
-
-		yield return new WaitForSeconds (1f);
-		for (int i = numofnonBogies; i < num_of_bogies; i++) {
-			var bogie_object = transform.GetChild (i).gameObject;
-			bogie_object.GetComponent<TrainGame_BogieBehavior> ().AttachBack();
-		}
+		StartCoroutine(Camera.main.GetComponent<TrainGame_GameManager> ().BlockAndRandomize ());
+//		yield return new WaitForSeconds (1f);
+//		for (int i = numofnonBogies; i < num_of_bogies; i++) {
+//			var bogie_object = transform.GetChild (i).gameObject;
+//			bogie_object.GetComponent<TrainGame_BogieBehavior> ().AttachBack(true);
+//		}
 	}
 
 
 	public void RandomizeBogies(bool touchvalue){
 		var num_of_bogies = transform.childCount ;
-		var N_points = Shared_ScriptForGeneralFunctions.GetNPointsAtHeight (.4f, num_of_bogies-numofnonBogies, true, 0.05f,0.05f);
+		var N_points = Shared_ScriptForGeneralFunctions.GetNPointsAtHeight (.2f, num_of_bogies-numofnonBogies, true, 0.05f,0.05f);
 		for (int i = 0; i < num_of_bogies - numofnonBogies; i++) {
 			var bogie_object = transform.GetChild (i + numofnonBogies).gameObject;
 			Debug.Log ("position for " + i + N_points[i] );
@@ -72,7 +72,7 @@ public class TrainGame_Engine_Behavior : MonoBehaviour {
 	}
 	public IEnumerator InitialAnimation(){
 //		transform.position = Shared_ScriptForGeneralFunctions.GetPointOnScreen (1.1f, .85f);
-		var target = Shared_ScriptForGeneralFunctions.GetPointOnScreen (.1f, .71f);
+		var target = Shared_ScriptForGeneralFunctions.GetPointOnScreen (.1f, TrainGame_SceneVariables.height_percentage);
 		GetComponent<AudioSource> ().Play ();
 		yield return new WaitForSeconds (GetComponent<AudioSource> ().clip.length * .5f);
 		yield return StartCoroutine(MoveToTarget( target));
@@ -92,7 +92,7 @@ public class TrainGame_Engine_Behavior : MonoBehaviour {
 	}
 
 	public IEnumerator FinalAnimation(){
-		var target = Shared_ScriptForGeneralFunctions.GetPointOnScreen (-1.1f, .71f);
+		var target = Shared_ScriptForGeneralFunctions.GetPointOnScreen (-1.1f, TrainGame_SceneVariables.height_percentage);
 		yield return StartCoroutine(MoveToTarget( target));
 		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}

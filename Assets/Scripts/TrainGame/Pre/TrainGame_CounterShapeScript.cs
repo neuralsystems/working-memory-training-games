@@ -9,17 +9,27 @@ public class TrainGame_CounterShapeScript : MonoBehaviour {
 	public Vector3 original_position; 
 	float smoothTime = 0.5f, minDistance = 0.1f;
 	static bool Repeat = false;
+	string hexForWrong = "#F80C1AFF";
+	string hexForNeutral = "#330CFF13";
+	string  hexForRight = "#72FF20FB";
+	public AudioClip connect_sound;
+	void Awake(){
+		original_position = transform.position;	
+	}
 	// Use this for initialization
 	void Start () {
-		original_position = transform.position;	
+		
 	}
 
 	public void SetUp(Sprite shape){
 		
 		GetComponent<SpriteRenderer> ().sprite = shape;
 		transform.position = original_position;	
-		GetComponent<Scalling> ().SetScale (true);
-		GetComponent<TrainGame_DetectTouch> ().SetTouch (true);
+		SetTouchAndScale (true, true, tag);
+		Repeat = false;
+		foreach (Transform chi in transform) {
+			chi.gameObject.GetComponent<TrainGame_CircleMaskScript> ().SetColorAndVisibility (hexForNeutral,false);
+		}
 	}
 	
 	public void OnMouseDown(){
@@ -29,31 +39,20 @@ public class TrainGame_CounterShapeScript : MonoBehaviour {
 	IEnumerator MoveToCounter(){
 		var target_go = GameObject.Find ("SampleShape");
 		var target= target_go.transform.position;
-//		target.x += GetComponent<SpriteRenderer> ().bounds.size.x/2; 
-//		GetComponent<Scalling> ().SetScale (false);
 		SetTouchAndScale(false,false, tag);
 		var is_correct = GetComponent<SpriteRenderer> ().sprite.name == "Correct";
 		yield return StartCoroutine (MoveToTarget (target, is_correct));
 		var sound_manager_go = GameObject.Find ("SoundManager");
-		float extra_wait	= 1f;
+		float extra_wait	= .2f;
 		if (!is_correct) {
-//			yield return new WaitForSeconds (1f);
-			foreach (Transform comp in target_go.transform) {
-				comp.gameObject.GetComponent<SpriteRenderer> ().enabled = true;
-			}
-//			comp.gameObject.GetComponent<SpriteRenderer> ().enabled = true;
 			yield return new WaitForSeconds (sound_manager_go.GetComponent<SoundManager_Script> ().PlaySadSound () + extra_wait);
 			yield return new WaitForSeconds (1f);
 			ResetPosition ();
-			foreach (Transform comp in target_go.transform) {
-				comp.gameObject.GetComponent<SpriteRenderer> ().enabled = false;
-			}
 			Camera.main.GetComponent<TrainGame_PreGameManager> ().ResetCorrect ();
 			Repeat = true;
 		} else {
-			
+			yield return new WaitForSeconds(sound_manager_go.GetComponent<SoundManager_Script>().PlaySound(connect_sound) + extra_wait * 2);
 			yield return new WaitForSeconds (sound_manager_go.GetComponent<SoundManager_Script> ().PlayHappySound () + extra_wait);
-//			yield return new WaitForSeconds (2f);
 			if (!Repeat) {
 				Camera.main.GetComponent<TrainGame_PreGameManager> ().IncrementOnCorrectMatch ();
 			}
@@ -63,22 +62,28 @@ public class TrainGame_CounterShapeScript : MonoBehaviour {
 
 
 	IEnumerator MoveToTarget(Vector3 target, bool is_correct){
-//		var target = target_go.transform.position;
 		while (Vector3.Distance (transform.position, target) > Mathf.Min (minDistance, 0.1f)) {
 			transform.position = Vector3.SmoothDamp (transform.position, target, ref velocity, smoothTime);
 			yield return null;
 		}
 		transform.position = target;
-		if (!is_correct) {
+		if((Vector3.Distance(transform.position,original_position) < 0.01f)){
 			foreach (Transform chi in transform) {
-				chi.gameObject.GetComponent<SpriteRenderer> ().enabled = true;
+				chi.gameObject.GetComponent<TrainGame_CircleMaskScript> ().SetColorAndVisibility (hexForNeutral,false);
 			}
-		} else if ((Vector3.Distance(transform.position,original_position) < 0.01f) ) {
-			foreach (Transform chi in transform) {
-				chi.gameObject.GetComponent<SpriteRenderer> ().enabled = false;
+			SetTouchAndScale (true, true, tag);
+		} else{
+			if (!is_correct) {
+				foreach (Transform chi in transform) {
+					chi.gameObject.GetComponent<TrainGame_CircleMaskScript> ().SetColorAndVisibility (hexForNeutral, false);
+				}
+			} else {
+				foreach (Transform chi in transform) {
+				chi.gameObject.GetComponent<TrainGame_CircleMaskScript> ().SetColorAndVisibility (hexForRight, true);
+				}
 			}
-			SetTouchAndScale(true,true, tag);
 		}
+
 	}
 
 

@@ -11,7 +11,7 @@ public class TrainGame_PreGameManager : MonoBehaviour {
 	string[] shapes = new string[]{"Shape_5", "Shape_1","Shape_2", "Shape_3", "Shape_4"};
 	int first_level = 0;
 	int consecutive_correct =0, threshold = 5;
-	public Scene mainScene;
+	public string mainScene;
 	void Start () {
 		SetShape ();
 		
@@ -40,7 +40,7 @@ public class TrainGame_PreGameManager : MonoBehaviour {
 
 	public void LoadNext(){
 		if (HasReachedThreshold()) {
-			SceneManager.LoadScene (mainScene.name);
+			SceneManager.LoadScene (mainScene);
 		} else {
 			SetShape ();
 		}

@@ -236,10 +236,6 @@ public class PlayTone : MonoBehaviour {
 		var reward_square_parent = GameObject.Find (Camera.main.GetComponent<SceneVariables> ().REWARD_SQUARE_PARENT);
 		var new_position = Shared_ScriptForGeneralFunctions.GetPointOnScreen(Camera.main.GetComponent<SceneVariables>().widthPercentageForRewardSquare, Camera.main.GetComponent<SceneVariables> ().heightPercentageForRewardSquare);
 		new_position.y += reward_square_parent.GetComponent<SpriteRenderer> ().bounds.size.y + .1f;
-//		new_position = camera_position;
-//		new_position.y -= reward_square_parent.GetComponent<SpriteRenderer> ().bounds.size.y;
-//		new_position.y -= .1f;
-//		StartCoroutine(reward_square_parent.GetComponent<PG_RewardSquareParentBehavior> ().MoveToTarget (new_position));
 		reward_square_parent.GetComponent<PG_RewardSquareParentBehavior> ().MoveCamera(new_position);
 		SceneVariables.IS_USER_MODE = false;
 		PlayGame (current_length);

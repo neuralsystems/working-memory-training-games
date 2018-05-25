@@ -28,10 +28,10 @@ public class TrainGame_GameManager : MonoBehaviour {
 
 
 	void CreateTrain(bool colored_or_keylock, int numOfBogies){
-		var engine_position = Shared_ScriptForGeneralFunctions.GetPointOnScreen (1.2f, .71f);
+		var engine_position = Shared_ScriptForGeneralFunctions.GetPointOnScreen (1.2f, TrainGame_SceneVariables.height_percentage);
 		var train_engine = Instantiate (ENGINE_PREFAB, engine_position, Quaternion.identity);
 		if (colored_or_keylock) {
-			var folder_location = TrainGame_SceneVariables.Game_Name + "/" + Camera.main.GetComponent<TrainGame_SceneVariables> ().GetBasketFolderName ();
+			var folder_location = TrainGame_SceneVariables.Game_Name + "/" + Camera.main.GetComponent<TrainGame_SceneVariables> ().GetSubFolderName ();
 			Debug.Log (folder_location);
 			var keys = Camera.main.GetComponent<TrainGame_SceneVariables> ().GetKeys (numOfBogies);
 			var previous_lock = train_engine.transform.GetChild (0);
@@ -47,7 +47,7 @@ public class TrainGame_GameManager : MonoBehaviour {
 ////					engine_position.y -= train_engine.GetComponent<SpriteRenderer> ().bounds.size.y / 2;
 ////					engine_position.y += bogie_object.GetComponent<SpriteRenderer> ().bounds.size.y / 2;
 //				}else{
-					shift = (bogie_object.GetComponent<SpriteRenderer> ().bounds.size.x) * 0.75f;
+					shift = (bogie_object.GetComponent<SpriteRenderer> ().bounds.size.x) ;
 //				}
 				shift += bogie_object.transform.GetChild (1).GetComponent<SpriteRenderer> ().bounds.size.x;
 				engine_position.x += shift;

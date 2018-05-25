@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class TrainGame_BogieBehavior : MonoBehaviour {
 	Vector3 velocity = Vector3.zero;
 	public Vector3 original_position; 
-	float smoothTime = 0.5f, minDistance = 0.1f;
+	float smoothTime = 0.3f, minDistance = 0.1f;
 	string original_tag ;
 	public GameObject BLOCK_TRAIN;
 	// Use this for initialization
@@ -22,7 +22,7 @@ public class TrainGame_BogieBehavior : MonoBehaviour {
 	}
 
 
-	public IEnumerator MoveToTarget (Vector3 target)
+	public IEnumerator MoveToTarget (Vector3 target, bool randmoize = false)
 	{
 		
 		while(Vector3.Distance (transform.position, target) > Mathf.Min(minDistance,0.1f)) {
@@ -34,8 +34,10 @@ public class TrainGame_BogieBehavior : MonoBehaviour {
 			tag = original_tag;
 			GetComponentInChildren<ParticleSystem> ().Play ();
 			yield return new WaitForSeconds (GetComponentInChildren<ParticleSystem> ().main.duration);
-			var unattached_bogies = GameObject.FindGameObjectsWithTag (TrainGame_SceneVariables.BOGIE_TAG);
-			if (unattached_bogies.Length == 0) {
+		}
+		if (randmoize) {
+			var attached_bogies = GameObject.FindGameObjectsWithTag (TrainGame_SceneVariables.ATTACHED_BOGIE_TAG);
+			if (attached_bogies.Length == 0) {
 				StartCoroutine(Camera.main.GetComponent<TrainGame_GameManager> ().BlockAndRandomize ());
 
 			}
@@ -43,8 +45,8 @@ public class TrainGame_BogieBehavior : MonoBehaviour {
 
 	}
 
-	public void AttachBack(){
-		StartCoroutine (MoveToTarget (original_position));
+	public void AttachBack(bool randomize = false){
+		StartCoroutine (MoveToTarget (original_position, randomize));
 	}
 
 
@@ -127,6 +129,7 @@ public class TrainGame_BogieBehavior : MonoBehaviour {
 		}
 	}
 	public IEnumerator MoveToTargetAndSet(Vector3 target, bool TouchValue, string tag_value){
+		transform.position = new Vector3(transform.position.x, target.y, transform.position.z);
 		tag = tag_value;
 		yield return StartCoroutine(MoveToTarget (target));
 		yield return new WaitForSeconds (2f);

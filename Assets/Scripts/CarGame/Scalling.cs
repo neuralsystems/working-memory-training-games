@@ -56,8 +56,9 @@ public class Scalling : MonoBehaviour {
 		if (shouldScale) {
 			StartCoroutine (Scale ());
 		} else if(scaling != null && (!shouldScale)){
+			Debug.Log ("Stopping to scale");
 			StopCoroutine (scaling);
 		}
-		transform.localScale = new Vector3(1,1,1) * maxSize;
+//		transform.localScale = new Vector3(1,1,1) * maxSize;
 	}
 }

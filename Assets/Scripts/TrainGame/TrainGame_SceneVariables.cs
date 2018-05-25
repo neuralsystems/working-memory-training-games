@@ -12,7 +12,7 @@ public class TrainGame_SceneVariables : MonoBehaviour {
 	public const string ATTACHED_BOGIE_TAG = "AttachedBogieTag";
 	public const string Game_Name = "TrainGame";
 	public const string COUNTER_SHAPE_OPTION_TAG = "CounterShapeOptionTag";
-	public const string DATABASE_NAME = "TrainGame_DB.db";
+	public const string DATABASE_NAME = "WorkingMemoryGames_DB.db";
 	Dictionary <string, string> key_lock_map = new Dictionary<string, string>{
 		{"K1_l","K1_r"},
 		{"K2_l","K2_r"},
@@ -21,6 +21,8 @@ public class TrainGame_SceneVariables : MonoBehaviour {
 		{"K5_l","K5_r"},
 		{"K6_l","K6_r"}
 	};
+
+	public const float height_percentage = 0.50f;	
 
 	// Use this for initialization
 	void Start () {
@@ -44,7 +46,7 @@ public class TrainGame_SceneVariables : MonoBehaviour {
 		}
 		return "";
 	}
-	public string GetBasketFolderName (){
-		return "LockAndKey/New/";
+	public string GetSubFolderName (){
+		return "LockAndKey/";
 	}
 }
