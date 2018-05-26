@@ -44,4 +44,5 @@ public class TrainGame_BlockTrainBehavior : MonoBehaviour {
 		target.x = block_position.x;
 		yield return StartCoroutine (MoveToTarget (target));
 	}
+
 }

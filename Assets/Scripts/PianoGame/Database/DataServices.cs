@@ -60,21 +60,26 @@ public class DataService  {
 
 		}
 
-		public IEnumerable<Level> GetLevels(){
-			return _connection.Table<Level>();
+		public IEnumerable<PianoGame_Levels> GetLevels(){
+			return _connection.Table<PianoGame_Levels>();
 		}
 //
-		public IEnumerable<Level> GetLevel( int id){
-		return _connection.Table<Level>().Where(x => x.Id == id);
+		public IEnumerable<PianoGame_Levels> GetLevel( int id){
+		return _connection.Table<PianoGame_Levels>().Where(x => x.Id == id);
 		}
 //
-		public IEnumerable<ToneForLevel> GetToneForLevel ( int id){
-		return _connection.Table<ToneForLevel>().Where(x => x.Id == id);
+		public IEnumerable<PianoGame_TonesForLevels> GetToneForLevel ( int id){
+		return _connection.Table<PianoGame_TonesForLevels>().Where(x => x.Id == id);
 		}
 //
-		public IEnumerable<ToneForLevel> GetRandomToneForLevel(int level){
-		const string command = "SELECT * FROM ToneForLevel where Level = ? ORDER BY RANDOM() LIMIT 1";
-		return _connection.Query<ToneForLevel>(command, level);
+		public IEnumerable<PianoGame_TonesForLevels> GetRandomToneForLevel(int level){
+		const string command = "SELECT * FROM PianoGame_TonesForLevels where Level = ? ORDER BY RANDOM() LIMIT 1";
+		return _connection.Query<PianoGame_TonesForLevels>(command, level);
+		}
+
+		public IEnumerable<PianoGame_TonesForLevels> GetRandomTone(){
+		const string command = "SELECT * FROM PianoGame_TonesForLevels ORDER BY RANDOM() LIMIT 1";
+		return _connection.Query<PianoGame_TonesForLevels>(command);
 		}
 //
 //		public IEnumerable<Images> GetImage( string imageName){

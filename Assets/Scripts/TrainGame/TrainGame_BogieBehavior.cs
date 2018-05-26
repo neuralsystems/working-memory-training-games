@@ -55,18 +55,24 @@ public class TrainGame_BogieBehavior : MonoBehaviour {
 		target.y = transform.position.y;
 		var top = GetComponentInParent<TrainGame_Engine_Behavior> ().GetTopPosition ();
 		Debug.Log ("Matched? = "+ (Vector3.Distance(top, original_position) <= 0.1f) + " "+top + " "+ original_position+ " " + Vector3.Distance(top, original_position));
+		foreach (Transform child in transform) {
+			if (child.tag == TrainGame_SceneVariables.BOGIE_BLOCK_TAG) {
+				child.GetComponent<SpriteRenderer> ().enabled = false;
+			}
+		}
 		StartCoroutine (ReAttachBogie ((Vector3.Distance(top, original_position) <= 0.1f), top));
 
 	}
 
 
 	public IEnumerator SetTouch(bool value){
-		GetComponent<BoxCollider2D> ().enabled = value;
-		GetComponent<TrainGame_DetectTouch> ().enabled = value;
-		foreach (Transform child in transform) {
-			child.GetComponent<TrainGame_DetectTouch> ().enabled = value;
-			child.GetComponent<BoxCollider2D> ().enabled = value;
-		}
+		GetComponent<TrainGame_DetectTouch> ().SetTouch (value);
+//		GetComponent<BoxCollider2D> ().enabled = value;
+//		GetComponent<TrainGame_DetectTouch> ().enabled = value;
+//		foreach (Transform child in transform) {
+//			child.GetComponent<TrainGame_DetectTouch> ().enabled = value;
+//			child.GetComponent<BoxCollider2D> ().enabled = value;
+//		}
 		yield return null;
 	}
 
@@ -134,7 +140,11 @@ public class TrainGame_BogieBehavior : MonoBehaviour {
 		yield return StartCoroutine(MoveToTarget (target));
 		yield return new WaitForSeconds (2f);
 		StartCoroutine(SetTouch (TouchValue));
-
+		foreach (Transform child in transform) {
+			if (child.tag == TrainGame_SceneVariables.BOGIE_BLOCK_TAG) {
+				child.GetComponent<SpriteRenderer> ().enabled = true;
+			}
+		}
 	}
 
 	public bool OnOriginalPosition(){

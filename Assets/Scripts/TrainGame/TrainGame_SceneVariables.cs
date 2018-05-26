@@ -10,6 +10,7 @@ public class TrainGame_SceneVariables : MonoBehaviour {
 	public const string BOGIE_TAG = "BogieTag";
 	public const string KEYLOCK_TAG = "KeyLockTag";
 	public const string ATTACHED_BOGIE_TAG = "AttachedBogieTag";
+	public const string BOGIE_BLOCK_TAG = "BogieBlockTag";
 	public const string Game_Name = "TrainGame";
 	public const string COUNTER_SHAPE_OPTION_TAG = "CounterShapeOptionTag";
 	public const string DATABASE_NAME = "WorkingMemoryGames_DB.db";

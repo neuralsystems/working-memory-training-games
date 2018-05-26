@@ -23,9 +23,7 @@ public class PlayTone : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		tones = Camera.main.GetComponent<Tones>();
-//		initial_length = 50;
-//		gradient = initial_length -1;
-		gradient =1;
+		gradient = 1;
 		current_length = initial_length;
 		sample = "";
 		original_tone  = tones.GetToneAtRandom ();
@@ -34,10 +32,6 @@ public class PlayTone : MonoBehaviour {
 		StartCoroutine(Camera.main.GetComponent<SceneVariables>().PlaceEmptyRewardSquare(numOfEmptyRewardSquare));
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	}
-
 	public void Repeat(){
 		sample = "";
 		SceneVariables.IS_READY = true;

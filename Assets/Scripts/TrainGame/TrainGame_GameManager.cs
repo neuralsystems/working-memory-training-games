@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TrainGame_GameManager : MonoBehaviour {
 
-	public Transform KEYLOCK_BOGIE_PREFAB, COLOR_BOGIE_PREFAB, ENGINE_PREFAB;
+	public Transform KEYLOCK_BOGIE_PREFAB, COLOR_BOGIE_PREFAB, ENGINE_PREFAB, BOGIE_COVER_PREFAB;
 	public GameObject BLOCK_TRAIN, static_game_object;
 	public bool Should_Block;
 	int numofBogies = 2;
@@ -49,10 +49,12 @@ public class TrainGame_GameManager : MonoBehaviour {
 //				}else{
 					shift = (bogie_object.GetComponent<SpriteRenderer> ().bounds.size.x) ;
 //				}
-				shift += bogie_object.transform.GetChild (1).GetComponent<SpriteRenderer> ().bounds.size.x;
+				shift += bogie_object.transform.GetChild (1).GetComponent<SpriteRenderer> ().bounds.size.x - 0.1f;
 				engine_position.x += shift;
-				bogie_object.position = engine_position;
+				bogie_object.transform.position = engine_position;
+				var temp_pos = bogie_object.transform.position;
 				bogie_object.transform.parent = train_engine.transform;
+				bogie_object.transform.position = temp_pos;
 			}
 			previous_lock.GetComponent<SpriteRenderer> ().sprite = null;
 			StartCoroutine (train_engine.GetComponent<TrainGame_Engine_Behavior>().InitialAnimation ());
@@ -65,7 +67,16 @@ public class TrainGame_GameManager : MonoBehaviour {
 		yield return new WaitForSeconds (numofBogies * 2f);
 		if(Should_Block)  //condition if true show the block train
 		{
-			yield return StartCoroutine (BLOCK_TRAIN.GetComponent<TrainGame_BlockTrainBehavior> ().BlockView ());
+//			yield return StartCoroutine (BLOCK_TRAIN.GetComponent<TrainGame_BlockTrainBehavior> ().BlockView ());
+			var all_bogies = GameObject.FindGameObjectsWithTag(TrainGame_SceneVariables.BOGIE_TAG);
+			foreach (var bogie in all_bogies) {
+				var spawn_pos = Shared_ScriptForGeneralFunctions.GetPointOnScreen (0f, -.1f);
+				spawn_pos.x = bogie.transform.position.x;
+				var block_go = Instantiate (BOGIE_COVER_PREFAB, spawn_pos, Quaternion.identity).gameObject;
+				StartCoroutine(block_go.GetComponent<TrainGame_BogieCoverScript> ().BlockTarget (bogie));
+			}
+
+
 		}
 
 	}
@@ -73,9 +84,9 @@ public class TrainGame_GameManager : MonoBehaviour {
 	public void FinalAnimation(){
 		ChangeGameLevel ();
 		StartCoroutine (GameObject.FindGameObjectWithTag (TrainGame_SceneVariables.ENGINE_TAG).GetComponent<TrainGame_Engine_Behavior> ().FinalAnimation ());
-		if (Should_Block) {
-			StartCoroutine (BLOCK_TRAIN.GetComponent<TrainGame_BlockTrainBehavior> ().UnBlockView ());	
-		}
+//		if (Should_Block) {
+//			StartCoroutine (BLOCK_TRAIN.GetComponent<TrainGame_BlockTrainBehavior> ().UnBlockView ());	
+//		}
 	}
 
 	public void ErrorDetected(){

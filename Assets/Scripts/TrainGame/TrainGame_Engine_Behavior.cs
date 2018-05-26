@@ -77,7 +77,7 @@ public class TrainGame_Engine_Behavior : MonoBehaviour {
 		yield return new WaitForSeconds (GetComponent<AudioSource> ().clip.length * .5f);
 		yield return StartCoroutine(MoveToTarget( target));
 		GetComponentInChildren<ParticleSystem> ().Stop ();
-		yield return new WaitForSeconds (2f);
+//		yield return new WaitForSeconds (2f);
 		StartCoroutine (DetachBogie ());
 	}
 

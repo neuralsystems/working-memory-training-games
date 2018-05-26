@@ -6,7 +6,7 @@ public class SceneVariables : MonoBehaviour {
 	
 	// database related variables
 
-	public string DATABASE_NAME = "PianoPlay.db"; 										// name of the sqlite database
+	public string DATABASE_NAME = "WorkingMemoryGames_DB.db"; 										// name of the sqlite database
 	public string Game_Name = "PianoGame";
 	// tags used in the game
 	public string KEY_SQUARE_TAG = "KeySquareTag";										// tag for the keys spawned when computer presses a piano key

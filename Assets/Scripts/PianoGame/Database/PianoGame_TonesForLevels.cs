@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SQLite4Unity3d;
-public class ToneForLevel : MonoBehaviour {
+public class PianoGame_TonesForLevels : MonoBehaviour {
 
 	[PrimaryKey, AutoIncrement]
 	public int Id { get; set; }
