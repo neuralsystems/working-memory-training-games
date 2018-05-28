@@ -21,12 +21,16 @@ public class PianoGame_RewardSquareBehavior : MonoBehaviour {
 	public IEnumerator MoveToTarget ( Vector3 target)
 	{
 		
-		if (Vector3.Distance (transform.position, target) > 0.00001f) {
+		if (Vector3.Distance (transform.position, target) > 0.01f) {
 			transform.position = Vector3.SmoothDamp (transform.position, target, ref velocity, smoothTime);
 			yield return null;
 			StartCoroutine (MoveToTarget (target));
 		} else {
 			transform.position = target;
+			Debug.Log (smoothTime);
+			if (GetComponent<Animator> ()) {
+				Stand ();
+			}
 		}
 
 
@@ -35,5 +39,9 @@ public class PianoGame_RewardSquareBehavior : MonoBehaviour {
 	public void SetVisibility(bool value){
 		GetComponent<SpriteRenderer> ().enabled = value;
 //		GetComponent<Outline> ().eraseRenderer = value;
+	}
+
+	public void Stand(){
+		GetComponent<Animator> ().SetInteger ("WalkorStand", 1);
 	}
 }

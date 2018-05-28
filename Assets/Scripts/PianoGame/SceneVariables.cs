@@ -135,6 +135,7 @@ public class SceneVariables : MonoBehaviour {
 //				targetRewardSquare.x = originalPosition.x;
 //				targetRewardSquare.y -= size_of_one_object.y;
 //			}
+
 			yield return null;
 		}
 		GameObject.Find (Camera.main.GetComponent<SceneVariables> ().playSound).GetComponent<HomeScreenButtons> ().SetHaloToggle(true);

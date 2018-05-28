@@ -5,7 +5,7 @@ using UnityEngine;
 public class FruitBehavior : MonoBehaviour {
 
 	// Use this for initialization
-	int speed = 2;
+	int speed = 5;
 	public float lowerLimit = -10f;
 	public string fruitName;
 	public string fruitPath;
@@ -31,7 +31,7 @@ public class FruitBehavior : MonoBehaviour {
 
 	void Start () {
 		
-		StartCoroutine (FadeCycle());
+//		StartCoroutine (FadeCycle());
 		fruitPath = Camera.main.GetComponent<BasketGame_SceneVariables>().GetPath ();
 	}
 	
@@ -74,6 +74,8 @@ public class FruitBehavior : MonoBehaviour {
 
 	public IEnumerator Fall(){
 //		transform.position = move
+		GetComponent<SpriteRenderer>().enabled = true;
+		yield return StartCoroutine (FadeCycle());
 		Debug.Log("fruit falling");
 		GetComponent<AudioSource>().PlayOneShot(FRUIT_FALLING);
 		GameObject bubble_gameobject = GameObject.FindGameObjectsWithTag (BasketGame_SceneVariables.bubbleTag)[0];
@@ -132,8 +134,8 @@ public class FruitBehavior : MonoBehaviour {
 	public IEnumerator AfterTrappedinBubble(){
 		
 		var path_speed = 20;
-		var bubble_x = GetComponentInChildren<SpriteRenderer> ().bounds.size.x;
-		GetComponent<BasketGame_DetectTouch>().SetBoxCollider(GetComponent<SpriteRenderer> ().bounds.size.x/bubble_x);
+		var bubble_x = GetComponentInChildren<Transform> ().localScale.x;
+		GetComponent<BasketGame_DetectTouch>().SetBoxCollider(2);
 		StartCoroutine(Shared_ScriptForGeneralFunctions.ScaleUp (gameObject, 1f, .3f));
 		iTween.MoveTo(gameObject,iTween.Hash("path",iTweenPath.GetPath(fruitPath),"speed",path_speed,"easetype","linear","oncomplete","Projectile"));
 		yield return new WaitForSeconds (1f);
@@ -145,7 +147,7 @@ public class FruitBehavior : MonoBehaviour {
 		ResetProperties ();
 		StartCoroutine(MoveToTarget (original_position));
 		yield return StartCoroutine(Shared_ScriptForGeneralFunctions.ScaleDown (this.gameObject, original_size.x, 0.3f));
-
+		GetComponent<SpriteRenderer> ().enabled = false;
 
 	}
 

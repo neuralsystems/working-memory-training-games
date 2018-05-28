@@ -8,6 +8,7 @@ public class TrainGame_BogieBehavior : MonoBehaviour {
 	float smoothTime = 0.3f, minDistance = 0.1f;
 	string original_tag ;
 	public GameObject BLOCK_TRAIN;
+	public GameObject soundManager_go;
 	// Use this for initialization
 	void Start () {
 		// initial tag to be set
@@ -67,12 +68,6 @@ public class TrainGame_BogieBehavior : MonoBehaviour {
 
 	public IEnumerator SetTouch(bool value){
 		GetComponent<TrainGame_DetectTouch> ().SetTouch (value);
-//		GetComponent<BoxCollider2D> ().enabled = value;
-//		GetComponent<TrainGame_DetectTouch> ().enabled = value;
-//		foreach (Transform child in transform) {
-//			child.GetComponent<TrainGame_DetectTouch> ().enabled = value;
-//			child.GetComponent<BoxCollider2D> ().enabled = value;
-//		}
 		yield return null;
 	}
 
@@ -80,7 +75,7 @@ public class TrainGame_BogieBehavior : MonoBehaviour {
 		var unattached_bogies = GameObject.FindGameObjectsWithTag (TrainGame_SceneVariables.BOGIE_TAG);
 		foreach (var bogie in unattached_bogies) {
 			//				if (bogie.tag == TrainGame_SceneVariables.BOGIE_TAG) {
-			StartCoroutine (bogie.GetComponent<TrainGame_BogieBehavior> ().SetTouch (true));
+			StartCoroutine (bogie.GetComponent<TrainGame_BogieBehavior> ().SetTouch (false));
 			//				}
 		}
 		var _random_position = transform.position;
@@ -103,12 +98,14 @@ public class TrainGame_BogieBehavior : MonoBehaviour {
 			yield return null;
 		}
 		transform.position = target;
+		var Sound_go = GameObject.Find("SoundManager");
 		// determine whether it is the correct match or not;
 		if(!matched){
 			Camera.main.GetComponent<TrainGame_GameManager> ().ErrorDetected ();
 			var shaketime = .1f;
 			iTween.ShakePosition (this.gameObject, iTween.Hash("x", 1f,"islocal", false, "time",shaketime ));
 			yield return new WaitForSeconds(shaketime);
+			yield return new WaitForSeconds(2.0f * Sound_go.GetComponent<SoundManager_Script>().PlaySadSound());
 			yield return StartCoroutine(MoveToTargetAndSet(_random_position, true, TrainGame_SceneVariables.BOGIE_TAG));
 		} else{
 			// code if it is a correct match
@@ -117,7 +114,8 @@ public class TrainGame_BogieBehavior : MonoBehaviour {
 			GetComponent<AudioSource> ().Play ();
 			GetComponentInChildren<ParticleSystem> ().Emit (500);
 			GetComponentInParent<TrainGame_Engine_Behavior> ().RemoveFromTop ();
-			yield return new WaitForSeconds(2.0f * GetComponentInChildren<ParticleSystem> ().main.duration);
+//			GetComponentInChildren<ParticleSystem> ().main.duration;
+			yield return new WaitForSeconds(2.0f * Sound_go.GetComponent<SoundManager_Script>().PlayHappySound());
 		}
 		Next ();
 	}
