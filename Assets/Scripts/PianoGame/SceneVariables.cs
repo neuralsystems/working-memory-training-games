@@ -13,18 +13,19 @@ public class SceneVariables : MonoBehaviour {
 	public string SAMPLE_SQUARE_TAG = "SampleSquareTag";									// not used yet and not sure why added this tag
 	public string USER_INPUT_SQUARE_TAG = "UserInputSquareTag";							// tag for the keys spawned when user presses a piano key
 	public string REWARD_SQUARE_TAG = "RewardSquareTag";									// // tag for the square spawned at the top of screen 
+	public string NON_REWARD_SQUARE_TAG = "NonRewardSquareTag";
 	public string RAIN_PARTICLE_SYSTEM_TAG = "RainParticleSystemTag";
 	public string REWARD_SQUARE_CHILD_TAG = "RewardSquareChildTag";
 	public const string PIANO_KEY_TAG = "PianoKeyTag";
 	// gameobject position related variables 
-	public float heightPercentageForRewardSquare = .95f, widthPercentageForRewardSquare = .50f; // for position of squares on top
+	public float heightPercentageForRewardSquare = .9f, widthPercentageForRewardSquare = .50f; // for position of squares on top
 	public float widthPercentage, heightPercentage;										// not used yet 
 
 
 	// gameplay related variables 
 	public static bool IS_PRESSED = false;												// to check that only one key is presses = true if any key is pressed, false otherwise
-	public static float PLAY_TIME = .6f;													// time in sec for which a frequency is played	
-	public static float WAIT_TIME = .6f;													// minimum time gap between two consequtive press 
+	public static float PLAY_TIME = .3f;													// time in sec for which a frequency is played	
+	public static float WAIT_TIME = .5f;													// minimum time gap between two consequtive press 
 	public static float delayAfterCorrect = 2.0f, delayAfterIncorrect = 2.0f;			// not used yet and not sure why added	
 	public static string USER_STRING = "";												// not used yet and not sure why added
 	public static bool IS_USER_MODE = false;												// to chek if press can be enabled for the user, is false when the computer is playing a tune, true at other time
@@ -122,11 +123,13 @@ public class SceneVariables : MonoBehaviour {
 					yield return new WaitForSeconds (1f);
 				}
 				var rs = Instantiate (rewardSquare, init_position, Quaternion.identity);
-				StartCoroutine(rs.GetComponent<PianoGame_RewardSquareBehavior>().MoveToTarget(targetRewardSquare));
-				rs.gameObject.tag = REWARD_SQUARE_TAG;
+				StartCoroutine(rs.GetComponent<PianoGame_RewardSquareBehavior>().MoveToTarget(targetRewardSquare, REWARD_SQUARE_TAG));
+//				rs.gameObject.tag = REWARD_SQUARE_TAG;
 //				rs.transform.localScale = reward_square_parent_gameobject.transform.localScale;
 				rs.transform.parent = reward_square_parent_gameobject.transform;
+				init_position.x += size_of_one_object.x; 
 			}
+//			yield return new WaitForSeconds (1f);
 //			Debug.Log (rs.transform.localScale + " is the size before");
 //			rs.transform.parent = GameObject.Find (REWARD_SQUARE_PARENT).transform;
 //			Debug.Log (rs.transform.localScale + " is the size after");
@@ -138,7 +141,7 @@ public class SceneVariables : MonoBehaviour {
 
 			yield return null;
 		}
-		GameObject.Find (Camera.main.GetComponent<SceneVariables> ().playSound).GetComponent<HomeScreenButtons> ().SetHaloToggle(true);
+//		GameObject.Find (Camera.main.GetComponent<SceneVariables> ().playSound).GetComponent<HomeScreenButtons> ().SetHaloToggle(true);
 	}
 
 	float GetNormalizedWidth( float blockPercent, float blockNumbers){
@@ -197,6 +200,4 @@ public class SceneVariables : MonoBehaviour {
 		GetComponent<AudioSource> ().PlayOneShot(Audio_Clips [r_x]);
 		yield return new WaitForSeconds (Audio_Clips [r_x].length); 
 	}
-
-
 }

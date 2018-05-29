@@ -45,6 +45,7 @@ public class TrainGame_KeyLockScript : MonoBehaviour {
 	}
 
 	public void ZoomInOut(){
+		Debug.Log ("Called me?");
 		StartCoroutine (Scale ());
 	}
 }

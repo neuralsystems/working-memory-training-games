@@ -17,7 +17,7 @@ public class DetectTouch : MonoBehaviour {
 				Vector2 touchPos = new Vector2(wp.x, wp.y);
 				if (GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPos))
 				{
-				this.gameObject.GetComponent<OnKeyPress>().OnMouseDown();
+					this.gameObject.GetComponent<OnKeyPress>().OnMouseDown();
 				}
 			}
 		}

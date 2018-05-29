@@ -17,7 +17,7 @@ public class PG_RewardSquareScrollList : MonoBehaviour {
 	public SimpleObjectPool RewardSquareObjectPool;
 	// Use this for initialization
 	void Start () {
-		RefreshDisplay ();
+//		RefreshDisplay ();
 	}
 
 	private void RefreshDisplay(){

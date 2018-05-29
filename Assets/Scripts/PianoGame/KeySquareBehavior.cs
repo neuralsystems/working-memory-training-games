@@ -117,7 +117,8 @@ public class KeySquareBehavior : MonoBehaviour
 	public IEnumerator MoveToReward ( GameObject rewardTile, bool shouldCall)
 	{
 		var target = rewardTile.transform.position;
-		transform.localScale = rewardTile.transform.localScale * (rewardTile.GetComponent<SpriteRenderer>().bounds.size.x / GetComponent<SpriteRenderer>().bounds.size.x);
+//		transform.localScale = rewardTile.transform.localScale * (rewardTile.GetComponent<SpriteRenderer>().bounds.size.x / GetComponent<SpriteRenderer>().bounds.size.x);
+		transform.localScale = rewardTile.transform.localScale * .5f;
 		while(Vector3.Distance (transform.position, target) > SceneVariables.MIN_DISTANCE) {
 			transform.position = Vector3.SmoothDamp (transform.position, target, ref velocity, smoothTime);
 			yield return null;

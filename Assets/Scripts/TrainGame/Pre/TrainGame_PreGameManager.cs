@@ -32,7 +32,7 @@ public class TrainGame_PreGameManager : MonoBehaviour {
 //		int total_shapes = shapes.Length;
 //		int x = Random.Range (0, total_shapes);
 		var shape_name = shapes [first_level];
-		SampleShape.GetComponent<SpriteRenderer> ().sprite = Resources.Load (Folder_location + shape_name, typeof(Sprite)) as Sprite;
+		SampleShape.GetComponent<SpriteRenderer> ().sprite = Resources.Load (Folder_location + "Shapes/" +shape_name, typeof(Sprite)) as Sprite;
 		SetOptions (shape_name);
 		first_level++;
 		first_level %= shapes.Length;
@@ -54,6 +54,7 @@ public class TrainGame_PreGameManager : MonoBehaviour {
 		Sprite[] all_sprites =  new Sprite[all_sprites_len];
 		for (int j =0;j< all_sprites_len;j++ ) {
 			all_sprites[j] = all_objects[j] as Sprite;
+			Debug.Log (all_sprites [j].name + " "+ all_sprites_len);
 		}
 		var counter_shape_sprites = RandomizingArray.RandomizeSprite (all_sprites).ToArray ();
 //		Debug.Log ("sneaked under: " counter_shape_sprites.coun);
