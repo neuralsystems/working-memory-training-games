@@ -5,7 +5,7 @@ using System.Linq;
 public class BasketGame_SceneVariables : MonoBehaviour {
 
 	public const string Game_Name = "BasketGame";
-	public static string basketTag = "BasketTag", fruitTag ="FruitTag", fullBasket = "FullBasketTag", bubbleTag = "BubbleTag", hangingFruitTag = "HangingFruitTag", inBasketFruitTag = "InBasketFruitTag";
+	public static string basketTag = "BasketTag", fruitTag ="FruitTag", fullBasket = "FullBasketTag", bubbleTag = "BubbleTag", hangingFruitTag = "HangingFruitTag", inBasketFruitTag = "InBasketFruitTag", baloonTag = "BaloonTag";
 	public const string eatenFruitTag = "EatenFruitTag";
 	public string RAIN_PARTICLE_SYSTEM_TAG = "RainParticleSystemTag";
 	public static Vector3 initVector = new Vector3(-5.6f,-1.5f,0f);
@@ -48,8 +48,8 @@ public class BasketGame_SceneVariables : MonoBehaviour {
 	public  Dictionary <string, string[]> objectColorMap = new Dictionary<string, string[]>{
 //		{"Bluebasket",new string[]{}},
 		{"redbasket",new string []{"Apple"}},
-		{"orangebasket",new string[] {"Orange"}},
-		{"yellowbasket",new string[] {"Banana", "Lemon"}},
+		{"orangebasket",new string[] {"Orange1"}},
+		{"yellowbasket",new string[] {"Banana1", "Lemon1"}},
 		{"purplebasket",new string[] {"Beetroot"}},
 		{"greenbasket",new string[] {"GreenApple"}},
 //		{"Brownbasket",new string[] {}},

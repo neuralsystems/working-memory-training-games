@@ -24,8 +24,8 @@ public class SceneVariables : MonoBehaviour {
 
 	// gameplay related variables 
 	public static bool IS_PRESSED = false;												// to check that only one key is presses = true if any key is pressed, false otherwise
-	public static float PLAY_TIME = .3f;													// time in sec for which a frequency is played	
-	public static float WAIT_TIME = .5f;													// minimum time gap between two consequtive press 
+	public static float PLAY_TIME = .5f;													// time in sec for which a frequency is played	
+	public static float WAIT_TIME = .6f;													// minimum time gap between two consequtive press 
 	public static float delayAfterCorrect = 2.0f, delayAfterIncorrect = 2.0f;			// not used yet and not sure why added	
 	public static string USER_STRING = "";												// not used yet and not sure why added
 	public static bool IS_USER_MODE = false;												// to chek if press can be enabled for the user, is false when the computer is playing a tune, true at other time

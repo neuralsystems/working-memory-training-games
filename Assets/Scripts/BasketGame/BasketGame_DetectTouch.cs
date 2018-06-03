@@ -23,7 +23,9 @@ public class BasketGame_DetectTouch : MonoBehaviour {
 				{
 					// add the code for execuation  on tap 
 //					Destroy(this.gameObject);
-					OnMouseDown();
+                   OnMouseDown();
+                   
+					
 
 				}
 			}
@@ -32,19 +34,29 @@ public class BasketGame_DetectTouch : MonoBehaviour {
 
 
 	public void OnMouseDown(){
-//		Debug.Log ("touched on the bubble");
-//		Destroy (this.gameObject);
-//		GetComponent<Rigidbody2D>().isKinematic = true;
-		gameObject.AddComponent<Rigidbody2D>();
-//		GetComponent<SpriteRenderer>().sortingLayerName = "Game";
-		foreach (Transform child in gameObject.transform) {
-			Destroy (child.gameObject);
-//			StartCoroutine(child.GetComponent<BasketGame_BubbleBehavior> ().BeforeGoDestroy ());
-		}
-		GetComponent<AudioSource> ().PlayOneShot (bubbleBurst);
-		GetComponent<ParticleSystem> ().Play();
-		iTween.Stop (gameObject);
-		SetBoxCollider (.2f);
+        if (tag == BasketGame_SceneVariables.baloonTag)
+        {
+            Debug.Log("vame in of");
+            Camera.main.GetComponent<BasketGame_PreGameManager>().Next();
+            Destroy(gameObject);
+        }
+        else
+        {
+            //		Debug.Log ("touched on the bubble");
+            //		Destroy (this.gameObject);
+            //		GetComponent<Rigidbody2D>().isKinematic = true;
+            gameObject.AddComponent<Rigidbody2D>();
+            //		GetComponent<SpriteRenderer>().sortingLayerName = "Game";
+            foreach (Transform child in gameObject.transform)
+            {
+                Destroy(child.gameObject);
+                //			StartCoroutine(child.GetComponent<BasketGame_BubbleBehavior> ().BeforeGoDestroy ());
+            }
+            GetComponent<AudioSource>().PlayOneShot(bubbleBurst);
+            GetComponent<ParticleSystem>().Play();
+            iTween.Stop(gameObject);
+            SetBoxCollider(.2f);
+        }
 //		StartCoroutine(GetComponent<FruitBehavior> ().Fall ());
 	}
 

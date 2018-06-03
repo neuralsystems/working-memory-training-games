@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
 public class Reward
 {
 	public Image rewardNote;
@@ -17,10 +18,10 @@ public class PG_RewardSquareScrollList : MonoBehaviour {
 	public SimpleObjectPool RewardSquareObjectPool;
 	// Use this for initialization
 	void Start () {
-//		RefreshDisplay ();
-	}
+        RefreshDisplay();
+    }
 
-	private void RefreshDisplay(){
+    private void RefreshDisplay(){
 		AddNotes ();
 	}
 
@@ -29,7 +30,6 @@ public class PG_RewardSquareScrollList : MonoBehaviour {
 			Reward reward_object = rewardList [i];
 			var newReward = RewardSquareObjectPool.GetObject ();
 			newReward.transform.SetParent (contentPanel);
-
 			PianoGame_SampleRewardSquare new_sampleRewardSquare = newReward.GetComponent<PianoGame_SampleRewardSquare> ();
 			new_sampleRewardSquare.SetUp (reward_object, this);
 		}

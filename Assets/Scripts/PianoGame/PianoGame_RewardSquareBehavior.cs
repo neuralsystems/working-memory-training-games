@@ -32,7 +32,7 @@ public class PianoGame_RewardSquareBehavior : MonoBehaviour {
 		if(object_tag == Camera.main.GetComponent<SceneVariables>().REWARD_SQUARE_TAG){
 			tag = object_tag;
 			if (GameObject.FindGameObjectsWithTag (Camera.main.GetComponent<SceneVariables> ().NON_REWARD_SQUARE_TAG).Length == 0) {
-				Debug.Log ("Length 0");
+				// Debug.Log ("Length 0");
 				GameObject.Find (Camera.main.GetComponent<SceneVariables> ().playSound).GetComponent<HomeScreenButtons> ().SetHaloToggle (true);
 			} else {
 				Debug.Log ("Length !0");

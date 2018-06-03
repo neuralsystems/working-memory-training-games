@@ -24,8 +24,14 @@ public class Shared_ScriptForGeneralFunctions : MonoBehaviour {
 
 	}
 
+    public static Vector3 GetRandomPointOnScreen(float width_min = .1f, float width_max = .9f, float height_min = .1f, float height_max = .9f)
+    {
+        var width_perc = Random.Range(width_min, width_max);
+        var height_perc = Random.Range(height_min, height_max);
+        return GetPointOnScreen(width_perc, height_perc);
+    }
 
-	public IEnumerator MoveToTarget (GameObject traveller, Vector3 target)
+    public IEnumerator MoveToTarget (GameObject traveller, Vector3 target)
 	{
 		Debug.Log ("started for traveller = "+ traveller.gameObject.name + target);
 		if (Vector3.Distance (traveller.transform.position, target) > Mathf.Min(minDistance,0.0001f)) {

@@ -128,6 +128,7 @@ public class KeySquareBehavior : MonoBehaviour
 		transform.position = target;
 		if (rewardTile.transform.childCount == 0) {
 			transform.parent = rewardTile.transform;
+            transform.localPosition = new Vector3(-.17f,-.13f,0f);
 			tag = Camera.main.GetComponent<SceneVariables> ().REWARD_SQUARE_CHILD_TAG;
 			GetComponentInParent<ParticleSystem> ().Play ();
 			if (shouldCall) {
