@@ -9,12 +9,12 @@ public class BasketGame_PreGameManager : MonoBehaviour {
     int tapCount = 0;
     int tap_threshold = 5;
     int level_number = 0;
-    int max_levels = 7;
+    int max_levels = 10;
     bool should_move = false;
     int movement_Speed = 4;
     public string MainGameSceneName;
-    bool[] Movement_choice = new bool[] { false,false,false,true,true,true,true};
-    int[] Speed_choices = new int[] {0,0,0,1,2,4,5};
+    bool[] Movement_choice = new bool[] { false,false,false,true,true,true,true,true,true,true};
+    int[] Speed_choices = new int[] {0,0,0,2,4,5,8,10,12,15};
     // Use this for initialization
     void Start () {
         var folder = BasketGame_SceneVariables.Game_Name + "/" + "Pre/Baloons";
@@ -61,14 +61,20 @@ public class BasketGame_PreGameManager : MonoBehaviour {
         SpawnBaloon();
     }
 
+    public void Previous()
+    {
+        ReduceLevel();
+        SpawnBaloon();
+    }
+
     public void ReduceLevel()
     {
-        level_number--;
+        level_number = Mathf.Max(0, level_number - 1);
     }
 
     public void IncreaseLevel()
     {
-        level_number++;
-        
+        level_number = Mathf.Min(level_number + 1, max_levels);
+
     }
 }

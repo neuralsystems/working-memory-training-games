@@ -21,6 +21,7 @@ public class BasketGame_PreBaloonScript : MonoBehaviour {
 
     void OnCompletingMotion()
     {
-        Camera.main.GetComponent<BasketGame_PreGameManager>().ReduceLevel();
+        Camera.main.GetComponent<BasketGame_PreGameManager>().Previous();
+        Destroy(gameObject);
     }
 }

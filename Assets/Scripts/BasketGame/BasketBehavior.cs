@@ -12,7 +12,7 @@ public class BasketBehavior : MonoBehaviour {
 	public float smoothTime = 0.2f;
 	public float  numOfRounds =  2f, inTime = 2f;
 	public Vector3 originalPosition;
-	public float num_of_fruits;
+	float num_of_fruits;
 	public float reduce_height_by;
 
 	// Use this for initialization
@@ -32,7 +32,7 @@ public class BasketBehavior : MonoBehaviour {
 		foreach (Transform child in transform) {
 			child.gameObject.transform.localScale = new Vector3 (.4f, .4f, 1f);
 		}
-		num_of_fruits = 3f;
+		num_of_fruits = 5f;
 		tag = basket_tag;
 		GetComponent<BasketBehavior> ().basketName = name;
 		transform.localScale = scale;
