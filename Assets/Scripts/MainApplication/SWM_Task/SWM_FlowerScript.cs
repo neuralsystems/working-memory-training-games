@@ -13,4 +13,19 @@ public class SWM_FlowerScript : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public IEnumerator MoveToTarget(GameObject target)
+    {
+        float smoothTime = .1f;
+        Vector3 velocity = Vector3.zero;
+        while(Vector3.Distance(transform.position, target.transform.position) > 0.01f)
+        {
+            transform.position = Vector3.SmoothDamp(transform.position, target.transform.position, ref velocity, smoothTime);
+            yield return null;
+        }
+        transform.position = target.transform.position;
+        transform.parent = target.transform;
+        target.GetComponent<SpriteRenderer>().enabled = false;
+        Camera.main.GetComponent<SWM_GameManager>().SetScene();
+    }
 }

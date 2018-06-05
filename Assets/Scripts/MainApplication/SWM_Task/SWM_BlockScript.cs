@@ -8,6 +8,7 @@ public class SWM_BlockScript : MonoBehaviour {
     bool hasToken = false;
     bool hadToken;
     bool Touchable;
+    //public GameObject _tower;
     // Use this for initialization
 	void Start () {
         SetHadToken(false);
@@ -32,6 +33,12 @@ public class SWM_BlockScript : MonoBehaviour {
         {
             TouchCount++;
             StartCoroutine(Show());
+            if (hasToken)
+            {
+                GameObject _flower = transform.GetChild(0).gameObject;
+                Camera.main.GetComponent<SWM_GameManager>().TrashFlower(_flower);
+            }
+
             //if (TouchCount > 1)
             //{
             //    Camera.main.GetComponent<SWM_GameManager>().WithInSearchError();
@@ -55,7 +62,7 @@ public class SWM_BlockScript : MonoBehaviour {
     IEnumerator Show()
     {
         GetComponent<SpriteRenderer>().enabled = false;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.2f);
         GetComponent<SpriteRenderer>().enabled = true;
     }
 

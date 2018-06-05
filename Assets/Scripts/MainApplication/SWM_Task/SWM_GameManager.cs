@@ -11,6 +11,7 @@ public class SWM_GameManager : MonoBehaviour {
     public int _with_in_search_error, _between_search_error;
     public Transform _flower;
     System.Random rand;
+    int numSpawn = 0;
     // Use this for initialization
 	void Start () {
         rand = new System.Random();
@@ -38,18 +39,26 @@ public class SWM_GameManager : MonoBehaviour {
     public void SetScene()
     {
         //GetAllPosition();
-        ResetErrorValues(0, _between_search_error);
-        for (int i = 0; i < number_of_blocks; i++)
+        if (numSpawn < number_of_blocks)
         {
-            block_parent.transform.GetChild(i).GetComponent<SWM_BlockScript>().SetVisible(true);
-            tower.transform.GetChild(i).GetComponent<SpriteRenderer>().enabled = true;
+            numSpawn++;
+            ResetErrorValues(0, _between_search_error);
+            for (int i = 0; i < number_of_blocks; i++)
+            {
+                block_parent.transform.GetChild(i).GetComponent<SWM_BlockScript>().SetVisible(true);
+                tower.transform.GetChild(i).GetComponent<SpriteRenderer>().enabled = true;
+            }
+            //string token = "Flower";
+            var flower_go = Instantiate(_flower, new Vector3(0, 0, 0), Quaternion.identity);
+            var child_number = rand.Next(0, number_of_blocks - 1);
+            flower_go.transform.position = block_parent.transform.GetChild(child_number).transform.position;
+            flower_go.transform.parent = block_parent.transform.GetChild(child_number).transform;
+            block_parent.transform.GetChild(child_number).GetComponent<SWM_BlockScript>().SetTokenBool(true);
         }
-        //string token = "Flower";
-        var flower_go = Instantiate(_flower, new Vector3(0,0,0),Quaternion.identity);
-        var child_number = rand.Next(0, number_of_blocks - 1);
-        flower_go.transform.position = block_parent.transform.GetChild(child_number).transform.position;
-        flower_go.transform.parent = block_parent.transform.GetChild(child_number).transform;
-        block_parent.transform.GetChild(child_number).GetComponent<SWM_BlockScript>().SetTokenBool(true);
+        else
+        {
+            Debug.Log(_between_search_error + " " + _with_in_search_error );
+        }
     }
 
     public void WithInSearchError()
@@ -66,6 +75,12 @@ public class SWM_GameManager : MonoBehaviour {
     {
         _with_in_search_error = _within;
         _between_search_error = _between;
+    }
+
+    public void TrashFlower(GameObject flower)
+    {
+        var target = tower.GetComponent<SWM_TowerScript>().GetNextChild().gameObject;
+        StartCoroutine(flower.GetComponent<SWM_FlowerScript>().MoveToTarget(target));
     }
 
 }
