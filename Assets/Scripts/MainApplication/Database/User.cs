@@ -20,5 +20,8 @@ public class User : MonoBehaviour {
     }
 
 
-
+    public string GetUserName()
+    {
+        return this.Username;
+    }
 }

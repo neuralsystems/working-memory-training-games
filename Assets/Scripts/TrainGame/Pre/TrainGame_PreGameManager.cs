@@ -11,7 +11,11 @@ public class TrainGame_PreGameManager : MonoBehaviour {
 	string[] shapes = new string[]{"Shape_5", "Shape_1","Shape_2", "Shape_3", "Shape_4"};
 	int first_level = 0;
 	int consecutive_correct =0, threshold = 5;
-	public string mainScene;
+    public const string NAME_FOR_CORRECT = "Correct";
+    public const string SAMPLE_GO = "SampleShape";
+    public bool ShowInitialSeperation = false;
+    public string mainScene;
+    public bool showOtherOptions = false;
 	void Start () {
 		SetShape ();
 		
@@ -28,7 +32,8 @@ public class TrainGame_PreGameManager : MonoBehaviour {
 	public void ResetCorrect(){
 		consecutive_correct = 0;
 	}
-	public void SetShape(){
+
+    public void SetShape(){
 //		int total_shapes = shapes.Length;
 //		int x = Random.Range (0, total_shapes);
 		var shape_name = shapes [first_level];
@@ -65,7 +70,7 @@ public class TrainGame_PreGameManager : MonoBehaviour {
 			counter_shape.GetComponent<TrainGame_CounterShapeScript> ().SetUp(counter_shape_sprites [i] as Sprite);
 			Debug.Log (counter_shape_sprites [i]);
 			i++;
-
+            //if(counter_shape_sprites[i].name == )
 		}
 	}
 

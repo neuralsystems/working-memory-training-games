@@ -77,9 +77,10 @@ public class MApp_DataServices
         return _connection.Table<User>().Where(x => x.Username == username);
     }
 
-    public void CreateUser(string Username, string dob, string diagnosis, int IQ = 80, string First_name = "Rohit", string Last_name = "Shetty")
+    public void CreateUser(string Username, string dob, int _age,string diagnosis, int iQ = 80, string first_name = "Rohit", string last_name = "Shetty")
     {
-         _connection.Insert( new User() { Id = 1, Username = Username, Dob = dob, Diagnosis = diagnosis, IQ = IQ, First_Name = First_name, Last_Name = Last_name });
+        Debug.Log( "passing values: :uname - " + Username+" dob - " + dob + " Age- "+ _age+ " diagnosis- "+ diagnosis+ " id- " + iQ+ "  first - " + first_name+ " last- " + last_name);
+        _connection.Insert( new User() { Username = Username, Dob = dob, Age = _age, Diagnosis = diagnosis,IQ = iQ, First_Name = first_name, Last_Name =last_name });
     }
 
     public IEnumerable<PianoGame_TonesForLevels> GetRandomToneForLevel(int level)
@@ -92,6 +93,11 @@ public class MApp_DataServices
     {
         const string command = "SELECT * FROM PianoGame_TonesForLevels ORDER BY RANDOM() LIMIT 1";
         return _connection.Query<PianoGame_TonesForLevels>(command);
+    }
+
+    public void RegisterSWMScores(int user_id, int _withinscore, int _betweenscore, string doa, int number_of_blocks)
+    {
+        _connection.Insert(new ScoreSWM() { TestedUser = user_id, WithInErrorCount = _withinscore, BetweenErrorCount = _betweenscore, DateOfTest = doa, NumOfBlocks = number_of_blocks });
     }
     
 }

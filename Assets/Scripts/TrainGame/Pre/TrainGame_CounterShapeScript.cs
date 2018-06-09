@@ -2,18 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using cakeslice;
 public class TrainGame_CounterShapeScript : MonoBehaviour {
 
 //	bool detectTouch = false;
 	Vector3 velocity = Vector3.zero;
-	public Vector3 original_position; 
-	float minDistance = 0.1f;
+	public Vector3 original_position;
+    private float minDistance = 0.1f;
 	static bool Repeat = false;
-    string original_tag;
-    string hexForWrong = "#F80C1AFF";
-	string hexForNeutral = "#330CFF13";
-	string  hexForRight = "#72FF20FB";
+    private string original_tag;
+    private string hexForWrong = "#F80C1AFF";
+	private string hexForNeutral = "#330CFF13";
+	private string  hexForRight = "#72FF20FB";
 	public AudioClip connect_sound;
+    
+
 	void Awake(){
 		original_position = transform.position;
         original_tag = tag;
@@ -24,26 +27,62 @@ public class TrainGame_CounterShapeScript : MonoBehaviour {
 	}
 
 	public void SetUp(Sprite shape){
-		
-		GetComponent<SpriteRenderer> ().sprite = shape;
-		transform.position = original_position;	
-		SetTouchAndScale (true, true, true,tag);
-		Repeat = false;
-		foreach (Transform chi in transform) {
-			chi.gameObject.GetComponent<TrainGame_CircleMaskScript> ().SetColorAndVisibility (hexForNeutral,false);
-		}
-	}
+
+        GetComponent<SpriteRenderer>().sprite = shape;
+        transform.position = original_position;
+        //SetTouchAndScale(true, true, true, tag);
+        Repeat = false;
+        foreach (Transform chi in transform)
+        {
+            chi.gameObject.GetComponent<TrainGame_CircleMaskScript>().SetColorAndVisibility(hexForNeutral, false);
+        }
+        var _is_correct = shape.name == TrainGame_PreGameManager.NAME_FOR_CORRECT;
+        if (_is_correct)
+        {
+            var target_go = GameObject.Find(TrainGame_PreGameManager.SAMPLE_GO);
+            transform.position = target_go.transform.position;
+            GetComponent<SpriteRenderer>().enabled = true;
+        }
+        if(_is_correct)
+        StartCoroutine(InitialSeperation(Camera.main.GetComponent<TrainGame_PreGameManager>().ShowInitialSeperation));
+
+
+    }
+
+    private void Reset()
+    {
+        GetComponent<SpriteRenderer>().enabled = false;
+    }
+
+    public IEnumerator InitialSeperation(bool val)
+    {
+        if (val)
+        {
+            var target = transform.position;
+            target.x += GetComponent<SpriteRenderer>().bounds.size.x;
+            yield return StartCoroutine(MoveToTarget(target, false, 2f));
+            ResetPosition();
+            
+        }
+        else
+        {
+            transform.position = original_position;
+        }
+
+        SetTouchAndScale(true, true, true, tag);
+    }
 	
 	public void OnMouseDown(){
         tag = TrainGame_SceneVariables.SELECTED_SHAPE_TAG;
-		StartCoroutine(MoveToCounter ());
+        SetTouchAndScale(false, false, true, tag);
+        StartCoroutine(MoveToCounter ());
 	}
 
 	IEnumerator MoveToCounter(){
-		var target_go = GameObject.Find ("SampleShape");
+		var target_go = GameObject.Find (TrainGame_PreGameManager.SAMPLE_GO);
 		var target= target_go.transform.position;
 		SetTouchAndScale(false,false,false ,original_tag);
-		var is_correct = GetComponent<SpriteRenderer> ().sprite.name == "Correct";
+		var is_correct = GetComponent<SpriteRenderer> ().sprite.name == TrainGame_PreGameManager.NAME_FOR_CORRECT;
         var smoothTime = .1f;
         if (is_correct)
         {
@@ -81,11 +120,11 @@ public class TrainGame_CounterShapeScript : MonoBehaviour {
 			foreach (Transform chi in transform) {
 				chi.gameObject.GetComponent<TrainGame_CircleMaskScript> ().SetColorAndVisibility (hexForNeutral,false);
 			}
-			SetTouchAndScale (true, true,true ,tag);
-		} else{
+            //SetTouchAndScale(true, true, true, tag);
+        } else{
 			if (!is_correct) {
 				foreach (Transform chi in transform) {
-					chi.gameObject.GetComponent<TrainGame_CircleMaskScript> ().SetColorAndVisibility (hexForNeutral, false);
+					chi.gameObject.GetComponent<TrainGame_CircleMaskScript> ().SetColorAndVisibility (hexForWrong, false);
 				}
 			} else {
 				foreach (Transform chi in transform) {
@@ -98,8 +137,15 @@ public class TrainGame_CounterShapeScript : MonoBehaviour {
 
 
 	void ResetPosition(){
-		StartCoroutine(MoveToTarget (original_position, true, .1f));
-	}
+        StartCoroutine(ResetPositionAndSet());
+    }
+
+    IEnumerator ResetPositionAndSet()
+    {
+        yield return StartCoroutine(MoveToTarget(original_position, true, .1f));
+        SetTouchAndScale(true, true, true, tag);
+
+    }
 
 	void SetTouchAndScale(bool touch, bool scale, bool visible, string object_tag)
     {
@@ -108,6 +154,7 @@ public class TrainGame_CounterShapeScript : MonoBehaviour {
             obj.GetComponent<SpriteRenderer>().enabled = visible;
 			obj.GetComponent<TrainGame_DetectTouch> ().SetTouch (touch); 
 			obj.GetComponent<Scalling> ().SetScale (scale);
+            obj.GetComponent<Outline>().eraseRenderer = visible;
 		}
 	}
 }

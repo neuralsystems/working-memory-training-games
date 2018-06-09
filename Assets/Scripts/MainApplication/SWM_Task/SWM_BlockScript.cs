@@ -7,25 +7,31 @@ public class SWM_BlockScript : MonoBehaviour {
     int TouchCount = 0;
     bool hasToken = false;
     bool hadToken;
-    bool Touchable;
+    bool Touchable = true;
+    bool clicked = false;
     //public GameObject _tower;
     // Use this for initialization
-	void Start () {
+    void Start() {
         SetHadToken(false);
         //Reset();
+        //StartCoroutine(GetComponentInChildren<SWM_CoverScript>().OpeningClosingAnimation());
 
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    // Update is called once per frame
+    void Update() {
+
+    }
 
     public void SetVisible(bool val)
     {
         GetComponent<SpriteRenderer>().enabled = val;
         Touchable = val;
+        
+        //StartCoroutine(GetComponentInChildren<SWM_CoverScript>().OpeningClosingAnimation());
+
     }
+
 
     private void OnMouseDown()
     {
@@ -33,11 +39,8 @@ public class SWM_BlockScript : MonoBehaviour {
         {
             TouchCount++;
             StartCoroutine(Show());
-            if (hasToken)
-            {
-                GameObject _flower = transform.GetChild(0).gameObject;
-                Camera.main.GetComponent<SWM_GameManager>().TrashFlower(_flower);
-            }
+            clicked = true;
+
 
             //if (TouchCount > 1)
             //{
@@ -59,16 +62,38 @@ public class SWM_BlockScript : MonoBehaviour {
         }
     }
 
+    public void CheckForToken(){
+        if (clicked)
+        {
+            if (hadToken)
+            {
+                Camera.main.GetComponent<SWM_GameManager>().BetweenSearchError();
+            }
+            else if (hasToken)
+            {
+                GameObject _flower = transform.GetChild(1).gameObject;
+                hadToken = true;
+                hasToken = false;
+                Camera.main.GetComponent<SWM_GameManager>().TrashFlower(_flower);
+            }
+            else if (TouchCount > 1)
+            {
+                Camera.main.GetComponent<SWM_GameManager>().WithInSearchError();
+            }
+        }
+    }
     IEnumerator Show()
     {
-        GetComponent<SpriteRenderer>().enabled = false;
-        yield return new WaitForSeconds(0.2f);
-        GetComponent<SpriteRenderer>().enabled = true;
+        //GetComponent<SpriteRenderer>().enabled = false;
+        //yield return new WaitForSeconds(0.2f);
+        //GetComponent<SpriteRenderer>().enabled = true;
+        yield return StartCoroutine(GetComponentInChildren<SWM_CoverScript>().OpenBox());
     }
 
-    private void Reset()
+    public void Reset()
     {
         TouchCount = 0;
+        clicked = false;
         //Touchable = false;
         //SetHasToken(false);
     }

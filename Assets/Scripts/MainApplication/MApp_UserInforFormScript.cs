@@ -21,15 +21,26 @@ public class MApp_UserInforFormScript : MonoBehaviour {
         if (val_form == all_ok)
         {
             MApp_DataServices ds = new MApp_DataServices(database_Name);
-            var _username = username.text;
-            var _dob = dob.text;
-            var _diagnosis = diagnosis.text;
-            var _iq_value = deafult_iq;
-            var _first_name = "";
-            var _last_name = "";
-                   
-            ds.CreateUser(_username,_dob,_diagnosis,_iq_value,_first_name,_last_name);
-            Debug.Log("Entered user: ");
+            var _username = username.text.ToString();
+            var _dob = dob.text.ToString();
+            var _diagnosis = diagnosis.text.ToString();
+            var _iq_value = Convert.ToInt32(iq_value.text); 
+            var _first_name =first_name.text.ToString();
+            var _last_name = last_name.text.ToString();
+            System.DateTime dDate;
+            System.DateTime.TryParse(dob.text, out dDate);
+            string.Format("{0:yyyy/mm/dd}", dDate);
+            var _age =  DateTime.Today.Year - dDate.Year;
+            //try
+            //{
+            ds.CreateUser(_username, _dob, _age, _diagnosis, _iq_value, _first_name, _last_name);
+            //} catch(Exception e)
+            //{
+            //OutputText.text = e.ToString();
+            //Debug.Log(e.ToString());
+            //}
+
+            Debug.Log("Entered user: " + _age);
         }
         else {
             //debug.log();
@@ -75,7 +86,7 @@ public class MApp_UserInforFormScript : MonoBehaviour {
         try
         {
             var _iq_value = Convert.ToInt32(iq_value.text);
-
+           
         }
         catch (Exception e)
         {
