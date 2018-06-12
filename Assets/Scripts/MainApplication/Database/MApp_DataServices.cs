@@ -6,7 +6,7 @@ using System.IO;
 #endif
 using System.Collections.Generic;
 
-public class MApp_DataServices
+public class MApp_DataServices 
 {
 
     private SQLiteConnection _connection;
@@ -80,7 +80,7 @@ public class MApp_DataServices
     public void CreateUser(string Username, string dob, int _age,string diagnosis, int iQ = 80, string first_name = "Rohit", string last_name = "Shetty")
     {
         Debug.Log( "passing values: :uname - " + Username+" dob - " + dob + " Age- "+ _age+ " diagnosis- "+ diagnosis+ " id- " + iQ+ "  first - " + first_name+ " last- " + last_name);
-        _connection.Insert( new User() { Username = Username, Dob = dob, Age = _age, Diagnosis = diagnosis,IQ = iQ, First_Name = first_name, Last_Name =last_name });
+        _connection.Insert( new User() { Username = "User_1", DoB = "2001-05-25", Age = 15, Diagnosis = "ASD",IQ = 125, First_Name = "first_name", Last_Name ="last_name" });
     }
 
     public IEnumerable<PianoGame_TonesForLevels> GetRandomToneForLevel(int level)

@@ -15,6 +15,8 @@ public class BasketGame_PreGameManager : MonoBehaviour {
     public string MainGameSceneName;
     bool[] Movement_choice = new bool[] { false,false,false,true,true,true,true,true,true,true};
     int[] Speed_choices = new int[] {0,0,0,2,4,5,8,10,12,15};
+    bool[] shouldStop = new bool[] { false, false, false, true, true, true, true, false, false, false};
+    public GameObject basket_go;
     // Use this for initialization
     void Start () {
         var folder = BasketGame_SceneVariables.Game_Name + "/" + "Pre/Baloons";
@@ -41,7 +43,7 @@ public class BasketGame_PreGameManager : MonoBehaviour {
             baloon_go.transform.position = Shared_ScriptForGeneralFunctions.GetRandomPointOnScreen();
             should_move = Movement_choice[level_number];
             movement_Speed = Speed_choices[level_number];
-            var path = "Zigzagpath";
+            var path = GetComponent<iTweenPath>().pathName;
             if (should_move)
             {
                 baloon_go.GetComponent<BasketGame_PreBaloonScript>().Move(movement_Speed, path);

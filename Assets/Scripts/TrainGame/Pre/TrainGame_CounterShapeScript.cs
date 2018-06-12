@@ -27,7 +27,7 @@ public class TrainGame_CounterShapeScript : MonoBehaviour {
 	}
 
 	public void SetUp(Sprite shape){
-
+        Reset();
         GetComponent<SpriteRenderer>().sprite = shape;
         transform.position = original_position;
         //SetTouchAndScale(true, true, true, tag);
@@ -69,7 +69,7 @@ public class TrainGame_CounterShapeScript : MonoBehaviour {
             transform.position = original_position;
         }
 
-        SetTouchAndScale(true, true, true, tag);
+        //SetTouchAndScale(true, true, true, tag);
     }
 	
 	public void OnMouseDown(){
@@ -149,12 +149,14 @@ public class TrainGame_CounterShapeScript : MonoBehaviour {
 
 	void SetTouchAndScale(bool touch, bool scale, bool visible, string object_tag)
     {
-		var all_obj = GameObject.FindGameObjectsWithTag (object_tag);
-		foreach (var obj in all_obj) {
+        var all_obj = GameObject.FindGameObjectsWithTag(object_tag);
+        foreach (var obj in all_obj)
+        {
+            //var obj = gameObject;
             obj.GetComponent<SpriteRenderer>().enabled = visible;
-			obj.GetComponent<TrainGame_DetectTouch> ().SetTouch (touch); 
-			obj.GetComponent<Scalling> ().SetScale (scale);
+            obj.GetComponent<TrainGame_DetectTouch>().SetTouch(touch);
+            obj.GetComponent<Scalling>().SetScale(scale);
             obj.GetComponent<Outline>().eraseRenderer = visible;
-		}
+        }
 	}
 }

@@ -2,20 +2,20 @@
 using SQLite4Unity3d;
 
 
-public class Levels
+public class BasketGame_Levels
 {
 	[PrimaryKey, AutoIncrement]
 	public int Id { get; set; }
-	public int NumBaskets { get; set; }
+	public int NumBasket { get; set; }
 	public int Capacity { get; set; }
 	public int LevelNumber { get; set; }
 
-	public Levels ()
+	public BasketGame_Levels ()
 	{
 	}
 
 	public override string ToString (){
-		return String.Format("Level:=  {0}, numbaskets:= {1}, Capacity:= {2}", LevelNumber, NumBaskets, Capacity);
+		return String.Format("Level:=  {0}, numbaskets:= {1}, Capacity:= {2}", LevelNumber, NumBasket, Capacity);
 	}
 
 	public int GetLevel(){
@@ -27,7 +27,7 @@ public class Levels
 	}
 
 	public int GetNumofBaskets(){
-		return this.NumBaskets;
+		return this.NumBasket;
 	}
 }
 

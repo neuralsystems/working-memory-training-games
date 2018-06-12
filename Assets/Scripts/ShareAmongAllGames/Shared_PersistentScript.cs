@@ -34,18 +34,19 @@ public class Shared_PersistentScript : MonoBehaviour {
 		
 	}
 
-	public Levels GetNewBasketGameLevelDetails(){
+	public BasketGame_Levels GetNewBasketGameLevelDetails(){
 		var ds = new BasketGame_DataService (BasketGame_SceneVariables.DATABASE_NAME);
 		var current_level_objects = ds.GetLevelsObject (currentLevel);
-		Levels x = new Levels ();
+		BasketGame_Levels x = new BasketGame_Levels ();
 		x.LevelNumber = 1;
-		x.NumBaskets = 1;
+		x.NumBasket = 1;
 		x.Capacity = 1;
 		foreach (var current_level in current_level_objects) {
 			x = current_level;
-			break;
+            Debug.Log("capacity and num basket= " + x.Capacity + " " + x.NumBasket);
+            //break;
 		}
-		Debug.Log (x.Capacity +" "+ x.NumBaskets );
+		//Debug.Log (x.Capacity +" "+ x.NumBaskets );
 		return x;
 
 	}

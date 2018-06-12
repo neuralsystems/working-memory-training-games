@@ -60,17 +60,17 @@ public class BasketGame_DataService  {
 
 		}
 
-		public IEnumerable<Levels> GetLevels(){
-		return _connection.Table<Levels>();
+		public IEnumerable<BasketGame_Levels> GetLevels(){
+		return _connection.Table<BasketGame_Levels>();
 		}
 
-		public IEnumerable<Levels> GetLevelsObject( int currentLevel){
-		return _connection.Table<Levels>().Where(x => x.LevelNumber == currentLevel);
+		public IEnumerable<BasketGame_Levels> GetLevelsObject( int currentLevel){
+		return _connection.Table<BasketGame_Levels>().Where(x => x.LevelNumber == currentLevel);
 		}
 
-		public IEnumerable<Levels> GetRandomLevel(){
-		const string command = "SELECT * FROM Levels ORDER BY RANDOM() LIMIT 1";
-		return _connection.Query<Levels>(command);
+		public IEnumerable<BasketGame_Levels> GetRandomLevel(){
+		const string command = "SELECT * FROM BasketGame_Levels ORDER BY RANDOM() LIMIT 1";
+		return _connection.Query<BasketGame_Levels>(command);
 		}
 
 

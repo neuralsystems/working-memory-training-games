@@ -8,7 +8,7 @@ public class User : MonoBehaviour {
     public int Id { get; set; }
     public string Username { get; set; }
     public float Age { get; set; }
-    public string Dob { get; set; }
+    public string DoB { get; set; }
     public int IQ { get; set; }
     public string Diagnosis { get; set;}
     public string First_Name { get; set; }
