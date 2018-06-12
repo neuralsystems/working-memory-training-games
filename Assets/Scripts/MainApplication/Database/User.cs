@@ -14,6 +14,7 @@ public class User : MonoBehaviour {
     public string First_Name { get; set; }
     public string Last_Name { get; set; }
 
+
     public override string ToString()
     {
         return string.Format("[Person: Id={0}, Username={1}, name = {2} {3} ]", Id, Username, First_Name, Last_Name);

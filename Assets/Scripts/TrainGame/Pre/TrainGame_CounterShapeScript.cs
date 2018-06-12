@@ -156,7 +156,7 @@ public class TrainGame_CounterShapeScript : MonoBehaviour {
             obj.GetComponent<SpriteRenderer>().enabled = visible;
             obj.GetComponent<TrainGame_DetectTouch>().SetTouch(touch);
             obj.GetComponent<Scalling>().SetScale(scale);
-            obj.GetComponent<Outline>().eraseRenderer = visible;
+            //obj.GetComponent<Outline>().eraseRenderer = visible;
         }
 	}
 }

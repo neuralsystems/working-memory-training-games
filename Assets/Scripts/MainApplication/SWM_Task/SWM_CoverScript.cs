@@ -16,7 +16,7 @@ public class SWM_CoverScript : MonoBehaviour {
     public  IEnumerator OpeningClosingAnimation()
     {
         //yield return new WaitForSeconds(GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.length - .1f);
-
+        Debug.Log(GetComponent<Animator>().GetFloat("Direction"));
         Debug.Log("Set to 1.0f");
         GetComponentInParent<SWM_BlockScript>().CheckForToken();
         GetComponent<Animator>().SetFloat("Direction", 1.0f);

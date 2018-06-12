@@ -39,7 +39,7 @@ public class BasketBehavior : MonoBehaviour {
 		transform.position = basket_pos;
 		rotationHeight = GetRotationHeight ();
 		lowerBound = Camera.main.GetComponent<BasketGame_SceneVariables> ().GetPointOnScreen (0, 0).y;
-		lowerBound -= GetComponent<SpriteRenderer> ().bounds.size.y / 2;
+		lowerBound -= (.75f * GetComponent<SpriteRenderer> ().bounds.size.y) / 2;
 		reduce_height_by = (transform.position.y - lowerBound) / num_of_fruits;
 		capacity = bas_capacity;
 		Debug.Log(capacity);

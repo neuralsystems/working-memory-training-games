@@ -5,8 +5,8 @@ using UnityEngine;
 public class SWM_BlockScript : MonoBehaviour {
 
     int TouchCount = 0;
-    bool hasToken = false;
-    bool hadToken;
+    public bool hasToken = false;
+    public bool hadToken;
     bool Touchable = true;
     bool clicked = false;
     //public GameObject _tower;
@@ -65,7 +65,8 @@ public class SWM_BlockScript : MonoBehaviour {
     public void CheckForToken(){
         if (clicked)
         {
-            if (hadToken)
+            Debug.Log("Checking for token " + name);
+            if (hadToken && (!hasToken))
             {
                 Camera.main.GetComponent<SWM_GameManager>().BetweenSearchError();
             }
@@ -76,7 +77,7 @@ public class SWM_BlockScript : MonoBehaviour {
                 hasToken = false;
                 Camera.main.GetComponent<SWM_GameManager>().TrashFlower(_flower);
             }
-            else if (TouchCount > 1)
+            if (TouchCount > 1)
             {
                 Camera.main.GetComponent<SWM_GameManager>().WithInSearchError();
             }
