@@ -72,6 +72,22 @@ public class BasketGame_DataService  {
 		const string command = "SELECT * FROM BasketGame_Levels ORDER BY RANDOM() LIMIT 1";
 		return _connection.Query<BasketGame_Levels>(command);
 		}
+        
+    public void UpdateUserProgress(string username, int level_number)
+    {
+        var user_level_obj = GetUserProgress(username);
+        user_level_obj.Level_Obj = level_number;
+        _connection.Update(user_level_obj);
+        
+    }
 
-
-		}
+    public UserProgress_BasketGame GetUserProgress(string username)
+    {
+        var user_level = _connection.Table<UserProgress_BasketGame>().Where(x => x.User_Obj == username);
+        foreach (var user_level_obj in user_level)
+        {
+           return user_level_obj;
+        }
+        return new UserProgress_BasketGame();
+    }
+}

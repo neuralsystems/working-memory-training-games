@@ -15,7 +15,9 @@ public class BasketGame_SceneVariables : MonoBehaviour {
 	public static string targetObject = "TargetObject";
 	public const string DATABASE_NAME = "WorkingMemoryGames_DB.db";
 	public bool isOutline = false;
-	public static float minDistance = .1f;									// min distance after which the position of object is set equal to target
+    public const string masterGO = "MasterGameObject";
+
+    public static float minDistance = .1f;									// min distance after which the position of object is set equal to target
 	public string[] paths = new string[]{
 		"FruitPath1",
 		"FruitPath2"

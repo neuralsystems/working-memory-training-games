@@ -5,10 +5,21 @@ using UnityEngine;
 public class Shared_PersistentScript : MonoBehaviour {
 
 	public string GAME_NAME;
-	public int currentLevel = 1;			// game with always start with this level
+	//public int currentLevel;			// game with always start with this level
 	public static Shared_PersistentScript Instance;
+    private static User CurrentPlayer;
 
-	void Awake(){
+    public User GetCurrentPlayer()
+    {
+        return CurrentPlayer;
+    }
+
+    public void SetCurrentPlayer(User _player)
+    {
+        CurrentPlayer = _player;
+    }
+
+    void Awake(){
 		if (Instance == null)
 		{
 			DontDestroyOnLoad(gameObject);
@@ -34,9 +45,10 @@ public class Shared_PersistentScript : MonoBehaviour {
 		
 	}
 
-	public BasketGame_Levels GetNewBasketGameLevelDetails(){
+    public BasketGame_Levels GetNewBasketGameLevelDetails(){
 		var ds = new BasketGame_DataService (BasketGame_SceneVariables.DATABASE_NAME);
-		var current_level_objects = ds.GetLevelsObject (currentLevel);
+        var currentLevel = ds.GetUserProgress(GetCurrentPlayer().Username);
+        var current_level_objects = ds.GetLevelsObject (currentLevel.Level_Obj);
 		BasketGame_Levels x = new BasketGame_Levels ();
 		x.LevelNumber = 1;
 		x.NumBasket = 1;
@@ -52,12 +64,17 @@ public class Shared_PersistentScript : MonoBehaviour {
 	}
 
 	public void IncreaseLevel( int val){
-		currentLevel += val;
-	}
+        //currentLevel += val;
+        var ds = new BasketGame_DataService(BasketGame_SceneVariables.DATABASE_NAME);
+        var current_level = ds.GetUserProgress(GetCurrentPlayer().Username);
+        ds.UpdateUserProgress(GetCurrentPlayer().Username, current_level.Level_Obj + val);
 
-	public TrainGame_Levels GetNewTrainGameLevelDetails(){
+    }
+
+    public TrainGame_Levels GetNewTrainGameLevelDetails(){
 		var Value_For_Block = 1;
 		var ds = new TrainGame_DataServices (TrainGame_SceneVariables.DATABASE_NAME);
+        var currentLevel = 1;
 		var current_level_objects = ds.GetLevelsObject (currentLevel);
 		TrainGame_Levels x = new TrainGame_Levels();
 		x.LevelNumber = 1;

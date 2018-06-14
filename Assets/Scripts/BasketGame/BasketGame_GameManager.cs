@@ -65,7 +65,7 @@ public class BasketGame_GameManager : MonoBehaviour {
 			} else {
 				rain_particlesystem_object.Play ();
 				yield return new WaitForSeconds(rain_particlesystem_object.main.duration);
-				persistent_go = GameObject.Find ("PersistentGameObject");
+				persistent_go = GameObject.Find (BasketGame_SceneVariables.masterGO);
 				persistent_go.GetComponent<Shared_PersistentScript>().IncreaseLevel(SetLevel());
 				SceneManager.LoadScene (SceneManager.GetActiveScene().name);
 			}

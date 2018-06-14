@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class MApp_AcrossSceneStaticVariables {
+public class MApp_AcrossSceneStaticVariables {
 
     private static User CurrentPlayer;
 

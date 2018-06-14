@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class MApp_GameManager : MonoBehaviour {
 
     public string HomeScreen;
+    public GameObject MasterGo;
     // Use this for initialization
 	void Start () {
 		
@@ -15,14 +16,15 @@ public class MApp_GameManager : MonoBehaviour {
         SceneManager.LoadScene(HomeScreen);
     }
 
-    public void SetUser(string username)
+    public void SetUser(User user_obj)
     {
+        Debug.Log("value passed: " + user_obj.Username);
         MApp_DataServices _ds = new MApp_DataServices(MApp_UserInforFormScript.database_Name);
-        var _users = _ds.GetUser(username);
+        var _users = _ds.GetUser(user_obj.Username);
         foreach(var _user in _users)
         {
-            MApp_AcrossSceneStaticVariables.SetCurrentPlayer(_user);
+            MasterGo.GetComponent<Shared_PersistentScript>().SetCurrentPlayer(_user);
         }
-
+        LoadHomeScreen();
     }
 }

@@ -17,6 +17,8 @@ public class MApp_UserIconScript : MonoBehaviour {
         user_gameobject = reward_object.user;
         scrollList = current_scrolllist;
         transform.GetChild(0).GetComponent<Text>().text = reward_object.user.Username;
+        UnityEngine.Events.UnityAction set = () => { Camera.main.GetComponent<MApp_GameManager>().SetUser(reward_object.user); };
+        GetComponent<Button>().onClick.AddListener(set);
         //transform.GetChild(0).GetComponent<Text>().text = "abc";
         //Debug.Log((transform.GetChild(0).GetComponent<Text>().text == "") );
     }

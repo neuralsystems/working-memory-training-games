@@ -25,7 +25,7 @@ public class MApp_UserInforFormScript : MonoBehaviour {
             var _dob = dob.text.ToString();
             var _diagnosis = diagnosis.text.ToString();
             var _iq_value = Convert.ToInt32(iq_value.text); 
-            var _first_name =first_name.text.ToString();
+            var _first_name = first_name.text.ToString();
             var _last_name = last_name.text.ToString();
             System.DateTime dDate;
             System.DateTime.TryParse(dob.text, out dDate);
@@ -33,7 +33,7 @@ public class MApp_UserInforFormScript : MonoBehaviour {
             var _age =  DateTime.Today.Year - dDate.Year;
             //try
             //{
-            ds.CreateUser(_username, _dob, _age, _diagnosis, _iq_value, _first_name, _last_name);
+            ds.CreateUser(_username, _age, _diagnosis, _iq_value, _first_name, _last_name);
             //} catch(Exception e)
             //{
             //OutputText.text = e.ToString();
