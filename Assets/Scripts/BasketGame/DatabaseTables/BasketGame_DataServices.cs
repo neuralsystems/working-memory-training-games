@@ -81,13 +81,26 @@ public class BasketGame_DataService  {
         
     }
 
-    public UserProgress_BasketGame GetUserProgress(string username)
+    public UserProgress GetUserProgress(string username)
     {
-        var user_level = _connection.Table<UserProgress_BasketGame>().Where(x => x.User_Obj == username);
+        var _game_name = GetGameName();
+        var user_level = _connection.Table<UserProgress>().Where(x => x.User_Obj == username).Where(x => x.Game_name == _game_name);
         foreach (var user_level_obj in user_level)
         {
            return user_level_obj;
         }
-        return new UserProgress_BasketGame();
+        return new UserProgress();
+    }
+
+    public int GetGameName()
+    {
+        var gn = BasketGame_SceneVariables.Game_Name;
+        var gns = _connection.Table<Games>().Where(x => x.GameName == gn);
+        var l = 1;
+        foreach(var g in gns)
+        {
+            return g.Id;
+        }
+        return l;
     }
 }
