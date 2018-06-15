@@ -71,7 +71,7 @@ public class BasketGame_DetectTouch : MonoBehaviour {
     {
         if (bubbleBurst)
         {
-            GetComponent<SpriteRenderer > ().enabled = false;
+            //GetComponent<SpriteRenderer > ().enabled = false;
             var ps = GetComponent<ParticleSystem>();
             var sr = GetComponent<SpriteRenderer>().bounds;
             var main = ps.main;
@@ -80,7 +80,8 @@ public class BasketGame_DetectTouch : MonoBehaviour {
             GetComponent<AudioSource>().PlayOneShot(bubbleBurst);
             yield return new WaitForSeconds(bubbleBurst.length);
         }
-        Camera.main.GetComponent<BasketGame_PreGameManager>().Next();
-        Destroy(gameObject);
+        GetComponent<BasketGame_PreBaloonScript>().ConvertToFruit();
+
+
     }
 }

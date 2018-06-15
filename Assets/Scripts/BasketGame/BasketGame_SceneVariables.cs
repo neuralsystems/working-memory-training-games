@@ -66,6 +66,7 @@ public class BasketGame_SceneVariables : MonoBehaviour {
 		{"yellowbasket",new string[] {"Banana1", "Lemon1"}},
 		{"purplebasket",new string[] {"Beetroot"}},
 		{"greenbasket",new string[] {"GreenApple"}},
+        //{"colored", new string[] {""} }
 //		{"Brownbasket",new string[] {}},
 	
 	};

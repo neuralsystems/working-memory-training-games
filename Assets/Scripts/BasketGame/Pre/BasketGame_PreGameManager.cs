@@ -41,7 +41,8 @@ public class BasketGame_PreGameManager : MonoBehaviour {
         {
             var baloon_go = simpleGameObjectPool.GetComponent<SimpleObjectPool>().GetObject();
             Debug.Log(all_baloons.Count);
-            baloon_go.transform.position = Shared_ScriptForGeneralFunctions.GetRandomPointOnScreen();
+            var target = basket_go.transform.position;
+            baloon_go.transform.position = new Vector3 (target.x,Shared_ScriptForGeneralFunctions.GetNPointsAtHeight(.8f, 1)[0].y,target.z);
             should_move = Movement_choice[level_number];
             movement_Speed = Speed_choices[level_number];
             var path = GetComponent<iTweenPath>().pathName;
