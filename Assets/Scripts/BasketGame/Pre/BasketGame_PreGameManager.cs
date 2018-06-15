@@ -19,23 +19,24 @@ public class BasketGame_PreGameManager : MonoBehaviour {
     public GameObject basket_go;
     // Use this for initialization
     void Start () {
+        
+        max_levels = Movement_choice.Length;
         var folder = BasketGame_SceneVariables.Game_Name + "/" + "Pre/Baloons";
         var all_sprites = Resources.LoadAll(folder, typeof(Sprite));
         foreach(var _sprite in all_sprites)
         {
             all_baloons.Add(_sprite as Sprite);
         }
+        basket_go.GetComponent<SpriteRenderer>().sprite = Resources.Load(BasketGame_SceneVariables.Game_Name + "/" + Camera.main.GetComponent<BasketGame_SceneVariables>().GetBasketFolderName() + BasketGame_SceneVariables.GetBaskets(1)[0], typeof(Sprite)) as Sprite;
         SpawnBaloon();
 
     }
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+	
 
     void SpawnBaloon()
     {
+        
         if (level_number < max_levels)
         {
             var baloon_go = simpleGameObjectPool.GetComponent<SimpleObjectPool>().GetObject();
@@ -53,6 +54,10 @@ public class BasketGame_PreGameManager : MonoBehaviour {
         }
         else
         {
+            var m_obj = GameObject.Find(BasketGame_SceneVariables.masterGO);
+            var current_user = m_obj.GetComponent<Shared_PersistentScript>().GetCurrentPlayer();
+            var ds = new BasketGame_DataService(BasketGame_SceneVariables.DATABASE_NAME);
+            ds.MarkPreLevelCompleted(current_user.Username);
             SceneManager.LoadScene(MainGameSceneName);
         }
     }

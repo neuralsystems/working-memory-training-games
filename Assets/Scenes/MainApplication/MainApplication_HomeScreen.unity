@@ -228,7 +228,6 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8f5333b28f5773a44b3c2101dbe4963a, type: 2}
-  m_RootGameObject: {fileID: 1443565064}
   m_IsPrefabParent: 0
 --- !u!1 &166586638
 GameObject:
@@ -381,8 +380,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1248887334}
-        m_MethodName: LoadSceneByName
-        m_Mode: 5
+        m_MethodName: BasketGame
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1546,50 +1545,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1443565064
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1306669459321566, guid: 8f5333b28f5773a44b3c2101dbe4963a,
-    type: 2}
-  m_PrefabInternal: {fileID: 105480225}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1443565066}
-  - component: {fileID: 1443565065}
-  m_Layer: 0
-  m_Name: MasterGameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1443565065
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114597859943822540, guid: 8f5333b28f5773a44b3c2101dbe4963a,
-    type: 2}
-  m_PrefabInternal: {fileID: 105480225}
-  m_GameObject: {fileID: 1443565064}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed44a255beac8bc4e857093f008d4086, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GAME_NAME: 
---- !u!4 &1443565066
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 4658020172034456, guid: 8f5333b28f5773a44b3c2101dbe4963a,
-    type: 2}
-  m_PrefabInternal: {fileID: 105480225}
-  m_GameObject: {fileID: 1443565064}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 246, y: 293, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1594797889
 GameObject:

@@ -16,4 +16,9 @@ public class UserProgress_BasketGame  {
     //    this.User_Obj = username;
     //    this.Level_Obj = default_level;
     //}
+
+    public bool hasCompletedPreLevel()
+    {
+        return this.PreLevelCompleted == BasketGame_SceneVariables.VALUE_FOR_PRE_LEVEL_COMPLETE;
+    }
 }

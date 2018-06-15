@@ -37,8 +37,8 @@ public class BasketGame_DetectTouch : MonoBehaviour {
         if (tag == BasketGame_SceneVariables.baloonTag)
         {
             Debug.Log("vame in of");
-            Camera.main.GetComponent<BasketGame_PreGameManager>().Next();
-            Destroy(gameObject);
+
+            StartCoroutine(BalloonClick());
         }
         else
         {
@@ -66,4 +66,21 @@ public class BasketGame_DetectTouch : MonoBehaviour {
 		s.y *= percent;
 		GetComponent<CircleCollider2D>().radius = s.x;
 	}
+
+    IEnumerator BalloonClick()
+    {
+        if (bubbleBurst)
+        {
+            GetComponent<SpriteRenderer > ().enabled = false;
+            var ps = GetComponent<ParticleSystem>();
+            var sr = GetComponent<SpriteRenderer>().bounds;
+            var main = ps.main;
+            main.startColor = GetComponent<SpriteRenderer>().sprite.texture.GetPixel(Mathf.RoundToInt(sr.size.x/2), Mathf.RoundToInt(sr.size.y/2));
+            ps.Play();
+            GetComponent<AudioSource>().PlayOneShot(bubbleBurst);
+            yield return new WaitForSeconds(bubbleBurst.length);
+        }
+        Camera.main.GetComponent<BasketGame_PreGameManager>().Next();
+        Destroy(gameObject);
+    }
 }

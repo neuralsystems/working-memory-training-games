@@ -17,4 +17,24 @@ public class Shared_ScriptForButtonOnClick : MonoBehaviour {
 	public void LoadSceneByName(string sceneName){
 		SceneManager.LoadScene (sceneName);
 	}
+
+    public void BasketGame()
+    {
+        var m_obj = GameObject.Find(BasketGame_SceneVariables.masterGO);
+        var current_user = m_obj.GetComponent<Shared_PersistentScript>().GetCurrentPlayer();
+        var ds = new BasketGame_DataService(BasketGame_SceneVariables.DATABASE_NAME);
+        var user_progress = ds.GetUserProgress(current_user.Username);
+        var MainGameSceneName = "BasketGame_Scene2";
+        var PreGameSceneName = "BasketGame_PreScene1";
+        if (user_progress.hasCompletedPreLevel())
+        {
+            SceneManager.LoadScene(MainGameSceneName);
+        }
+        else
+        {
+            SceneManager.LoadScene(PreGameSceneName);
+        }
+    }
+
+   
 }

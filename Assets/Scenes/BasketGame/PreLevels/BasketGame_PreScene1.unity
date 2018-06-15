@@ -9625,6 +9625,7 @@ GameObject:
   - component: {fileID: 1750438454}
   - component: {fileID: 1750438458}
   - component: {fileID: 1750438459}
+  - component: {fileID: 1750438460}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -9732,3 +9733,20 @@ MonoBehaviour:
   simpleGameObjectPool: {fileID: 1392899416}
   MainGameSceneName: BasketGame_Scene2
   basket_go: {fileID: 1454318894}
+--- !u!114 &1750438460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1750438453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ece5c3e907355741bd70534d087bdb9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RAIN_PARTICLE_SYSTEM_TAG: RainParticleSystemTag
+  basketCapacity: 15
+  isOutline: 0
+  paths:
+  - FruitPath1
+  - FruitPath2

@@ -9,7 +9,7 @@ public class TrainGame_Levels
 	public int NumOfBogie { get; set; }
 	public int ShouldBlock { get; set; }		// set this value to 1 in the database to show block train, and otherwise to doesn't show block train
 	public int LevelNumber { get; set; }
-
+    public float WaitTime { get; set; }
 	public TrainGame_Levels ()
 	{
 	}
