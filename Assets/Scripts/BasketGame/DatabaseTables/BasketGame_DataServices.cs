@@ -81,26 +81,35 @@ public class BasketGame_DataService  {
         
     }
 
-    public UserProgress GetUserProgress(string username)
+    public void MarkPreLevelCompleted(string username)
     {
-        var _game_name = GetGameName();
-        var user_level = _connection.Table<UserProgress>().Where(x => x.User_Obj == username).Where(x => x.Game_name == _game_name);
+        var user_level_obj = GetUserProgress(username);
+        user_level_obj.PreLevelCompleted = BasketGame_SceneVariables.VALUE_FOR_PRE_LEVEL_COMPLETE;
+        _connection.Update(user_level_obj);
+
+    }
+
+    public UserProgress_BasketGame GetUserProgress(string username)
+    {
+        //var _game_name = GetGameName();
+        var user_level = _connection.Table<UserProgress_BasketGame>().Where(x => x.User_Obj == username);/*.Where(x => x.Game_name == _game_name);*/
         foreach (var user_level_obj in user_level)
         {
            return user_level_obj;
         }
-        return new UserProgress();
+        return new UserProgress_BasketGame();
     }
 
-    public int GetGameName()
-    {
-        var gn = BasketGame_SceneVariables.Game_Name;
-        var gns = _connection.Table<Games>().Where(x => x.GameName == gn);
-        var l = 1;
-        foreach(var g in gns)
-        {
-            return g.Id;
-        }
-        return l;
-    }
+
+    //public int GetGameName()
+    //{
+    //    var gn = BasketGame_SceneVariables.Game_Name;
+    //    var gns = _connection.Table<Games>().Where(x => x.GameName == gn);
+    //    var l = 1;
+    //    foreach(var g in gns)
+    //    {
+    //        return g.Id;
+    //    }
+    //    return l;
+    //}
 }

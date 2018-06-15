@@ -1,0 +1,642 @@
+fileFormatVersion: 2
+guid: 851790080cae59a45903a1e4487f41b1
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Jumping_Girl_Spritesheet_new_0
+    21300002: Jumping_Girl_Spritesheet_new_1
+    21300004: Jumping_Girl_Spritesheet_new_2
+    21300006: Jumping_Girl_Spritesheet_new_3
+    21300008: Jumping_Girl_Spritesheet_new_4
+    21300010: Jumping_Girl_Spritesheet_new_5
+    21300012: Jumping_Girl_Spritesheet_new_6
+    21300014: Jumping_Girl_Spritesheet_new_7
+    21300016: Jumping_Girl_Spritesheet_new_8
+    21300018: Jumping_Girl_Spritesheet_new_9
+    21300020: Jumping_Girl_Spritesheet_new_10
+    21300022: Jumping_Girl_Spritesheet_new_11
+    21300024: Jumping_Girl_Spritesheet_new_12
+    21300026: Jumping_Girl_Spritesheet_new_13
+    21300028: Jumping_Girl_Spritesheet_new_14
+    21300030: Jumping_Girl_Spritesheet_new_15
+    21300032: Jumping_Girl_Spritesheet_new_16
+    21300034: Jumping_Girl_Spritesheet_new_17
+    21300036: Jumping_Girl_Spritesheet_new_18
+    21300038: Jumping_Girl_Spritesheet_new_19
+    21300040: Jumping_Girl_Spritesheet_new_20
+    21300042: Jumping_Girl_Spritesheet_new_21
+    21300044: Jumping_Girl_Spritesheet_new_22
+    21300046: Jumping_Girl_Spritesheet_new_23
+    21300048: Jumping_Girl_Spritesheet_new_24
+  externalObjects: {}
+  serializedVersion: 5
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Jumping_Girl_Spritesheet_new_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1472
+        width: 143.2
+        height: 368
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03f4196af5d107a47ac499a57670c05f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jumping_Girl_Spritesheet_new_1
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 1472
+        width: 143.2
+        height: 368
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d87c51af576f6f141828ab59ca3c764e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jumping_Girl_Spritesheet_new_2
+      rect:
+        serializedVersion: 2
+        x: 286
+        y: 1472
+        width: 143.2
+        height: 368
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89e7c2ea27eef964a8b8d48ba9f33c55
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jumping_Girl_Spritesheet_new_3
+      rect:
+        serializedVersion: 2
+        x: 429
+        y: 1472
+        width: 143.2
+        height: 368
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d7d08e901de05545b5f26f392e5f884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jumping_Girl_Spritesheet_new_4
+      rect:
+        serializedVersion: 2
+        x: 572
+        y: 1472
+        width: 143.2
+        height: 368
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 137c431f9c6553a4dbbbc26014478f06
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jumping_Girl_Spritesheet_new_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1104
+        width: 143.2
+        height: 368
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6667841168a2ac84cae174260bca9fdd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jumping_Girl_Spritesheet_new_6
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 1104
+        width: 143.2
+        height: 368
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e568a177671a7146bbabd233581270f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jumping_Girl_Spritesheet_new_7
+      rect:
+        serializedVersion: 2
+        x: 286
+        y: 1104
+        width: 143.2
+        height: 368
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 862e427c2b3973f428396ea644fb682e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jumping_Girl_Spritesheet_new_8
+      rect:
+        serializedVersion: 2
+        x: 429
+        y: 1104
+        width: 143.2
+        height: 368
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e900fbd04f50b34587cb1734212e65d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jumping_Girl_Spritesheet_new_9
+      rect:
+        serializedVersion: 2
+        x: 572
+        y: 1104
+        width: 143.2
+        height: 368
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c6198afff612a64dbfd680ca892fbd4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jumping_Girl_Spritesheet_new_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 736
+        width: 143.2
+        height: 368
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c0061296deb7874e9cce43565eda05c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jumping_Girl_Spritesheet_new_11
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 736
+        width: 143.2
+        height: 368
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 95afec1abf5187b4eb1bb1e2437e0a42
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jumping_Girl_Spritesheet_new_12
+      rect:
+        serializedVersion: 2
+        x: 286
+        y: 736
+        width: 143.2
+        height: 368
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b55d90737dd81864bb5d1c32b08bb2c8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jumping_Girl_Spritesheet_new_13
+      rect:
+        serializedVersion: 2
+        x: 429
+        y: 736
+        width: 143.2
+        height: 368
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b60cef4efb877a347ac1dcfb0d1cf092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jumping_Girl_Spritesheet_new_14
+      rect:
+        serializedVersion: 2
+        x: 572
+        y: 736
+        width: 143.2
+        height: 368
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15e4b420891f168478cc2257f6407e4b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jumping_Girl_Spritesheet_new_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 368
+        width: 143.2
+        height: 368
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c0ee8f242f5b4d4d891a59e7642083b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jumping_Girl_Spritesheet_new_16
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 368
+        width: 143.2
+        height: 368
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f20152b09b0f7343b00ea436a323ad3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jumping_Girl_Spritesheet_new_17
+      rect:
+        serializedVersion: 2
+        x: 286
+        y: 368
+        width: 143.2
+        height: 368
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fced9ab34b1c1dd47897e443b0a7a464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jumping_Girl_Spritesheet_new_18
+      rect:
+        serializedVersion: 2
+        x: 429
+        y: 368
+        width: 143.2
+        height: 368
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7577dec0cc9f0b54b9a6c288d3c38aee
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jumping_Girl_Spritesheet_new_19
+      rect:
+        serializedVersion: 2
+        x: 572
+        y: 368
+        width: 143.2
+        height: 368
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: acc12c468b28a5740b2583a2aa2585d3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jumping_Girl_Spritesheet_new_20
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 143.2
+        height: 368
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13aa89d50e752c646aac6891c82b2f40
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jumping_Girl_Spritesheet_new_21
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 0
+        width: 143.2
+        height: 368
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cfdd0bb5cd2732441a65ccb98ebfe37d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jumping_Girl_Spritesheet_new_22
+      rect:
+        serializedVersion: 2
+        x: 286
+        y: 0
+        width: 143.2
+        height: 368
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69ee212367007b14ab9aaafc727088aa
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jumping_Girl_Spritesheet_new_23
+      rect:
+        serializedVersion: 2
+        x: 429
+        y: 0
+        width: 143.2
+        height: 368
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e513c95623475ce47a41853190835231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Jumping_Girl_Spritesheet_new_24
+      rect:
+        serializedVersion: 2
+        x: 572
+        y: 0
+        width: 143.2
+        height: 368
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e4a49d469798f547a724a3680d77fa5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 4d0c1f8adf2860a4388318110e5f2523
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
