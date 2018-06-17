@@ -97,9 +97,21 @@ public class BasketGame_DataService  {
         {
            return user_level_obj;
         }
-        return new UserProgress_BasketGame();
+        return AddUserProgress(username);
     }
 
+    public UserProgress_BasketGame AddUserProgress(string username)
+    {
+        var default_level = 1;
+        var max_ids =_connection.Query< UserProgress_BasketGame>("SELECT *, max(Id) FROM UserProgress_BasketGame LIMIT 1");
+        int id = 0;
+        foreach(var max_id in max_ids)
+        {
+            id = max_id.Id;
+        }
+        _connection.Insert(new UserProgress_BasketGame() {  User_Obj = username, Level_Obj = default_level });
+        return GetUserProgress(username);
+    }
 
     //public int GetGameName()
     //{

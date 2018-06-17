@@ -25,6 +25,7 @@ public class BasketGame_DetectTouch : MonoBehaviour {
 				{
 					// add the code for execuation  on tap 
 //					Destroy(this.gameObject);
+                    
                    OnMouseDown();
                    
 					
@@ -36,6 +37,10 @@ public class BasketGame_DetectTouch : MonoBehaviour {
 
 
 	public void OnMouseDown(){
+        if (gameObject.tag == BasketGame_SceneVariables.fruitTag)
+        {
+            shouldTouch = true;
+        }
         if (shouldTouch)
         {
             if (tag == BasketGame_SceneVariables.baloonTag)
