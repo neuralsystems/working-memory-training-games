@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using System;
 [System.Serializable]
 public class UserIcon
 {
@@ -19,6 +19,7 @@ public class MApp_RegistedUserListScript : MonoBehaviour {
     public SimpleObjectPool simpleGameObjectPool;
     public Transform contentPanel;
     public List<UserIcon> user_list;
+    public Text msg_display;
  
     // Use this for initialization
 	void Start () {
@@ -40,19 +41,30 @@ public class MApp_RegistedUserListScript : MonoBehaviour {
             _user_icon_script.SetUp(u_icon, this);
 
         }
+
     }
 
     void GetUsers()
     {
-        Debug.Log("called getusers");
-        MApp_DataServices ds = new MApp_DataServices(MApp_UserInforFormScript.database_Name);
-        var all_users = ds.GetAllUsers();
-        foreach(var user in all_users)
+        try
         {
-            Debug.Log("running the inner loop " + user.First_Name);
-            var new_user = new UserIcon();
-            new_user.user = user;
-            user_list.Add(new_user);
+            Debug.Log("called getusers");
+            MApp_DataServices ds = new MApp_DataServices(MApp_UserInforFormScript.database_Name);
+            var all_users = ds.GetAllUsers();
+            int i = 0;
+            foreach (var user in all_users)
+            {
+                Debug.Log("running the inner loop " + user.First_Name);
+                var new_user = new UserIcon();
+                new_user.user = user;
+                user_list.Add(new_user);
+                i++;
+            }
+
+            msg_display.text = i.ToString() + "users ";
+        } catch (Exception e)
+        {
+            msg_display.text = e.ToString();
         }
     }
 	
