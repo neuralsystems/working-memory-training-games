@@ -13,9 +13,10 @@ public class BasketGame_PreGameManager : MonoBehaviour {
     bool should_move = false;
     int movement_Speed = 4;
     public string MainGameSceneName;
-    bool[] Movement_choice = new bool[] { false,false,false,true,true,true,true,true,true,true};
-    int[] Speed_choices = new int[] {0,0,0,2,4,5,8,10,12,15};
-    bool[] shouldStop = new bool[] { false, false, false, true, true, true, true, false, false, false};
+    readonly bool[] Movement_choice = new bool[] { false,false,false,true,true,true,true,true,true,true};
+    readonly int[] Speed_choices = new int[] {0,0,0,2,4,5,8,10,12,15};
+    readonly bool[] shouldStop = new bool[] { false, false, false, true, true, true, true, false, false, false};
+    readonly bool[] clickable = new bool[] { true, true, true, false, false, false, true, true, true, true };
     public GameObject basket_go;
     // Use this for initialization
     void Start () {
@@ -46,9 +47,11 @@ public class BasketGame_PreGameManager : MonoBehaviour {
             should_move = Movement_choice[level_number];
             movement_Speed = Speed_choices[level_number];
             var path = GetComponent<iTweenPath>().pathName;
+            baloon_go.GetComponent<Scalling>().SetScale(!should_move);
+            baloon_go.GetComponent<BasketGame_DetectTouch>().SetTouch(clickable[level_number]);
             if (should_move)
             {
-                baloon_go.GetComponent<BasketGame_PreBaloonScript>().Move(movement_Speed, path);
+                baloon_go.GetComponent<BasketGame_PreBaloonScript>().Move(movement_Speed, path, shouldStop[level_number]);
             }
             int n = Random.Range(0, all_baloons.Count);
             baloon_go.GetComponent<SpriteRenderer>().sprite = all_baloons[n];

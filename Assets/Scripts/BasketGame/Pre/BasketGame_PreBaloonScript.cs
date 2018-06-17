@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class BasketGame_PreBaloonScript : MonoBehaviour {
 
-	// Use this for initialization
+    bool ShouldStop = false;
+    bool isClickable = false;
+    // Use this for initialization
 	void Start () {
         StartCoroutine(OutOfBoundError());
     }
 	
-	// Update is called once per frame
-	void Update () {
-        
-	}
-
-    public void Move(int path_speed, string fruitPath)
+	
+    public void Move(int path_speed, string fruitPath, bool should_stop)
     {
         //transform.position = iTweenPath.GetPath(fruitPath).
+        isClickable = GetComponent<BasketGame_DetectTouch>().shouldTouch;
+        ShouldStop = should_stop;
         transform.position = Camera.main.GetComponent<iTweenPath>().nodes[0];
        iTween.MoveTo(gameObject, iTween.Hash("path", iTweenPath.GetPath(fruitPath), "speed", path_speed, "easetype", "linear", "oncomplete", "OnCompletingMotion"));
     }
@@ -30,7 +30,8 @@ public class BasketGame_PreBaloonScript : MonoBehaviour {
 
     public void ConvertToFruit()
     {
-        gameObject.AddComponent<Rigidbody2D>();
+        //gameObject.AddComponent<Rigidbody2D>();
+        GetComponent<Rigidbody2D>().isKinematic = false;
         var basket_obj = GameObject.Find("Basket");
         var fruitName = Camera.main.GetComponent<BasketGame_SceneVariables>().GetColoredFruit(basket_obj.GetComponent<SpriteRenderer>().sprite.name);
         Debug.Log("fruitName = "+ fruitName);
@@ -49,5 +50,26 @@ public class BasketGame_PreBaloonScript : MonoBehaviour {
         }
         yield return new WaitForSeconds(2f);
         StartCoroutine(OutOfBoundError());
+    }
+    
+    public IEnumerator CheckForStop()
+    {
+        if (ShouldStop)
+        {
+            var basket_obj = GameObject.Find("Basket");
+            while (transform.position.x < basket_obj.transform.position.x)
+            {
+                yield return null;
+            }
+            iTween.Stop(gameObject);
+        }
+    }
+
+    public void CheckForTouch()
+    {
+        if (!isClickable)
+        {
+            GetComponent<BasketGame_DetectTouch>().Flip();
+        }
     }
 }

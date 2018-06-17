@@ -26,6 +26,8 @@ GameObject:
   - component: {fileID: 114192534391120312}
   - component: {fileID: 199235576200655088}
   - component: {fileID: 198018085432196104}
+  - component: {fileID: 114348003603504736}
+  - component: {fileID: 50567775868645532}
   m_Layer: 0
   m_Name: Baloons
   m_TagString: BaloonTag
@@ -46,6 +48,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &50567775868645532
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1292564665394792}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!61 &61474237825507416
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -69,7 +91,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.21, y: 1.5}
+  m_Size: {x: 1.9, y: 2.85}
   m_EdgeRadius: 0
 --- !u!82 &82858249982879080
 AudioSource:
@@ -177,6 +199,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c728279da494674f9a7c39ffe552195, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114348003603504736
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1292564665394792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d99252402d5d5b48a5f2015e7379915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSize: 1
+  minSize: 0.5
+  growFactor: 0.2
+  waitTime: 0.1
+  shouldScale: 0
+  original_scale: {x: 0, y: 0, z: 0}
 --- !u!114 &114823016443648554
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4876,5 +4915,5 @@ SpriteRenderer:
   m_Size: {x: 1.21, y: 1.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
