@@ -76,4 +76,44 @@ public class TrainGame_DataServices  {
 		const string command = "SELECT * FROM TrainGame_Levels ORDER BY RANDOM() LIMIT 1";
 		return _connection.Query<TrainGame_Levels>(command);
 		}
+
+        public void UpdateUserProgress(string username, int level_number)
+        {
+            var user_level_obj = GetUserProgress(username);
+            user_level_obj.Level_Obj = level_number;
+            _connection.Update(user_level_obj);
+
+        }
+
+        public void MarkPreLevelCompleted(string username)
+        {
+            var user_level_obj = GetUserProgress(username);
+            user_level_obj.PreLevelCompleted = BasketGame_SceneVariables.VALUE_FOR_PRE_LEVEL_COMPLETE;
+            _connection.Update(user_level_obj);
+
+        }
+
+        public UserProgress_TrainGame GetUserProgress(string username)
+        {
+            //var _game_name = GetGameName();
+            var user_level = _connection.Table<UserProgress_TrainGame>().Where(x => x.User_Obj == username);/*.Where(x => x.Game_name == _game_name);*/
+            foreach (var user_level_obj in user_level)
+            {
+                return user_level_obj;
+            }
+            return AddUserProgress(username);
+        }
+
+        public UserProgress_TrainGame AddUserProgress(string username)
+        {
+            var default_level = 1;
+            var max_ids = _connection.Query<UserProgress_TrainGame>("SELECT *, max(Id) FROM UserProgress_TrainGame LIMIT 1");
+            int id = 0;
+            foreach (var max_id in max_ids)
+            {
+                id = max_id.Id;
+            }
+            _connection.Insert(new UserProgress_TrainGame() { User_Obj = username, Level_Obj = default_level });
+            return GetUserProgress(username);
+        }
 }

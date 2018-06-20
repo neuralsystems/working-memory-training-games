@@ -4,9 +4,10 @@ using UnityEngine;
 using System;
 public class TrainGame_SceneVariables : MonoBehaviour {
 
+    public const string masterGO = "MasterGameObject";
 
-	// Tags 
-	public const string ENGINE_TAG = "EngineTag";
+    // Tags 
+    public const string ENGINE_TAG = "EngineTag";
 	public const string BOGIE_TAG = "BogieTag";
 	public const string KEYLOCK_TAG = "KeyLockTag";
 	public const string ATTACHED_BOGIE_TAG = "AttachedBogieTag";
@@ -15,7 +16,8 @@ public class TrainGame_SceneVariables : MonoBehaviour {
 	public const string COUNTER_SHAPE_OPTION_TAG = "CounterShapeOptionTag";
     public const string SELECTED_SHAPE_TAG = "SelectedShapeTag";
 	public const string DATABASE_NAME = "WorkingMemoryGames_DB.db";
-	Dictionary <string, string> key_lock_map = new Dictionary<string, string>{
+    public const int VALUE_FOR_PRE_LEVEL_COMPLETE = 1;                              // value in the database to check if pre level is complete
+    Dictionary <string, string> key_lock_map = new Dictionary<string, string>{
 		{"K1_l","K1_r"},
 		{"K2_l","K2_r"},
 		{"K3_l","K3_r"},

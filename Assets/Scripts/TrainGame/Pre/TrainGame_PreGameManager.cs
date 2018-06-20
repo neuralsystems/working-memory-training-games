@@ -45,7 +45,11 @@ public class TrainGame_PreGameManager : MonoBehaviour {
 
 	public void LoadNext(){
 		if (HasReachedThreshold()) {
-			SceneManager.LoadScene (mainScene);
+            var m_obj = GameObject.Find(TrainGame_SceneVariables.masterGO);
+            var current_user = m_obj.GetComponent<Shared_PersistentScript>().GetCurrentPlayer();
+            var ds = new TrainGame_DataServices(TrainGame_SceneVariables.DATABASE_NAME);
+            ds.MarkPreLevelCompleted(current_user.Username);
+            SceneManager.LoadScene (mainScene);
 		} else {
 			SetShape ();
 		}
