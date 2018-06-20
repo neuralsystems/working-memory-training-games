@@ -32,11 +32,21 @@ public class BasketGame_GameManager : MonoBehaviour {
 	}
 
 	public int SetLevel(){
-		var allowed_error_percentage  = .2f;
-		if (num_of_fruits * allowed_error_percentage < Error_Count) {
-			return 0;
-		}
-		return 1;
+		var error_rate_for_increment  = .2f;
+        var error_rate_for_decrement_1 = .7f;
+        var error_rate_for_decrement_2 = .9f;
+        int change = 0;
+        // increase level by 1 if error rate is 20%, decrease level by 1 if error rate is 70% or above and by 2 if error rate is 90% or above
+        if (Error_Count < num_of_fruits * error_rate_for_increment) {
+			change = 1;
+		} else if (Error_Count > num_of_fruits * error_rate_for_decrement_2)
+        {
+            change = -2;
+        } else if (Error_Count > num_of_fruits * error_rate_for_decrement_1)
+        {
+            change = -1;
+        }
+		return change;
 	}
 	public IEnumerator MakeFruit(){
 //		yield return new WaitForSeconds (2f);
@@ -66,7 +76,7 @@ public class BasketGame_GameManager : MonoBehaviour {
 				rain_particlesystem_object.Play ();
 				yield return new WaitForSeconds(rain_particlesystem_object.main.duration);
 				persistent_go = GameObject.Find (BasketGame_SceneVariables.masterGO);
-				persistent_go.GetComponent<Shared_PersistentScript>().IncreaseLevel(SetLevel());
+				persistent_go.GetComponent<Shared_PersistentScript>().IncreaseLevelBasketGame(SetLevel());
 				SceneManager.LoadScene (SceneManager.GetActiveScene().name);
 			}
 

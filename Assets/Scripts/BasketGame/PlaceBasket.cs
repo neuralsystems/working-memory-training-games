@@ -15,19 +15,6 @@ public class PlaceBasket : MonoBehaviour {
     public Text t;
     // Use this for initialization
     void Start () {
-        //try
-        //{
-        //    if (Application.platform == RuntimePlatform.Android)
-        //    {
-        //        ShowToast(Application.persistentDataPath + "  " + Application.persistentDataPath);
-        //    }
-        //}catch (Exception e)
-        //{
-
-        //}
-        //t.text = Application.persistentDataPath + "  " + Application.persistentDataPath;
-        //Debug.Log(Application.persistentDataPath);
-        //Debug.Log(Application.streamingAssetsPath);
         persistent_go = GameObject.Find ("PersistentGameObject");
 		var level_details = persistent_go.GetComponent<Shared_PersistentScript> ().GetNewBasketGameLevelDetails ();
 		capacity = level_details.GetCapacity ();

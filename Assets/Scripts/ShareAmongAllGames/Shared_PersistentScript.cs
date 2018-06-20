@@ -63,11 +63,16 @@ public class Shared_PersistentScript : MonoBehaviour {
 
 	}
 
-	public void IncreaseLevel( int val){
+	public void IncreaseLevelBasketGame( int val){
         //currentLevel += val;
         var ds = new BasketGame_DataService(BasketGame_SceneVariables.DATABASE_NAME);
         var current_level = ds.GetUserProgress(GetCurrentPlayer().Username);
-        ds.UpdateUserProgress(GetCurrentPlayer().Username, current_level.Level_Obj + val);
+        ds.UpdateUserProgress(GetCurrentPlayer().Username, Mathf.Max(current_level.Level_Obj + val, 0));
+
+    }
+
+    public void IncreaseLevelTrainGame(int val)
+    {
 
     }
 

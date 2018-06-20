@@ -888,7 +888,7 @@ Prefab:
     - target: {fileID: 198220589568169084, guid: 03d3b0a0af3b9864a8e539a772d8fdc9,
         type: 2}
       propertyPath: lengthInSec
-      value: 15
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 198220589568169084, guid: 03d3b0a0af3b9864a8e539a772d8fdc9,
         type: 2}
