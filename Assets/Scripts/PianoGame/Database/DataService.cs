@@ -81,25 +81,40 @@ public class DataService  {
 		const string command = "SELECT * FROM PianoGame_TonesForLevels ORDER BY RANDOM() LIMIT 1";
 		return _connection.Query<PianoGame_TonesForLevels>(command);
 		}
-//
-//		public IEnumerable<Images> GetImage( string imageName){
-//		return _connection.Table<Images>().Where(x => x.FileUrl == imageName);
-//		}
-//
-//		public IEnumerable<ScoreMatrix> GetScoreValue( int Level, float Time, int forCorrect ){
-//		const string command = "SELECT scoreValue FROM ScoreMatrix where Level = ? and Time >=? and ForCorrect = ? ORDER BY Time ASC LIMIT 1";
-//		return _connection.Query<ScoreMatrix>(command, Level,Time,forCorrect);
-//		//		return _connection.Table<ScoreMatrix>().Where(x => x.Level == Level && x.Time == Time && x.ForCorrect == isCorrect);
-//		}
-//
-//		//		public IEnumerable<NextLevelToLoad> GetNextLevelToLoad(int currentLevel, int score){
-//		//		const string command = "SELECT * FROM NextLevelToLoad WHERE CurrentLevel = ? and UpperLimit >= ? and LoverLimit <= ? ORDER BY";
-//		//		return _connection.Query<NextLevelToLoad> (command, currentLevel, score, score);
-//		//		}
-//
-//		public IEnumerable<NextLevelToLoad> GetNextLevelToLoad(int currentLevel){
-//		const string command = "SELECT * FROM NextLevelToLoad WHERE CurrentLevel = ? ";
-//		return _connection.Query<NextLevelToLoad> (command, currentLevel);
-//		}
 
-	}
+        public IEnumerable<PianoGame_Levels> GetLevelsObject(int level_number)
+        {
+        return _connection.Table<PianoGame_Levels>().Where(c => c.LevelNumber == level_number);
+        }
+        public void UpdateUserProgress(string username, int level_number)
+        {
+            var user_level_obj = GetUserProgress(username);
+            user_level_obj.Level_Obj = level_number;
+            _connection.Update(user_level_obj);
+
+        }
+
+        public UserProgress_PianoGame GetUserProgress(string username)
+        {
+            //var _game_name = GetGameName();
+            var user_level = _connection.Table<UserProgress_PianoGame>().Where(x => x.User_Obj == username);/*.Where(x => x.Game_name == _game_name);*/
+            foreach (var user_level_obj in user_level)
+            {
+                return user_level_obj;
+            }
+            return AddUserProgress(username);
+        }
+
+        public UserProgress_PianoGame AddUserProgress(string username)
+        {
+            var default_level = 1;
+            var max_ids = _connection.Query<UserProgress_BasketGame>("SELECT *, max(Id) FROM UserProgress_PianoGame LIMIT 1");
+            int id = 0;
+            foreach (var max_id in max_ids)
+            {
+                id = max_id.Id;
+            }
+            _connection.Insert(new UserProgress_BasketGame() { User_Obj = username, Level_Obj = default_level });
+            return GetUserProgress(username);
+        }
+}

@@ -20,8 +20,10 @@ public class PlayTone : MonoBehaviour {
 		current_length = initial_length;
 		camera_position = Camera.main.transform.position;
 	}
+
 	// Use this for initialization
 	void Start () {
+        var persistan_go = GameObject.Find(SceneVariables.masterGO);
 		tones = Camera.main.GetComponent<Tones>();
 		gradient = 1;
 		current_length = initial_length;

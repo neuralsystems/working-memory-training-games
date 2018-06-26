@@ -84,6 +84,7 @@ public class MApp_DataServices
         try
         {
             _connection.Insert(new User() { Username = _username, Age = _age, IQ = iQ, First_Name = _first_name, Last_Name = _last_name });
+
         } catch(System.Exception e)
         {
             Debug.Log(e.ToString());

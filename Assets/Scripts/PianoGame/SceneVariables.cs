@@ -6,10 +6,11 @@ public class SceneVariables : MonoBehaviour {
 	
 	// database related variables
 
-	public string DATABASE_NAME = "WorkingMemoryGames_DB.db"; 										// name of the sqlite database
+	public const string DATABASE_NAME = "WorkingMemoryGames_DB.db"; 										// name of the sqlite database
 	public string Game_Name = "PianoGame";
-	// tags used in the game
-	public string KEY_SQUARE_TAG = "KeySquareTag";										// tag for the keys spawned when computer presses a piano key
+    public const string masterGO = "MasterGameObject";
+    // tags used in the game
+    public string KEY_SQUARE_TAG = "KeySquareTag";										// tag for the keys spawned when computer presses a piano key
 	public string SAMPLE_SQUARE_TAG = "SampleSquareTag";									// not used yet and not sure why added this tag
 	public string USER_INPUT_SQUARE_TAG = "UserInputSquareTag";							// tag for the keys spawned when user presses a piano key
 	public string REWARD_SQUARE_TAG = "RewardSquareTag";									// // tag for the square spawned at the top of screen 
@@ -20,10 +21,10 @@ public class SceneVariables : MonoBehaviour {
 	// gameobject position related variables 
 	public float heightPercentageForRewardSquare = .9f, widthPercentageForRewardSquare = .50f; // for position of squares on top
 	public float widthPercentage, heightPercentage;										// not used yet 
+    public const int DEFAULT_VALUE_KEEP_VISIBLE = 1;
 
-
-	// gameplay related variables 
-	public static bool IS_PRESSED = false;												// to check that only one key is presses = true if any key is pressed, false otherwise
+    // gameplay related variables 
+    public static bool IS_PRESSED = false;												// to check that only one key is presses = true if any key is pressed, false otherwise
 	public static float PLAY_TIME = .5f;													// time in sec for which a frequency is played	
 	public static float WAIT_TIME = .6f;													// minimum time gap between two consequtive press 
 	public static float delayAfterCorrect = 2.0f, delayAfterIncorrect = 2.0f;			// not used yet and not sure why added	

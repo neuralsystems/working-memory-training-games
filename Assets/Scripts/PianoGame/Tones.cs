@@ -26,8 +26,8 @@ public class Tones : MonoBehaviour {
 	}
 
 	public string GetToneAtRandom(){
-		var sc = Camera.main.GetComponent<SceneVariables> ();
-		DataService ds = new DataService (sc.DATABASE_NAME);
+		//var sc = Camera.main.GetComponent<SceneVariables> ();
+		DataService ds = new DataService (SceneVariables.DATABASE_NAME);
 		var tones = ds.GetRandomTone();
 		foreach (var tone in tones) {
 			Debug.Log (tone.ToneName);

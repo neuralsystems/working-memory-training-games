@@ -63,6 +63,7 @@ public class Shared_PersistentScript : MonoBehaviour {
 
 	}
 
+    //used for changing levels including both increase as well as decrease
 	public void IncreaseLevelBasketGame( int val){
         //currentLevel += val;
         var ds = new BasketGame_DataService(BasketGame_SceneVariables.DATABASE_NAME);
@@ -71,6 +72,7 @@ public class Shared_PersistentScript : MonoBehaviour {
 
     }
 
+    //used for changing levels including both increase as well as decrease
     public void IncreaseLevelTrainGame(int val)
     {
         var ds = new TrainGame_DataServices(TrainGame_SceneVariables.DATABASE_NAME);
@@ -98,4 +100,30 @@ public class Shared_PersistentScript : MonoBehaviour {
 
 	}
 
+    //used for changing levels including both increase as well as decrease
+    public void IncreaseLevelPianoGame(int val)
+    {
+        var ds = new DataService(SceneVariables.DATABASE_NAME);
+        var current_level = ds.GetUserProgress(GetCurrentPlayer().Username);
+        ds.UpdateUserProgress(GetCurrentPlayer().Username, Mathf.Max(current_level.Level_Obj + val, 0));
+    }
+
+    public PianoGame_Levels GetNewPianoGameLevelDetails()
+    {
+        var ds = new DataService(TrainGame_SceneVariables.DATABASE_NAME);
+        var currentLevel = ds.GetUserProgress(GetCurrentPlayer().Username);
+        //      var Value_For_Block = 1;
+        //var ds = new TrainGame_DataServices (TrainGame_SceneVariables.DATABASE_NAME);
+        //var currentLevel = 1;
+        var current_level_objects = ds.GetLevelsObject(currentLevel.Level_Obj);
+        PianoGame_Levels x = new PianoGame_Levels();
+        foreach (var current_level in current_level_objects)
+        {
+            x = current_level;
+            break;
+        }
+        //Debug.Log ((x.ShouldBlock  == Value_For_Block)+" "+ x.NumOfBogie );
+        return x;
+
+    }
 }
