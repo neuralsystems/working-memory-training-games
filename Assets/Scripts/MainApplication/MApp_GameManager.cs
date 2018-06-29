@@ -6,8 +6,9 @@ public class MApp_GameManager : MonoBehaviour {
 
     public string HomeScreen;
     public GameObject MasterGo;
+    public const string masterGO = "MasterGameObject";
     // Use this for initialization
-	void Start () {
+    void Start () {
 		
 	}
 	

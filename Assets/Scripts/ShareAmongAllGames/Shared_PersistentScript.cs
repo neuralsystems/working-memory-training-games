@@ -110,7 +110,7 @@ public class Shared_PersistentScript : MonoBehaviour {
 
     public PianoGame_Levels GetNewPianoGameLevelDetails()
     {
-        var ds = new DataService(TrainGame_SceneVariables.DATABASE_NAME);
+        var ds = new DataService(SceneVariables.DATABASE_NAME);
         var currentLevel = ds.GetUserProgress(GetCurrentPlayer().Username);
         //      var Value_For_Block = 1;
         //var ds = new TrainGame_DataServices (TrainGame_SceneVariables.DATABASE_NAME);

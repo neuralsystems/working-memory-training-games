@@ -84,8 +84,8 @@ public class KeySquareBehavior : MonoBehaviour
 				var shift = GetComponent<SpriteRenderer>().sprite.bounds.size.y * (1-overlapfraction);
 				var target_for_parent = user_input_parent_object.transform.position;
 				target_for_parent.y -= shift;
-				user_input_parent_object.GetComponent<PianoGame_UserInputSquareParentBehavior> ().All_Match = all_matched;
-				StartCoroutine(user_input_parent_object.GetComponent<PianoGame_UserInputSquareParentBehavior>().MoveToTarget(target_for_parent));
+				//user_input_parent_object.GetComponent<PianoGame_UserInputSquareParentBehavior> ().All_Match = all_matched;
+				StartCoroutine(user_input_parent_object.GetComponent<PianoGame_UserInputSquareParentBehavior>().MoveToTarget(target_for_parent,all_matched));
 			}
 		}
 

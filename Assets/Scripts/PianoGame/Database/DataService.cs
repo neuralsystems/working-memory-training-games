@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Collections;
 using System.IO;
 #endif
+using System;
 using System.Collections.Generic;
 
 public class DataService  {
@@ -86,10 +87,12 @@ public class DataService  {
         {
         return _connection.Table<PianoGame_Levels>().Where(c => c.LevelNumber == level_number);
         }
+
         public void UpdateUserProgress(string username, int level_number)
         {
             var user_level_obj = GetUserProgress(username);
             user_level_obj.Level_Obj = level_number;
+            user_level_obj.LastModified = DateTime.Now;
             _connection.Update(user_level_obj);
 
         }
@@ -108,13 +111,7 @@ public class DataService  {
         public UserProgress_PianoGame AddUserProgress(string username)
         {
             var default_level = 1;
-            var max_ids = _connection.Query<UserProgress_BasketGame>("SELECT *, max(Id) FROM UserProgress_PianoGame LIMIT 1");
-            int id = 0;
-            foreach (var max_id in max_ids)
-            {
-                id = max_id.Id;
-            }
-            _connection.Insert(new UserProgress_BasketGame() { User_Obj = username, Level_Obj = default_level });
+            _connection.Insert(new UserProgress_PianoGame() { User_Obj = username, Level_Obj = default_level, LastModified = DateTime.Now,  DateCreated = DateTime.Now});
             return GetUserProgress(username);
         }
 }

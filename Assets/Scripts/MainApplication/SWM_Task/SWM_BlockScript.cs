@@ -35,31 +35,19 @@ public class SWM_BlockScript : MonoBehaviour {
 
     private void OnMouseDown()
     {
-        if (Touchable)
+        if (Touchable && NotConsequtive())
         {
             TouchCount++;
             StartCoroutine(Show());
             clicked = true;
-
-
-            //if (TouchCount > 1)
-            //{
-            //    Camera.main.GetComponent<SWM_GameManager>().WithInSearchError();
-            //    if (hadToken && !hasToken)
-            //    {
-            //        Camera.main.GetComponent<SWM_GameManager>().BetweenSearchError();
-            //    }
-            //}
-            //else
-            //{
-            //    if (hasToken)
-            //    {
-            //        hadToken = true;
-            //        transform.GetChild(0).transform.parent = null;
-            //        Camera.main.GetComponent<SWM_GameManager>().SetScene();
-            //    }
-            //}
+            Camera.main.GetComponent<SWM_GameManager>().previous_gameobject = this.gameObject;
         }
+    }
+
+
+    bool NotConsequtive()
+    {
+        return Camera.main.GetComponent<SWM_GameManager>().previous_gameobject != this.gameObject;
     }
 
     public void CheckForToken(){
@@ -75,6 +63,7 @@ public class SWM_BlockScript : MonoBehaviour {
                 GameObject _flower = transform.GetChild(1).gameObject;
                 hadToken = true;
                 hasToken = false;
+                Camera.main.GetComponent<SWM_GameManager>().previous_gameobject = null;
                 Camera.main.GetComponent<SWM_GameManager>().TrashFlower(_flower);
             }
             if (TouchCount > 1)

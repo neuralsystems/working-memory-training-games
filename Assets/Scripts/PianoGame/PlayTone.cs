@@ -16,6 +16,7 @@ public class PlayTone : MonoBehaviour {
 	List <string> toneTOBePlayed = new List<string>(); 
 	public Transform blockSquare;
 	Vector3 camera_position;
+    float WAIT_TIME, PLAY_TIME;
 	void Awake(){
 		current_length = initial_length;
 		camera_position = Camera.main.transform.position;
@@ -23,8 +24,8 @@ public class PlayTone : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        var persistan_go = GameObject.Find(SceneVariables.masterGO);
-		tones = Camera.main.GetComponent<Tones>();
+        GetLevelDetails();
+        tones = Camera.main.GetComponent<Tones>();
 		gradient = 1;
 		current_length = initial_length;
 		sample = "";
@@ -33,6 +34,17 @@ public class PlayTone : MonoBehaviour {
 		var numOfEmptyRewardSquare = initial_length + (gradient * (Camera.main.GetComponent<SceneVariables> ().CONSECUTIVE_CORRECT_THRESHOLD - 1));
 		StartCoroutine(Camera.main.GetComponent<SceneVariables>().PlaceEmptyRewardSquare(numOfEmptyRewardSquare));
 	}
+
+    void GetLevelDetails()
+    {
+        var persistan_go = GameObject.Find(SceneVariables.masterGO);
+        var level_obj = persistan_go.GetComponent<Shared_PersistentScript>().GetNewPianoGameLevelDetails();
+        initial_length = level_obj.InitialLength;
+        gradient = level_obj.Gradient;
+        WAIT_TIME = level_obj.WaitTime;
+        PLAY_TIME = level_obj.PlayTime;
+
+    }
 	
 	public void Repeat(){
 		sample = "";
@@ -41,7 +53,6 @@ public class PlayTone : MonoBehaviour {
 	}
 
 	public void Next(){
-		Debug.Log ("called next");
 		if (SceneVariables.error_count > SceneVariables.max_allowed_error) {
 			current_length = Mathf.Max (current_length - gradient, SceneVariables.min_tone_length);
 		} else {
@@ -57,10 +68,11 @@ public class PlayTone : MonoBehaviour {
 	public IEnumerator LoadNextLevel(){
 		Debug.Log ("called LoadNextLevel");
 		consequtive_correct = 0;
-		initial_length += incrementForNextLevel;
-		current_length = initial_length;
-		gradient = 1;
-		previous = 0;
+		//initial_length += incrementForNextLevel;
+		//current_length = initial_length;
+		//gradient = 1;
+        GetLevelDetails();
+        previous = 0;
 		Camera.main.GetComponent<SceneVariables> ().Reset ();
 		var numOfEmptyRewardSquare = initial_length + (gradient * (Camera.main.GetComponent<SceneVariables> ().CONSECUTIVE_CORRECT_THRESHOLD - 1));
 		StartCoroutine(Camera.main.GetComponent<SceneVariables>().PlaceEmptyRewardSquare(numOfEmptyRewardSquare));
@@ -70,7 +82,8 @@ public class PlayTone : MonoBehaviour {
 
 	public IEnumerator DisplayOnLevelComplete(){
 		Debug.Log ("called DisplayOnLevelComplete");
-		DestroyCueSquares (Camera.main.GetComponent<SceneVariables> ().USER_INPUT_SQUARE_TAG);
+        ChangeLevel();
+        DestroyCueSquares (Camera.main.GetComponent<SceneVariables> ().USER_INPUT_SQUARE_TAG);
 		DestroyCueSquares (Camera.main.GetComponent<SceneVariables> ().SAMPLE_SQUARE_TAG);
 //		GameObject.Find (GetComponent<SceneVariables> ().REWARD_SQUARE_PARENT).transform.position = GameObject.Find (GetComponent<SceneVariables> ().USER_INPUT_SQUARE_PARENT).transform.position;
 		StartCoroutine(GameObject.Find (GetComponent<SceneVariables> ().REWARD_SQUARE_PARENT).GetComponent<PG_RewardSquareParentBehavior>().MoveToTarget( GameObject.Find (GetComponent<SceneVariables> ().USER_INPUT_SQUARE_PARENT).transform.position));
@@ -80,6 +93,12 @@ public class PlayTone : MonoBehaviour {
 		yield return StartCoroutine(WaitForRainToStop(rain_particle_system_object.GetComponent<ParticleSystem>()));
 	}
 
+    void ChangeLevel()
+    {
+        var persistan_go = GameObject.Find(SceneVariables.masterGO);
+
+        persistan_go.GetComponent<Shared_PersistentScript>().IncreaseLevelPianoGame(1);
+    }
 	public IEnumerator WaitForRainToStop(ParticleSystem rain){
 		if (rain.isPlaying) {
 			yield return null;
@@ -123,7 +142,7 @@ public class PlayTone : MonoBehaviour {
 					reward_square_child_object.transform.localScale += new Vector3(1,1,1) * .3f;
 				}
 				g.GetComponent<OnKeyPress> ().PlaySound(isRepeat);
-				yield return new WaitForSeconds (SceneVariables.WAIT_TIME);
+				yield return new WaitForSeconds (WAIT_TIME);
 				if (isRepeat) {
 					var reward_square_child_object = reward_square_parent.transform.GetChild (i).transform.GetChild (0);
 					reward_square_child_object.GetComponent<SpriteRenderer> ().sortingLayerName = original_layer;
@@ -136,10 +155,10 @@ public class PlayTone : MonoBehaviour {
 				}
 
 			} else {
-				yield return new WaitForSeconds (SceneVariables.WAIT_TIME);
+				yield return new WaitForSeconds (WAIT_TIME);
 			}
 		}
-		yield return new WaitForSeconds (SceneVariables.PLAY_TIME);
+		yield return new WaitForSeconds (PLAY_TIME);
 		if (!isRepeat) {
 			SceneVariables.IS_USER_MODE = true;
 		}

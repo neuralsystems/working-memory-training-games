@@ -6,7 +6,7 @@ public class ScoreSWM {
 
     [PrimaryKey, AutoIncrement]
 	public int Id { get; set; }
-    public int TestedUser { get; set; }
+    public string TestedUser { get; set; }
     public int WithInErrorCount { get; set; }
     public int BetweenErrorCount { get; set; }
     public string DateOfTest { get; set; }

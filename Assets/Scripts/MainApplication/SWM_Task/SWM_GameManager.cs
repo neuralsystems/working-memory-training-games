@@ -13,6 +13,7 @@ public class SWM_GameManager : MonoBehaviour {
     public Transform _flower;
     System.Random rand;
     int numSpawn = 0;
+    public GameObject previous_gameobject;
     List<int> token_order = new List<int>();
 
     // Use this for initialization
@@ -84,12 +85,10 @@ public class SWM_GameManager : MonoBehaviour {
                 tower.transform.GetChild(i).GetComponent<SpriteRenderer>().enabled = false;
             }
             MApp_DataServices ds = new MApp_DataServices(MApp_UserInforFormScript.database_Name);
-            var users = ds.GetUser(1);
+            var persistent_go = GameObject.Find(MApp_GameManager.masterGO);
+            var user = persistent_go.GetComponent<Shared_PersistentScript>().GetCurrentPlayer();
             var _timeoftest = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            foreach (var user in users) {
-
-                ds.RegisterSWMScores(user.Id, _with_in_search_error, _between_search_error, _timeoftest, number_of_blocks);
-            }
+            ds.RegisterSWMScores(user.Username, _with_in_search_error, _between_search_error, _timeoftest, number_of_blocks);
             Debug.Log("Test Completed Scores: " + _with_in_search_error + "(Withh in search errors), " + _between_search_error + " (Between search error count)");
         }
     }

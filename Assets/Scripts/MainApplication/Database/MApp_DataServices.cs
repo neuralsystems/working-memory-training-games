@@ -91,21 +91,13 @@ public class MApp_DataServices
         }
     }
 
-    public IEnumerable<PianoGame_TonesForLevels> GetRandomToneForLevel(int level)
-    {
-        const string command = "SELECT * FROM PianoGame_TonesForLevels where Level = ? ORDER BY RANDOM() LIMIT 1";
-        return _connection.Query<PianoGame_TonesForLevels>(command, level);
-    }
+    
 
-    public IEnumerable<PianoGame_TonesForLevels> GetRandomTone()
+    public int RegisterSWMScores(string user_name, int _withinscore, int _betweenscore, string doa, int number_of_blocks)
     {
-        const string command = "SELECT * FROM PianoGame_TonesForLevels ORDER BY RANDOM() LIMIT 1";
-        return _connection.Query<PianoGame_TonesForLevels>(command);
-    }
-
-    public void RegisterSWMScores(int user_id, int _withinscore, int _betweenscore, string doa, int number_of_blocks)
-    {
-        _connection.Insert(new ScoreSWM() { TestedUser = user_id, WithInErrorCount = _withinscore, BetweenErrorCount = _betweenscore, DateOfTest = doa, NumOfBlocks = number_of_blocks });
+       var added =  _connection.Insert(new ScoreSWM() { TestedUser = user_name, WithInErrorCount = _withinscore, BetweenErrorCount = _betweenscore, DateOfTest = doa, NumOfBlocks = number_of_blocks });
+        Debug.Log(added + "record added");
+        return added;
     }
     
 }
