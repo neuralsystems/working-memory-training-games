@@ -37,7 +37,11 @@ public class PianoGame_Levels : MonoBehaviour {
 
     public bool GetKeepVisible()
     {
-        return KeepVisible == SceneVariables.DEFAULT_VALUE_KEEP_VISIBLE;
+        return this.KeepVisible == SceneVariables.DEFAULT_VALUE_KEEP_VISIBLE;
     }
 
+    public int GetDifference()
+    {
+        return Mathf.Max(this.InitialLength - this.Gradient, 0);
+    }
 }

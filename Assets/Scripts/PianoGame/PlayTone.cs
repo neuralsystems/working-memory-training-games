@@ -17,7 +17,9 @@ public class PlayTone : MonoBehaviour {
 	public Transform blockSquare;
 	Vector3 camera_position;
     float WAIT_TIME, PLAY_TIME;
-	void Awake(){
+    const string KeySquareObjectPool = "KeySquareObjectPool";
+
+    void Awake(){
 		current_length = initial_length;
 		camera_position = Camera.main.transform.position;
 	}
@@ -26,7 +28,10 @@ public class PlayTone : MonoBehaviour {
 	void Start () {
         GetLevelDetails();
         tones = Camera.main.GetComponent<Tones>();
-		gradient = 1;
+  //      initial_length = 1;
+  //      WAIT_TIME = 1.0f;
+  //      PLAY_TIME = 1.0f;
+		//gradient = 1;
 		current_length = initial_length;
 		sample = "";
 		original_tone  = tones.GetToneAtRandom ();
@@ -96,7 +101,6 @@ public class PlayTone : MonoBehaviour {
     void ChangeLevel()
     {
         var persistan_go = GameObject.Find(SceneVariables.masterGO);
-
         persistan_go.GetComponent<Shared_PersistentScript>().IncreaseLevelPianoGame(1);
     }
 	public IEnumerator WaitForRainToStop(ParticleSystem rain){
@@ -133,7 +137,8 @@ public class PlayTone : MonoBehaviour {
 				var original_layer = "Game";
 				string game_layer = "Game";
 				if (isRepeat) {
-					Debug.Log ("Color set");
+                    //Debug.Log ("Color set");
+                    Debug.Log("i = " + i);
 					var reward_square_child_object = reward_square_parent.transform.GetChild (i).transform.GetChild (0);
 					original_layer = reward_square_child_object.GetComponent<SpriteRenderer> ().sortingLayerName;
 					reward_square_child_object.GetComponent<SpriteRenderer> ().sortingLayerName = game_layer;
@@ -262,9 +267,11 @@ public class PlayTone : MonoBehaviour {
 
 	public void DestroyCueSquares(string tag){
 		var gs = GameObject.FindGameObjectsWithTag (tag);
-		foreach (var g in gs) {
-			Destroy (g);
-		}
+        var ks = GameObject.Find(KeySquareObjectPool);
+        foreach (var g in gs) {
+            //ks.GetComponent<SimpleObjectPool>().ReturnObject(g);
+            Destroy(g);
+        }
 
 	}
 

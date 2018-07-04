@@ -69,6 +69,7 @@ public class SceneVariables : MonoBehaviour {
 	// AudioSource related variables
 	public AudioClip[] Audio_Clips = new AudioClip[2] ;
 
+    public GameObject RewardPoolObject;
 	void Awake(){
 		Reset ();
 	}
@@ -123,8 +124,10 @@ public class SceneVariables : MonoBehaviour {
 				if (i == old) {
 					yield return new WaitForSeconds (1f);
 				}
-				var rs = Instantiate (rewardSquare, init_position, Quaternion.identity);
-				StartCoroutine(rs.GetComponent<PianoGame_RewardSquareBehavior>().MoveToTarget(targetRewardSquare, REWARD_SQUARE_TAG));
+                //var rs = Instantiate (rewardSquare, init_position, Quaternion.identity);
+                var rs = RewardPoolObject.GetComponent<SimpleObjectPool>().GetObject();
+                rs.transform.position = init_position;
+                StartCoroutine(rs.GetComponent<PianoGame_RewardSquareBehavior>().MoveToTarget(targetRewardSquare, REWARD_SQUARE_TAG));
 //				rs.gameObject.tag = REWARD_SQUARE_TAG;
 //				rs.transform.localScale = reward_square_parent_gameobject.transform.localScale;
 				rs.transform.parent = reward_square_parent_gameobject.transform;
@@ -164,21 +167,23 @@ public class SceneVariables : MonoBehaviour {
 		var userSquares = GameObject.FindGameObjectsWithTag (USER_INPUT_SQUARE_TAG);
 		var x = REWARD_INDEX;
 		var reward_square_parent_object = GameObject.Find (REWARD_SQUARE_PARENT);
-		int last = userSquares.Length - 1;
+        var master_go = GameObject.Find(SceneVariables.masterGO);
+        var overlap = master_go.GetComponent<Shared_PersistentScript>().GetNewPianoGameLevelDetails().GetDifference();
+		int last = userSquares.Length - overlap;
 
 		yield return GetRandomClapping();
-		for(int i=0;i<=last;i++){
+		for(int i=0;i<last;i++){
 //		foreach (var userSquare in userSquares) {
 			userSquares[i].transform.parent = null;
 			var shouldCall = false;
-			if (i == last) {
+			if (i == (last -1)) {
 				shouldCall = true;
 			}
 			StartCoroutine(userSquares[i].GetComponent<KeySquareBehavior>().MoveToReward(reward_square_parent_object.transform.GetChild(x).gameObject, shouldCall));
 			
 			x++;
 		}
-		REWARD_INDEX += 1;
+		REWARD_INDEX += overlap;
 		GameObject.Find (USER_INPUT_SQUARE_PARENT).GetComponent<PianoGame_UserInputSquareParentBehavior> ().ResetPosition ();
 	}
 
