@@ -37,7 +37,7 @@ public class MApp_RegistedUserListScript : MonoBehaviour {
             //_usericon.GuiButton.onClick.AddListener(() => { Function(param); OtherFunction(param); })
             _usericon.transform.SetParent(contentPanel);
             MApp_UserIconScript _user_icon_script = _usericon.GetComponent<MApp_UserIconScript>();
-            Debug.Log("running the inner loop 1 " + u_icon.user.First_Name);
+            //Debug.Log("running the inner loop 1 " + u_icon.user.First_Name);
             _user_icon_script.SetUp(u_icon, this);
 
         }
@@ -54,7 +54,7 @@ public class MApp_RegistedUserListScript : MonoBehaviour {
             int i = 0;
             foreach (var user in all_users)
             {
-                Debug.Log("running the inner loop " + user.First_Name);
+                //Debug.Log("running the inner loop " + user.First_Name);
                 var new_user = new UserIcon();
                 new_user.user = user;
                 user_list.Add(new_user);

@@ -54,15 +54,15 @@ public class OnKeyPress : MonoBehaviour {
 					userString += this.gameObject.name + delimeter;
 					userString = userString.ToUpper ();
 					if (Camera.main.GetComponent<PlayTone> ().GetTuneLength () == numOfKeysPressed) {
-						Debug.Log ("in check");
+						//Debug.Log ("in check");
 						if (CheckWithSampleTune ()) {
 							userString = "";
 							Camera.main.GetComponent<SceneVariables> ().correctMatch = true;
-							Debug.Log ("calling the next");
+							//Debug.Log ("calling the next");
 							Camera.main.GetComponent<PlayTone> ().Next ();
 						} else {
 							SceneVariables.error_count += 1;
-							Debug.Log ("error count is" + SceneVariables.error_count);
+							//Debug.Log ("error count is" + SceneVariables.error_count);
 							Camera.main.GetComponent<PlayTone> ().Repeat ();
 						}
 					}
@@ -85,7 +85,7 @@ public class OnKeyPress : MonoBehaviour {
 			keysquare.tag = Camera.main.GetComponent<SceneVariables> ().SAMPLE_SQUARE_TAG;
 		}
 		var file_name = keySquareImageName;
-		Debug.Log ("tried at: "+ folderName + file_name);
+		//Debug.Log ("tried at: "+ folderName + file_name);
 		keysquare.GetComponent<SpriteRenderer> ().sprite = Resources.Load (game_name + "/" + folderName + file_name, typeof(Sprite)) as Sprite;
 	}
 
@@ -148,7 +148,7 @@ public class OnKeyPress : MonoBehaviour {
 
 	public void ChangeTransperancy( bool val){
 		var tem_color = gameObject.GetComponent<SpriteRenderer> ().material.color;
-		Debug.Log ("called for other keys " + val);
+		//Debug.Log ("called for other keys " + val);
 		if (val) {
 			tem_color.a = .3f;
 		} else {

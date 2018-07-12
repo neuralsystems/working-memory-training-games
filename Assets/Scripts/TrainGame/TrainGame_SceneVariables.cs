@@ -15,7 +15,7 @@ public class TrainGame_SceneVariables : MonoBehaviour {
 	public const string Game_Name = "TrainGame";
 	public const string COUNTER_SHAPE_OPTION_TAG = "CounterShapeOptionTag";
     public const string SELECTED_SHAPE_TAG = "SelectedShapeTag";
-	public const string DATABASE_NAME = "WorkingMemoryGames_DB.db";
+	public const string DATABASE_NAME = "WorkingMemoryGames_DB1.db";
     public const int VALUE_FOR_PRE_LEVEL_COMPLETE = 1;                              // value in the database to check if pre level is complete
     Dictionary <string, string> key_lock_map = new Dictionary<string, string>{
 		{"K1_l","K1_r"},

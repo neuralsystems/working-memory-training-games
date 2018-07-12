@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
+using UnityEngine.UI;
 public class BasketGame_PreGameManager : MonoBehaviour {
 
     public GameObject simpleGameObjectPool;
@@ -14,10 +16,11 @@ public class BasketGame_PreGameManager : MonoBehaviour {
     int movement_Speed = 4;
     public string MainGameSceneName;
     readonly bool[] Movement_choice = new bool[] { false,false,false,true,true,true,true,true,true,true};
-    readonly int[] Speed_choices = new int[] {0,0,0,2,4,5,8,10,12,15};
+    readonly int[] Speed_choices = new int[] {0,0,0,2,4,5,8,4,8,10};
     readonly bool[] shouldStop = new bool[] { false, false, false, true, true, true, true, false, false, false};
     readonly bool[] clickable = new bool[] { true, true, true, false, false, false, true, true, true, true };
     public GameObject basket_go;
+    public Text error_text;
     // Use this for initialization
     void Start () {
         
@@ -53,16 +56,23 @@ public class BasketGame_PreGameManager : MonoBehaviour {
             {
                 baloon_go.GetComponent<BasketGame_PreBaloonScript>().Move(movement_Speed, path, shouldStop[level_number]);
             }
-            int n = Random.Range(0, all_baloons.Count);
+            int n = UnityEngine.Random.Range(0, all_baloons.Count);
             baloon_go.GetComponent<SpriteRenderer>().sprite = all_baloons[n];
         }
         else
         {
-            var m_obj = GameObject.Find(BasketGame_SceneVariables.masterGO);
-            var current_user = m_obj.GetComponent<Shared_PersistentScript>().GetCurrentPlayer();
-            var ds = new BasketGame_DataService(BasketGame_SceneVariables.DATABASE_NAME);
-            ds.MarkPreLevelCompleted(current_user.Username);
-            SceneManager.LoadScene(MainGameSceneName);
+            try
+            {
+                var m_obj = GameObject.Find(BasketGame_SceneVariables.masterGO);
+                var current_user = m_obj.GetComponent<Shared_PersistentScript>().GetCurrentPlayer();
+                var ds = new BasketGame_DataService(BasketGame_SceneVariables.DATABASE_NAME);
+                ds.MarkPreLevelCompleted(current_user.Username);
+                SceneManager.LoadScene(MainGameSceneName);
+            } catch(Exception e)
+            {
+                error_text.text = e.ToString();
+            }
+            
         }
     }
 

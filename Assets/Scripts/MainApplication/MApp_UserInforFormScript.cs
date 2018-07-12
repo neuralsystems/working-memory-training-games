@@ -13,7 +13,7 @@ public class MApp_UserInforFormScript : MonoBehaviour {
     public InputField last_name;
     public Text OutputText;
     const string all_ok = "Form Submitted Successfully. Thank you for your participation!";
-    public const string database_Name = "WorkingMemoryGames_DB.db";
+    public const string database_Name = "WorkingMemoryGames_DB1.db";
     const int deafult_iq = 20;
     public void AddUserDetails()
     {

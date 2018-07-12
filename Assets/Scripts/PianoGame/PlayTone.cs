@@ -18,7 +18,7 @@ public class PlayTone : MonoBehaviour {
 	Vector3 camera_position;
     float WAIT_TIME, PLAY_TIME;
     const string KeySquareObjectPool = "KeySquareObjectPool";
-
+    int CONSECUTIVE_CORRECT_THRESHOLD;
     void Awake(){
 		current_length = initial_length;
 		camera_position = Camera.main.transform.position;
@@ -32,11 +32,11 @@ public class PlayTone : MonoBehaviour {
   //      WAIT_TIME = 1.0f;
   //      PLAY_TIME = 1.0f;
 		//gradient = 1;
-		current_length = initial_length;
+		
 		sample = "";
 		original_tone  = tones.GetToneAtRandom ();
 		GetNotes(original_tone, tones.GetDelimeter ());
-		var numOfEmptyRewardSquare = initial_length + (gradient * (Camera.main.GetComponent<SceneVariables> ().CONSECUTIVE_CORRECT_THRESHOLD - 1));
+		var numOfEmptyRewardSquare = initial_length + (gradient * (CONSECUTIVE_CORRECT_THRESHOLD - 1));
 		StartCoroutine(Camera.main.GetComponent<SceneVariables>().PlaceEmptyRewardSquare(numOfEmptyRewardSquare));
 	}
 
@@ -48,7 +48,8 @@ public class PlayTone : MonoBehaviour {
         gradient = level_obj.Gradient;
         WAIT_TIME = level_obj.WaitTime;
         PLAY_TIME = level_obj.PlayTime;
-
+        current_length = initial_length;
+        CONSECUTIVE_CORRECT_THRESHOLD = level_obj.Threshold;
     }
 	
 	public void Repeat(){
@@ -79,7 +80,7 @@ public class PlayTone : MonoBehaviour {
         GetLevelDetails();
         previous = 0;
 		Camera.main.GetComponent<SceneVariables> ().Reset ();
-		var numOfEmptyRewardSquare = initial_length + (gradient * (Camera.main.GetComponent<SceneVariables> ().CONSECUTIVE_CORRECT_THRESHOLD - 1));
+		var numOfEmptyRewardSquare = initial_length + (gradient * (CONSECUTIVE_CORRECT_THRESHOLD - 1));
 		StartCoroutine(Camera.main.GetComponent<SceneVariables>().PlaceEmptyRewardSquare(numOfEmptyRewardSquare));
 		yield return null;
 	}
@@ -181,7 +182,7 @@ public class PlayTone : MonoBehaviour {
 		sample = GetFirstnNotes (original_tone, delimeter,current_length);
 		yield return StartCoroutine(PlaySomeTone (sample,tones.GetDelimeter(), 0, current_length-gradient,true, isLastRepeat));
 //		Camera.main.GetComponent<SceneVariables> ().GetRandomClapping ();
-		if (consequtive_correct < Camera.main.GetComponent<SceneVariables> ().CONSECUTIVE_CORRECT_THRESHOLD) {
+		if (consequtive_correct < CONSECUTIVE_CORRECT_THRESHOLD) {
 			GameObject.Find (Camera.main.GetComponent<SceneVariables> ().playSound).GetComponent<HomeScreenButtons> ().SetHaloToggle (true);
 		}
 	}
@@ -277,7 +278,7 @@ public class PlayTone : MonoBehaviour {
 
 	public void CheckOnComplete(){
 		Debug.Log ("Checked for level complete");
-		if (consequtive_correct >= Camera.main.GetComponent<SceneVariables> ().CONSECUTIVE_CORRECT_THRESHOLD) {
+		if (consequtive_correct >= CONSECUTIVE_CORRECT_THRESHOLD) {
 			SceneVariables.IS_USER_MODE = false;
 			StartCoroutine (DisplayOnLevelComplete ());
 		} else {

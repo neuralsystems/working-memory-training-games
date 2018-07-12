@@ -6,7 +6,7 @@ public class SceneVariables : MonoBehaviour {
 	
 	// database related variables
 
-	public const string DATABASE_NAME = "WorkingMemoryGames_DB.db"; 										// name of the sqlite database
+	public const string DATABASE_NAME = "WorkingMemoryGames_DB1.db"; 										// name of the sqlite database
 	public string Game_Name = "PianoGame";
     public const string masterGO = "MasterGameObject";
     // tags used in the game
@@ -169,21 +169,19 @@ public class SceneVariables : MonoBehaviour {
 		var reward_square_parent_object = GameObject.Find (REWARD_SQUARE_PARENT);
         var master_go = GameObject.Find(SceneVariables.masterGO);
         var overlap = master_go.GetComponent<Shared_PersistentScript>().GetNewPianoGameLevelDetails().GetDifference();
-		int last = userSquares.Length - overlap;
-
+		int last = userSquares.Length - 1;
 		yield return GetRandomClapping();
-		for(int i=0;i<last;i++){
+		for(int i=0;i<=last;i++){
 //		foreach (var userSquare in userSquares) {
 			userSquares[i].transform.parent = null;
 			var shouldCall = false;
-			if (i == (last -1)) {
+			if (i == (last)) {
 				shouldCall = true;
 			}
 			StartCoroutine(userSquares[i].GetComponent<KeySquareBehavior>().MoveToReward(reward_square_parent_object.transform.GetChild(x).gameObject, shouldCall));
-			
 			x++;
 		}
-		REWARD_INDEX += overlap;
+		REWARD_INDEX = x - overlap;
 		GameObject.Find (USER_INPUT_SQUARE_PARENT).GetComponent<PianoGame_UserInputSquareParentBehavior> ().ResetPosition ();
 	}
 

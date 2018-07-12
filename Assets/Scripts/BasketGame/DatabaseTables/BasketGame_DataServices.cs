@@ -1,5 +1,6 @@
 ﻿using SQLite4Unity3d;
 using UnityEngine;
+using System;
 #if !UNITY_EDITOR
 using System.Collections;
 using System.IO;
@@ -85,6 +86,7 @@ public class BasketGame_DataService  {
         {
             var user_level_obj = GetUserProgress(username);
             user_level_obj.PreLevelCompleted = BasketGame_SceneVariables.VALUE_FOR_PRE_LEVEL_COMPLETE;
+            user_level_obj.LastModified = DateTime.Now;
             _connection.Update(user_level_obj);
 
         }
@@ -109,7 +111,7 @@ public class BasketGame_DataService  {
             {
                 id = max_id.Id;
             }
-            _connection.Insert(new UserProgress_BasketGame() {  User_Obj = username, Level_Obj = default_level });
+            _connection.Insert(new UserProgress_BasketGame() {  User_Obj = username, Level_Obj = default_level, DateCreated = DateTime.Now,LastModified = DateTime.Now  });
             return GetUserProgress(username);
         }
 

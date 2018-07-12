@@ -8,7 +8,7 @@ public class BasketGame_SceneVariables : MonoBehaviour {
     public const string Game_Name = "BasketGame";
     public const string masterGO = "MasterGameObject";
     public const int VALUE_FOR_PRE_LEVEL_COMPLETE = 1;
-    public const string DATABASE_NAME = "WorkingMemoryGames_DB.db";
+    public const string DATABASE_NAME = "WorkingMemoryGames_DB1.db";
     public static string basketTag = "BasketTag";
     public static string fruitTag ="FruitTag";
     public static string fullBasket = "FullBasketTag";
