@@ -33,7 +33,7 @@ EditorBuildSettings:
     path: Assets/Scenes/BasketGame/BasketGame_Scene2.unity
     guid: 544f3e405abdcc44696188d8a2f29dff
   - enabled: 1
-    path: Assets/Scenes/TrainGame/Pre/TrainGame_Pre_Scene1.unity
+    path: Assets/Scenes/TrainGame/Pre/TrainGame_PreScene1.unity
     guid: 72a1958c43c70ec44be8f871b163372d
   - enabled: 1
     path: Assets/Scenes/TrainGame/Levels/TrainGame_Scene1.unity
@@ -50,4 +50,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainApplication/CognitiveTest/SWM_TestScene_8.unity
     guid: 4bd921adc752b6447a16676159b46e95
+  - enabled: 1
+    path: Assets/Scenes/ShapeMatch/ShapeMatch_Scene1.unity
+    guid: 4169113a47cbaa146a1c1525be2b6aad
+  - enabled: 1
+    path: Assets/Scenes/ShapeMatch/ShapeMatch_userlist.unity
+    guid: 6f422c36f60c01541821f523935f2640
   m_configObjects: {}

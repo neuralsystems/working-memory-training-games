@@ -53,8 +53,64 @@ public class Scalling : MonoBehaviour {
 		//}
 	}
 
+    IEnumerator Scale(float maxSize, float minSize)
+    {
+        // we scale all axis, so they will have the same value, 
+        // so we can work with a float instead of comparing vectors
 
-	public void SetScale(bool value){
+        while (maxSize > transform.localScale.x)
+        {
+            transform.localScale += new Vector3(1, 1, 1) * Time.deltaTime * growFactor;
+            yield return null;
+        }
+        while (minSize < transform.localScale.x)
+        {
+            transform.localScale -= new Vector3(1, 1, 1) * Time.deltaTime * growFactor;
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(waitTime);
+        if (shouldScale)
+        {
+            scaling = StartCoroutine(Scale(maxSize, minSize));
+        }
+        else
+        {
+            transform.localScale = new Vector3(1, 1, 1) * maxSize;
+        }
+    }
+   
+    // used in shape match game only
+    public void SetScale(bool value, int GO)
+    {
+        float maxSize;
+        if (GO <= 3)
+        {
+            maxSize = 5 - 0.7f * GO;
+        }
+        else if (GO > 3 && GO <= 5)
+        {
+            maxSize = 5 - 0.6f * GO;
+        }
+        else
+        {
+            maxSize = 5 - 0.5f * GO;
+        }
+        float minSize = maxSize - 0.5f + 0.02f * GO;
+        shouldScale = value;
+        if (shouldScale)
+        {
+            StartCoroutine(Scale(maxSize, minSize));
+        }
+        else if (scaling != null && (!shouldScale))
+        {
+            StopCoroutine(scaling);
+        }
+        //		transform.localScale = new Vector3(1,1,1) * maxSize;
+    }
+
+
+    public void SetScale(bool value){
 //		StopCoroutine(Scale());
 
 		shouldScale = value;
@@ -66,6 +122,23 @@ public class Scalling : MonoBehaviour {
 		}
 //		transform.localScale = new Vector3(1,1,1) * maxSize;
 	}
+
+    public void SetScaleForLevelScreen(bool value)
+    {
+        float maxSize = 1.5f;
+
+        float minSize = maxSize - 0.5f;
+        shouldScale = value;
+        if (shouldScale)
+        {
+            StartCoroutine(Scale(maxSize, minSize));
+        }
+        else if (scaling != null && (!shouldScale))
+        {
+            StopCoroutine(scaling);
+        }
+        //		transform.localScale = new Vector3(1,1,1) * maxSize;
+    }
 
     public void Flip()
     {
