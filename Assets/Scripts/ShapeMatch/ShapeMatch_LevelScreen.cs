@@ -22,14 +22,14 @@ public class ShapeMatch_LevelScreen : MonoBehaviour
         Debug.Log(username02);
         GetLevelInformation(username02);
         Debug.Log(LevelNumber);
-        ScrollRect1.verticalNormalizedPosition = 1 - (0.03f * LevelNumber);
+        ScrollRect1.verticalNormalizedPosition = 1 - (0.02f * LevelNumber);
         StartCoroutine(Instantiate_obj(LevelNumber));
         PreviousLevel = LevelNumber;
         ChangeColor(Color.HSVToRGB(210, 62, 77));
     }
     public void NewStart()
     {
-        ScrollRect1.verticalNormalizedPosition = 1 - (0.03f * LevelNumber);
+        ScrollRect1.verticalNormalizedPosition = 1 - (0.02f * LevelNumber);
         canvas.gameObject.SetActive(true);
         username02 = GetuserInformation();
         Debug.Log(username02);
@@ -124,13 +124,14 @@ public class ShapeMatch_LevelScreen : MonoBehaviour
         {
             temp_Go.transform.position = Vector3.MoveTowards(temp_Go.transform.position, playerpos, step);
             yield return null;
-            if (Vector3.Distance(temp_Go.transform.position, playerpos) <= 0.5)
-            {
-                temp_Go.transform.position = playerpos;
-            }
+            
         }
-        
-        
+        //if (Vector3.Distance(temp_Go.transform.position, playerpos) <= 0.5)
+        //{
+            temp_Go.transform.position = playerpos;
+        //}
+
+
     }
     public void ChangeColor( Color Color_reqired)
     {

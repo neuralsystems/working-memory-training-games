@@ -23,7 +23,8 @@ public class BasketGame_PreGameManager : MonoBehaviour {
     public Text error_text;
     // Use this for initialization
     void Start () {
-        
+
+
         max_levels = Movement_choice.Length;
         var folder = BasketGame_SceneVariables.Game_Name + "/" + "Pre/Baloons";
         var all_sprites = Resources.LoadAll(folder, typeof(Sprite));

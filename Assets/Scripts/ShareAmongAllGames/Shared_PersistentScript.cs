@@ -55,7 +55,7 @@ public class Shared_PersistentScript : MonoBehaviour {
 		x.Capacity = 1;
 		foreach (var current_level in current_level_objects) {
 			x = current_level;
-            Debug.Log("capacity and num basket= " + x.Capacity + " " + x.NumBasket);
+            //Debug.Log("capacity and num basket= " + x.Capacity + " " + x.NumBasket);
             //break;
 		}
 		//Debug.Log (x.Capacity +" "+ x.NumBaskets );

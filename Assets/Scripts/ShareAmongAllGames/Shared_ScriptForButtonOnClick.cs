@@ -36,5 +36,21 @@ public class Shared_ScriptForButtonOnClick : MonoBehaviour {
         }
     }
 
-   
+   public void TrainGame()
+    {
+        var m_obj = GameObject.Find(TrainGame_SceneVariables.masterGO);
+        var current_user = m_obj.GetComponent<Shared_PersistentScript>().GetCurrentPlayer();
+        var ds = new TrainGame_DataServices(TrainGame_SceneVariables.DATABASE_NAME);
+        var user_progress = ds.GetUserProgress(current_user.Username);
+        var MainGameSceneName = "TrainGame_Scene1";
+        var PreGameSceneName = "TrainGame_PreScene1";
+        if (user_progress.HasCompletedPreLevel())
+        {
+            SceneManager.LoadScene(MainGameSceneName);
+        }
+        else
+        {
+            SceneManager.LoadScene(PreGameSceneName);
+        }
+    }
 }
