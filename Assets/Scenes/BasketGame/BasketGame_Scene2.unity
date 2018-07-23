@@ -2826,6 +2826,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10e2a8b21dd3bae40842c2142a075ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  previousLevel: 1
+  currentLevel: 0
   levelIconParent: {fileID: 970411996}
   playerIcon: {fileID: 970411995}
 --- !u!114 &1222570105
@@ -6329,6 +6331,10 @@ Prefab:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1502256269988984, guid: bbc8b409699385f40b0e2d3f3f1cadfe, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bbc8b409699385f40b0e2d3f3f1cadfe, type: 2}
   m_IsPrefabParent: 0
@@ -6363,5 +6369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10e2a8b21dd3bae40842c2142a075ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  previousLevel: 1
+  currentLevel: 0
   levelIconParent: {fileID: 2146678346}
   playerIcon: {fileID: 889949872}

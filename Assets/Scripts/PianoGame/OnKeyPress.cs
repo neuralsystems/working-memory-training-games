@@ -13,7 +13,7 @@ public class OnKeyPress : MonoBehaviour {
 	public string keySquareImageName, keyName;
 	string folderName = "Buttons/", game_name;
 	public static int numOfKeysPressed = 0;
-
+    public AudioClip Keytone;
 	void Start () {
 		game_name = Camera.main.GetComponent<SceneVariables> ().Game_Name;
 		keySquareImageName = keyName + "_square";
@@ -98,7 +98,7 @@ public class OnKeyPress : MonoBehaviour {
 			StartCoroutine (tappinghand.GetComponent<FingerBehavior> ().SetPositionAndPlay (transform.position, keyName));
 		}
 //		GetComponent<SpriteRenderer> ().color = SceneVariables.PRESSED_COLOR;
-		GetComponent<AudioSource> ().Play ();
+		GetComponent<AudioSource> ().PlayOneShot (Keytone);
 		StartCoroutine (DelayedCallback (SceneVariables.PLAY_TIME, AudioFinished));
 //		spriteRenderer.color = SceneVariables.PRESSED_COLOR;
 	}

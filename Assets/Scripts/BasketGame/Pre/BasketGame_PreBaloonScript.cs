@@ -8,6 +8,7 @@ public class BasketGame_PreBaloonScript : MonoBehaviour {
     bool isClickable = false;
     // Use this for initialization
 	void Start () {
+        AddFruit();
         StartCoroutine(OutOfBoundError());
     }
 	
@@ -32,14 +33,17 @@ public class BasketGame_PreBaloonScript : MonoBehaviour {
     {
         //gameObject.AddComponent<Rigidbody2D>();
         GetComponent<Rigidbody2D>().isKinematic = false;
-        var basket_obj = GameObject.Find("Basket");
-        var fruitName = Camera.main.GetComponent<BasketGame_SceneVariables>().GetColoredFruit(basket_obj.GetComponent<SpriteRenderer>().sprite.name);
-        Debug.Log("fruitName = "+ fruitName);
-        GetComponent<SpriteRenderer>().sprite = Resources.Load(BasketGame_SceneVariables.Game_Name + "/" + Camera.main.GetComponent<BasketGame_SceneVariables>().GetFruitFolderName() + fruitName, typeof(Sprite)) as Sprite;
-
+        GetComponent<SpriteRenderer>().enabled = false;
+        GetComponent<SpriteRenderer>().sprite = transform.GetChild(0).GetComponent<SpriteRenderer>().sprite; 
     }
 
-   
+    void AddFruit()
+    {
+        var basket_obj = GameObject.Find("Basket");
+        var fruitName = Camera.main.GetComponent<BasketGame_SceneVariables>().GetColoredFruit(basket_obj.GetComponent<SpriteRenderer>().sprite.name);
+        Debug.Log("fruitName = " + fruitName);
+        transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = Resources.Load(BasketGame_SceneVariables.Game_Name + "/" + Camera.main.GetComponent<BasketGame_SceneVariables>().GetFruitFolderName() + fruitName, typeof(Sprite)) as Sprite;
+    }
 
     IEnumerator OutOfBoundError()
     {

@@ -290,6 +290,21 @@ Prefab:
       propertyPath: m_TagString
       value: PianoKeyTag
       objectReference: {fileID: 0}
+    - target: {fileID: 82659860743806680, guid: 5ba7adb207795bc4799e3af2e7f70c8e,
+        type: 2}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: d5f6e4abc4a9bee43a32cdf35f0bea4d, type: 3}
+    - target: {fileID: 114318323137993220, guid: 5ba7adb207795bc4799e3af2e7f70c8e,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114058244489674764, guid: 5ba7adb207795bc4799e3af2e7f70c8e,
+        type: 2}
+      propertyPath: Keytone
+      value: 
+      objectReference: {fileID: 8300000, guid: d5f6e4abc4a9bee43a32cdf35f0bea4d, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5ba7adb207795bc4799e3af2e7f70c8e, type: 2}
   m_IsPrefabParent: 0
@@ -449,6 +464,21 @@ Prefab:
       propertyPath: m_TagString
       value: PianoKeyTag
       objectReference: {fileID: 0}
+    - target: {fileID: 82659860743806680, guid: 5ba7adb207795bc4799e3af2e7f70c8e,
+        type: 2}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 4b1ea93204634b2469a493e97b7799cf, type: 3}
+    - target: {fileID: 114318323137993220, guid: 5ba7adb207795bc4799e3af2e7f70c8e,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114058244489674764, guid: 5ba7adb207795bc4799e3af2e7f70c8e,
+        type: 2}
+      propertyPath: Keytone
+      value: 
+      objectReference: {fileID: 8300000, guid: 4b1ea93204634b2469a493e97b7799cf, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5ba7adb207795bc4799e3af2e7f70c8e, type: 2}
   m_IsPrefabParent: 0
@@ -457,75 +487,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4551579267882704, guid: 5ba7adb207795bc4799e3af2e7f70c8e,
     type: 2}
   m_PrefabInternal: {fileID: 155202970}
---- !u!1 &201883881
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 201883882}
-  - component: {fileID: 201883884}
-  - component: {fileID: 201883883}
-  m_Layer: 5
-  m_Name: RewardSquarePanel
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &201883882
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 201883881}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 921557489}
-  m_Father: {fileID: 1484877748}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.9}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 46.8}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &201883883
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 201883881}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
---- !u!222 &201883884
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 201883881}
 --- !u!1001 &208981356
 Prefab:
   m_ObjectHideFlags: 0
@@ -662,6 +623,21 @@ Prefab:
       propertyPath: m_TagString
       value: PianoKeyTag
       objectReference: {fileID: 0}
+    - target: {fileID: 82659860743806680, guid: 5ba7adb207795bc4799e3af2e7f70c8e,
+        type: 2}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: bb857bd1b1562b546ad38465db41d067, type: 3}
+    - target: {fileID: 114318323137993220, guid: 5ba7adb207795bc4799e3af2e7f70c8e,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114058244489674764, guid: 5ba7adb207795bc4799e3af2e7f70c8e,
+        type: 2}
+      propertyPath: Keytone
+      value: 
+      objectReference: {fileID: 8300000, guid: bb857bd1b1562b546ad38465db41d067, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5ba7adb207795bc4799e3af2e7f70c8e, type: 2}
   m_IsPrefabParent: 0
@@ -859,37 +835,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 03d3b0a0af3b9864a8e539a772d8fdc9, type: 2}
   m_IsPrefabParent: 0
---- !u!84 &399616280
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: 
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_Width: 508
-  m_Height: 318
-  m_AntiAliasing: 1
-  m_DepthFormat: 1
-  m_ColorFormat: 0
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
 --- !u!1001 &436330431
 Prefab:
   m_ObjectHideFlags: 0
@@ -1068,6 +1013,21 @@ Prefab:
       propertyPath: m_TagString
       value: PianoKeyTag
       objectReference: {fileID: 0}
+    - target: {fileID: 82659860743806680, guid: 5ba7adb207795bc4799e3af2e7f70c8e,
+        type: 2}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: bdbf542cd3d6c69419e7014633d755f8, type: 3}
+    - target: {fileID: 114318323137993220, guid: 5ba7adb207795bc4799e3af2e7f70c8e,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114058244489674764, guid: 5ba7adb207795bc4799e3af2e7f70c8e,
+        type: 2}
+      propertyPath: Keytone
+      value: 
+      objectReference: {fileID: 8300000, guid: bdbf542cd3d6c69419e7014633d755f8, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5ba7adb207795bc4799e3af2e7f70c8e, type: 2}
   m_IsPrefabParent: 0
@@ -1181,6 +1141,23 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &515732574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 515732571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d99252402d5d5b48a5f2015e7379915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSize: 1
+  minSize: 0.8
+  growFactor: 2
+  waitTime: 0.1
+  shouldScale: 1
+  original_scale: {x: 0, y: 0, z: 0}
 --- !u!1 &592466768
 GameObject:
   m_ObjectHideFlags: 0
@@ -6108,6 +6085,21 @@ Prefab:
       propertyPath: m_TagString
       value: PianoKeyTag
       objectReference: {fileID: 0}
+    - target: {fileID: 82659860743806680, guid: 5ba7adb207795bc4799e3af2e7f70c8e,
+        type: 2}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: ac347592f8b347544bb57bd8e4c2591c, type: 3}
+    - target: {fileID: 114318323137993220, guid: 5ba7adb207795bc4799e3af2e7f70c8e,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114058244489674764, guid: 5ba7adb207795bc4799e3af2e7f70c8e,
+        type: 2}
+      propertyPath: Keytone
+      value: 
+      objectReference: {fileID: 8300000, guid: ac347592f8b347544bb57bd8e4c2591c, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5ba7adb207795bc4799e3af2e7f70c8e, type: 2}
   m_IsPrefabParent: 0
@@ -6158,37 +6150,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: decf4134f3e022f4ead3dbf84cb1965a, type: 2}
   m_IsPrefabParent: 0
---- !u!84 &768516220
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: 
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_Width: 508
-  m_Height: 318
-  m_AntiAliasing: 1
-  m_DepthFormat: 1
-  m_ColorFormat: 0
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 0
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
 --- !u!1001 &791962740
 Prefab:
   m_ObjectHideFlags: 0
@@ -6355,8 +6316,8 @@ MonoBehaviour:
   sourceCamera: {fileID: 798181099}
   outlineCamera: {fileID: 1460941517}
   outlineShaderMaterial: {fileID: 0}
-  renderTexture: {fileID: 768516220}
-  extraRenderTexture: {fileID: 399616280}
+  renderTexture: {fileID: 1283246964}
+  extraRenderTexture: {fileID: 1782649471}
 --- !u!1001 &816671794
 Prefab:
   m_ObjectHideFlags: 0
@@ -6493,6 +6454,21 @@ Prefab:
       propertyPath: m_TagString
       value: PianoKeyTag
       objectReference: {fileID: 0}
+    - target: {fileID: 82659860743806680, guid: 5ba7adb207795bc4799e3af2e7f70c8e,
+        type: 2}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 0626d2cf9567c8741a67bb7080e39f90, type: 3}
+    - target: {fileID: 114318323137993220, guid: 5ba7adb207795bc4799e3af2e7f70c8e,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114058244489674764, guid: 5ba7adb207795bc4799e3af2e7f70c8e,
+        type: 2}
+      propertyPath: Keytone
+      value: 
+      objectReference: {fileID: 8300000, guid: 0626d2cf9567c8741a67bb7080e39f90, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5ba7adb207795bc4799e3af2e7f70c8e, type: 2}
   m_IsPrefabParent: 0
@@ -6713,18 +6689,18 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 921557488}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1353170401}
-  m_Father: {fileID: 201883882}
+  m_Father: {fileID: 1484877748}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 9.25, y: -9}
-  m_SizeDelta: {x: 524, y: 49}
+  m_AnchoredPosition: {x: 9.5, y: 127.2}
+  m_SizeDelta: {x: 527.9, y: 63.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &921557490
 MonoBehaviour:
@@ -6732,7 +6708,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 921557488}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -6931,6 +6907,21 @@ Prefab:
       propertyPath: m_TagString
       value: PianoKeyTag
       objectReference: {fileID: 0}
+    - target: {fileID: 82659860743806680, guid: 5ba7adb207795bc4799e3af2e7f70c8e,
+        type: 2}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 84cf9406badee8944b008de1ea8864e7, type: 3}
+    - target: {fileID: 114318323137993220, guid: 5ba7adb207795bc4799e3af2e7f70c8e,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114058244489674764, guid: 5ba7adb207795bc4799e3af2e7f70c8e,
+        type: 2}
+      propertyPath: Keytone
+      value: 
+      objectReference: {fileID: 8300000, guid: 84cf9406badee8944b008de1ea8864e7, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5ba7adb207795bc4799e3af2e7f70c8e, type: 2}
   m_IsPrefabParent: 0
@@ -6996,6 +6987,14 @@ Prefab:
         type: 2}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4296286565150924, guid: 93aa07469da80d94699b9c42c255e275, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4296286565150924, guid: 93aa07469da80d94699b9c42c255e275, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 93aa07469da80d94699b9c42c255e275, type: 2}
@@ -7074,6 +7073,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!84 &1283246964
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_Width: 508
+  m_Height: 318
+  m_AntiAliasing: 1
+  m_DepthFormat: 1
+  m_ColorFormat: 0
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 0
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
 --- !u!1 &1350880672
 GameObject:
   m_ObjectHideFlags: 0
@@ -7239,7 +7269,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 0
   m_RenderingPath: 1
-  m_TargetTexture: {fileID: 768516220}
+  m_TargetTexture: {fileID: 1283246964}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
@@ -7347,7 +7377,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 201883882}
+  - {fileID: 921557489}
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7492,6 +7522,21 @@ Prefab:
       propertyPath: m_TagString
       value: PianoKeyTag
       objectReference: {fileID: 0}
+    - target: {fileID: 82659860743806680, guid: 5ba7adb207795bc4799e3af2e7f70c8e,
+        type: 2}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 392b84b7594b5f14dbc51a2a4e07185a, type: 3}
+    - target: {fileID: 114318323137993220, guid: 5ba7adb207795bc4799e3af2e7f70c8e,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114058244489674764, guid: 5ba7adb207795bc4799e3af2e7f70c8e,
+        type: 2}
+      propertyPath: Keytone
+      value: 
+      objectReference: {fileID: 8300000, guid: 392b84b7594b5f14dbc51a2a4e07185a, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5ba7adb207795bc4799e3af2e7f70c8e, type: 2}
   m_IsPrefabParent: 0
@@ -7500,6 +7545,37 @@ Transform:
   m_PrefabParentObject: {fileID: 4551579267882704, guid: 5ba7adb207795bc4799e3af2e7f70c8e,
     type: 2}
   m_PrefabInternal: {fileID: 1546582669}
+--- !u!84 &1782649471
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_Width: 508
+  m_Height: 318
+  m_AntiAliasing: 1
+  m_DepthFormat: 1
+  m_ColorFormat: 0
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
 --- !u!1 &1891380802
 GameObject:
   m_ObjectHideFlags: 0

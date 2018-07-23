@@ -84,7 +84,7 @@ public class BasketGame_DetectTouch : MonoBehaviour {
         var sr = GetComponent<SpriteRenderer>().bounds;
         var main = ps.main;
         iTween.Stop(gameObject);
-        main.startColor = GetComponent<SpriteRenderer>().sprite.texture.GetPixel(Mathf.RoundToInt(sr.size.x / 2), Mathf.RoundToInt(sr.size.y / 2));
+        //main.startColor = GetComponent<SpriteRenderer>().sprite.texture.GetPixel(Mathf.RoundToInt(sr.size.x / 2), Mathf.RoundToInt(sr.size.y / 2));
         //ps.Play();
         if (bubbleBurst)
         {

@@ -22,7 +22,7 @@ public class PG_RewardSquareParentBehavior : MonoBehaviour {
 	public IEnumerator MoveToTarget ( Vector3 target)
 	{
 
-		while (Vector3.Distance (transform.position, target) > 0.00001f) {
+		while (Vector3.Distance (transform.position, target) > 0.01f) {
 			transform.position = Vector3.SmoothDamp (transform.position, target, ref velocity, smoothTime);
 //			transform.position = Vector3.down * Time.deltaTime;
 			yield return new WaitForSeconds(0.005f);
