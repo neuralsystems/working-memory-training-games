@@ -1,0 +1,117 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1755602621283456}
+  m_IsPrefabParent: 1
+--- !u!1 &1755602621283456
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4560531586358586}
+  - component: {fileID: 114324330180329622}
+  m_Layer: 0
+  m_Name: Database
+  m_TagString: Database
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4560531586358586
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1755602621283456}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114324330180329622
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1755602621283456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af5616e29b59f4808a1c55eeffc8a638, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scenes_map: Map
+  scenes_gameStart: GameStart
+  scenes_level: Level
+  scenes_basic: Basic
+  tagsAndNames_sqliteDB: WorkingMemoryGames_DB1.db
+  tagsAndNames_background: Background
+  tagsAndNames_tempBackground: TempBackground
+  tagsAndNames_mapPanel: MapPanel
+  tagsAndNames_shiftMap: ShiftMap
+  tagsAndNames_progressBar: ProgressBarLabelFollow
+  tagsAndNames_wrongChoice: WrongChoice
+  tagsAndNames_rightChoice: RightChoice
+  tagsAndNames_portals: Portal
+  tagsAndNames_unlocked: Unlocked
+  tagsAndNames_changeScene: ChangeScene
+  tagsAndNames_option: Option
+  tagsAndNames_cover: Cover
+  constants_faceShownForSeconds: 5
+  constants_rainingTime: 5
+  constants_rainingIntervalTime: 0.1
+  constants_smoothTime: 0.3
+  constants_blinkTime: 0.3
+  constants_faceTimeDecr: 0.3
+  constants_faceBaseOffset: -6.2
+  constants_faceBaseOffset2: -2.4
+  constants_faceBaseOffset3: -5
+  constants_scaleToRadiusConversionFactor: 5.2
+  constants_sizeToScaleConversionFactor: 0.08
+  constants_faceComponentScale: 1
+  constants_fadePerSecond: 2.5
+  constants_popSpeed: 3
+  constants_wobbleDeltaScale: 0.04
+  constants_wobbleGrowFactor: 0.2
+  constants_transitionSpeed: 10
+  constants_diminishSpeed: 1
+  constants_epsilon: 0.001
+  viewPortWidth: 1
+  viewPortHeight: 1
+  constants_rainingPositionsCount: 40
+  constants_noOfFaceComponents: 3
+  constants_NO_OF_OPTIONS: 3
+  constants_NO_OF_COMPONENTS_LV1: 7
+  ifRight: 1
+  ifOptionSelected: 0
+  fadeIn: 0
+  fadeOut: 0
+  user: pk
+  constants_preLevOptionPos: {x: 6, y: -12, z: 0}
+  constants_optionBGShift: {x: 0.33, y: -0.16, z: -1.27}
+  constants_stdScale: {x: 1, y: 1, z: 0}
+  constants_optionPosLevel:
+  - {x: 2.3, y: -1.8, z: 0}
+  - {x: 3.4, y: 2.5, z: 0}
+  - {x: 6.7, y: -0.4, z: 0}
+  constants_optionPosBasic:
+  - {x: 3.8, y: 2, z: 0}
+  - {x: 5.6, y: -2.6, z: 0}
+  - {x: 0.6, y: -1.8, z: 0}
+  constants_faceShadedColor:
+    serializedVersion: 2
+    rgba: 4290168015
+  constants_noColor:
+    serializedVersion: 2
+    rgba: 4294967295

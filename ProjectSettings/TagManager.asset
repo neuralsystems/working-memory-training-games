@@ -42,6 +42,30 @@ TagManager:
   - Particles
   - box
   - TouchedObject
+  - Database
+  - RightQ
+  - CompleteFace
+  - WrongQ
+  - GameManager
+  - Portal
+  - ModalPart
+  - Locked
+  - FaceParts
+  - GoodJob
+  - Outline
+  - OppsRetry
+  - ProgressBar
+  - RightChoice
+  - WrongChoice
+  - Slider
+  - MakeItRainObjects
+  - LinkToLevel
+  - Unlocked
+  - Applause
+  - WellDone
+  - TryAgain
+  - Text
+  - Pointer
   layers:
   - Default
   - TransparentFX

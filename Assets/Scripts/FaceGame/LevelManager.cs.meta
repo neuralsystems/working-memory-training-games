@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 62d76fd427d394c328e2745224e4a134
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - FaceComponentUIPrefab: {fileID: 1050943001649000, guid: ad157ee9d816d4a659d5453c459367c3,
+      type: 2}
+  - PointerPrefab: {fileID: 1800786546531292, guid: a4ac4a6f2631c41bf8c251bf4ca59fe6,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
