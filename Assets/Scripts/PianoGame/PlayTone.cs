@@ -137,7 +137,7 @@ public class PlayTone : MonoBehaviour {
 				var g = GameObject.Find (token1).gameObject;
 				var original_layer = "Game";
 				string game_layer = "Game";
-				if (isRepeat) {
+				if (isRepeat && !isLastRepeat) {
                     //Debug.Log ("Color set");
                     Debug.Log("i = " + i);
                     var reward_square_child_object = reward_square_parent.transform.GetChild (i).transform.GetChild (0);
@@ -147,18 +147,30 @@ public class PlayTone : MonoBehaviour {
 					y_index.y = y_index.y -  1f;
 					reward_square_child_object.transform.localScale += new Vector3(1,1,1) * .3f;
 				}
-				g.GetComponent<OnKeyPress> ().PlaySound(isRepeat);
+                else if (isRepeat && isLastRepeat)
+                {
+                    try
+                    {
+                        var reward_square_child_object = reward_square_parent.transform.GetChild(i).transform.GetChild(0);
+                        reward_square_child_object.transform.localScale += new Vector3(1, 1, 1) * .3f;
+                        reward_square_child_object.GetComponent<Rigidbody2D>().gravityScale = 2;
+                        reward_square_child_object.GetComponent<Rigidbody2D>().velocity = new Vector3(2f, 0f, 0f);
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.Log("Nothing to SHow");
+                    }
+
+
+                }
+
+                g.GetComponent<OnKeyPress> ().PlaySound(isRepeat);
 				yield return new WaitForSeconds (WAIT_TIME);
-				if (isRepeat) {
+				if (isRepeat && !isLastRepeat) {
 					var reward_square_child_object = reward_square_parent.transform.GetChild (i).transform.GetChild (0);
 					reward_square_child_object.GetComponent<SpriteRenderer> ().sortingLayerName = original_layer;
-					if (isLastRepeat) {
-						reward_square_child_object.GetComponent<Rigidbody2D> ().gravityScale = 2;
-					} else {
-						reward_square_child_object.transform.localScale -= new Vector3 (1, 1, 1) * .3f;
-					}
-
-				}
+                    reward_square_child_object.transform.localScale -= new Vector3(1, 1, 1) * .3f;
+                } 
 
 			} else {
 				yield return new WaitForSeconds (WAIT_TIME);
@@ -180,7 +192,14 @@ public class PlayTone : MonoBehaviour {
 	public IEnumerator RepeatTone(bool isLastRepeat = false){
 		string delimeter = tones.GetDelimeter ();
 		sample = GetFirstnNotes (original_tone, delimeter,current_length);
-		yield return StartCoroutine(PlaySomeTone (sample,tones.GetDelimeter(), 0, current_length-gradient,true, isLastRepeat));
+        var til = current_length - gradient;
+        if (isLastRepeat)
+        {
+            WAIT_TIME = 0.7f;PLAY_TIME = 0.5f;
+            til = Mathf.Min((current_length - gradient) * 3, toneTOBePlayed.Count);
+         }
+        Debug.Log("til = " + til);
+		yield return StartCoroutine(PlaySomeTone (sample,tones.GetDelimeter(), 0, til ,true, isLastRepeat));
 //		Camera.main.GetComponent<SceneVariables> ().GetRandomClapping ();
 		if (consequtive_correct < CONSECUTIVE_CORRECT_THRESHOLD) {
 			GameObject.Find (Camera.main.GetComponent<SceneVariables> ().playSound).GetComponent<HomeScreenButtons> ().SetHaloToggle (true);

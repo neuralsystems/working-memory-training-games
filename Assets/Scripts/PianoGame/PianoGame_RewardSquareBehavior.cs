@@ -18,7 +18,7 @@ public class PianoGame_RewardSquareBehavior : MonoBehaviour {
 	}
 
 
-	public IEnumerator MoveToTarget ( Vector3 target, string object_tag = null)
+	public IEnumerator MoveToTarget ( Vector3 target, bool show_play_button, string object_tag = null)
 	{
 		
 		while (Vector3.Distance (transform.position, target) > 0.01f) {
@@ -31,12 +31,15 @@ public class PianoGame_RewardSquareBehavior : MonoBehaviour {
 		transform.position = target;
 		if(object_tag == Camera.main.GetComponent<SceneVariables>().REWARD_SQUARE_TAG){
 			tag = object_tag;
-			if (GameObject.FindGameObjectsWithTag (Camera.main.GetComponent<SceneVariables> ().NON_REWARD_SQUARE_TAG).Length == 0) {
-				// Debug.Log ("Length 0");
-				GameObject.Find (Camera.main.GetComponent<SceneVariables> ().playSound).GetComponent<HomeScreenButtons> ().SetHaloToggle (true);
-			} else {
-				Debug.Log ("Length !0");
-			}
+            //if (GameObject.FindGameObjectsWithTag (Camera.main.GetComponent<SceneVariables> ().NON_REWARD_SQUARE_TAG).Length == 0) {
+            Debug.Log("Length 0");
+            if (show_play_button)
+            {
+                GameObject.Find(Camera.main.GetComponent<SceneVariables>().playSound).GetComponent<HomeScreenButtons>().SetHaloToggle(true);
+            }
+			//} else {
+				//Debug.Log ("Length !0");
+			//}
 		}
 //		Debug.Log (smoothTime);
 		if (GetComponent<Animator> ()) {

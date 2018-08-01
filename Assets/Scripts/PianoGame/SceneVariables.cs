@@ -100,6 +100,7 @@ public class SceneVariables : MonoBehaviour {
 		GameObject[] oldSquares = GameObject.FindGameObjectsWithTag (REWARD_SQUARE_TAG);
 		foreach (GameObject old_square_object in oldSquares) {
 			old_square_object.GetComponent<PianoGame_RewardSquareBehavior> ().SetVisibility(true);
+            old_square_object.tag = NON_REWARD_SQUARE_TAG;
 			foreach (Transform child in old_square_object.transform) {
 				Destroy (child.gameObject);
 			}
@@ -119,7 +120,8 @@ public class SceneVariables : MonoBehaviour {
 		originalPosition = targetRewardSquare;
 		for (int i = 0; i < n; i++) {
 			if (i < old) {
-				StartCoroutine (oldSquares [i].GetComponent<PianoGame_RewardSquareBehavior> ().MoveToTarget (targetRewardSquare));
+                Debug.Log("moving old ones " + (i == n - 1));
+				StartCoroutine (oldSquares [i].GetComponent<PianoGame_RewardSquareBehavior> ().MoveToTarget (targetRewardSquare, i == n-1, REWARD_SQUARE_TAG));
 			} else {
 				if (i == old) {
 					yield return new WaitForSeconds (1f);
@@ -127,7 +129,7 @@ public class SceneVariables : MonoBehaviour {
                 //var rs = Instantiate (rewardSquare, init_position, Quaternion.identity);
                 var rs = RewardPoolObject.GetComponent<SimpleObjectPool>().GetObject();
                 rs.transform.position = init_position;
-                StartCoroutine(rs.GetComponent<PianoGame_RewardSquareBehavior>().MoveToTarget(targetRewardSquare, REWARD_SQUARE_TAG));
+                StartCoroutine(rs.GetComponent<PianoGame_RewardSquareBehavior>().MoveToTarget(targetRewardSquare, i == n - 1, REWARD_SQUARE_TAG));
 //				rs.gameObject.tag = REWARD_SQUARE_TAG;
 //				rs.transform.localScale = reward_square_parent_gameobject.transform.localScale;
 				rs.transform.parent = reward_square_parent_gameobject.transform;
@@ -145,6 +147,10 @@ public class SceneVariables : MonoBehaviour {
 
 			yield return null;
 		}
+        for(int i = n;i< old; i++)
+        {
+            RewardPoolObject.GetComponent<SimpleObjectPool>().ReturnObject(oldSquares[i]);
+        }
 //		GameObject.Find (Camera.main.GetComponent<SceneVariables> ().playSound).GetComponent<HomeScreenButtons> ().SetHaloToggle(true);
 	}
 
