@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class BasketGame_GameManager : MonoBehaviour {
 
 	public Transform fruitprefab, alignedBasket, bubbleprefab;
@@ -11,6 +12,8 @@ public class BasketGame_GameManager : MonoBehaviour {
 	public ParticleSystem rain_particlesystem_object;
 	public GameObject Girl, persistent_go;
 	int Error_Count = 0, num_of_fruits;
+    public Canvas level_canvas;
+    public Transform level_content;
 	// Use this for initialization
 	void Start () {
 		
@@ -77,14 +80,27 @@ public class BasketGame_GameManager : MonoBehaviour {
 				yield return new WaitForSeconds(rain_particlesystem_object.main.duration);
 				persistent_go = GameObject.Find (BasketGame_SceneVariables.masterGO);
 				persistent_go.GetComponent<Shared_PersistentScript>().IncreaseLevelBasketGame(SetLevel());
-				SceneManager.LoadScene (SceneManager.GetActiveScene().name);
-			}
+                //SceneManager.LoadScene (SceneManager.GetActiveScene().name);
+                ChangeLevel();
+
+            }
 
 	}
 //		StartCoroutine (MakeFruit());
 //		fruitTag
 	}
 
+    void ChangeLevel()
+    {
+        var all_baskets = GameObject.FindGameObjectsWithTag(BasketGame_SceneVariables.fullBasket);
+        foreach(var b in all_baskets)
+        {
+            Destroy(b);
+        }
+        level_canvas.gameObject.SetActive(true);
+        Girl.GetComponent<Animator>().SetInteger("StateValue", 6);
+        StartCoroutine(level_content.GetComponent<BasketGame_LevelScreenManager>().ShowTransition());
+    }
 	// function called when a basket is completely filled.
 	// if all the baskets are filled Show some animation
 	public void BasketFilled(){
@@ -171,6 +187,7 @@ public class BasketGame_GameManager : MonoBehaviour {
 			StartCoroutine(fruit.GetComponent<FruitBehavior>().EatFruit());
 			StartCoroutine(Shared_ScriptForGeneralFunctions.ScaleDown (fruit, .1f, 0.1f));
 		}
+
 //		while
 	}
 }

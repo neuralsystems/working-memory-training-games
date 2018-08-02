@@ -18,6 +18,7 @@ public class SceneVariables : MonoBehaviour {
 	public string RAIN_PARTICLE_SYSTEM_TAG = "RainParticleSystemTag";
 	public string REWARD_SQUARE_CHILD_TAG = "RewardSquareChildTag";
 	public const string PIANO_KEY_TAG = "PianoKeyTag";
+    public Transform contentPanel;
 	// gameobject position related variables 
 	public float heightPercentageForRewardSquare = .9f, widthPercentageForRewardSquare = .50f; // for position of squares on top
 	public float widthPercentage, heightPercentage;										// not used yet 

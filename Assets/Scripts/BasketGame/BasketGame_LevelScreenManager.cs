@@ -6,24 +6,13 @@ public class BasketGame_LevelScreenManager : MonoBehaviour {
 
     public int previousLevel = 1,  currentLevel;
     public GameObject levelIconParent, playerIcon;
-    public static BasketGame_LevelScreenManager Instance;
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            DontDestroyOnLoad(gameObject);
-            Instance = this;
-        }
-        else if (Instance != this)
-        {
-            Destroy(gameObject);
-        }
-    }
+    
+    
     private void Start()
     {
         StartCoroutine(ShowTransition());
     }
-    IEnumerator ShowTransition()
+    public IEnumerator ShowTransition()
     {
         Debug.Log("called transition");
         yield return null;
@@ -47,8 +36,9 @@ public class BasketGame_LevelScreenManager : MonoBehaviour {
             var destination = levelIconParent.transform.GetChild(i - 1).transform.position;
             yield return StartCoroutine(playerIcon.GetComponent<BasketGame_PlayerIconManager>().Transition(destination));
             i += val;
-            previousLevel = i;
+            
         }
+        previousLevel = currentLevel;
         playerIcon.GetComponent<BasketGame_PlayerIconManager>().SetTouch(true);
         //previousLevel = currentLevel;
         //}

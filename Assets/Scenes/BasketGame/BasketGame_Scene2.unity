@@ -3087,6 +3087,8 @@ MonoBehaviour:
   rain_particlesystem_object: {fileID: 46351821}
   Girl: {fileID: 2074039980}
   persistent_go: {fileID: 1170745956}
+  level_canvas: {fileID: 2146678344}
+  level_content: {fileID: 2146678351}
 --- !u!114 &1303383510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6373,3 +6375,24 @@ MonoBehaviour:
   currentLevel: 0
   levelIconParent: {fileID: 2146678346}
   playerIcon: {fileID: 889949872}
+--- !u!1 &2146678349 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1502256269988984, guid: bbc8b409699385f40b0e2d3f3f1cadfe,
+    type: 2}
+  m_PrefabInternal: {fileID: 2146678343}
+--- !u!114 &2146678350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2146678349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1476f5dbe5714f64ab60f9dd22fdec64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!224 &2146678351 stripped
+RectTransform:
+  m_PrefabParentObject: {fileID: 224623117527926982, guid: bbc8b409699385f40b0e2d3f3f1cadfe,
+    type: 2}
+  m_PrefabInternal: {fileID: 2146678343}
