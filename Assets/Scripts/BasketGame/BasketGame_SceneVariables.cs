@@ -6,7 +6,7 @@ public class BasketGame_SceneVariables : MonoBehaviour {
 
     //* [Constant and static variables [shared throughout the games, like tags, database related variables, layer names, global variables, important spawn positions, foldernames etc ..]]
     public const string Game_Name = "BasketGame";
-    public const string masterGO = "MasterGameObject";
+    //public const string masterGO = "MasterGameObject";
     public const int VALUE_FOR_PRE_LEVEL_COMPLETE = 1;
     public const string DATABASE_NAME = "WorkingMemoryGames_DB1.db";
     public static string basketTag = "BasketTag";

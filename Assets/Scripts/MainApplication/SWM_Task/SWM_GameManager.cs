@@ -85,7 +85,7 @@ public class SWM_GameManager : MonoBehaviour {
                 tower.transform.GetChild(i).GetComponent<SpriteRenderer>().enabled = false;
             }
             MApp_DataServices ds = new MApp_DataServices(MApp_UserInforFormScript.database_Name);
-            var persistent_go = GameObject.Find(MApp_GameManager.masterGO);
+            var persistent_go = GameObject.Find(Shared_Scenevariables.masterGO);
             var user = persistent_go.GetComponent<Shared_PersistentScript>().GetCurrentPlayer();
             var _timeoftest = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             ds.RegisterSWMScores(user.Username, _with_in_search_error, _between_search_error, _timeoftest, number_of_blocks);

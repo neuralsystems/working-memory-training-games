@@ -14,7 +14,7 @@ public class ShapeMatch_LevelScreen : MonoBehaviour
     [HideInInspector]public static int PreviousLevel=0;
     public Canvas canvas;
     public ScrollRect ScrollRect1;
-    public const string masterGO = "MasterGameObject";
+    //public const string masterGO = "MasterGameObject";
     private void Start()
     {
         canvas.gameObject.SetActive(true);
@@ -84,7 +84,7 @@ public class ShapeMatch_LevelScreen : MonoBehaviour
 
     public string GetuserInformation()
     {
-        var master_go = GameObject.Find(masterGO);
+        var master_go = GameObject.Find(Shared_Scenevariables.masterGO);
         //User User_info = ShapeMatch_detectTapOnscollList.GO;
         User User_info = master_go.GetComponent<Shared_PersistentScript>().GetCurrentPlayer();
         string Username = User_info.GetUserName();

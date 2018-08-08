@@ -42,7 +42,7 @@ public class PlayTone : MonoBehaviour {
 
     void GetLevelDetails()
     {
-        var persistan_go = GameObject.Find(SceneVariables.masterGO);
+        var persistan_go = GameObject.Find(Shared_Scenevariables.masterGO);
         var level_obj = persistan_go.GetComponent<Shared_PersistentScript>().GetNewPianoGameLevelDetails();
         initial_length = level_obj.InitialLength;
         gradient = level_obj.Gradient;
@@ -101,7 +101,7 @@ public class PlayTone : MonoBehaviour {
 
     void ChangeLevel()
     {
-        var persistan_go = GameObject.Find(SceneVariables.masterGO);
+        var persistan_go = GameObject.Find(Shared_Scenevariables.masterGO);
         persistan_go.GetComponent<Shared_PersistentScript>().IncreaseLevelPianoGame(1);
     }
 	public IEnumerator WaitForRainToStop(ParticleSystem rain){

@@ -20,7 +20,7 @@ public class Shared_ScriptForButtonOnClick : MonoBehaviour {
 
     public void BasketGame()
     {
-        var m_obj = GameObject.Find(BasketGame_SceneVariables.masterGO);
+        var m_obj = GameObject.Find(Shared_Scenevariables.masterGO);
         var current_user = m_obj.GetComponent<Shared_PersistentScript>().GetCurrentPlayer();
         var ds = new BasketGame_DataService(BasketGame_SceneVariables.DATABASE_NAME);
         var user_progress = ds.GetUserProgress(current_user.Username);
@@ -38,7 +38,7 @@ public class Shared_ScriptForButtonOnClick : MonoBehaviour {
 
    public void TrainGame()
     {
-        var m_obj = GameObject.Find(TrainGame_SceneVariables.masterGO);
+        var m_obj = GameObject.Find(Shared_Scenevariables.masterGO);
         var current_user = m_obj.GetComponent<Shared_PersistentScript>().GetCurrentPlayer();
         var ds = new TrainGame_DataServices(TrainGame_SceneVariables.DATABASE_NAME);
         var user_progress = ds.GetUserProgress(current_user.Username);

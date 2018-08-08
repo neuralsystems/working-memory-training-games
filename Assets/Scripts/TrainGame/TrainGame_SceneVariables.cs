@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 public class TrainGame_SceneVariables : MonoBehaviour {
 
-    public const string masterGO = "MasterGameObject";
+    //public const string masterGO = "MasterGameObject";
 
     // Tags 
     public const string ENGINE_TAG = "EngineTag";

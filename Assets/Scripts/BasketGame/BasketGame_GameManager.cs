@@ -78,7 +78,7 @@ public class BasketGame_GameManager : MonoBehaviour {
 			} else {
 				rain_particlesystem_object.Play ();
 				yield return new WaitForSeconds(rain_particlesystem_object.main.duration);
-				persistent_go = GameObject.Find (BasketGame_SceneVariables.masterGO);
+				persistent_go = GameObject.Find (Shared_Scenevariables.masterGO);
 				persistent_go.GetComponent<Shared_PersistentScript>().IncreaseLevelBasketGame(SetLevel());
                 //SceneManager.LoadScene (SceneManager.GetActiveScene().name);
                 ChangeLevel();
@@ -98,8 +98,24 @@ public class BasketGame_GameManager : MonoBehaviour {
             Destroy(b);
         }
         level_canvas.gameObject.SetActive(true);
-        Girl.GetComponent<Animator>().SetInteger("StateValue", 6);
-        StartCoroutine(level_content.GetComponent<BasketGame_LevelScreenManager>().ShowTransition());
+        var value_for_stand_from_eat = 6;
+        var value_for_stand_from_Clap = 2;
+        var value_for_pause = 6;
+        var state_eat = "Eat";
+        var state_clap = "Clap";
+        var variable_name = "StateValue";
+        if (Girl.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName(state_eat))
+        {
+            Debug.Log("State is " + state_eat);
+            Girl.GetComponent<Animator>().SetInteger(variable_name, value_for_stand_from_eat);
+        }
+        else if (Girl.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName(state_clap))
+        {
+            Debug.Log("State is " + state_clap);
+            Girl.GetComponent<Animator>().SetInteger(variable_name, value_for_stand_from_Clap);
+        }
+        //Girl.GetComponent<Animator>().SetInteger("StateValue", 6);
+        StartCoroutine(level_content.GetComponent<LevelScreenManager>().ShowTransition());
     }
 	// function called when a basket is completely filled.
 	// if all the baskets are filled Show some animation

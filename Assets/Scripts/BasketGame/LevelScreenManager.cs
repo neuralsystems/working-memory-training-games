@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class BasketGame_LevelScreenManager : MonoBehaviour {
+public class LevelScreenManager : MonoBehaviour {
 
     public int previousLevel = 1,  currentLevel;
     public GameObject levelIconParent, playerIcon;
@@ -12,11 +12,13 @@ public class BasketGame_LevelScreenManager : MonoBehaviour {
     {
         StartCoroutine(ShowTransition());
     }
+
+
     public IEnumerator ShowTransition()
     {
         Debug.Log("called transition");
         yield return null;
-        var master_go = GameObject.Find(BasketGame_SceneVariables.masterGO);
+        var master_go = GameObject.Find(Shared_Scenevariables.masterGO);
         currentLevel = master_go.GetComponent<Shared_PersistentScript>().GetNewBasketGameLevelDetails().LevelNumber;
         
         //if (previousLevel == -1)

@@ -12,7 +12,7 @@ public class TrainGame_GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		static_game_object = GameObject.Find(TrainGame_SceneVariables.masterGO);
+		static_game_object = GameObject.Find(Shared_Scenevariables.masterGO);
 		error_count = 0;
 		var level_details = static_game_object.GetComponent<Shared_PersistentScript> ().GetNewTrainGameLevelDetails ();
 		numofBogies = level_details.GetNumofBogie ();

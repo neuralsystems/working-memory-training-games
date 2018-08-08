@@ -8,7 +8,7 @@ public class SceneVariables : MonoBehaviour {
 
 	public const string DATABASE_NAME = "WorkingMemoryGames_DB1.db"; 										// name of the sqlite database
 	public string Game_Name = "PianoGame";
-    public const string masterGO = "MasterGameObject";
+    //public const string masterGO = "MasterGameObject";
     // tags used in the game
     public string KEY_SQUARE_TAG = "KeySquareTag";										// tag for the keys spawned when computer presses a piano key
 	public string SAMPLE_SQUARE_TAG = "SampleSquareTag";									// not used yet and not sure why added this tag
@@ -174,7 +174,7 @@ public class SceneVariables : MonoBehaviour {
 		var userSquares = GameObject.FindGameObjectsWithTag (USER_INPUT_SQUARE_TAG);
 		var x = REWARD_INDEX;
 		var reward_square_parent_object = GameObject.Find (REWARD_SQUARE_PARENT);
-        var master_go = GameObject.Find(SceneVariables.masterGO);
+        var master_go = GameObject.Find(Shared_Scenevariables.masterGO);
         var overlap = master_go.GetComponent<Shared_PersistentScript>().GetNewPianoGameLevelDetails().GetDifference();
 		int last = userSquares.Length - 1;
 		yield return GetRandomClapping();

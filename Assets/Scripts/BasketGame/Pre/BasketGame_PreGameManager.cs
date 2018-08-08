@@ -64,7 +64,7 @@ public class BasketGame_PreGameManager : MonoBehaviour {
         {
             try
             {
-                var m_obj = GameObject.Find(BasketGame_SceneVariables.masterGO);
+                var m_obj = GameObject.Find(Shared_Scenevariables.masterGO);
                 var current_user = m_obj.GetComponent<Shared_PersistentScript>().GetCurrentPlayer();
                 var ds = new BasketGame_DataService(BasketGame_SceneVariables.DATABASE_NAME);
                 ds.MarkPreLevelCompleted(current_user.Username);

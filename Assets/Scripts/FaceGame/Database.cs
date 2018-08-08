@@ -8,7 +8,7 @@ public class Database : MonoBehaviour
     public string scenes_gameStart = "GameStart";
 	public string scenes_level = "Level";
     public string scenes_basic = "Basic";
-    public const string masterGo = "MasterGameObject";
+    //public const string masterGo = "MasterGameObject";
 
     public string tagsAndNames_sqliteDB = "WorkingMemoryGames_DB1.db";
 	public string tagsAndNames_background = "Background";
