@@ -15,7 +15,7 @@ public class OnKeyPress : MonoBehaviour {
 	public static int numOfKeysPressed = 0;
     public AudioClip Keytone;
 	void Start () {
-		game_name = Camera.main.GetComponent<SceneVariables> ().Game_Name;
+		game_name = SceneVariables.Game_Name;
 		keySquareImageName = keyName + "_square";
 		this.gameObject.GetComponent<AudioSource> ().Play ();
 		this.gameObject.GetComponent<AudioSource> ().Pause ();

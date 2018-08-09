@@ -80,6 +80,11 @@ public class KeySquareBehavior : MonoBehaviour
 						user_squares_gameobject[i].transform.parent =null;
 					}
 				}
+                if (!all_matched)
+                {
+                    //SceneVariables.error_count++;
+                    Debug.Log("not matched and error count increased to " + SceneVariables.error_count);
+                }
 				yield return new WaitForSeconds (0.5f);
 				var shift = GetComponent<SpriteRenderer>().sprite.bounds.size.y * (1-overlapfraction);
 				var target_for_parent = user_input_parent_object.transform.position;

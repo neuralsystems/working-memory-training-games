@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Text.RegularExpressions;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 public class PlayTone : MonoBehaviour {
 
@@ -19,6 +20,9 @@ public class PlayTone : MonoBehaviour {
     public float WAIT_TIME, PLAY_TIME;
     const string KeySquareObjectPool = "KeySquareObjectPool";
     int CONSECUTIVE_CORRECT_THRESHOLD;
+    public Canvas level_canvas;
+    public Transform level_content;
+    int num_of_notes;
     void Awake(){
 		current_length = initial_length;
 		camera_position = Camera.main.transform.position;
@@ -26,19 +30,29 @@ public class PlayTone : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        GetLevelDetails();
-        tones = Camera.main.GetComponent<Tones>();
-  //      initial_length = 1;
-  //      WAIT_TIME = 1.0f;
-  //      PLAY_TIME = 1.0f;
-		//gradient = 1;
-		
-		sample = "";
-		original_tone  = tones.GetToneAtRandom ();
-		GetNotes(original_tone, tones.GetDelimeter ());
-		var numOfEmptyRewardSquare = initial_length + (gradient * (CONSECUTIVE_CORRECT_THRESHOLD - 1));
-		StartCoroutine(Camera.main.GetComponent<SceneVariables>().PlaceEmptyRewardSquare(numOfEmptyRewardSquare));
+        //StartGame();
 	}
+
+    public void StartGame()
+    {
+        GetLevelDetails();
+        
+        tones = Camera.main.GetComponent<Tones>();
+
+        //      initial_length = 1;
+        //      WAIT_TIME = 1.0f;
+        //      PLAY_TIME = 1.0f;
+        //gradient = 1;
+        consequtive_correct = 0;
+        sample = "";
+        previous = 0;
+        original_tone = tones.GetToneAtRandom();
+        GetNotes(original_tone, tones.GetDelimeter());
+        Camera.main.GetComponent<SceneVariables>().Reset();
+        var numOfEmptyRewardSquare = initial_length + (gradient * (CONSECUTIVE_CORRECT_THRESHOLD - 1));
+        num_of_notes = numOfEmptyRewardSquare;
+        StartCoroutine(Camera.main.GetComponent<SceneVariables>().PlaceEmptyRewardSquare(numOfEmptyRewardSquare));
+    }
 
     void GetLevelDetails()
     {
@@ -62,7 +76,7 @@ public class PlayTone : MonoBehaviour {
 		//if (SceneVariables.error_count > SceneVariables.max_allowed_error) {
   //          current_length = current_length * 1;
 		//} else {
-		SceneVariables.error_count -= Mathf.Max (SceneVariables.error_count - 1, 0);
+		//SceneVariables.error_count -= Mathf.Max (SceneVariables.error_count - 1, 0);
 		current_length += gradient;
 		previous += gradient;
 		//}
@@ -72,16 +86,19 @@ public class PlayTone : MonoBehaviour {
 	}
 
 	public IEnumerator LoadNextLevel(){
-		Debug.Log ("called LoadNextLevel");
-		consequtive_correct = 0;
-		//initial_length += incrementForNextLevel;
-		//current_length = initial_length;
-		//gradient = 1;
-        GetLevelDetails();
-        previous = 0;
-		Camera.main.GetComponent<SceneVariables> ().Reset ();
-		var numOfEmptyRewardSquare = initial_length + (gradient * (CONSECUTIVE_CORRECT_THRESHOLD - 1));
-		StartCoroutine(Camera.main.GetComponent<SceneVariables>().PlaceEmptyRewardSquare(numOfEmptyRewardSquare));
+        //Debug.Log ("called LoadNextLevel");
+        //consequtive_correct = 0;
+        ////initial_length += incrementForNextLevel;
+        ////current_length = initial_length;
+        ////gradient = 1;
+        //      GetLevelDetails();
+        //      previous = 0;
+        //Camera.main.GetComponent<SceneVariables> ().Reset ();
+        //var numOfEmptyRewardSquare = initial_length + (gradient * (CONSECUTIVE_CORRECT_THRESHOLD - 1));
+        //StartCoroutine(Camera.main.GetComponent<SceneVariables>().PlaceEmptyRewardSquare(numOfEmptyRewardSquare));
+        //StartGame();
+        level_canvas.gameObject.SetActive(true);
+        StartCoroutine(level_content.GetComponent<LevelScreenManager>().ShowTransition());
 		yield return null;
 	}
 
@@ -102,7 +119,19 @@ public class PlayTone : MonoBehaviour {
     void ChangeLevel()
     {
         var persistan_go = GameObject.Find(Shared_Scenevariables.masterGO);
-        persistan_go.GetComponent<Shared_PersistentScript>().IncreaseLevelPianoGame(1);
+        int change_by = 0; 
+        if(SceneVariables.error_count > 0.9f  * num_of_notes)
+        {
+            change_by = -2;
+        } else if(SceneVariables. error_count > 0.7f * num_of_notes)
+        {
+            change_by = -1;
+        } else if( SceneVariables.error_count < 0.2f * num_of_notes)
+        {
+            change_by = 1;
+        }
+        Debug.Log(change_by + "is the change_by and error count = " + SceneVariables.error_count);
+        persistan_go.GetComponent<Shared_PersistentScript>().IncreaseLevelPianoGame(change_by);
     }
 	public IEnumerator WaitForRainToStop(ParticleSystem rain){
 		if (rain.isPlaying) {

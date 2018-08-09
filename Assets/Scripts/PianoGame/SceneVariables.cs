@@ -7,13 +7,13 @@ public class SceneVariables : MonoBehaviour {
 	// database related variables
 
 	public const string DATABASE_NAME = "WorkingMemoryGames_DB1.db"; 										// name of the sqlite database
-	public string Game_Name = "PianoGame";
+	public const string Game_Name = "PianoGame";
     //public const string masterGO = "MasterGameObject";
     // tags used in the game
     public string KEY_SQUARE_TAG = "KeySquareTag";										// tag for the keys spawned when computer presses a piano key
 	public string SAMPLE_SQUARE_TAG = "SampleSquareTag";									// not used yet and not sure why added this tag
-	public string USER_INPUT_SQUARE_TAG = "UserInputSquareTag";							// tag for the keys spawned when user presses a piano key
-	public string REWARD_SQUARE_TAG = "RewardSquareTag";									// // tag for the square spawned at the top of screen 
+	public string USER_INPUT_SQUARE_TAG = "UserInputSquareTag";             // tag for the keys spawned when user presses a piano key
+    public string REWARD_SQUARE_TAG = "RewardSquareTag";									// // tag for the square spawned at the top of screen 
 	public string NON_REWARD_SQUARE_TAG = "NonRewardSquareTag";
 	public string RAIN_PARTICLE_SYSTEM_TAG = "RainParticleSystemTag";
 	public string REWARD_SQUARE_CHILD_TAG = "RewardSquareChildTag";
@@ -148,12 +148,12 @@ public class SceneVariables : MonoBehaviour {
 
 			yield return null;
 		}
-        for(int i = n;i< old; i++)
+        for (int i = n; i < old; i++)
         {
             RewardPoolObject.GetComponent<SimpleObjectPool>().ReturnObject(oldSquares[i]);
         }
-//		GameObject.Find (Camera.main.GetComponent<SceneVariables> ().playSound).GetComponent<HomeScreenButtons> ().SetHaloToggle(true);
-	}
+        //		GameObject.Find (Camera.main.GetComponent<SceneVariables> ().playSound).GetComponent<HomeScreenButtons> ().SetHaloToggle(true);
+    }
 
 	float GetNormalizedWidth( float blockPercent, float blockNumbers){
 		SCREEN_WIDTH = Camera.main.pixelWidth;
@@ -203,6 +203,7 @@ public class SceneVariables : MonoBehaviour {
 		REWARD_INDEX = 0;
 		IS_USER_MODE = false;	
 		IS_READY = true;
+        error_count = 0;
 		GameObject.Find (REWARD_SQUARE_PARENT).transform.position = GetPointOnScreen (widthPercentageForRewardSquare, heightPercentageForRewardSquare);
 	}
 
