@@ -9,17 +9,23 @@ public class TrainGame_GameManager : MonoBehaviour {
 	public bool Should_Block;
 	int numofBogies = 2;
 	int error_count ;
-
+    public Canvas level_canvas;
+    public Transform level_content;
 	// Use this for initialization
 	void Start () {
-		static_game_object = GameObject.Find(Shared_Scenevariables.masterGO);
-		error_count = 0;
-		var level_details = static_game_object.GetComponent<Shared_PersistentScript> ().GetNewTrainGameLevelDetails ();
-		numofBogies = level_details.GetNumofBogie ();
-		Should_Block = level_details.ShouldBlockTrain ();
-		CreateTrain (true, numofBogies);
+        //level_canvas.gameObject.SetActive(true);
+        //StartCoroutine(level_content.GetComponent<LevelScreenManager>().ShowTransition());
 	}
 	
+    public void StartGame()
+    {
+        static_game_object = GameObject.Find(Shared_Scenevariables.masterGO);
+        error_count = 0;
+        var level_details = static_game_object.GetComponent<Shared_PersistentScript>().GetNewTrainGameLevelDetails();
+        numofBogies = level_details.GetNumofBogie();
+        Should_Block = level_details.ShouldBlockTrain();
+        CreateTrain(true, numofBogies);
+    }
 	// Update is called once per frame
 	void Update () {
 		
@@ -30,6 +36,8 @@ public class TrainGame_GameManager : MonoBehaviour {
 	void CreateTrain(bool colored_or_keylock, int numOfBogies){
 		var engine_position = Shared_ScriptForGeneralFunctions.GetPointOnScreen (1.2f, TrainGame_SceneVariables.height_percentage);
 		var train_engine = Instantiate (ENGINE_PREFAB, engine_position, Quaternion.identity);
+        var engine_size = train_engine.GetComponent<SpriteRenderer>().bounds.size.x ;
+        var extra_size = 0f;
 		if (colored_or_keylock) {
 			var folder_location = TrainGame_SceneVariables.Game_Name + "/" + Camera.main.GetComponent<TrainGame_SceneVariables> ().GetSubFolderName ();
 			Debug.Log (folder_location);
@@ -55,7 +63,13 @@ public class TrainGame_GameManager : MonoBehaviour {
 				var temp_pos = bogie_object.transform.position;
 				bogie_object.transform.parent = train_engine.transform;
 				bogie_object.transform.position = temp_pos;
-			}
+                extra_size = bogie_object.transform.GetChild(1).GetComponent<SpriteRenderer>().bounds.size.x;
+
+            }
+            var total = ((numofBogies + 1) * engine_size) + (2 * extra_size * numofBogies);
+            var _ratio = Screen.width / total;
+            Debug.Log("ration " + _ratio + " " + Screen.width + " " + total);
+            //train_engine.transform.localScale *= (Mathf.Max(1, _ratio));
 			previous_lock.GetComponent<SpriteRenderer> ().sprite = null;
 			StartCoroutine (train_engine.GetComponent<TrainGame_Engine_Behavior>().InitialAnimation ());
 		}

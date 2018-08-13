@@ -7,22 +7,33 @@ public class PlayerIconManager : MonoBehaviour {
     Vector3 velocity = Vector3.zero;
     float smoothTime = .5f;
     public Canvas levelcanvas;
-    
-    public IEnumerator Transition(Vector3 destination)
+
+    public IEnumerator Transition(Transform destination, bool rotate)
     {
         Debug.Log("called to move icon to " + destination);
-        while (Vector3.Distance(transform.position, destination) > 0.5f)
+        //var look_for = transform.position;
+        //look_for.z = destination.position.z;
+        if (rotate)
         {
-            transform.position = Vector3.SmoothDamp(transform.position, destination, ref velocity, smoothTime);
+            Vector3 diff = destination.position - transform.position;
+            diff.Normalize();
+            float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
+        }
+        while (Vector3.Distance(transform.position, destination.position) > 0.5f)
+        {
+            transform.position = Vector3.SmoothDamp(transform.position, destination.position, ref velocity, smoothTime);
+            //transform.LookAt(look_for);
             yield return null;
         }
-        transform.position = destination;
+        transform.position = destination.position;
     }
 
 
     public void OnMouseDown( int gameCode)
     {
         levelcanvas.gameObject.SetActive(false);
+        Debug.Log("clicked the player icon");
         // game code = 1,2,3 for basket game, piano game,  train game respectively
         if (gameCode == 1)
         {
@@ -44,6 +55,7 @@ public class PlayerIconManager : MonoBehaviour {
     public void SetTouch(bool val)
     {
         GetComponent<Button>().interactable = val;
+        //GetComponent<Scalling>().SetScale(val);
     }
 
     void StartBasketGame()
@@ -59,6 +71,6 @@ public class PlayerIconManager : MonoBehaviour {
 
     void StartTrainGame()
     {
-
+        Camera.main.GetComponent<TrainGame_GameManager>().StartGame();
     }
 }
