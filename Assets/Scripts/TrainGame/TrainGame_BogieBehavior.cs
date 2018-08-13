@@ -9,6 +9,7 @@ public class TrainGame_BogieBehavior : MonoBehaviour {
 	string original_tag ;
 	public GameObject BLOCK_TRAIN;
 	public GameObject soundManager_go;
+    //public GameObject track_2;
 	// Use this for initialization
 	void Start () {
 		// initial tag to be set

@@ -32,7 +32,7 @@ public class TrainGame_Engine_Behavior : MonoBehaviour {
 		bogiePositions.Push (top);
 	}
 	// only to be used if the train is of type Key and Lock
-	IEnumerator DetachBogie(){
+	IEnumerator DetachBogie(Vector3 target_track){
 //		var detacher = new GameObject();
 		var num_of_bogies = transform.childCount ;
 		int x = num_of_bogies;
@@ -60,25 +60,30 @@ public class TrainGame_Engine_Behavior : MonoBehaviour {
 	}
 
 
-	public void RandomizeBogies(bool touchvalue){
+	public void RandomizeBogies(bool touchvalue, float y_offset){
 		var num_of_bogies = transform.childCount ;
 		var N_points = Shared_ScriptForGeneralFunctions.GetNPointsAtHeight (.2f, num_of_bogies-numofnonBogies, true, 0.05f,0.05f);
 		for (int i = 0; i < num_of_bogies - numofnonBogies; i++) {
 			var bogie_object = transform.GetChild (i + numofnonBogies).gameObject;
 			Debug.Log ("position for " + i + N_points[i] );
+            var _temp = N_points[i];
+            _temp.y += y_offset ;
+            _temp.y += (bogie_object.GetComponent<SpriteRenderer>().bounds.size.y * 0.5f * bogie_object.transform.localScale.y);
+            N_points[i] = _temp;
 			StartCoroutine(bogie_object.GetComponent<TrainGame_BogieBehavior> ().MoveToTargetAndSet (N_points[i], touchvalue, TrainGame_SceneVariables.BOGIE_TAG));
 		}
 
 	}
-	public IEnumerator InitialAnimation(){
+	public IEnumerator InitialAnimation(Vector3 source_track, Vector3 target_track){
 //		transform.position = Shared_ScriptForGeneralFunctions.GetPointOnScreen (1.1f, .85f);
 		var target = Shared_ScriptForGeneralFunctions.GetPointOnScreen (.1f, TrainGame_SceneVariables.height_percentage);
+        target.y = transform.position.y;
 		GetComponent<AudioSource> ().Play ();
 		yield return new WaitForSeconds (GetComponent<AudioSource> ().clip.length * .5f);
 		yield return StartCoroutine(MoveToTarget( target));
 		GetComponentInChildren<ParticleSystem> ().Stop ();
 //		yield return new WaitForSeconds (2f);
-		StartCoroutine (DetachBogie ());
+		StartCoroutine (DetachBogie (target_track));
 	}
 
 	public IEnumerator MoveToTarget ( Vector3 target)

@@ -49,17 +49,20 @@ public class LevelScreenManager : MonoBehaviour {
             playerIcon.transform.position = levelIconParent.transform.GetChild(currentLevel - 1).transform.position;
         }
         //playerIcon.GetComponent<PlayerIconManager>().SetTouch(false);
-        var val = previousLevel < currentLevel ? 1 : -1;
-        Debug.Log("previous level n current level: " + previousLevel + " " + currentLevel);
-        int i = previousLevel;
-        playerIcon.transform.position = levelIconParent.transform.GetChild(previousLevel - 1).transform.position;
-        while (i != (currentLevel+val))
+        else
         {
-            Debug.Log("called transition to " + levelIconParent.transform.GetChild(i - 1).name);
-            var destination = levelIconParent.transform.GetChild(i - 1).transform;
-            yield return StartCoroutine(playerIcon.GetComponent<PlayerIconManager>().Transition(destination,should_rotate));
-            i += val;
-            
+            var val = previousLevel < currentLevel ? 1 : -1;
+            Debug.Log("previous level n current level: " + previousLevel + " " + currentLevel);
+            int i = previousLevel;
+            playerIcon.transform.position = levelIconParent.transform.GetChild(previousLevel - 1).transform.position;
+            while (i != (currentLevel + val))
+            {
+                Debug.Log("called transition to " + levelIconParent.transform.GetChild(i - 1).name);
+                var destination = levelIconParent.transform.GetChild(i - 1).transform;
+                yield return StartCoroutine(playerIcon.GetComponent<PlayerIconManager>().Transition(destination, should_rotate));
+                i += val;
+
+            }
         }
         previousLevel = currentLevel;
         playerIcon.GetComponent<PlayerIconManager>().SetTouch(true);

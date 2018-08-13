@@ -11,6 +11,7 @@ public class TrainGame_GameManager : MonoBehaviour {
 	int error_count ;
     public Canvas level_canvas;
     public Transform level_content;
+    public Transform track_1, track_2;
 	// Use this for initialization
 	void Start () {
         //level_canvas.gameObject.SetActive(true);
@@ -67,17 +68,22 @@ public class TrainGame_GameManager : MonoBehaviour {
 
             }
             var total = ((numofBogies + 1) * engine_size) + (2 * extra_size * numofBogies);
-            var _ratio = Screen.width / total;
-            Debug.Log("ration " + _ratio + " " + Screen.width + " " + total);
-            //train_engine.transform.localScale *= (Mathf.Max(1, _ratio));
-			previous_lock.GetComponent<SpriteRenderer> ().sprite = null;
-			StartCoroutine (train_engine.GetComponent<TrainGame_Engine_Behavior>().InitialAnimation ());
+            var _ratio = (2*Camera.main.ScreenToWorldPoint(new Vector3(Screen.width,0f,0f)).x) / total;
+            var _multiplier = (Mathf.Min(1, _ratio));
+            train_engine.transform.localScale *= _multiplier;
+            var train_position = train_engine.transform.position;
+            train_position.y = track_1.transform.position.y + (train_engine.GetComponent<SpriteRenderer>().bounds.size.y * _multiplier * 0.5f + (track_1.GetComponent<SpriteRenderer>().bounds.size.y * .5f ));
+            Debug.Log("ration " + _ratio + " " + Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0f, 0f)).x + " " + total + " " + _multiplier );
+            train_engine.transform.position = train_position;
+            previous_lock.GetComponent<SpriteRenderer> ().sprite = null;
+			StartCoroutine (train_engine.GetComponent<TrainGame_Engine_Behavior>().InitialAnimation (track_1.position,track_2.position));
 		}
 	}
 
 
 	public IEnumerator BlockAndRandomize(){
-		GameObject.FindGameObjectWithTag(TrainGame_SceneVariables.ENGINE_TAG).GetComponent<TrainGame_Engine_Behavior> ().RandomizeBogies (!Should_Block);
+        var y_offset = track_2.transform.position.y + track_2.GetComponent<SpriteRenderer>().bounds.size.y * 0.2f;
+		GameObject.FindGameObjectWithTag(TrainGame_SceneVariables.ENGINE_TAG).GetComponent<TrainGame_Engine_Behavior> ().RandomizeBogies (!Should_Block, y_offset);
 		yield return new WaitForSeconds (numofBogies * 2f);
 		if(Should_Block)  //condition if true show the block train
 		{

@@ -1009,7 +1009,7 @@ GameObject:
   - component: {fileID: 441381002}
   - component: {fileID: 441381001}
   m_Layer: 5
-  m_Name: Level_Canvas
+  m_Name: Level_Canvas [not in use]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1165,8 +1165,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10e2a8b21dd3bae40842c2142a075ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousLevel: 1
-  currentLevel: 0
   levelIconParent: {fileID: 1703242238}
   playerIcon: {fileID: 1749121063}
   game_name: TrainGame
@@ -1809,8 +1807,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10e2a8b21dd3bae40842c2142a075ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousLevel: 1
-  currentLevel: 0
   levelIconParent: {fileID: 1703242238}
   playerIcon: {fileID: 1749121063}
   game_name: TrainGame
@@ -2523,7 +2519,7 @@ GameObject:
   - component: {fileID: 1275998716}
   - component: {fileID: 1275998715}
   m_Layer: 0
-  m_Name: ZOO wall 1
+  m_Name: ZOO wall 1 [not in use]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2793,6 +2789,8 @@ MonoBehaviour:
   Should_Block: 0
   level_canvas: {fileID: 399166988}
   level_content: {fileID: 884783092}
+  track_1: {fileID: 1117483602}
+  track_2: {fileID: 1117483602}
 --- !u!114 &1307359875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2815,7 +2813,7 @@ GameObject:
   - component: {fileID: 1330005115}
   - component: {fileID: 1330005117}
   m_Layer: 0
-  m_Name: BlockTrain
+  m_Name: BlockTrain [not in use]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3201,7 +3199,7 @@ GameObject:
   - component: {fileID: 1443126983}
   - component: {fileID: 1443126982}
   m_Layer: 0
-  m_Name: fences and grass (1)
+  m_Name: fences and grass (1) [not in use]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3953,7 +3951,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1963675888}
   m_Layer: 0
-  m_Name: TrackParentObject
+  m_Name: TrackParentObject [not in use]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
