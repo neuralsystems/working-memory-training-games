@@ -10,6 +10,7 @@ public class LevelScreenManager : MonoBehaviour
     public string game_name;
     public Sprite level_complete_icon, level_icon;
     LevelScreenManager Instance;
+    public ScrollRect verticalScroll;
     private void Awake()
     {
         if (Instance == null)
@@ -27,8 +28,8 @@ public class LevelScreenManager : MonoBehaviour
         StartCoroutine(ShowTransition());
     }
 
-
-    public IEnumerator ShowTransition()
+    // set first_load = true when the level canvas is loaded for the first time
+    public IEnumerator ShowTransition( )
     {
         Debug.Log("called transition");
         yield return null;
@@ -60,6 +61,7 @@ public class LevelScreenManager : MonoBehaviour
         //else
         //{
         playerIcon.GetComponent<PlayerIconManager>().SetTouch(false);
+
         //playerIcon.GetComponent<Scalling>().SetScaleForLevelScreen(false);
         if (previousLevel == -1)
         {
@@ -75,7 +77,10 @@ public class LevelScreenManager : MonoBehaviour
         //playerIcon.GetComponent<PlayerIconManager>().SetTouch(false);
         //else
         //{
-        for(int j = 1; j <= previousLevel; j++)
+        var total_levels = levelIconParent.transform.childCount;
+        Debug.Log( " positioned at " + (1 - (1.0f * ((currentLevel - 2)/ total_levels))));
+        verticalScroll.verticalNormalizedPosition = 1 - (1.0f * (currentLevel -2)/total_levels);
+        for (int j = 1; j <= previousLevel; j++)
         {
             levelIconParent.transform.GetChild(j - 1).transform.gameObject.GetComponent<Image>().sprite = level_complete_icon;
         }

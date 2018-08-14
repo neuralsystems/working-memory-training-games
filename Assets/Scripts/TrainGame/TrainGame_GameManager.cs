@@ -129,4 +129,11 @@ public class TrainGame_GameManager : MonoBehaviour {
         //      }
         static_game_object.GetComponent<Shared_PersistentScript>().IncreaseLevelTrainGame(error_count*1.0f, numofBogies*1.0f);
     }
+
+    public void LoadNextLevel()
+    {
+        //StartGame();
+        level_canvas.gameObject.SetActive(true);
+        StartCoroutine(level_content.GetComponent<LevelScreenManager>().ShowTransition());
+    }
 }

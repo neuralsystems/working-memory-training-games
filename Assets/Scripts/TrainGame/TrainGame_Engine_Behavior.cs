@@ -99,6 +99,8 @@ public class TrainGame_Engine_Behavior : MonoBehaviour {
 	public IEnumerator FinalAnimation(){
 		var target = Shared_ScriptForGeneralFunctions.GetPointOnScreen (-1.1f, TrainGame_SceneVariables.height_percentage);
 		yield return StartCoroutine(MoveToTarget( target));
-		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Camera.main.GetComponent<TrainGame_GameManager>().LoadNextLevel();
+        Destroy(gameObject);
 	}
 }
