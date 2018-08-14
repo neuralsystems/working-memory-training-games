@@ -1949,6 +1949,7 @@ GameObject:
   - component: {fileID: 889949875}
   - component: {fileID: 889949874}
   - component: {fileID: 889949877}
+  - component: {fileID: 889949878}
   m_Layer: 5
   m_Name: PlayerIcon
   m_TagString: Untagged
@@ -1969,11 +1970,11 @@ RectTransform:
   m_Father: {fileID: 2146678345}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 71, y: -48}
-  m_SizeDelta: {x: 36.3, y: 77.5}
-  m_Pivot: {x: 0, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -176.85, y: 736.25}
+  m_SizeDelta: {x: 36.299988, y: 77.5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &889949874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2072,6 +2073,23 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &889949878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 889949872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d99252402d5d5b48a5f2015e7379915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSize: 1
+  minSize: 0.9
+  growFactor: 0.6
+  waitTime: 0.1
+  shouldScale: 1
+  original_scale: {x: 0, y: 0, z: 0}
 --- !u!1 &918002965
 GameObject:
   m_ObjectHideFlags: 0
@@ -2864,11 +2882,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10e2a8b21dd3bae40842c2142a075ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousLevel: 1
-  currentLevel: 0
   levelIconParent: {fileID: 970411996}
   playerIcon: {fileID: 970411995}
   game_name: 
+  level_complete_icon: {fileID: 0}
+  level_icon: {fileID: 0}
 --- !u!114 &1222570105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5771,12 +5789,12 @@ Prefab:
     - target: {fileID: 224623117527926982, guid: bbc8b409699385f40b0e2d3f3f1cadfe,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -0.0000018458798
+      value: 0.00015258789
       objectReference: {fileID: 0}
     - target: {fileID: 114549956820951128, guid: bbc8b409699385f40b0e2d3f3f1cadfe,
         type: 2}
       propertyPath: m_Size
-      value: 1
+      value: 0.19546908
       objectReference: {fileID: 0}
     - target: {fileID: 224760496445415080, guid: bbc8b409699385f40b0e2d3f3f1cadfe,
         type: 2}
@@ -6417,6 +6435,26 @@ Prefab:
       propertyPath: m_Horizontal
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114549956820951128, guid: bbc8b409699385f40b0e2d3f3f1cadfe,
+        type: 2}
+      propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224515831708084356, guid: bbc8b409699385f40b0e2d3f3f1cadfe,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224190639244739120, guid: bbc8b409699385f40b0e2d3f3f1cadfe,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 224964918423870466, guid: bbc8b409699385f40b0e2d3f3f1cadfe,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bbc8b409699385f40b0e2d3f3f1cadfe, type: 2}
   m_IsPrefabAsset: 0
@@ -6451,11 +6489,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10e2a8b21dd3bae40842c2142a075ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousLevel: 1
-  currentLevel: 0
   levelIconParent: {fileID: 2146678346}
   playerIcon: {fileID: 889949872}
   game_name: BasketGame
+  level_complete_icon: {fileID: 21300000, guid: 761174fbd931d694eb427c789b1e0ff3,
+    type: 3}
+  level_icon: {fileID: 21300000, guid: a1d0eb2e46e359d4d9f6b20616d1bc8d, type: 3}
 --- !u!1 &2146678349 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1502256269988984, guid: bbc8b409699385f40b0e2d3f3f1cadfe,

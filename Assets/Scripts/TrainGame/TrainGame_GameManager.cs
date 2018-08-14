@@ -114,16 +114,19 @@ public class TrainGame_GameManager : MonoBehaviour {
 	}
 
 	void ChangeGameLevel(){
+        // ***************************** //
+        // moved this function to the shared_persistantScript.cs to keep it common for train, basket and piano game
+        // **************************** //
         // increase level by 1 if error rate is 20%, decrease level by 1 if error rate is 70% or above and by 2 if error rate is 90% or above
-        var change = 0;
-        if (error_count < .2f * numofBogies) {
-			change = 1;
-		} else if(error_count > .9f * numofBogies){
-            change = -2;
-        } else if (error_count > .7f * numofBogies)
-        {
-            change = -1;
-        }
-        static_game_object.GetComponent<Shared_PersistentScript>().IncreaseLevelTrainGame(change);
+        //      var change = 0;
+        //      if (error_count < .2f * numofBogies) {
+        //	change = 1;
+        //} else if(error_count > .9f * numofBogies){
+        //          change = -2;
+        //      } else if (error_count > .7f * numofBogies)
+        //      {
+        //          change = -1;
+        //      }
+        static_game_object.GetComponent<Shared_PersistentScript>().IncreaseLevelTrainGame(error_count*1.0f, numofBogies*1.0f);
     }
 }

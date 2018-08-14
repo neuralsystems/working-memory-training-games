@@ -1412,6 +1412,21 @@ Prefab:
       propertyPath: m_SizeDelta.x
       value: 243.8
       objectReference: {fileID: 0}
+    - target: {fileID: 224964918423870466, guid: bbc8b409699385f40b0e2d3f3f1cadfe,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224190639244739120, guid: bbc8b409699385f40b0e2d3f3f1cadfe,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 224515831708084356, guid: bbc8b409699385f40b0e2d3f3f1cadfe,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bbc8b409699385f40b0e2d3f3f1cadfe, type: 2}
   m_IsPrefabAsset: 0
@@ -1436,11 +1451,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10e2a8b21dd3bae40842c2142a075ce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousLevel: 1
-  currentLevel: 0
   levelIconParent: {fileID: 235822529}
   playerIcon: {fileID: 1986548023}
   game_name: PianoGame
+  level_complete_icon: {fileID: 21300000, guid: 14b992e5c832a314a9e3a6347602a485,
+    type: 3}
+  level_icon: {fileID: 21300000, guid: 265a29ee0fba7734f97c8e79b5af9fcd, type: 3}
 --- !u!224 &235822532 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 224623117527926982, guid: bbc8b409699385f40b0e2d3f3f1cadfe,
@@ -1640,37 +1656,6 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 03d3b0a0af3b9864a8e539a772d8fdc9, type: 2}
   m_IsPrefabAsset: 0
---- !u!84 &372740275
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: 
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_Width: 1280
-  m_Height: 800
-  m_AntiAliasing: 1
-  m_DepthFormat: 1
-  m_ColorFormat: 7
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
 --- !u!1001 &436330431
 Prefab:
   m_ObjectHideFlags: 0
@@ -1713,6 +1698,37 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3782b3544942b2042884c1ebe81bf2aa, type: 2}
   m_IsPrefabAsset: 0
+--- !u!84 &460776436
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_Width: 1280
+  m_Height: 800
+  m_AntiAliasing: 1
+  m_DepthFormat: 1
+  m_ColorFormat: 7
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
 --- !u!1001 &469501778
 Prefab:
   m_ObjectHideFlags: 0
@@ -7157,8 +7173,8 @@ MonoBehaviour:
   sourceCamera: {fileID: 798181099}
   outlineCamera: {fileID: 1460941517}
   outlineShaderMaterial: {fileID: 0}
-  renderTexture: {fileID: 1871073294}
-  extraRenderTexture: {fileID: 372740275}
+  renderTexture: {fileID: 1512600430}
+  extraRenderTexture: {fileID: 460776436}
 --- !u!1001 &816671794
 Prefab:
   m_ObjectHideFlags: 0
@@ -8101,7 +8117,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 0
   m_RenderingPath: 1
-  m_TargetTexture: {fileID: 1871073294}
+  m_TargetTexture: {fileID: 1512600430}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
@@ -8218,6 +8234,37 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!84 &1512600430
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_Width: 1280
+  m_Height: 800
+  m_AntiAliasing: 1
+  m_DepthFormat: 1
+  m_ColorFormat: 7
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 0
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
 --- !u!1001 &1546582669
 Prefab:
   m_ObjectHideFlags: 0
@@ -8377,37 +8424,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4551579267882704, guid: 5ba7adb207795bc4799e3af2e7f70c8e,
     type: 2}
   m_PrefabInternal: {fileID: 1546582669}
---- !u!84 &1871073294
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: 
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_Width: 1280
-  m_Height: 800
-  m_AntiAliasing: 1
-  m_DepthFormat: 1
-  m_ColorFormat: 7
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 0
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
 --- !u!1 &1891380802
 GameObject:
   m_ObjectHideFlags: 0
@@ -8640,11 +8656,11 @@ RectTransform:
   m_Father: {fileID: 235822532}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 52, y: -56.2}
-  m_SizeDelta: {x: 64.3, y: 39.42}
-  m_Pivot: {x: 0, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -163.85, y: 737.09}
+  m_SizeDelta: {x: 64.29999, y: 39.419983}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1986548025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8756,7 +8772,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSize: 1
   minSize: 0.9
-  growFactor: 2
+  growFactor: 0.6
   waitTime: 0.1
   shouldScale: 0
   original_scale: {x: 0, y: 0, z: 0}

@@ -440,7 +440,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -17.9, y: 0}
+  m_AnchoredPosition: {x: -17.900024, y: 0}
   m_SizeDelta: {x: 36, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &167847034
@@ -489,7 +489,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Content: {fileID: 884783092}
-  m_Horizontal: 1
+  m_Horizontal: 0
   m_Vertical: 1
   m_MovementType: 1
   m_Elasticity: 0.1
@@ -913,6 +913,7 @@ GameObject:
   - component: {fileID: 399166988}
   - component: {fileID: 399166987}
   - component: {fileID: 399166986}
+  - component: {fileID: 399166990}
   m_Layer: 5
   m_Name: Level_canvas1
   m_TagString: Untagged
@@ -996,6 +997,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &399166990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 399166985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1476f5dbe5714f64ab60f9dd22fdec64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &441381000
 GameObject:
   m_ObjectHideFlags: 0
@@ -1128,7 +1140,6 @@ RectTransform:
   - {fileID: 1415688819}
   - {fileID: 591511863}
   - {fileID: 1703242239}
-  - {fileID: 1749121064}
   m_Father: {fileID: 884783092}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1168,6 +1179,8 @@ MonoBehaviour:
   levelIconParent: {fileID: 1703242238}
   playerIcon: {fileID: 1749121063}
   game_name: TrainGame
+  level_complete_icon: {fileID: 0}
+  level_icon: {fileID: 0}
 --- !u!224 &591511863
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1810,6 +1823,9 @@ MonoBehaviour:
   levelIconParent: {fileID: 1703242238}
   playerIcon: {fileID: 1749121063}
   game_name: TrainGame
+  level_complete_icon: {fileID: 21300000, guid: 4467a97968d99b44eb7b94e3c37eee2e,
+    type: 3}
+  level_icon: {fileID: 21300000, guid: 12d1ccec8b7ebf240bc06e171a922663, type: 3}
 --- !u!1 &948393507
 GameObject:
   m_ObjectHideFlags: 0
@@ -3625,6 +3641,7 @@ RectTransform:
   - {fileID: 1096964480}
   - {fileID: 1119536374}
   - {fileID: 1133800640}
+  - {fileID: 1749121064}
   m_Father: {fileID: 591511860}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3658,6 +3675,7 @@ GameObject:
   - component: {fileID: 1749121066}
   - component: {fileID: 1749121065}
   - component: {fileID: 1749121068}
+  - component: {fileID: 1749121069}
   m_Layer: 5
   m_Name: PlayerIcon
   m_TagString: Untagged
@@ -3675,14 +3693,14 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 591511860}
-  m_RootOrder: 3
+  m_Father: {fileID: 1703242239}
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 186.6, y: -98.5}
-  m_SizeDelta: {x: 102.93, y: 49.62}
-  m_Pivot: {x: 0, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -398.435, y: 713.8901}
+  m_SizeDelta: {x: 102.92999, y: 49.62}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1749121065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3781,6 +3799,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelcanvas: {fileID: 399166988}
+--- !u!114 &1749121069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1749121063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d99252402d5d5b48a5f2015e7379915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSize: 1
+  minSize: 0.9
+  growFactor: 0.5
+  waitTime: 0.1
+  shouldScale: 1
+  original_scale: {x: 0, y: 0, z: 0}
 --- !u!1 &1835224147
 GameObject:
   m_ObjectHideFlags: 0

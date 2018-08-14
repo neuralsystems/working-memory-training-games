@@ -119,19 +119,23 @@ public class PlayTone : MonoBehaviour {
     void ChangeLevel()
     {
         var persistan_go = GameObject.Find(Shared_Scenevariables.masterGO);
-        int change_by = 0; 
-        if(SceneVariables.error_count > 0.9f  * num_of_notes)
-        {
-            change_by = -2;
-        } else if(SceneVariables. error_count > 0.7f * num_of_notes)
-        {
-            change_by = -1;
-        } else if( SceneVariables.error_count < 0.2f * num_of_notes)
-        {
-            change_by = 1;
-        }
-        Debug.Log(change_by + "is the change_by and error count = " + SceneVariables.error_count);
-        persistan_go.GetComponent<Shared_PersistentScript>().IncreaseLevelPianoGame(change_by);
+        // ***************************** //
+        // moved this function to the shared_persistantScript.cs to keep it common for train, basket and piano game
+        // **************************** //
+
+        //int change_by = 0; 
+        //if(SceneVariables.error_count > 0.9f  * num_of_notes)
+        //{
+        //    change_by = -2;
+        //} else if(SceneVariables. error_count > 0.7f * num_of_notes)
+        //{
+        //    change_by = -1;
+        //} else if( SceneVariables.error_count < 0.2f * num_of_notes)
+        //{
+        //    change_by = 1;
+        //}
+        //Debug.Log(change_by + "is the change_by and error count = " + SceneVariables.error_count);
+        persistan_go.GetComponent<Shared_PersistentScript>().IncreaseLevelPianoGame(SceneVariables.error_count *1.0f, num_of_notes *1.0f);
     }
 	public IEnumerator WaitForRainToStop(ParticleSystem rain){
 		if (rain.isPlaying) {

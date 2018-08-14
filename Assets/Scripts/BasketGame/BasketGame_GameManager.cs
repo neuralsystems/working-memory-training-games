@@ -34,23 +34,31 @@ public class BasketGame_GameManager : MonoBehaviour {
 		Error_Count++;
 	}
 
-	public int SetLevel(){
-		var error_rate_for_increment  = .2f;
-        var error_rate_for_decrement_1 = .7f;
-        var error_rate_for_decrement_2 = .9f;
-        int change = 0;
-        // increase level by 1 if error rate is 20%, decrease level by 1 if error rate is 70% or above and by 2 if error rate is 90% or above
-        if (Error_Count < num_of_fruits * error_rate_for_increment) {
-			change = 1;
-		} else if (Error_Count > num_of_fruits * error_rate_for_decrement_2)
-        {
-            change = -2;
-        } else if (Error_Count > num_of_fruits * error_rate_for_decrement_1)
-        {
-            change = -1;
-        }
-		return change;
-	}
+    // ***************************** //
+    // moved this function to the shared_persistantScript.cs to keep it common for train, basket and piano game
+    // **************************** //
+	//public int SetLevel( float error_count, float total){
+	//	var error_rate_for_increment  = .2f;
+ //       var error_rate_for_decrement_1 = .7f;
+ //       var error_rate_for_decrement_2 = .9f;
+ //       //int change = 0;
+ //       // increase level by 1 if error rate is 20%, decrease level by 1 if error rate is 70% or above and by 2 if error rate is 90% or above
+ //       if (Error_Count < num_of_fruits * error_rate_for_increment) {
+ //           Debug.Log("increasing level by 1");
+	//		return 1;
+	//	} else if (Error_Count > num_of_fruits * error_rate_for_decrement_2)
+ //       {
+ //           Debug.Log("Decreasing level by 2");
+ //           return -2;
+ //       } else if (Error_Count > num_of_fruits * error_rate_for_decrement_1)
+ //       {
+ //           Debug.Log("decreasing level by 1");
+ //           return -1;
+ //       }
+ //       Debug.Log("keeping the level same");
+ //       return 0;
+	//}
+
 	public IEnumerator MakeFruit(){
 //		yield return new WaitForSeconds (2f);
 //		Debug.Log("called me?");
@@ -79,7 +87,7 @@ public class BasketGame_GameManager : MonoBehaviour {
 				rain_particlesystem_object.Play ();
 				yield return new WaitForSeconds(rain_particlesystem_object.main.duration);
 				persistent_go = GameObject.Find (Shared_Scenevariables.masterGO);
-				persistent_go.GetComponent<Shared_PersistentScript>().IncreaseLevelBasketGame(SetLevel());
+				persistent_go.GetComponent<Shared_PersistentScript>().IncreaseLevelBasketGame(Error_Count* 1.0f, num_of_fruits* 1.0f);
                 //SceneManager.LoadScene (SceneManager.GetActiveScene().name);
                 ChangeLevel();
 

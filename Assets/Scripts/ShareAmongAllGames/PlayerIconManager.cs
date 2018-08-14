@@ -15,11 +15,9 @@ public class PlayerIconManager : MonoBehaviour {
         //look_for.z = destination.position.z;
         if (rotate)
         {
-            Vector3 diff = destination.position - transform.position;
-            diff.Normalize();
-            float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
+            LookAtGameObject(destination.position);
         }
+        
         while (Vector3.Distance(transform.position, destination.position) > 0.5f)
         {
             transform.position = Vector3.SmoothDamp(transform.position, destination.position, ref velocity, smoothTime);
@@ -55,7 +53,7 @@ public class PlayerIconManager : MonoBehaviour {
     public void SetTouch(bool val)
     {
         GetComponent<Button>().interactable = val;
-        //GetComponent<Scalling>().SetScale(val);
+        GetComponent<Scalling>().SetScaleForLevelScreen(val);
     }
 
     void StartBasketGame()
@@ -72,5 +70,13 @@ public class PlayerIconManager : MonoBehaviour {
     void StartTrainGame()
     {
         Camera.main.GetComponent<TrainGame_GameManager>().StartGame();
+    }
+
+    public void LookAtGameObject(Vector3 destination)
+    {
+        Vector3 diff = destination - transform.position;
+        diff.Normalize();
+        float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0f, 0f, rot_z);
     }
 }

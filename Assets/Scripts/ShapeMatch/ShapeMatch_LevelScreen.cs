@@ -14,6 +14,7 @@ public class ShapeMatch_LevelScreen : MonoBehaviour
     [HideInInspector]public static int PreviousLevel=0;
     public Canvas canvas;
     public ScrollRect ScrollRect1;
+    public Sprite level_completed_icon, level_icon;
     //public const string masterGO = "MasterGameObject";
     private void Start()
     {
@@ -25,7 +26,9 @@ public class ShapeMatch_LevelScreen : MonoBehaviour
         ScrollRect1.verticalNormalizedPosition = 1 - (0.02f * LevelNumber);
         StartCoroutine(Instantiate_obj(LevelNumber));
         PreviousLevel = LevelNumber;
-        ChangeColor(Color.HSVToRGB(210, 62, 77));
+        //ChangeColor(Color.HSVToRGB(210, 62, 77));
+        ChangeSprite(level_completed_icon);
+
     }
     public void NewStart()
     {
@@ -35,7 +38,8 @@ public class ShapeMatch_LevelScreen : MonoBehaviour
         Debug.Log(username02);
         GetLevelInformation(username02);
         //Debug.Log(LevelNumber);
-        ChangeColor(Color.HSVToRGB(210, 62, 77));
+        //ChangeColor(Color.HSVToRGB(210, 62, 77));
+        ChangeSprite(level_completed_icon);
         Debug.Log("previous level  " + PreviousLevel + "level   " + LevelNumber);
         StartCoroutine(MoveIcon());
     }
@@ -50,19 +54,22 @@ public class ShapeMatch_LevelScreen : MonoBehaviour
                 int temp = LevelNumber + 1;
                 Vector3 playerpos1 = Object1.transform.GetChild(temp).position;
                 StartCoroutine(backAgain(playerpos1, temp_GO));
-                Object1.transform.GetChild(PreviousLevel).GetComponent<Image>().color = Color.white;
+                //Object1.transform.GetChild(PreviousLevel).GetComponent<Image>().color = Color.white;
+                Object1.transform.GetChild(PreviousLevel).GetComponent<Image>().sprite = level_icon;
                 PreviousLevel--;
             }
             Debug.Log("previous level  " + PreviousLevel+ "level   " + LevelNumber);
             Vector3 playerpos2 = Object1.transform.GetChild(LevelNumber).position;
             yield return new WaitForSeconds(2f);
             StartCoroutine(backAgain(playerpos2, temp_GO));
-            Object1.transform.GetChild(PreviousLevel).GetComponent<Image>().color = Color.white;
+            //Object1.transform.GetChild(PreviousLevel).GetComponent<Image>().color = Color.white;
+            Object1.transform.GetChild(PreviousLevel).GetComponent<Image>().sprite = level_icon;
 
         }
         else
         {
-            Object1.transform.GetChild(PreviousLevel).GetComponent<Image>().color = Color.HSVToRGB(210, 62, 77);
+            //Object1.transform.GetChild(PreviousLevel).GetComponent<Image>().color = Color.HSVToRGB(210, 62, 77);
+            Object1.transform.GetChild(PreviousLevel).GetComponent<Image>().sprite = level_completed_icon;
             Vector3 playerpos = Object1.transform.GetChild(LevelNumber).position;
             StartCoroutine(backAgain(playerpos, temp_GO));
             yield return new WaitForSeconds(2f);
@@ -138,6 +145,14 @@ public class ShapeMatch_LevelScreen : MonoBehaviour
         for (int i = 0; i < PreviousLevel; i++)
         {
             Object1.transform.GetChild(i).GetComponent<Image>().color = Color_reqired;
+        }
+    }
+
+   void ChangeSprite(Sprite _sprite)
+    {
+        for(int i = 0; i < PreviousLevel; i++)
+        {
+            Object1.transform.GetChild(i).GetComponent<Image>().sprite = _sprite;
         }
     }
 }
