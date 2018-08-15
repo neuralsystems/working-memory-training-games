@@ -7149,8 +7149,8 @@ MonoBehaviour:
   sourceCamera: {fileID: 798181099}
   outlineCamera: {fileID: 1460941517}
   outlineShaderMaterial: {fileID: 0}
-  renderTexture: {fileID: 1758372652}
-  extraRenderTexture: {fileID: 2036765125}
+  renderTexture: {fileID: 2056647609}
+  extraRenderTexture: {fileID: 1711376588}
 --- !u!1001 &816671794
 Prefab:
   m_ObjectHideFlags: 0
@@ -8093,7 +8093,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 0
   m_RenderingPath: 1
-  m_TargetTexture: {fileID: 1758372652}
+  m_TargetTexture: {fileID: 2056647609}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
@@ -8369,7 +8369,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4551579267882704, guid: 5ba7adb207795bc4799e3af2e7f70c8e,
     type: 2}
   m_PrefabInternal: {fileID: 1546582669}
---- !u!84 &1758372652
+--- !u!84 &1711376588
 RenderTexture:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8393,7 +8393,7 @@ RenderTexture:
   m_TextureSettings:
     serializedVersion: 2
     m_FilterMode: 1
-    m_Aniso: 0
+    m_Aniso: 1
     m_MipBias: 0
     m_WrapU: 1
     m_WrapV: 1
@@ -8752,7 +8752,7 @@ MonoBehaviour:
   waitTime: 0.1
   shouldScale: 0
   original_scale: {x: 0, y: 0, z: 0}
---- !u!84 &2036765125
+--- !u!84 &2056647609
 RenderTexture:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8776,7 +8776,7 @@ RenderTexture:
   m_TextureSettings:
     serializedVersion: 2
     m_FilterMode: 1
-    m_Aniso: 1
+    m_Aniso: 0
     m_MipBias: 0
     m_WrapU: 1
     m_WrapV: 1

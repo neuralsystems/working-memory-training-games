@@ -62,6 +62,8 @@ public class PlayTone : MonoBehaviour {
         gradient = level_obj.Gradient;
         WAIT_TIME = level_obj.WaitTime;
         PLAY_TIME = level_obj.PlayTime;
+        SceneVariables.PLAY_TIME = PLAY_TIME;
+        SceneVariables.WAIT_TIME = WAIT_TIME;
         current_length = initial_length;
         CONSECUTIVE_CORRECT_THRESHOLD = level_obj.Threshold;
     }
@@ -69,7 +71,7 @@ public class PlayTone : MonoBehaviour {
 	public void Repeat(){
 		sample = "";
 		SceneVariables.IS_READY = true;
-		GameObject.Find (Camera.main.GetComponent<SceneVariables> ().playSound).GetComponent<HomeScreenButtons> ().SetHaloToggle(true);
+		
 	}
 
 	public void Next(){
@@ -162,10 +164,11 @@ public class PlayTone : MonoBehaviour {
 //		}
 		OnKeyPress.numOfKeysPressed = 0;
 		SceneVariables.IS_USER_MODE = false;
-		Debug.Log (notes + "is played");
+		
 		for (int i = start; i < end; i++) {
 			if (toneTOBePlayed[i] != "") {
-				var token = toneTOBePlayed [i];
+                Debug.Log(toneTOBePlayed[i] + "is played");
+                var token = toneTOBePlayed [i];
 				string token1 =token.ToUpper ();
 				var g = GameObject.Find (token1).gameObject;
 				var original_layer = "Game";
@@ -197,9 +200,9 @@ public class PlayTone : MonoBehaviour {
 
                 }
 
-                g.GetComponent<OnKeyPress> ().PlaySound(isRepeat);
-				yield return new WaitForSeconds (WAIT_TIME);
-				if (isRepeat && !isLastRepeat) {
+                yield return StartCoroutine(g.GetComponent<OnKeyPress> ().PlaySound(isRepeat));
+                yield return new WaitForSeconds(.2f);
+                if (isRepeat && !isLastRepeat) {
 					var reward_square_child_object = reward_square_parent.transform.GetChild (i).transform.GetChild (0);
 					reward_square_child_object.GetComponent<SpriteRenderer> ().sortingLayerName = original_layer;
                     reward_square_child_object.transform.localScale -= new Vector3(1, 1, 1) * .3f;
@@ -209,7 +212,7 @@ public class PlayTone : MonoBehaviour {
 				yield return new WaitForSeconds (WAIT_TIME);
 			}
 		}
-		yield return new WaitForSeconds (PLAY_TIME);
+		//yield return new WaitForSeconds (PLAY_TIME);
 		if (!isRepeat) {
 			SceneVariables.IS_USER_MODE = true;
 		}

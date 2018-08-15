@@ -48,7 +48,7 @@ public class OnKeyPress : MonoBehaviour {
 			Debug.Log(Camera.main.GetComponent<PlayTone> ().GetTuneLength () + " " +numOfKeysPressed);
 			if (Camera.main.GetComponent<PlayTone> ().GetTuneLength () > numOfKeysPressed) {
 				SceneVariables.IS_PRESSED = true;
-				PlaySound ();
+				StartCoroutine(PlaySound ());
 				if ((PlayTone.sample != "")) {
 					numOfKeysPressed++;
 					userString += this.gameObject.name + delimeter;
@@ -90,18 +90,31 @@ public class OnKeyPress : MonoBehaviour {
 	}
 
 
-	public void PlaySound(bool isRepeat = false)
+	public IEnumerator PlaySound(bool isRepeat = false)
 	{
-		SetTransparency (true);
-		if (!isRepeat) {
-			var tappinghand = GameObject.Find (Camera.main.GetComponent<SceneVariables> ().tappingHand).gameObject;
-			StartCoroutine (tappinghand.GetComponent<FingerBehavior> ().SetPositionAndPlay (transform.position, keyName));
-		}
-//		GetComponent<SpriteRenderer> ().color = SceneVariables.PRESSED_COLOR;
-		GetComponent<AudioSource> ().PlayOneShot (Keytone);
-		StartCoroutine (DelayedCallback (SceneVariables.PLAY_TIME, AudioFinished));
-//		spriteRenderer.color = SceneVariables.PRESSED_COLOR;
-	}
+        var reduce_by = .95f;
+        //SetTransparency (true);
+        var tappinghand = GameObject.Find(Camera.main.GetComponent<SceneVariables>().tappingHand).gameObject;
+        tappinghand.transform.position = transform.position;
+        tappinghand.GetComponent<SpriteRenderer>().enabled = true;
+        if (!isRepeat) {
+			
+            //StartCoroutine (tappinghand.GetComponent<FingerBehavior> ().SetPositionAndPlay (transform.position, keyName));
+            
+            ShowKeySquare();
+        }
+        GetComponent<SpriteRenderer>().color = SceneVariables.PRESSED_COLOR;
+        var original_scale = transform.localScale;
+        transform.localScale *= reduce_by;
+        Debug.Log("key color " + GetComponent<SpriteRenderer>().color);
+        GetComponent<AudioSource> ().PlayOneShot(Keytone);
+        yield return new WaitForSeconds(Keytone.length);
+        AudioFinished();
+        transform.localScale = original_scale;
+        tappinghand.GetComponent<SpriteRenderer>().enabled = false;
+		//StartCoroutine (DelayedCallback (SceneVariables.PLAY_TIME, AudioFinished));
+        //spriteRenderer.color = SceneVariables.PRESSED_COLOR;
+    }
 
 
 	// this function checks if the user guessed sequence is same as the played one or not
@@ -120,6 +133,14 @@ public class OnKeyPress : MonoBehaviour {
 			}
 		}
 	}
+
+    public void KeyPressEffect(float size_percent, string hex_color)
+    {
+        
+        //Color myColor = new Color();
+        //Color.TryParseHexString(hex_color, out myColor);
+        //GetComponent<SpriteRenderer>().color.h = 
+    } 
 	// used in case if there is a clip to play and some code has to be executed at the end of the clip
 	public void PlaySoundWithCallBack(AudioClip clip, AudioCallback callback){
 
@@ -135,11 +156,12 @@ public class OnKeyPress : MonoBehaviour {
 
 	// this function is called when the audio clip ends
 	void AudioFinished(){
-		GetComponent<AudioSource> ().Pause ();
+		//GetComponent<AudioSource> ().Pause ();
 		SceneVariables.IS_PRESSED = false;
-		spriteRenderer.color = originalColor;
-		SetTransparency (false);
-	}
+        spriteRenderer.color = originalColor;
+        Debug.Log("key color set to original " + GetComponent<SpriteRenderer>().color);
+        //SetTransparency (false);
+    }
 
 	void ResetGame()
 	{

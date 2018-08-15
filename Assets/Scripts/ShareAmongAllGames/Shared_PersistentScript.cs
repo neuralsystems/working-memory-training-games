@@ -8,7 +8,7 @@ public class Shared_PersistentScript : MonoBehaviour {
 	//public int currentLevel;			// game with always start with this level
 	public static Shared_PersistentScript Instance;
     private static User CurrentPlayer;
-
+    int min_level_value = 1;
     public User GetCurrentPlayer()
     {
         return CurrentPlayer;
@@ -69,7 +69,7 @@ public class Shared_PersistentScript : MonoBehaviour {
         int val = SetLevel(error_count, total);
         var ds = new BasketGame_DataService(BasketGame_SceneVariables.DATABASE_NAME);
         var current_level = ds.GetUserProgress(GetCurrentPlayer().Username);
-        ds.UpdateUserProgress(GetCurrentPlayer().Username, Mathf.Max(current_level.Level_Obj + val, 0));
+        ds.UpdateUserProgress(GetCurrentPlayer().Username, Mathf.Max(current_level.Level_Obj + val, min_level_value));
 
     }
 
@@ -79,7 +79,7 @@ public class Shared_PersistentScript : MonoBehaviour {
         int val = SetLevel(error_count, total);
         var ds = new TrainGame_DataServices(TrainGame_SceneVariables.DATABASE_NAME);
         var current_level = ds.GetUserProgress(GetCurrentPlayer().Username);
-        ds.UpdateUserProgress(GetCurrentPlayer().Username, Mathf.Max(current_level.Level_Obj + val, 0));
+        ds.UpdateUserProgress(GetCurrentPlayer().Username, Mathf.Max(current_level.Level_Obj + val, min_level_value));
     }
 
     public TrainGame_Levels GetNewTrainGameLevelDetails(){
@@ -108,7 +108,7 @@ public class Shared_PersistentScript : MonoBehaviour {
         int val = SetLevel(error_count, total);
         var ds = new DataService(SceneVariables.DATABASE_NAME);
         var current_level = ds.GetUserProgress(GetCurrentPlayer().Username);
-        ds.UpdateUserProgress(GetCurrentPlayer().Username, Mathf.Max(current_level.Level_Obj + val, 0));
+        ds.UpdateUserProgress(GetCurrentPlayer().Username, Mathf.Max(current_level.Level_Obj + val, min_level_value));
     }
 
     public PianoGame_Levels GetNewPianoGameLevelDetails()

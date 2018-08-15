@@ -31,7 +31,7 @@ public class SceneVariables : MonoBehaviour {
 	public static float delayAfterCorrect = 2.0f, delayAfterIncorrect = 2.0f;			// not used yet and not sure why added	
 	public static string USER_STRING = "";												// not used yet and not sure why added
 	public static bool IS_USER_MODE = false;												// to chek if press can be enabled for the user, is false when the computer is playing a tune, true at other time
-	public static Color PRESSED_COLOR = new Color (0.1f, 0.0f, 0.5f, 1f);				// color of the key when it is in pressed state
+	public static Color PRESSED_COLOR = new Color (0.5f, 0.5f, 0.5f, 1f);				// color of the key when it is in pressed state
 	// these variable were used earlier however now they are not part of the active gameplay but removing them will cause error
 	public static float SPEED = 10.0f;													
 	public static float DELAY_TO_START=.5f;
