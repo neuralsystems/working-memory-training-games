@@ -14,6 +14,7 @@ public class OnKeyPress : MonoBehaviour {
 	string folderName = "Buttons/", game_name;
 	public static int numOfKeysPressed = 0;
     public AudioClip Keytone;
+    Vector3 original_scale; 
 	void Start () {
 		game_name = SceneVariables.Game_Name;
 		keySquareImageName = keyName + "_square";
@@ -25,7 +26,8 @@ public class OnKeyPress : MonoBehaviour {
 		userString = "";
 		spriteRenderer = this.gameObject.GetComponent<SpriteRenderer> ();
 		originalColor = spriteRenderer.color;
-	}
+        original_scale = transform.localScale;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -46,6 +48,11 @@ public class OnKeyPress : MonoBehaviour {
 		Debug.Log ("is user mode: " + SceneVariables.IS_USER_MODE);
 		if (!SceneVariables.IS_PRESSED && SceneVariables.IS_USER_MODE && SceneVariables.IS_READY) {
 			Debug.Log(Camera.main.GetComponent<PlayTone> ().GetTuneLength () + " " +numOfKeysPressed);
+            // uncomment next three lines for enabling the wobble effect of the keys
+            //if(numOfKeysPressed == 0)
+            //{
+            //    Camera.main.GetComponent<PlayTone>().ChangeUserModeDisplay(false);
+            //}
 			if (Camera.main.GetComponent<PlayTone> ().GetTuneLength () > numOfKeysPressed) {
 				SceneVariables.IS_PRESSED = true;
 				StartCoroutine(PlaySound ());
@@ -92,7 +99,7 @@ public class OnKeyPress : MonoBehaviour {
 
 	public IEnumerator PlaySound(bool isRepeat = false)
 	{
-        var reduce_by = .95f;
+        var reduce_to = .95f;
         //SetTransparency (true);
         var tappinghand = GameObject.Find(Camera.main.GetComponent<SceneVariables>().tappingHand).gameObject;
         tappinghand.transform.position = transform.position;
@@ -103,19 +110,26 @@ public class OnKeyPress : MonoBehaviour {
             
             ShowKeySquare();
         }
-        GetComponent<SpriteRenderer>().color = SceneVariables.PRESSED_COLOR;
-        var original_scale = transform.localScale;
-        transform.localScale *= reduce_by;
+        //GetComponent<SpriteRenderer>().color = SceneVariables.PRESSED_COLOR;
+        var original_scale1 = transform.localScale;
+        transform.localScale *= reduce_to;
         Debug.Log("key color " + GetComponent<SpriteRenderer>().color);
         GetComponent<AudioSource> ().PlayOneShot(Keytone);
         yield return new WaitForSeconds(Keytone.length);
         AudioFinished();
-        transform.localScale = original_scale;
+        transform.localScale = original_scale1;
         tappinghand.GetComponent<SpriteRenderer>().enabled = false;
 		//StartCoroutine (DelayedCallback (SceneVariables.PLAY_TIME, AudioFinished));
         //spriteRenderer.color = SceneVariables.PRESSED_COLOR;
+      
     }
 
+    public void DisplayUserMode(bool val)
+    {
+        
+        GetComponent<Scalling>().SetScale(true, original_scale.x, original_scale.x * .19f);
+        
+    }
 
 	// this function checks if the user guessed sequence is same as the played one or not
 	bool CheckWithSampleTune(){

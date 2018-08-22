@@ -9,6 +9,9 @@ public class Shared_PersistentScript : MonoBehaviour {
 	public static Shared_PersistentScript Instance;
     private static User CurrentPlayer;
     int min_level_value = 1;
+
+    float time_in_sec = 0f;
+
     public User GetCurrentPlayer()
     {
         return CurrentPlayer;
@@ -157,5 +160,10 @@ public class Shared_PersistentScript : MonoBehaviour {
         }
         Debug.Log("increasing level by 1");
         return 1;
+    }
+
+    void LogTime()
+    {
+
     }
 }

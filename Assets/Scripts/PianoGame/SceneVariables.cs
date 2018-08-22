@@ -177,7 +177,9 @@ public class SceneVariables : MonoBehaviour {
         var master_go = GameObject.Find(Shared_Scenevariables.masterGO);
         var overlap = master_go.GetComponent<Shared_PersistentScript>().GetNewPianoGameLevelDetails().GetDifference();
 		int last = userSquares.Length - 1;
-		yield return GetRandomClapping();
+        var user_square_parent_go = GameObject.Find(USER_INPUT_SQUARE_PARENT).gameObject;
+        user_square_parent_go.GetComponent<ParticleSystem>().Play();
+        yield return GetRandomClapping();
 		for(int i=0;i<=last;i++){
 //		foreach (var userSquare in userSquares) {
 			userSquares[i].transform.parent = null;

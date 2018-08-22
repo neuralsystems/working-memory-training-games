@@ -23,6 +23,7 @@ public class PlayTone : MonoBehaviour {
     public Canvas level_canvas;
     public Transform level_content;
     int num_of_notes;
+    public GameObject piano_go;
     void Awake(){
 		current_length = initial_length;
 		camera_position = Camera.main.transform.position;
@@ -215,7 +216,10 @@ public class PlayTone : MonoBehaviour {
 		//yield return new WaitForSeconds (PLAY_TIME);
 		if (!isRepeat) {
 			SceneVariables.IS_USER_MODE = true;
-		}
+
+            // uncomment next line to enable wobble effect
+            ChangeUserModeDisplay(true);
+        }
 //		else if (isRepeat) {
 //			var shift =  reward_square_parent.transform.GetChild (0).transform.GetChild (0).GetComponent<SpriteRenderer> ().bounds.size;
 //			Debug.Log ("moving camera down by " + shift);
@@ -224,6 +228,16 @@ public class PlayTone : MonoBehaviour {
 //		}
 	}
 		
+
+    public void ChangeUserModeDisplay(bool val)
+    {
+        var num_child = piano_go.transform.childCount;
+        piano_go.GetComponent<Scalling>().SetScale(true);
+        //for(int i = 0;i < num_child;i++)
+        //{
+        //   piano_go.transform.GetChild(i).GetComponent<OnKeyPress>().DisplayUserMode(val);
+        //}
+    }
 
 	public IEnumerator RepeatTone(bool isLastRepeat = false){
 		string delimeter = tones.GetDelimeter ();
