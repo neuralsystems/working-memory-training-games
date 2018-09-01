@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 114720972318514846}
   - component: {fileID: 114496402266687616}
   - component: {fileID: 82961113449336196}
+  - component: {fileID: 114886815513378136}
   m_Layer: 0
   m_Name: Bogie_KL_prefab
   m_TagString: AttachedBogieTag
@@ -299,7 +300,23 @@ MonoBehaviour:
   original_position: {x: 0, y: 0, z: 0}
   BLOCK_TRAIN: {fileID: 0}
   soundManager_go: {fileID: 0}
-  track_2: {fileID: 0}
+--- !u!114 &114886815513378136
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1474577890972948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d99252402d5d5b48a5f2015e7379915, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSize: 1
+  minSize: 0.9
+  growFactor: 0.5
+  waitTime: 0.1
+  shouldScale: 0
+  original_scale: {x: 0, y: 0, z: 0}
 --- !u!198 &198856949633869358
 ParticleSystem:
   m_ObjectHideFlags: 1

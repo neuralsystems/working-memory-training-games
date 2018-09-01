@@ -22,9 +22,13 @@ public class TrainGame_BogieCoverScript : MonoBehaviour {
 
 	public IEnumerator BlockTarget(GameObject target){
 		GetComponent<SpriteRenderer> ().enabled = true;
-		yield return MoveToTarget (target.transform.position);
-		transform.parent = target.transform;
+        transform.parent = target.transform;
+        transform.localScale = target.transform.localScale;
+        yield return MoveToTarget (target.transform.position);
+		
 		transform.position = target.transform.position;
+        
 		target.GetComponent<TrainGame_DetectTouch> ().SetTouch (true);
+        GetComponentInParent<Scalling>().SetScale(true);
 	}
 }

@@ -76,10 +76,11 @@ public class PlayTone : MonoBehaviour {
 	}
 
 	public void Next(){
-		//if (SceneVariables.error_count > SceneVariables.max_allowed_error) {
-  //          current_length = current_length * 1;
-		//} else {
-		//SceneVariables.error_count -= Mathf.Max (SceneVariables.error_count - 1, 0);
+        //if (SceneVariables.error_count > SceneVariables.max_allowed_error) {
+        //          current_length = current_length * 1;
+        //} else {
+        //SceneVariables.error_count -= Mathf.Max (SceneVariables.error_count - 1, 0);
+        Debug.Log("next is called");
 		current_length += gradient;
 		previous += gradient;
 		//}
@@ -232,7 +233,7 @@ public class PlayTone : MonoBehaviour {
     public void ChangeUserModeDisplay(bool val)
     {
         var num_child = piano_go.transform.childCount;
-        piano_go.GetComponent<Scalling>().SetScale(true);
+        //piano_go.GetComponent<Scalling>().SetScale(true);
         //for(int i = 0;i < num_child;i++)
         //{
         //   piano_go.transform.GetChild(i).GetComponent<OnKeyPress>().DisplayUserMode(val);

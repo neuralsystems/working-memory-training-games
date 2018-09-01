@@ -180,4 +180,6 @@ public class KeySquareBehavior : MonoBehaviour
     {
         GetComponent<SpriteRenderer>().color = original_color;
     }
+
+    
 }

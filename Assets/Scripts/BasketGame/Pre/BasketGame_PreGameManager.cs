@@ -51,11 +51,15 @@ public class BasketGame_PreGameManager : MonoBehaviour {
             should_move = Movement_choice[level_number];
             movement_Speed = Speed_choices[level_number];
             var path = GetComponent<iTweenPath>().pathName;
-            baloon_go.GetComponent<Scalling>().SetScale(!should_move);
             baloon_go.GetComponent<BasketGame_DetectTouch>().SetTouch(clickable[level_number]);
             if (should_move)
             {
                 baloon_go.GetComponent<BasketGame_PreBaloonScript>().Move(movement_Speed, path, shouldStop[level_number]);
+            }
+            else
+            {
+                Debug.Log("setting to scale");
+                baloon_go.GetComponent<Scalling>().SetScale(!should_move);
             }
             int n = UnityEngine.Random.Range(0, all_baloons.Count);
             baloon_go.GetComponent<SpriteRenderer>().sprite = all_baloons[n];

@@ -18,7 +18,7 @@ public class Scalling : MonoBehaviour {
 		//transform.localScale = new Vector3 (1, 1, 1) * maxSize;
 //		minSize = .5f * maxSize;
 //		growFactor = .5f * (maxSize - minSize);
-		if (shouldScale) {
+		if (shouldScale && scaling == null) {
 			scaling = StartCoroutine (Scale ());
 		}
         Debug.Log("Should Scale = " + shouldScale);
@@ -114,12 +114,15 @@ public class Scalling : MonoBehaviour {
 //		StopCoroutine(Scale());
 
 		shouldScale = value;
-		if (shouldScale) {
-            //StartCoroutine(Scale());
+		if (shouldScale && scaling == null) {
+            original_scale = transform.localScale;
+             scaling = StartCoroutine(Scale());
         } else if(scaling != null && (!shouldScale)){
 			Debug.Log ("Stopping to scale");
-			StopCoroutine (scaling);
-		}
+            StopCoroutine (scaling);
+            scaling = null;
+            transform.localScale = original_scale;
+        }
 //		transform.localScale = new Vector3(1,1,1) * maxSize;
 	}
 
@@ -131,6 +134,7 @@ public class Scalling : MonoBehaviour {
             scaling = StartCoroutine(Scale(maxSize, minSize));
         } else if (scaling != null && (!shouldScale))
         {
+            
             StopCoroutine(scaling);
         }
     }

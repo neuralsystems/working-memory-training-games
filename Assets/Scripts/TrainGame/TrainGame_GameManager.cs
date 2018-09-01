@@ -85,10 +85,11 @@ public class TrainGame_GameManager : MonoBehaviour {
         var y_offset = track_2.transform.position.y + track_2.GetComponent<SpriteRenderer>().bounds.size.y * 0.2f;
 		GameObject.FindGameObjectWithTag(TrainGame_SceneVariables.ENGINE_TAG).GetComponent<TrainGame_Engine_Behavior> ().RandomizeBogies (!Should_Block, y_offset);
 		yield return new WaitForSeconds (numofBogies * 2f);
-		if(Should_Block)  //condition if true show the block train
+        var all_bogies = GameObject.FindGameObjectsWithTag(TrainGame_SceneVariables.BOGIE_TAG);
+        if (Should_Block)  //condition if true show the block train
 		{
 //			yield return StartCoroutine (BLOCK_TRAIN.GetComponent<TrainGame_BlockTrainBehavior> ().BlockView ());
-			var all_bogies = GameObject.FindGameObjectsWithTag(TrainGame_SceneVariables.BOGIE_TAG);
+			
 			foreach (var bogie in all_bogies) {
 				var spawn_pos = Shared_ScriptForGeneralFunctions.GetPointOnScreen (0f, -.1f);
 				spawn_pos.x = bogie.transform.position.x;
@@ -96,8 +97,9 @@ public class TrainGame_GameManager : MonoBehaviour {
 				StartCoroutine(block_go.GetComponent<TrainGame_BogieCoverScript> ().BlockTarget (bogie));
 			}
 
+        }
+       
 
-		}
 
 	}
 

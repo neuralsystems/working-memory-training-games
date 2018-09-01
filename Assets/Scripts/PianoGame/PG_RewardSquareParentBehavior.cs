@@ -8,6 +8,8 @@ public class PG_RewardSquareParentBehavior : MonoBehaviour {
 	private Vector3 velocity = Vector3.zero;
 	Vector3 original_position, camera_position;
 	Coroutine scroll_movement;
+    public Transform content_panel;
+    public GameObject RewardSquareUIPoolObject;
 	// Use this for initialization
 	void Start () {
 		camera_position = Camera.main.transform.position;
@@ -64,4 +66,38 @@ public class PG_RewardSquareParentBehavior : MonoBehaviour {
 //		Camera.main.transform.position = camera_position;
 		StartCoroutine (MoveToTarget (new_position));
 	}
+
+    public void ReflectOnScrollList()
+    {
+        //transform.parent = contentPanel;
+        int num_own_child = transform.childCount;
+        int num_content_child = content_panel.transform.childCount;
+        Debug.Log("num own count and num content count = " + num_own_child+ " "+ num_content_child  );
+        for(int i =0; i < num_own_child; i++)
+        {
+            if (i >= num_content_child)
+            {
+                AddChildToContent();
+            }
+            transform.GetChild(i).GetComponent<SpriteRenderer>().enabled = false;
+        }
+        for(int i = num_own_child; i < num_content_child; i++)
+        {
+            DeleteLastChildFromContent();
+        }
+
+    }
+    
+    void AddChildToContent()
+    {
+        var UI_object = RewardSquareUIPoolObject.GetComponent<SimpleObjectPool>().GetObject();
+        UI_object.transform.parent = content_panel;
+    }
+
+    void DeleteLastChildFromContent()
+    {
+        var _last_index = content_panel.transform.childCount - 1;
+        RewardSquareUIPoolObject.GetComponent<SimpleObjectPool>().ReturnObject(content_panel.transform.GetChild(_last_index).gameObject);
+    }
 }
+

@@ -69,6 +69,7 @@ public class TrainGame_BogieBehavior : MonoBehaviour {
 
 	public IEnumerator SetTouch(bool value){
 		GetComponent<TrainGame_DetectTouch> ().SetTouch (value);
+        
 		yield return null;
 	}
 
@@ -77,8 +78,9 @@ public class TrainGame_BogieBehavior : MonoBehaviour {
 		foreach (var bogie in unattached_bogies) {
 			//				if (bogie.tag == TrainGame_SceneVariables.BOGIE_TAG) {
 			StartCoroutine (bogie.GetComponent<TrainGame_BogieBehavior> ().SetTouch (false));
-			//				}
-		}
+            bogie.GetComponent<Scalling>().SetScale(false);
+            //				}
+        }
 		var _random_position = transform.position;
 		foreach (Transform bogie in transform.parent) {
 			if (bogie.tag == TrainGame_SceneVariables.BOGIE_TAG) {
@@ -106,7 +108,8 @@ public class TrainGame_BogieBehavior : MonoBehaviour {
 			var shaketime = .1f;
 			iTween.ShakePosition (this.gameObject, iTween.Hash("x", 1f,"islocal", false, "time",shaketime ));
 			yield return new WaitForSeconds(shaketime);
-			yield return new WaitForSeconds(2.0f * Sound_go.GetComponent<SoundManager_Script>().PlaySadSound());
+			yield return new WaitForSeconds(Sound_go.GetComponent<SoundManager_Script>().PlaySadSound());
+            //yield return new 
 			yield return StartCoroutine(MoveToTargetAndSet(_random_position, true, TrainGame_SceneVariables.BOGIE_TAG));
 		} else{
 			// code if it is a correct match
@@ -129,22 +132,26 @@ public class TrainGame_BogieBehavior : MonoBehaviour {
 			foreach (var bogie in unattached_bogies) {
 				//				if (bogie.tag == TrainGame_SceneVariables.BOGIE_TAG) {
 				StartCoroutine (bogie.GetComponent<TrainGame_BogieBehavior> ().SetTouch (true));
-				//				}
-			}
+                bogie.GetComponent<Scalling>().SetScale(true);
+                //				}
+            }
 		}
 	}
 	public IEnumerator MoveToTargetAndSet(Vector3 target, bool TouchValue, string tag_value){
 		transform.position = new Vector3(transform.position.x, target.y, transform.position.z);
 		tag = tag_value;
 		yield return StartCoroutine(MoveToTarget (target));
-		yield return new WaitForSeconds (2f);
-		StartCoroutine(SetTouch (TouchValue));
-		foreach (Transform child in transform) {
+		yield return new WaitForSeconds (.5f);
+        GetComponent<Scalling>().SetScale(TouchValue);
+        StartCoroutine(SetTouch (TouchValue));
+        
+        foreach (Transform child in transform) {
 			if (child.tag == TrainGame_SceneVariables.BOGIE_BLOCK_TAG) {
 				child.GetComponent<SpriteRenderer> ().enabled = true;
 			}
 		}
-	}
+        
+    }
 
 	public bool OnOriginalPosition(){
 		return transform.position == original_position;

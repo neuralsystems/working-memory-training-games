@@ -236,8 +236,8 @@ MonoBehaviour:
   sourceCamera: {fileID: 501489964}
   outlineCamera: {fileID: 505286684}
   outlineShaderMaterial: {fileID: 0}
-  renderTexture: {fileID: 1895835332}
-  extraRenderTexture: {fileID: 1659835944}
+  renderTexture: {fileID: 2070272628}
+  extraRenderTexture: {fileID: 1338617737}
 --- !u!114 &501489967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -299,7 +299,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 0
   m_RenderingPath: 1
-  m_TargetTexture: {fileID: 1895835332}
+  m_TargetTexture: {fileID: 2070272628}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
@@ -495,6 +495,14 @@ Prefab:
         type: 2}
       propertyPath: looping
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4941576332431892, guid: f475aee8064ff9344bd127058f3b5829, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4941576332431892, guid: f475aee8064ff9344bd127058f3b5829, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f475aee8064ff9344bd127058f3b5829, type: 2}
@@ -798,7 +806,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!84 &1659835944
+--- !u!84 &1338617737
 RenderTexture:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -875,7 +883,7 @@ Prefab:
     - target: {fileID: 114216645728990776, guid: 25cfb8c5948da3149907890b21a4cb08,
         type: 2}
       propertyPath: growFactor
-      value: 2
+      value: 0.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25cfb8c5948da3149907890b21a4cb08, type: 2}
@@ -931,7 +939,7 @@ Prefab:
     - target: {fileID: 114216645728990776, guid: 25cfb8c5948da3149907890b21a4cb08,
         type: 2}
       propertyPath: growFactor
-      value: 2
+      value: 0.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25cfb8c5948da3149907890b21a4cb08, type: 2}
@@ -978,12 +986,12 @@ Prefab:
     - target: {fileID: 114216645728990776, guid: 25cfb8c5948da3149907890b21a4cb08,
         type: 2}
       propertyPath: growFactor
-      value: 2
+      value: 0.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 25cfb8c5948da3149907890b21a4cb08, type: 2}
   m_IsPrefabAsset: 0
---- !u!84 &1895835332
+--- !u!84 &2070272628
 RenderTexture:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

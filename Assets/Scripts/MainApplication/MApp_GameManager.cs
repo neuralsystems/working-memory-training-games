@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class MApp_GameManager : MonoBehaviour {
 
     public string HomeScreen;
-    public GameObject MasterGo;
+    GameObject MasterGo;
     public const string masterGO = "MasterGameObject";
     // Use this for initialization
     void Start () {
@@ -20,6 +20,7 @@ public class MApp_GameManager : MonoBehaviour {
     public void SetUser(User user_obj)
     {
         //Debug.Log("value passed: " + user_obj.Username);
+        MasterGo = GameObject.Find(masterGO);
         MApp_DataServices _ds = new MApp_DataServices(MApp_UserInforFormScript.database_Name);
         var _users = _ds.GetUser(user_obj.Username);
         foreach(var _user in _users)

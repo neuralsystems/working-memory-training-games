@@ -71,8 +71,7 @@ public class LevelManager : MonoBehaviour
             error_text.text = e.ToString();
         }
 		unlocked = GameObject.Find("Level " + Convert.ToString(highestLevel));
-        
-		float delY = 0.25f * Convert.ToInt16(unlocked.transform.parent.name);
+        float delY = 0.25f * Convert.ToInt16(unlocked.transform.parent.name);
 		FindObjectOfType<Scrollbar>().value = 1f - delY;
         
 		foreach (var lev in sortedPortalList)

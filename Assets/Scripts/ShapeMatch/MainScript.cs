@@ -242,7 +242,7 @@ public class MainScript : MonoBehaviour
     {
         foreach (var level_obj in Level_info)
         {
-            hide = level_obj.GetIsMove();
+            hide = level_obj.GetIsHide();
         }
         return hide;
     }

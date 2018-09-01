@@ -61,6 +61,7 @@ public class SceneVariables : MonoBehaviour {
 	public string USER_INPUT_SQUARE_PARENT = "UserInputSquareParent";
 	public Vector3 target, targetRewardSquare, targetUserSquare ;
 	public Transform rewardSquare;
+    public Transform reward_content_panel;
 
 
 	// animation related variables 
@@ -187,8 +188,9 @@ public class SceneVariables : MonoBehaviour {
 			if (i == (last)) {
 				shouldCall = true;
 			}
-			StartCoroutine(userSquares[i].GetComponent<KeySquareBehavior>().MoveToReward(reward_square_parent_object.transform.GetChild(x).gameObject, shouldCall));
-			x++;
+            StartCoroutine(userSquares[i].GetComponent<KeySquareBehavior>().MoveToReward(reward_square_parent_object.transform.GetChild(x).gameObject, shouldCall));
+            //StartCoroutine(userSquares[i].GetComponent<KeySquareBehavior>().MoveToReward(reward_content_panel.GetChild(x).gameObject, shouldCall));
+            x++;
 		}
 		REWARD_INDEX = x - overlap;
 		GameObject.Find (USER_INPUT_SQUARE_PARENT).GetComponent<PianoGame_UserInputSquareParentBehavior> ().ResetPosition ();
@@ -206,6 +208,7 @@ public class SceneVariables : MonoBehaviour {
 		IS_USER_MODE = false;	
 		IS_READY = true;
         error_count = 0;
+        OnKeyPress.numOfKeysPressed = 0;
 		GameObject.Find (REWARD_SQUARE_PARENT).transform.position = GetPointOnScreen (widthPercentageForRewardSquare, heightPercentageForRewardSquare);
 	}
 

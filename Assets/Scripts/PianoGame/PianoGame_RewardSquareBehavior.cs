@@ -36,14 +36,15 @@ public class PianoGame_RewardSquareBehavior : MonoBehaviour {
             if (show_play_button)
             {
                 GameObject.Find(Camera.main.GetComponent<SceneVariables>().playSound).GetComponent<HomeScreenButtons>().SetHaloToggle(true);
+                //transform.parent.GetComponent<PG_RewardSquareParentBehavior>().ReflectOnScrollList();
             }
             //transform.parent = Camera.main.GetComponent<SceneVariables>().contentPanel;
-			//} else {
-				//Debug.Log ("Length !0");
-			//}
-		}
-//		Debug.Log (smoothTime);
-		if (GetComponent<Animator> ()) {
+            //} else {
+            //Debug.Log ("Length !0");
+            //}
+        }
+        //		Debug.Log (smoothTime);
+        if (GetComponent<Animator> ()) {
 			Stand ();
 		}
 	}
@@ -56,4 +57,5 @@ public class PianoGame_RewardSquareBehavior : MonoBehaviour {
 	public void Stand(){
 		GetComponent<Animator> ().SetInteger ("WalkorStand", 1);
 	}
+
 }

@@ -48,7 +48,8 @@ public class TrainGame_Engine_Behavior : MonoBehaviour {
 //			x-=1;
 			Debug.Log ("move_back_to " + move_back_to);
 			Debug.Log("to this point1");
-			yield return StartCoroutine(bogie_object.GetComponent<TrainGame_BogieBehavior> ().MoveToTargetAndSet (move_back_to, false, TrainGame_SceneVariables.BOGIE_TAG));
+            bogie_object.GetComponent<AudioSource>().Play();
+            yield return StartCoroutine(bogie_object.GetComponent<TrainGame_BogieBehavior> ().MoveToTargetAndSet (move_back_to, false, TrainGame_SceneVariables.BOGIE_TAG));
 //			yield return new WaitForSeconds (1f);
 		}
 		StartCoroutine(Camera.main.GetComponent<TrainGame_GameManager> ().BlockAndRandomize ());
@@ -88,8 +89,8 @@ public class TrainGame_Engine_Behavior : MonoBehaviour {
 
 	public IEnumerator MoveToTarget ( Vector3 target)
 	{
-
-		while (Vector3.Distance (transform.position, target) > Mathf.Min(minDistance,0.0001f)) {
+        GetComponentInChildren<ParticleSystem>().Play();
+        while (Vector3.Distance (transform.position, target) > Mathf.Min(minDistance,0.0001f)) {
 			transform.position = Vector3.SmoothDamp (transform.position, target, ref velocity, smoothTime);
 			yield return null;
 		} 
@@ -98,7 +99,9 @@ public class TrainGame_Engine_Behavior : MonoBehaviour {
 
 	public IEnumerator FinalAnimation(){
 		var target = Shared_ScriptForGeneralFunctions.GetPointOnScreen (-1.1f, TrainGame_SceneVariables.height_percentage);
-		yield return StartCoroutine(MoveToTarget( target));
+        GetComponent<AudioSource>().Play();
+        yield return StartCoroutine(MoveToTarget( target));
+        GetComponentInChildren<ParticleSystem>().Stop();
         //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Camera.main.GetComponent<TrainGame_GameManager>().LoadNextLevel();
         Destroy(gameObject);
