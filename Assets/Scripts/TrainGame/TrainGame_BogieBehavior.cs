@@ -119,7 +119,7 @@ public class TrainGame_BogieBehavior : MonoBehaviour {
 			GetComponentInChildren<ParticleSystem> ().Emit (500);
 			GetComponentInParent<TrainGame_Engine_Behavior> ().RemoveFromTop ();
 //			GetComponentInChildren<ParticleSystem> ().main.duration;
-			yield return new WaitForSeconds(2.0f * Sound_go.GetComponent<SoundManager_Script>().PlayHappySound());
+			yield return new WaitForSeconds(Sound_go.GetComponent<SoundManager_Script>().PlayHappySound());
 		}
 		Next ();
 	}

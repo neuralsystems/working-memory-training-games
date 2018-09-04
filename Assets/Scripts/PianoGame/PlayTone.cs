@@ -8,7 +8,8 @@ using Random = UnityEngine.Random;
 public class PlayTone : MonoBehaviour {
 
 
-	public static string sample,original_tone;
+    public static string sample;
+    string original_tone;
 	Tones tones;
 	public int initial_length, gradient, consequtive_correct = 0;
 	public int current_length;
@@ -47,7 +48,6 @@ public class PlayTone : MonoBehaviour {
         consequtive_correct = 0;
         sample = "";
         previous = 0;
-        original_tone = tones.GetToneAtRandom();
         GetNotes(original_tone, tones.GetDelimeter());
         Camera.main.GetComponent<SceneVariables>().Reset();
         var numOfEmptyRewardSquare = initial_length + (gradient * (CONSECUTIVE_CORRECT_THRESHOLD - 1));
@@ -57,8 +57,12 @@ public class PlayTone : MonoBehaviour {
 
     void GetLevelDetails()
     {
+
+        Debug.Log("getting levels details");
         var persistan_go = GameObject.Find(Shared_Scenevariables.masterGO);
         var level_obj = persistan_go.GetComponent<Shared_PersistentScript>().GetNewPianoGameLevelDetails();
+        tones = Camera.main.GetComponent<Tones>();
+        original_tone = tones.GetToneAtRandomForLevel(level_obj.LevelNumber);
         initial_length = level_obj.InitialLength;
         gradient = level_obj.Gradient;
         WAIT_TIME = level_obj.WaitTime;
@@ -247,7 +251,7 @@ public class PlayTone : MonoBehaviour {
         if (isLastRepeat)
         {
             WAIT_TIME = 0.7f;PLAY_TIME = 0.5f;
-            til = Mathf.Min((current_length - gradient) * 3, toneTOBePlayed.Count);
+            til = toneTOBePlayed.Count;
          }
         Debug.Log("til = " + til);
 		yield return StartCoroutine(PlaySomeTone (sample,tones.GetDelimeter(), 0, til ,true, isLastRepeat));
@@ -289,6 +293,7 @@ public class PlayTone : MonoBehaviour {
 
 	void GetNotes(string tone,string delimeter){
 		string[] tokens = TailorTone(tone).Split(new[] { delimeter }, StringSplitOptions.None);
+        toneTOBePlayed.Clear();
 		foreach (string token in tokens) {
 			toneTOBePlayed.Add (token);
 		}

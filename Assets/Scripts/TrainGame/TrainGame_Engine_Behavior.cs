@@ -89,7 +89,10 @@ public class TrainGame_Engine_Behavior : MonoBehaviour {
 
 	public IEnumerator MoveToTarget ( Vector3 target)
 	{
-        GetComponentInChildren<ParticleSystem>().Play();
+        if (!GetComponentInChildren<ParticleSystem>().isPlaying)
+        {
+            GetComponentInChildren<ParticleSystem>().Play();
+        }
         while (Vector3.Distance (transform.position, target) > Mathf.Min(minDistance,0.0001f)) {
 			transform.position = Vector3.SmoothDamp (transform.position, target, ref velocity, smoothTime);
 			yield return null;
@@ -99,7 +102,11 @@ public class TrainGame_Engine_Behavior : MonoBehaviour {
 
 	public IEnumerator FinalAnimation(){
 		var target = Shared_ScriptForGeneralFunctions.GetPointOnScreen (-1.1f, TrainGame_SceneVariables.height_percentage);
+        var Sound_go = GameObject.Find("SoundManager");
+        yield return new WaitForSeconds(Sound_go.GetComponent<SoundManager_Script>().PlayHappySound());
         GetComponent<AudioSource>().Play();
+        GetComponentInChildren<ParticleSystem>().Play();
+        yield return new WaitForSeconds(1f);
         yield return StartCoroutine(MoveToTarget( target));
         GetComponentInChildren<ParticleSystem>().Stop();
         //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
