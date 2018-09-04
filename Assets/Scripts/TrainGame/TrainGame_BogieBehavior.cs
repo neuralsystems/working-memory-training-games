@@ -110,7 +110,8 @@ public class TrainGame_BogieBehavior : MonoBehaviour {
 			yield return new WaitForSeconds(shaketime);
 			yield return new WaitForSeconds(Sound_go.GetComponent<SoundManager_Script>().PlaySadSound());
             //yield return new 
-			yield return StartCoroutine(MoveToTargetAndSet(_random_position, true, TrainGame_SceneVariables.BOGIE_TAG));
+            //yield return StartCoroutine(MoveToTargetAndSet(_random_position, true, TrainGame_SceneVariables.BOGIE_TAG));
+            yield return StartCoroutine(MoveBack(_random_position));
 		} else{
 			// code if it is a correct match
 			tag = original_tag;
@@ -156,4 +157,14 @@ public class TrainGame_BogieBehavior : MonoBehaviour {
 	public bool OnOriginalPosition(){
 		return transform.position == original_position;
 	}
+
+    IEnumerator MoveBack(Vector3 target)
+    {
+        yield return null;
+        var move_back_to = Shared_ScriptForGeneralFunctions.GetPointOnScreen(1.2f, 0.1f);
+        move_back_to.y = transform.position.y;
+        move_back_to.z = transform.position.z;
+        yield return StartCoroutine(MoveToTarget(move_back_to));
+        yield return StartCoroutine(MoveToTargetAndSet(target, true, TrainGame_SceneVariables.BOGIE_TAG));
+    }
 }

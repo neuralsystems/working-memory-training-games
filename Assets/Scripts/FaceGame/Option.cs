@@ -15,6 +15,8 @@ public class Option : MonoBehaviour
     void Start()
     {
 		database = FindObjectOfType<Database>();
+        GetComponent<CircleCollider2D>().radius = transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().bounds.size.x / 1.70f;
+        GetComponent<CircleCollider2D>().offset = new Vector2 (transform.GetChild(0).localPosition.x, transform.GetChild(0).localPosition.y);
     }
 
     void OnMouseDown()
