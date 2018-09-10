@@ -11,9 +11,12 @@ public class BasketGame_GameManager : MonoBehaviour {
 	Vector3 positionForNewBasket;
 	public ParticleSystem rain_particlesystem_object;
 	public GameObject Girl, persistent_go;
-	int Error_Count = 0, num_of_fruits;
+    public int Error_Count = 0;
+    int  num_of_fruits;
     public Canvas level_canvas;
     public Transform level_content;
+    int num_of_presentations = 0;
+    public GameObject sound_manager;
 	// Use this for initialization
 	void Start () {
 		
@@ -59,6 +62,17 @@ public class BasketGame_GameManager : MonoBehaviour {
  //       return 0;
 	//}
 
+    public void MaxChanceExceed()
+    {
+        //if (num_of_presentations > 1.5 * num_of_fruits)
+        //{
+        //    ChangeLevel();
+        //}
+        //else
+        //{
+            StartCoroutine(MakeFruit());
+        //}
+    }
 	public IEnumerator MakeFruit(){
 //		yield return new WaitForSeconds (2f);
 //		Debug.Log("called me?");
@@ -66,15 +80,17 @@ public class BasketGame_GameManager : MonoBehaviour {
 //		var fallingfruits = GameObject.FindGameObjectsWithTag (BasketGame_SceneVariables);
 //		var offset = 1f;
 		if (fruits.Length < 1 ) {
-//			var spawn_position = Shared_ScriptForGeneralFunctions.GetPointOnScreen (.2f, 0f);
-//			var basket_gameobject = GameObject.FindGameObjectsWithTag (BasketGame_SceneVariables.basketTag) [0];
-//			spawn_position.y = basket_gameobject.transform.position.y+ basket_gameobject.GetComponent<SpriteRenderer>().bounds.size.y + offset;
-//			Instantiate (fruit,spawn_position , Quaternion.identity);
-//		}
-//			Debug.Log("called me to fall ");
-			var random_fruit_array = GameObject.FindGameObjectsWithTag (BasketGame_SceneVariables.hangingFruitTag);
+            
+            //			var spawn_position = Shared_ScriptForGeneralFunctions.GetPointOnScreen (.2f, 0f);
+            //			var basket_gameobject = GameObject.FindGameObjectsWithTag (BasketGame_SceneVariables.basketTag) [0];
+            //			spawn_position.y = basket_gameobject.transform.position.y+ basket_gameobject.GetComponent<SpriteRenderer>().bounds.size.y + offset;
+            //			Instantiate (fruit,spawn_position , Quaternion.identity);
+            //		}
+            //			Debug.Log("called me to fall ");
+            var random_fruit_array = GameObject.FindGameObjectsWithTag (BasketGame_SceneVariables.hangingFruitTag);
 			if (random_fruit_array.Length > 0) {
-				int x = Random.Range (0, random_fruit_array.Length);
+                num_of_presentations++;
+                int x = Random.Range (0, random_fruit_array.Length);
 				var random_fruit = random_fruit_array [x];
 				random_fruit.tag = BasketGame_SceneVariables.fruitTag;
 				random_fruit.GetComponent<FruitBehavior> ().SetUp();
@@ -86,8 +102,6 @@ public class BasketGame_GameManager : MonoBehaviour {
 			} else {
 				rain_particlesystem_object.Play ();
 				yield return new WaitForSeconds(rain_particlesystem_object.main.duration);
-				persistent_go = GameObject.Find (Shared_Scenevariables.masterGO);
-				persistent_go.GetComponent<Shared_PersistentScript>().IncreaseLevelBasketGame(Error_Count* 1.0f, num_of_fruits* 1.0f);
                 //SceneManager.LoadScene (SceneManager.GetActiveScene().name);
                 ChangeLevel();
 
@@ -100,8 +114,16 @@ public class BasketGame_GameManager : MonoBehaviour {
 
     void ChangeLevel()
     {
+        persistent_go = GameObject.Find(Shared_Scenevariables.masterGO);
+        persistent_go.GetComponent<Shared_PersistentScript>().IncreaseLevelBasketGame(Error_Count * 1.0f, num_of_fruits * 1.0f);
+        Error_Count = 0;
         var all_baskets = GameObject.FindGameObjectsWithTag(BasketGame_SceneVariables.fullBasket);
         foreach(var b in all_baskets)
+        {
+            Destroy(b);
+        }
+        all_baskets = GameObject.FindGameObjectsWithTag(BasketGame_SceneVariables.basketTag);
+        foreach (var b in all_baskets)
         {
             Destroy(b);
         }
@@ -179,7 +201,7 @@ public class BasketGame_GameManager : MonoBehaviour {
 		var value_for_play = 1; 
 		var value_for_pause = 2;
 		Girl.GetComponent<Animator>().SetInteger("StateValue", value_for_play);
-		yield return StartCoroutine(Camera.main.GetComponent<Shared_ScriptForGeneralFunctions>().GetRandomClapping());
+		yield return new WaitForSeconds(sound_manager.GetComponent<SoundManager_Script>().PlayHappySound());
 		Girl.GetComponent<Animator>().SetInteger("StateValue", value_for_pause);
 		yield return new WaitForSeconds (.5f);
 		StartCoroutine (MakeFruit ());

@@ -50,6 +50,7 @@ public class SceneVariables : MonoBehaviour {
 	public float width;
 	public float SCREEN_WIDTH ;
 	public float SCREEN_HEIGHT ;
+    public GameObject sound_manager;
 //	static string smileName ="Smile", sadName ="Sad", neutralName = "Neutral";
 
 
@@ -180,7 +181,7 @@ public class SceneVariables : MonoBehaviour {
 		int last = userSquares.Length - 1;
         var user_square_parent_go = GameObject.Find(USER_INPUT_SQUARE_PARENT).gameObject;
         user_square_parent_go.GetComponent<ParticleSystem>().Play();
-        yield return GetRandomClapping();
+        yield return new WaitForSeconds(sound_manager.GetComponent<SoundManager_Script>().PlayHappySound());
 		for(int i=0;i<=last;i++){
 //		foreach (var userSquare in userSquares) {
 			userSquares[i].transform.parent = null;

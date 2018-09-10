@@ -58,9 +58,16 @@ public class FruitBehavior : MonoBehaviour {
 	}
 
 	public void OnComplete(){
-		
 
-		StartCoroutine(Camera.main.GetComponent<BasketGame_GameManager> ().MakeFruit ());
+        Camera.main.GetComponent<BasketGame_GameManager>().MaxChanceExceed();
+        //if (!Camera.main.GetComponent<BasketGame_GameManager>().MaxChanceExceed())
+        //{
+        //    StartCoroutine(Camera.main.GetComponent<BasketGame_GameManager>().MakeFruit());
+        //}
+        //else
+        //{
+
+        //}
 //		GetComponent<FruitBehavior> ().enabled = false;
 //		Destroy (gameObject);
 	}
@@ -148,6 +155,7 @@ public class FruitBehavior : MonoBehaviour {
 		StartCoroutine(MoveToTarget (original_position));
 		yield return StartCoroutine(Shared_ScriptForGeneralFunctions.ScaleDown (this.gameObject, original_size.x, 0.3f));
 		GetComponent<SpriteRenderer> ().enabled = false;
+        
 
 	}
 

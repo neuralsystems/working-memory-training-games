@@ -8,15 +8,15 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications: []
     m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 0}
+  m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1277680148830932}
-  m_IsPrefabParent: 1
+  m_IsPrefabAsset: 1
 --- !u!1 &1277680148830932
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4558324158234590}
   - component: {fileID: 82758131534463624}
@@ -31,7 +31,7 @@ GameObject:
 --- !u!4 &4558324158234590
 Transform:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1277680148830932}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -44,7 +44,7 @@ Transform:
 --- !u!82 &82758131534463624
 AudioSource:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1277680148830932}
   m_Enabled: 1
@@ -139,7 +139,7 @@ AudioSource:
 --- !u!114 &114356899465687830
 MonoBehaviour:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1277680148830932}
   m_Enabled: 1
@@ -152,14 +152,14 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c3111b9487b068d44bf93bbe840d4d8b, type: 3}
   - {fileID: 8300000, guid: bc5debedd72d47d4a8fb1f8f48c44969, type: 3}
   - {fileID: 8300000, guid: 9e64dd821c917be49baccd7927fd6099, type: 3}
-  - {fileID: 8300000, guid: 79476aead48503f449f88c233102253d, type: 3}
-  - {fileID: 8300000, guid: 45ae5141cf4cf6341ad052e4f9da7aa6, type: 3}
-  - {fileID: 8300000, guid: 40d40dc1376552a469c0f0b101c15a9a, type: 3}
-  - {fileID: 8300000, guid: 57f13f2333761c048baef51d60c63028, type: 3}
-  - {fileID: 8300000, guid: 8c5cd9c8eaf5a7c438227c41f7acacb8, type: 3}
-  - {fileID: 8300000, guid: da6b943b53bf39f41ad41c42b2c14d57, type: 3}
-  - {fileID: 8300000, guid: e989b440a916c324295ab033b650608d, type: 3}
-  - {fileID: 8300000, guid: b6e9c3b30e6ceb64da2458d742fd9e2d, type: 3}
+  - {fileID: 8300000, guid: 60f9129f05c88624c939b44acb455b5b, type: 3}
+  - {fileID: 8300000, guid: ed2372cb5070c1c42a95a59036e398c1, type: 3}
+  - {fileID: 8300000, guid: 0752c3f4c4086fd43a0c542e649f7fb6, type: 3}
+  - {fileID: 8300000, guid: 129d0441fc609e0498721c654daaffff, type: 3}
+  - {fileID: 8300000, guid: 2f8d11c6477f0f346a68aaafd5de00e9, type: 3}
+  - {fileID: 8300000, guid: 55c3bb26e51510a4ca53ed70d438e059, type: 3}
+  - {fileID: 8300000, guid: 7ffff14ce8a0e9940b66dc019f06dd9f, type: 3}
+  - {fileID: 8300000, guid: edb343fae60f4a5408d426a15bc94b2c, type: 3}
   SAD_SOUND_VOICES:
   - {fileID: 8300000, guid: 6f6b59e209ce82f47945db7454a706ca, type: 3}
   - {fileID: 8300000, guid: 2bbe511f266fd534db1d767f6e1c4359, type: 3}

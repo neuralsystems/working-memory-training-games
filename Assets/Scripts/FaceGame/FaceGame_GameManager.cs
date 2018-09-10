@@ -40,7 +40,7 @@ public class FaceGame_GameManager : MonoBehaviour
 	public SpriteRenderer facePrefab;
 	public Option optionPrefab;
 	public AudioClip applause;
-
+    public GameObject sound_manager;
 	void Start()
 	{
 		//StartLevel();
@@ -212,13 +212,13 @@ public class FaceGame_GameManager : MonoBehaviour
 		{
 			ParticleSystem particleEffect = FindObjectOfType<ParticleSystem>();
 			particleEffect.Play();
-			FindObjectOfType<SoundManager>().PlayHappySound();
-			yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(sound_manager.GetComponent<SoundManager_Script>().PlayHappySound());
+			//yield return new WaitForSeconds(2f);
 		}
 		else
 		{
-			FindObjectOfType<SoundManager>().PlaySadSound();
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(sound_manager.GetComponent<SoundManager_Script>().PlaySadSound());
+            //yield return new WaitForSeconds(2f);
 		}
 
         //repeat level if wrongly matched
@@ -276,6 +276,7 @@ public class FaceGame_GameManager : MonoBehaviour
 			option[0].correctKey = true; //Since first option-index is assigned as the modalComponent    
 			option[0].transform.GetChild(0).position += new Vector3(0f,database.constants_optionBGShift[0]);
 			option[0].GetComponent<WobbleEffect>().StartWobble();
+            //tag = database.tagsAndNames_optionTag;
 		}
 		else
 		{
@@ -443,17 +444,17 @@ public class FaceGame_GameManager : MonoBehaviour
 
 			yield return new WaitForSeconds(2f);
 
-			FindObjectOfType<SoundManager>().PlaySadSound();
-			yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(sound_manager.GetComponent<SoundManager_Script>().PlaySadSound());
+			//yield return new WaitForSeconds(2f);
 		}
 		else
 		{
 			yield return new WaitForSeconds(1.5f);
 			ParticleSystem particleEffect = FindObjectOfType<ParticleSystem>();
 			particleEffect.Play();
-			FindObjectOfType<SoundManager>().PlayHappySound();
+            yield return new WaitForSeconds(sound_manager.GetComponent<SoundManager_Script>().PlayHappySound());
 
-			yield return new WaitForSeconds(2f);
+			//yield return new WaitForSeconds(2f);
 		}
 
         Hide(face);
@@ -513,8 +514,8 @@ public class FaceGame_GameManager : MonoBehaviour
 
     IEnumerator LevelComplete()
     {
-		FindObjectOfType<SoundManager>().PlaySound(applause);
-		      
+		GetComponent<AudioSource>().PlayOneShot(applause);
+        yield return new WaitForSeconds(applause.length);     
 		Camera.main.GetComponent<MakeItRainObjects>().enabled = true;
 		yield return new WaitForSeconds(totalWaitingTime);      
         

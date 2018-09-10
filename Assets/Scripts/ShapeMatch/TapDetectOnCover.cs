@@ -41,9 +41,9 @@ public class TapDetectOnCover : MonoBehaviour
         if (targetsprite.sprite == playersprite.sprite)                                     // comparing the sprites of both the objects
         {
             
-            Camera.main.GetComponent<Audio_effects>().PlayNeutralSound();                   // playing fitting sound
+            Camera.main.GetComponent<SoundManager_Script>().PlayNeutralSound();                   // playing fitting sound
             yield return new WaitForSeconds(0.4f);
-            Camera.main.GetComponent<Audio_effects>().PlayInstructionSound();               // playing appreciating sounds
+            Camera.main.GetComponent<SoundManager_Script>().PlayHappySound();               // playing appreciating sounds
             Debug.Log(" both objects matches");
             ParticleSystem particle=transform.parent.gameObject.GetComponent<ParticleSystem>();
             particle.Play();                                                                    // playing attached particle system
@@ -55,7 +55,7 @@ public class TapDetectOnCover : MonoBehaviour
             GO = GO - 2;
             if(GO==0)                                                                           // checking if gameobjects=0
             {
-                Camera.main.GetComponent<Audio_effects>().PlayHappySound();
+                Camera.main.GetComponent<SoundManager_Script>().PlayHappySound();
                 yield return new WaitForSeconds(1f);
                 Destroy(transform.parent.gameObject);
                 Camera.main.GetComponent<NewLevel>().New_Level();                               // calling script for starting new level
@@ -69,7 +69,7 @@ public class TapDetectOnCover : MonoBehaviour
         }
         else
         {
-            Camera.main.GetComponent<Audio_effects>().PlaySadSound();                               // when the sprites dont match
+            Camera.main.GetComponent<SoundManager_Script>().PlaySadSound();                               // when the sprites dont match
             Debug.Log(" both objects do not match");
             StartCoroutine(backAgain(playerPosition));
             ResetWhenNotMatch();                                                                    // calling reset function when not matching

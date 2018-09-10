@@ -65,9 +65,18 @@ public class Component : MonoBehaviour
         }
 
 		yield return new WaitUntil(() => database.ifOptionSelected);
-        
-		//Setting false for next iteration
-		database.ifOptionSelected = false;
+        for (int i = 0; i < count; i++)
+        {
+            component = transform.GetChild(i).gameObject;
+            //if (!(component.GetComponent<Option>().selectedKey))
+            //{
+                component.GetComponent<Option>().SetTouch(false);
+            //}
+        }
+
+        //Setting false for next iteration
+        database.ifOptionSelected = false;
+
 
         yield return new WaitForSeconds(3 * smoothTime);     //Wait for Object to reach facebase
 

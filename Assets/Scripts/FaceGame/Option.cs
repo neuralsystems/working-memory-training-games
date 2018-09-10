@@ -11,7 +11,7 @@ public class Option : MonoBehaviour
     public bool correctKey = false;
     public bool selectedKey = false;
     private Database database;
-
+    private bool shouldDetectTouch = true;
     void Start()
     {
 		database = FindObjectOfType<Database>();
@@ -67,11 +67,20 @@ public class Option : MonoBehaviour
                 Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(i).position);
                 if (Physics.Raycast(ray, out hit))
                 {
-                    hit.transform.gameObject.SendMessage("OnMouseDown");
+                    if (shouldDetectTouch)
+                    {
+                        hit.transform.gameObject.SendMessage("OnMouseDown");
+                    }
                 }
             }
         }
 
+    }
+
+    public void SetTouch(bool val)
+    {
+        shouldDetectTouch = val;
+        GetComponent<CircleCollider2D>().enabled = val;
     }
 
 }

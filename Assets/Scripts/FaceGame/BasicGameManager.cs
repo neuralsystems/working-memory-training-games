@@ -16,6 +16,7 @@ public class BasicGameManager : MonoBehaviour {
 	public Option faceComponentPrefab;
 	public Option optionsPrefab;
 	public AudioClip applause;
+    public GameObject sound_manager;
     //Start() >> BasicLevel() >> Iteration()
 
     private void Start()
@@ -100,13 +101,15 @@ public class BasicGameManager : MonoBehaviour {
 
 			//Until any option is clicked(touched)
 			yield return new WaitUntil(() => database.ifOptionSelected);
-			yield return new WaitForSeconds(1f);
-
+            ChangeTouch(false);
+            yield return new WaitForSeconds(1f);
+            
 			//if option chosen is correct
 			if (database.ifRight)
 			{
-				FindObjectOfType<SoundManager>().PlayHappySound();
-				particleEffect.Play();
+                particleEffect.Play();
+                yield return new WaitForSeconds(sound_manager.GetComponent<SoundManager_Script>().PlayHappySound());
+				
 			}
 			//if option chosen is wrong
 			else
@@ -124,8 +127,8 @@ public class BasicGameManager : MonoBehaviour {
 				obj.GetComponent<Blink>().StartBlink();
 				obj.GetComponent<WobbleEffect>().StopWobble();
 
-				FindObjectOfType<SoundManager>().PlaySadSound();
-				yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(sound_manager.GetComponent<SoundManager_Script>().PlaySadSound());
+				//yield return new WaitForSeconds(1f);
 
 				obj.GetComponent<Blink>().StopBlink();
 				obj.GetComponent<WobbleEffect>().StartWobble();
@@ -138,10 +141,11 @@ public class BasicGameManager : MonoBehaviour {
 
 				database.ifOptionSelected = false;
 				obj.selectedKey = false;
+                ChangeTouch(true);
 
-			}
+            }
 		} while (!database.ifRight);
-		yield return new WaitForSeconds(2f);
+		yield return new WaitForSeconds(.5f);
 
 		database.ifOptionSelected = false;
 
@@ -150,6 +154,24 @@ public class BasicGameManager : MonoBehaviour {
         yield return null;
     }
 
+    void ChangeTouch(bool val)
+    {
+        var all_options = GameObject.FindGameObjectsWithTag(database.tagsAndNames_optionTag);
+        foreach(var opt in all_options)
+        {
+            opt.GetComponent<Option>().SetTouch(val);
+        }
+        all_options = GameObject.FindGameObjectsWithTag(database.tagsAndNames_rightChoice);
+        foreach (var opt in all_options)
+        {
+            opt.GetComponent<Option>().SetTouch(val);
+        }
+        all_options = GameObject.FindGameObjectsWithTag(database.tagsAndNames_wrongChoice);
+        foreach (var opt in all_options)
+        {
+            opt.GetComponent<Option>().SetTouch(val);
+        }
+    }
 	void SetFaceComponentnOptions(int index, int subIndex, int noOfOptions, GameObject item, Option faceComponent,Option[] options)
     {
         //Face Component (eg. hair) to match
@@ -174,7 +196,7 @@ public class BasicGameManager : MonoBehaviour {
 			options[i].transform.position -= new Vector3(0f, database.constants_optionBGShift[index]);
 			options[i].transform.GetChild(0).transform.position += new Vector3(0f, database.constants_optionBGShift[index]);
 			options[i].optionPos = options[i].transform.position;
-
+            options[i].tag = database.tagsAndNames_optionTag;
 			options[i].GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("FaceGame/Level_1/Parts/Part_" + Convert.ToString(index + 1) + Convert.ToString(rand[i]));
 			options[i].GetComponent<SpriteRenderer>().enabled = true;
 			options[i].transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
@@ -231,8 +253,8 @@ public class BasicGameManager : MonoBehaviour {
 
 	IEnumerator BasicLevelComplete()
 	{
-		FindObjectOfType<SoundManager>().PlaySound(applause);
-
+		GetComponent<AudioSource>().PlayOneShot(applause);
+        yield return new WaitForSeconds(applause.length);
         Camera.main.GetComponent<MakeItRainObjects>().enabled = true;
         yield return new WaitForSeconds(6f);    
 

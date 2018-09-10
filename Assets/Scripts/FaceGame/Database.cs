@@ -23,6 +23,7 @@ public class Database : MonoBehaviour
     public string tagsAndNames_changeScene = "ChangeScene";
 	public string tagsAndNames_option = "Option";
 	public string tagsAndNames_cover = "Cover";
+    public string tagsAndNames_optionTag = "OptionTag";
 
     public float constants_faceShownForSeconds = 5.0f;
     public float constants_rainingTime = 5.0f;

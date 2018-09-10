@@ -12,7 +12,7 @@ public class ButtonControls : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		PauseOrExit ();
+		//PauseOrExit ();
 	}
 		
 	void PauseOrExit(){
