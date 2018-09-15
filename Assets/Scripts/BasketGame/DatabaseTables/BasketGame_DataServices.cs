@@ -74,10 +74,11 @@ public class BasketGame_DataService  {
 		return _connection.Query<BasketGame_Levels>(command);
 		}
         
-        public void UpdateUserProgress(string username, int level_number)
+        public void UpdateUserProgress(string username, int level_number, int pre_completed)
         {
             var user_level_obj = GetUserProgress(username);
             user_level_obj.Level_Obj = level_number;
+            user_level_obj.PreLevelCompleted = pre_completed;
             _connection.Update(user_level_obj);
         
         }

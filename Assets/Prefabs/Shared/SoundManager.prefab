@@ -161,13 +161,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7ffff14ce8a0e9940b66dc019f06dd9f, type: 3}
   - {fileID: 8300000, guid: edb343fae60f4a5408d426a15bc94b2c, type: 3}
   SAD_SOUND_VOICES:
-  - {fileID: 8300000, guid: 6f6b59e209ce82f47945db7454a706ca, type: 3}
-  - {fileID: 8300000, guid: 2bbe511f266fd534db1d767f6e1c4359, type: 3}
-  - {fileID: 8300000, guid: a5e0a80e09b269e44a8df5bd16a900d1, type: 3}
-  - {fileID: 8300000, guid: 16b320acf8612ee44be1074e0f675bae, type: 3}
+  - {fileID: 8300000, guid: 53a4a5711689f1b42b8a44ab29949212, type: 3}
+  - {fileID: 8300000, guid: fc36a6c09f55ce148a6c677ae6f4efef, type: 3}
+  - {fileID: 8300000, guid: d9caf30f7cc8f2242b84caede23c88d1, type: 3}
+  - {fileID: 8300000, guid: ae4c06e68e3baed49b9633fe895982d0, type: 3}
   - {fileID: 8300000, guid: 22aa0a49fe85eff4da618d3333b1e0cd, type: 3}
   - {fileID: 8300000, guid: 7f363edaa1cb5b04fb8d24475090cc5e, type: 3}
-  - {fileID: 8300000, guid: 806789368ec4c2343913f8070453d89f, type: 3}
-  - {fileID: 8300000, guid: e0c4e18e4604d2a44816885bc7573054, type: 3}
+  - {fileID: 8300000, guid: 0b03bb9f0ba30f246aa3bcfbf8c3532a, type: 3}
   NEUTRAL_SOUND_VOICES: []
   Instruction_SOUND_VOICES: []

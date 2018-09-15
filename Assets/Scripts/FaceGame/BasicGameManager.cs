@@ -127,7 +127,7 @@ public class BasicGameManager : MonoBehaviour {
 				obj.GetComponent<Blink>().StartBlink();
 				obj.GetComponent<WobbleEffect>().StopWobble();
 
-                yield return new WaitForSeconds(sound_manager.GetComponent<SoundManager_Script>().PlaySadSound());
+                //yield return new WaitForSeconds(sound_manager.GetComponent<SoundManager_Script>().PlaySadSound());
 				//yield return new WaitForSeconds(1f);
 
 				obj.GetComponent<Blink>().StopBlink();

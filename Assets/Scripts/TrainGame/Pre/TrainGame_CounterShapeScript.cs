@@ -92,7 +92,7 @@ public class TrainGame_CounterShapeScript : MonoBehaviour {
 		var sound_manager_go = GameObject.Find ("SoundManager");
 		float extra_wait	= .2f;
 		if (!is_correct) {
-			yield return new WaitForSeconds (sound_manager_go.GetComponent<SoundManager_Script> ().PlaySadSound ());
+			//yield return new WaitForSeconds (sound_manager_go.GetComponent<SoundManager_Script> ().PlaySadSound ());
 			yield return new WaitForSeconds (1f);
 			ResetPosition ();
 			Camera.main.GetComponent<TrainGame_PreGameManager> ().ResetCorrect ();

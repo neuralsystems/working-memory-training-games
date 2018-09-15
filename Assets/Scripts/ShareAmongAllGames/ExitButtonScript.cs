@@ -42,7 +42,7 @@ public class ExitButtonScript : MonoBehaviour {
     {
         Debug.Log("called exit protocol");
         pressed_for += Time.deltaTime;
-        GetComponentInChildren<Text>().text = pressed_for + "secs";
+        //GetComponentInChildren<Text>().text = pressed_for + "secs";
         if (IsPressedForLong() && other_button.GetComponent<ExitButtonScript>().IsPressedForLong())
         {
             if (!is_pre_level && !levelCanvas.gameObject.activeSelf)

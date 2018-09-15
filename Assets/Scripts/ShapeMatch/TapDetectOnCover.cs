@@ -69,7 +69,7 @@ public class TapDetectOnCover : MonoBehaviour
         }
         else
         {
-            Camera.main.GetComponent<SoundManager_Script>().PlaySadSound();                               // when the sprites dont match
+            //Camera.main.GetComponent<SoundManager_Script>().PlaySadSound();                               // when the sprites dont match
             Debug.Log(" both objects do not match");
             StartCoroutine(backAgain(playerPosition));
             ResetWhenNotMatch();                                                                    // calling reset function when not matching
@@ -101,7 +101,7 @@ public class TapDetectOnCover : MonoBehaviour
                 go.GetComponentInChildren<BoxCollider2D>().enabled = true;
             }
         }
-        else if (Camera.main.GetComponent<MainScript>().ShouldHide == 1)                            // when the value of should hide =1 i.e, when covered
+        else if (Camera.main.GetComponent<MainScript>().ShouldHide == 1 || Camera.main.GetComponent<MainScript>().ShouldHide == 2)                            // when the value of should hide =1 i.e, when covered
         {
             foreach (GameObject go in gameObjectarray)
             {

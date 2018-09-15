@@ -65,4 +65,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FaceGame/Level.unity
     guid: 9e9edb86defb74960940c63a08ad9423
+  - enabled: 1
+    path: Assets/Scenes/MainApplication/UserInformationForm.unity
+    guid: 77fc5575516e1aa4994b55612545721d
   m_configObjects: {}

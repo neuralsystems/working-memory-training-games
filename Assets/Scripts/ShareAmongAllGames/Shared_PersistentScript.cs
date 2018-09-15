@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class Shared_PersistentScript : MonoBehaviour {
 
 	public string GAME_NAME;
@@ -69,10 +69,21 @@ public class Shared_PersistentScript : MonoBehaviour {
     //used for changing levels including both increase as well as decrease
 	public void IncreaseLevelBasketGame( float error_count, float total ){
         //currentLevel += val;
+        var pre_level = "BasketGame_PreScene1";
         int val = SetLevel(error_count, total);
         var ds = new BasketGame_DataService(BasketGame_SceneVariables.DATABASE_NAME);
         var current_level = ds.GetUserProgress(GetCurrentPlayer().Username);
-        ds.UpdateUserProgress(GetCurrentPlayer().Username, Mathf.Max(current_level.Level_Obj + val, min_level_value));
+        bool load_pre_level = false;
+        if(current_level.Level_Obj + val <= 0)
+        {
+            current_level.PreLevelCompleted = 0;
+            load_pre_level = true;
+        }
+        ds.UpdateUserProgress(GetCurrentPlayer().Username, Mathf.Max(current_level.Level_Obj + val, min_level_value), current_level.PreLevelCompleted);
+        if (load_pre_level)
+        {
+            SceneManager.LoadScene(pre_level);
+        }
 
     }
 

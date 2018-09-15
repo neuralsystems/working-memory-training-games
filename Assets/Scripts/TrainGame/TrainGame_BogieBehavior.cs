@@ -108,7 +108,7 @@ public class TrainGame_BogieBehavior : MonoBehaviour {
 			var shaketime = .1f;
 			iTween.ShakePosition (this.gameObject, iTween.Hash("x", 1f,"islocal", false, "time",shaketime ));
 			yield return new WaitForSeconds(shaketime);
-			yield return new WaitForSeconds(Sound_go.GetComponent<SoundManager_Script>().PlaySadSound());
+			//yield return new WaitForSeconds(Sound_go.GetComponent<SoundManager_Script>().PlaySadSound());
             //yield return new 
             //yield return StartCoroutine(MoveToTargetAndSet(_random_position, true, TrainGame_SceneVariables.BOGIE_TAG));
             yield return StartCoroutine(MoveBack(_random_position));

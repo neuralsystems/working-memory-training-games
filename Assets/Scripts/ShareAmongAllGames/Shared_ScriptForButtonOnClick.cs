@@ -6,7 +6,7 @@ public class Shared_ScriptForButtonOnClick : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        Debug.Log("Current player is " + GameObject.Find("MasterGameObject").GetComponent<Shared_PersistentScript>().GetCurrentPlayer().Username);
+        //Debug.Log("Current player is " + GameObject.Find("MasterGameObject").GetComponent<Shared_PersistentScript>().GetCurrentPlayer().Username);
     }
 
     // Update is called once per frame

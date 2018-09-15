@@ -77,13 +77,20 @@ public class MApp_DataServices
         return _connection.Table<User>().Where(x => x.Username == username);
     }
 
-    public void CreateUser(string _username, float _age,string diagnosis, int iQ , string _first_name , string _last_name)
+    public void CreateUser(string _username, double _age,string diagnosis, int iQ , string _first_name , string _last_name)
     {
         Debug.Log( "passing values: :uname - " + _username +  " Age- "+ _age+ " diagnosis- "+ diagnosis+ " id- " + iQ+ "  first - " + _first_name+ " last- " + _last_name);
+        var max_ids = _connection.Query<User>("SELECT *, max(Id) FROM UserProgress_BasketGame LIMIT 1");
+        int id = 0;
+        foreach (var max_id in max_ids)
+        {
+            id = max_id.Id;
+        }
         //_connection.Insert(new User() { Username = _username, DoB = "2001-05-25", Age = 15, Diagnosis = "ASD", IQ = 125, First_Name = "first_name", Last_Name = "last_name" });
         try
         {
-            _connection.Insert(new User() { Username = _username, Age = _age, IQ = iQ, First_Name = _first_name, Last_Name = _last_name });
+            var User_obj = new User() { Id = id + 1,Username = _username, Age = _age, IQ = iQ, Diagnosis = diagnosis, First_Name = _first_name, Last_Name = _last_name };
+            _connection.Insert(User_obj);
 
         } catch(System.Exception e)
         {

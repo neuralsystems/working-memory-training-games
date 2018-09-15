@@ -7,7 +7,7 @@ public class User : MonoBehaviour {
     [PrimaryKey, AutoIncrement]
     public int Id { get; set; }
     public string Username { get; set; }
-    public float Age { get; set; }
+    public double Age { get; set; }
     //public string DoB { get; set; }
     public int IQ { get; set; }
     public string Diagnosis { get; set;}

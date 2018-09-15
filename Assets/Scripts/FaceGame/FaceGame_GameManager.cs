@@ -215,11 +215,11 @@ public class FaceGame_GameManager : MonoBehaviour
             yield return new WaitForSeconds(sound_manager.GetComponent<SoundManager_Script>().PlayHappySound());
 			//yield return new WaitForSeconds(2f);
 		}
-		else
-		{
-            yield return new WaitForSeconds(sound_manager.GetComponent<SoundManager_Script>().PlaySadSound());
-            //yield return new WaitForSeconds(2f);
-		}
+		//else
+		//{
+  //          //yield return new WaitForSeconds(sound_manager.GetComponent<SoundManager_Script>().PlaySadSound());
+  //          //yield return new WaitForSeconds(2f);
+		//}
 
         //repeat level if wrongly matched
 		if (!database.ifRight)
@@ -444,7 +444,7 @@ public class FaceGame_GameManager : MonoBehaviour
 
 			yield return new WaitForSeconds(2f);
 
-            yield return new WaitForSeconds(sound_manager.GetComponent<SoundManager_Script>().PlaySadSound());
+            //yield return new WaitForSeconds(sound_manager.GetComponent<SoundManager_Script>().PlaySadSound());
 			//yield return new WaitForSeconds(2f);
 		}
 		else

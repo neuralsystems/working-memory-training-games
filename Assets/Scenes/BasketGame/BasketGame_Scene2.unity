@@ -3343,7 +3343,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2146678345}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -9098,7 +9098,7 @@ Prefab:
     - target: {fileID: 224019381223741540, guid: f756bbb216c9ee447aea961063a056b2,
         type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 224019381223741540, guid: f756bbb216c9ee447aea961063a056b2,
         type: 2}
@@ -9599,7 +9599,7 @@ Prefab:
     - target: {fileID: 224014786998631450, guid: bbc8b409699385f40b0e2d3f3f1cadfe,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0.10420399
+      value: 0.7776418
       objectReference: {fileID: 0}
     - target: {fileID: 224014786998631450, guid: bbc8b409699385f40b0e2d3f3f1cadfe,
         type: 2}
@@ -9609,7 +9609,7 @@ Prefab:
     - target: {fileID: 224014786998631450, guid: bbc8b409699385f40b0e2d3f3f1cadfe,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0.3265622
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1502256269988984, guid: bbc8b409699385f40b0e2d3f3f1cadfe, type: 2}
       propertyPath: m_Name
@@ -9644,12 +9644,12 @@ Prefab:
     - target: {fileID: 224623117527926982, guid: bbc8b409699385f40b0e2d3f3f1cadfe,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 962.9487
+      value: 0.00012207031
       objectReference: {fileID: 0}
     - target: {fileID: 114549956820951128, guid: bbc8b409699385f40b0e2d3f3f1cadfe,
         type: 2}
       propertyPath: m_Size
-      value: 0.19847067
+      value: 0.22235821
       objectReference: {fileID: 0}
     - target: {fileID: 224760496445415080, guid: bbc8b409699385f40b0e2d3f3f1cadfe,
         type: 2}
@@ -10293,7 +10293,7 @@ Prefab:
     - target: {fileID: 114549956820951128, guid: bbc8b409699385f40b0e2d3f3f1cadfe,
         type: 2}
       propertyPath: m_Value
-      value: 0.13399999
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224515831708084356, guid: bbc8b409699385f40b0e2d3f3f1cadfe,
         type: 2}
@@ -10303,7 +10303,7 @@ Prefab:
     - target: {fileID: 224190639244739120, guid: bbc8b409699385f40b0e2d3f3f1cadfe,
         type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 224964918423870466, guid: bbc8b409699385f40b0e2d3f3f1cadfe,
         type: 2}
