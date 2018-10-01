@@ -15,7 +15,7 @@ public class TrainGame_Levels
 	}
 
 	public override string ToString (){
-		return String.Format("Level:=  {0}, numbaskets:= {1}, Capacity:= {2}", LevelNumber, NumOfBogie, ShouldBlock);
+		return String.Format("Id:= {4} Level:=  {0}, num of bogies:= {1}, Should Block:= {2}, wait time:= {3}", LevelNumber, NumOfBogie, ShouldBlock, WaitTime, Id);
 	}
 
 	public int GetLevel(){

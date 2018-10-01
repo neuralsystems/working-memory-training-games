@@ -68,4 +68,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainApplication/UserInformationForm.unity
     guid: 77fc5575516e1aa4994b55612545721d
+  - enabled: 1
+    path: Assets/Scenes/MainApplication/ListTableEntries.unity
+    guid: 3c04b71441b56ca41a343a15a90a6d49
   m_configObjects: {}

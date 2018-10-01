@@ -12,6 +12,7 @@ public class TrainGame_GameManager : MonoBehaviour {
     public Canvas level_canvas;
     public Transform level_content;
     public Transform track_1, track_2;
+    float wait_before_block;
 	// Use this for initialization
 	void Start () {
         //level_canvas.gameObject.SetActive(true);
@@ -25,6 +26,7 @@ public class TrainGame_GameManager : MonoBehaviour {
         var level_details = static_game_object.GetComponent<Shared_PersistentScript>().GetNewTrainGameLevelDetails();
         numofBogies = level_details.GetNumofBogie();
         Should_Block = level_details.ShouldBlockTrain();
+        wait_before_block = level_details.WaitTime;
         CreateTrain(true, numofBogies);
     }
 	// Update is called once per frame
@@ -84,7 +86,7 @@ public class TrainGame_GameManager : MonoBehaviour {
 	public IEnumerator BlockAndRandomize(){
         var y_offset = track_2.transform.position.y + track_2.GetComponent<SpriteRenderer>().bounds.size.y * 0.2f;
 		GameObject.FindGameObjectWithTag(TrainGame_SceneVariables.ENGINE_TAG).GetComponent<TrainGame_Engine_Behavior> ().RandomizeBogies (!Should_Block, y_offset);
-		yield return new WaitForSeconds (numofBogies * 2f);
+		yield return new WaitForSeconds (1.5f * numofBogies * wait_before_block);
         var all_bogies = GameObject.FindGameObjectsWithTag(TrainGame_SceneVariables.BOGIE_TAG);
         if (Should_Block)  //condition if true show the block train
 		{

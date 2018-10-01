@@ -137,4 +137,30 @@ public class ShapeMatch_DataService
         _connection.Insert(new UserProgress_ShapeMatch() { Username = username, LevelCompleted = default_level, LastModified = DateTime.Now, DateCreated = DateTime.Now });
         return GetCompletedLevel(username);
     }
+    public void AddLevels(List<ShapeMatch_levels> levels_list)
+    {
+        _connection.InsertAll(levels_list);
+    }
+
+    public void AddLevel(ShapeMatch_levels level_obj)
+    {
+        _connection.Insert(level_obj);
+    }
+
+    public void DeleteLevel(ShapeMatch_levels level_obj)
+    {
+        _connection.Delete(level_obj);
+
+    }
+    public List<string> ListAllLevels()
+    {
+
+        var result = _connection.Table<ShapeMatch_levels>();
+        List<string> result_string = new List<string>();
+        foreach (var r in result)
+        {
+            result_string.Add(r.ToString());
+        }
+        return result_string;
+    }
 }

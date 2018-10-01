@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using SQLite4Unity3d;
-public class User : MonoBehaviour {
+public class User  {
 
     [PrimaryKey, AutoIncrement]
     public int Id { get; set; }

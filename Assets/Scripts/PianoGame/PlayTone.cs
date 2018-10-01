@@ -250,7 +250,8 @@ public class PlayTone : MonoBehaviour {
         var til = current_length - gradient;
         if (isLastRepeat)
         {
-            WAIT_TIME = 0.7f;PLAY_TIME = 0.5f;
+            WAIT_TIME = 0.7f;
+            PLAY_TIME = 0.5f;
             til = toneTOBePlayed.Count;
          }
         Debug.Log("til = " + til);
@@ -356,10 +357,12 @@ public class PlayTone : MonoBehaviour {
 		if (consequtive_correct >= CONSECUTIVE_CORRECT_THRESHOLD) {
 			SceneVariables.IS_USER_MODE = false;
 			StartCoroutine (DisplayOnLevelComplete ());
-		} else {
-			StartCoroutine(RepeatTone ());
-
 		}
+        else
+        {
+            //startcoroutine(repeattone ());
+            GameObject.Find(Camera.main.GetComponent<SceneVariables>().playSound).GetComponent<HomeScreenButtons>().SetHaloToggle(true);
+        }
 
-	}
+    }
 }

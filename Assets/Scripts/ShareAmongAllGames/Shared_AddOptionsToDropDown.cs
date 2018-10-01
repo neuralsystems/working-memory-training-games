@@ -5,6 +5,8 @@ using UnityEngine.UI;
 public class Shared_AddOptionsToDropDown : MonoBehaviour {
 
     public int code;
+    public SimpleObjectPool simpleGameObjectPool;
+    public Transform contentPanel;
     private void Start()
     {
         AddOptionsToMenu();
@@ -35,6 +37,44 @@ public class Shared_AddOptionsToDropDown : MonoBehaviour {
                 l.Add(i.ToString());
             }
         }
+        if(code == 4)                              // code to add list of database tables
+        {
+            l = GetDatabaseTablesList();
+        }
         drop_down.AddOptions(l);
     }
+
+    List<string> GetDatabaseTablesList()
+    {
+        MApp_DataServices ds = new MApp_DataServices(MApp_UserInforFormScript.database_Name);
+        List<string> tables = new List<string>();
+        var res = ds.GetTables();
+        foreach(var r in res)
+        {
+            tables.Add(r.ToString());
+        }
+        return tables;
+    }
+
+    public void ListRows()
+    {
+        var dd = GetComponent<Dropdown>();
+        var table_name = dd.options[dd.value].text.Split(':')[0];
+        var ds = new TrainGame_DataServices(MApp_UserInforFormScript.database_Name);
+        List<string> rows = ds.ListAllLevels();
+        Debug.Log("selected table " + table_name);
+        for (int i = 0; i < rows.Count; i++)
+        {
+            
+            var _rowbutton = simpleGameObjectPool.GetObject();
+            //_usericon.GuiButton.onClick.AddListener(() => { Function(param); OtherFunction(param); })
+            _rowbutton.transform.SetParent(contentPanel);
+            var _row_script = _rowbutton.GetComponent<DatabaseRowScript>();
+            //Debug.Log("running the inner loop 1 " + u_icon.user.First_Name);
+            _row_script.SetUp(rows[i]);
+
+        }
+    }
+
+
 }

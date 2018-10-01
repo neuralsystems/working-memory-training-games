@@ -125,40 +125,66 @@ public class FaceGame_DataService  {
         }
 
     //    public IEnumerable<Category> GetRandomCategory(){
-        //        const string command = "SELECT * FROM Category ORDER BY RANDOM() LIMIT 1";
-        //    return _connection.Query<Category>(command);
-        //}
+    //        const string command = "SELECT * FROM Category ORDER BY RANDOM() LIMIT 1";
+    //    return _connection.Query<Category>(command);
+    //}
 
-        //    public IEnumerable<Images> GetnImages(int n){
-        //    const string command = "SELECT FileUrl FROM Images ORDER BY RANDOM() LIMIT ?";
-        //    return _connection.Query<Images>(command, n);
-        //}
+    //    public IEnumerable<Images> GetnImages(int n){
+    //    const string command = "SELECT FileUrl FROM Images ORDER BY RANDOM() LIMIT ?";
+    //    return _connection.Query<Images>(command, n);
+    //}
 
-        //    public IEnumerable<Images> GetnImagesFromCategory(int n, int categoryId){
-//            const string command = "Select FileUrl from Images join Category where Images.Category = Category.Id and Category.CategoryName = ? ORDER BY RANDOM() LIMIT ?";
-        //const string command = "Select FileUrl from Images where category = ? ORDER BY RANDOM() LIMIT ?";
-        //    return _connection.Query<Images>(command,categoryId, n);
-        //}
+    //    public IEnumerable<Images> GetnImagesFromCategory(int n, int categoryId){
+    //            const string command = "Select FileUrl from Images join Category where Images.Category = Category.Id and Category.CategoryName = ? ORDER BY RANDOM() LIMIT ?";
+    //const string command = "Select FileUrl from Images where category = ? ORDER BY RANDOM() LIMIT ?";
+    //    return _connection.Query<Images>(command,categoryId, n);
+    //}
 
-//        public IEnumerable<Images> GetnImagesOfCategory(int n, int category){
-//        const string command = "SELECT FileUrl FROM Images ORDER BY RANDOM() LIMIT ?";
-//        return _connection.Query<Images>(command, n);
-//        }
+    //        public IEnumerable<Images> GetnImagesOfCategory(int n, int category){
+    //        const string command = "SELECT FileUrl FROM Images ORDER BY RANDOM() LIMIT ?";
+    //        return _connection.Query<Images>(command, n);
+    //        }
 
-        //        public IEnumerable<ScoreMatrix> GetScoreValue( int Level, float Time, int forCorrect ){
-        //    const string command = "SELECT scoreValue FROM ScoreMatrix where Level = ? and Time >=? and ForCorrect = ? ORDER BY Time ASC LIMIT 1";
-        //    return _connection.Query<ScoreMatrix>(command, Level,Time,forCorrect);
-//        return _connection.Table<ScoreMatrix>().Where(x => x.Level == Level && x.Time == Time && x.ForCorrect == isCorrect);
-        //}
+    //        public IEnumerable<ScoreMatrix> GetScoreValue( int Level, float Time, int forCorrect ){
+    //    const string command = "SELECT scoreValue FROM ScoreMatrix where Level = ? and Time >=? and ForCorrect = ? ORDER BY Time ASC LIMIT 1";
+    //    return _connection.Query<ScoreMatrix>(command, Level,Time,forCorrect);
+    //        return _connection.Table<ScoreMatrix>().Where(x => x.Level == Level && x.Time == Time && x.ForCorrect == isCorrect);
+    //}
 
-//        public IEnumerable<NextLevelToLoad> GetNextLevelToLoad(int currentLevel, int score){
-//        const string command = "SELECT * FROM NextLevelToLoad WHERE CurrentLevel = ? and UpperLimit >= ? and LoverLimit <= ? ORDER BY";
-//        return _connection.Query<NextLevelToLoad> (command, currentLevel, score, score);
-//        }
+    //        public IEnumerable<NextLevelToLoad> GetNextLevelToLoad(int currentLevel, int score){
+    //        const string command = "SELECT * FROM NextLevelToLoad WHERE CurrentLevel = ? and UpperLimit >= ? and LoverLimit <= ? ORDER BY";
+    //        return _connection.Query<NextLevelToLoad> (command, currentLevel, score, score);
+    //        }
 
-        //    public IEnumerable<NextLevelToLoad> GetNextLevelToLoad(int currentLevel){
-        //    const string command = "SELECT * FROM NextLevelToLoad WHERE CurrentLevel = ? ";
-        //    return _connection.Query<NextLevelToLoad> (command, currentLevel);
-        //}
+    //    public IEnumerable<NextLevelToLoad> GetNextLevelToLoad(int currentLevel){
+    //    const string command = "SELECT * FROM NextLevelToLoad WHERE CurrentLevel = ? ";
+    //    return _connection.Query<NextLevelToLoad> (command, currentLevel);
+    //}
 
-    }
+        public void AddLevels(List<FaceGame_GameData> levels_list)
+        {
+            _connection.InsertAll(levels_list);
+        }
+
+        public void AddLevel(FaceGame_GameData level_obj)
+        {
+            _connection.Insert(level_obj);
+        }
+
+        public void DeleteLevel(FaceGame_GameData level_obj)
+        {
+            _connection.Delete(level_obj);
+
+        }
+        public List<string> ListAllLevels()
+        {
+
+            var result = _connection.Table<FaceGame_GameData>();
+            List<string> result_string = new List<string>();
+            foreach (var r in result)
+            {
+                result_string.Add(r.ToString());
+            }
+            return result_string;
+        }
+}

@@ -107,4 +107,8 @@ public class MApp_DataServices
         return added;
     }
     
+    public IEnumerable<sqlite_sequence> GetTables()
+    {
+        return _connection.Table<sqlite_sequence>();
+    }
 }

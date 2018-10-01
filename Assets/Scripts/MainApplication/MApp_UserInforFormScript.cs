@@ -29,8 +29,8 @@ public class MApp_UserInforFormScript : MonoBehaviour {
             var _username = username.text.ToString();
             //var _dob = dob.text.ToString();
             var _day = day.options[day.value].text;
-            var _month = month.options[day.value].text;
-            var _year = year.options[day.value].text;
+            var _month = month.options[month.value].text;
+            var _year = year.options[year.value].text;
             var _diagnosis = diagnosis.text.ToString();
             var _iq_value = Convert.ToInt32(iq_value.text); 
             var _first_name = first_name.text.ToString();
@@ -38,8 +38,8 @@ public class MApp_UserInforFormScript : MonoBehaviour {
             System.DateTime dDate;
             //System.DateTime.TryParse(dob.text, out dDate);
             //string.Format("{0:yyyy/mm/dd}", dDate);
-
-            var _age = DateTime.Today.Year;
+            
+            var _age = DateTime.Today.Year - GetDOB().Year;
             //try
             //{
             var users = ds.GetAllUsers();
@@ -64,7 +64,11 @@ public class MApp_UserInforFormScript : MonoBehaviour {
 
     public void DisplayDOB()
     {
-        dob.text = "born on: " + day.options[day.value].text + "/" + month.options[day.value].text + "/" + year.options[day.value].text;
+        dob.text = "born on: " + GetDOB();
+    }
+    DateTime GetDOB()
+    {
+        return DateTime.Parse(day.options[day.value].text + "-" + month.options[month.value].text + "-" + year.options[year.value].text);
     }
     string validateform()
     {

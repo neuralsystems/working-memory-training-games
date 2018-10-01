@@ -116,15 +116,41 @@ public class BasketGame_DataService  {
             return GetUserProgress(username);
         }
 
-        //public int GetGameName()
-        //{
-        //    var gn = BasketGame_SceneVariables.Game_Name;
-        //    var gns = _connection.Table<Games>().Where(x => x.GameName == gn);
-        //    var l = 1;
-        //    foreach(var g in gns)
-        //    {
-        //        return g.Id;
-        //    }
-        //    return l;
-        //}
+    //public int GetGameName()
+    //{
+    //    var gn = BasketGame_SceneVariables.Game_Name;
+    //    var gns = _connection.Table<Games>().Where(x => x.GameName == gn);
+    //    var l = 1;
+    //    foreach(var g in gns)
+    //    {
+    //        return g.Id;
+    //    }
+    //    return l;
+    //}
+    public void AddLevels(List<BasketGame_Levels> levels_list)
+    {
+        _connection.InsertAll(levels_list);
+    }
+
+    public void AddLevel(BasketGame_Levels level_obj)
+    {
+        _connection.Insert(level_obj);
+    }
+
+    public void DeleteLevel(BasketGame_Levels level_obj)
+    {
+        _connection.Delete(level_obj);
+
+    }
+    public List<string> ListAllLevels()
+    {
+
+        var result = _connection.Table<BasketGame_Levels>();
+        List<string> result_string = new List<string>();
+        foreach (var r in result)
+        {
+            result_string.Add(r.ToString());
+        }
+        return result_string;
+    }
 }

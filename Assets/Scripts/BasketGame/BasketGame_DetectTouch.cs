@@ -43,10 +43,11 @@ public class BasketGame_DetectTouch : MonoBehaviour {
         }
         if (shouldTouch)
         {
+            
             if (tag == BasketGame_SceneVariables.baloonTag)
             {
                 Debug.Log("vame in of");
-
+                shouldTouch = false;
                 StartCoroutine(BalloonClick());
             }
             else

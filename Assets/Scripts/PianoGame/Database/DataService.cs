@@ -114,4 +114,31 @@ public class DataService  {
             _connection.Insert(new UserProgress_PianoGame() { User_Obj = username, Level_Obj = default_level, LastModified = DateTime.Now,  DateCreated = DateTime.Now});
             return GetUserProgress(username);
         }
+
+    public void AddLevels(List<PianoGame_Levels> levels_list)
+    {
+        _connection.InsertAll(levels_list);
+    }
+
+    public void AddLevel(PianoGame_Levels level_obj)
+    {
+        _connection.Insert(level_obj);
+    }
+
+    public void DeleteLevel(PianoGame_Levels level_obj)
+    {
+        _connection.Delete(level_obj);
+
+    }
+    public List<string> ListAllLevels()
+    {
+
+        var result = _connection.Table<PianoGame_Levels>();
+        List<string> result_string = new List<string>();
+        foreach (var r in result)
+        {
+            result_string.Add(r.ToString());
+        }
+        return result_string;
+    }
 }
