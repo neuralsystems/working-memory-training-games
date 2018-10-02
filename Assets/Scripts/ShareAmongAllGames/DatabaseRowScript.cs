@@ -34,6 +34,20 @@ public class DatabaseRowScript : MonoBehaviour {
         ds.UpdateUserProgress("pip", 12);
         GetComponent<Button>().interactable = false;
     }
+
+    public void ChangeShapeGameLevels()
+    {
+        var ds = new ShapeMatch_DataService(MApp_UserInforFormScript.database_Name);
+        var levels_to_change = ds.GetLevelsInfo(10);
+        foreach(var l in levels_to_change)
+        {
+            l.IsHide = 1;
+            Debug.Log("in side the loop");
+            ds.UpdateLevelInfo(l);
+        }
+        
+        ds.UpdateUserProgress("pip", 10);
+    }
 }
 
 

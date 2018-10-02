@@ -60,8 +60,46 @@ public class Shared_AddOptionsToDropDown : MonoBehaviour {
     {
         var dd = GetComponent<Dropdown>();
         var table_name = dd.options[dd.value].text.Split(':')[0];
-        var ds = new TrainGame_DataServices(MApp_UserInforFormScript.database_Name);
-        List<string> rows = ds.ListAllLevels();
+        List<string> rows = new List<string>();
+
+        //var selected_table = System.Type.GetType(table_name);
+        foreach (Transform list_obj in contentPanel.transform)
+        {
+            simpleGameObjectPool.ReturnObject(list_obj.gameObject);
+        }
+        rows.Clear();
+        if (table_name == "TrainGame_Levels")
+        {
+            var ds = new TrainGame_DataServices(MApp_UserInforFormScript.database_Name);
+           rows = ds.ListAllLevels();
+        }
+        else if (table_name == "BasketGame_Levels")
+        {
+            var ds = new BasketGame_DataService(MApp_UserInforFormScript.database_Name);
+            rows = ds.ListAllLevels();
+        }
+        else if (table_name == "PianoGame_Levels")
+        {
+            var ds = new DataService(MApp_UserInforFormScript.database_Name);
+            rows = ds.ListAllLevels();
+        }
+        else if (table_name == "ShapeMatch_levels")
+        {
+            var ds = new ShapeMatch_DataService(MApp_UserInforFormScript.database_Name);
+            rows = ds.ListAllLevels();
+        }
+        else if (table_name == "FaceGame_GameData")
+        {
+            var ds = new FaceGame_DataService(MApp_UserInforFormScript.database_Name);
+            rows = ds.ListAllLevels();
+        }
+        //else
+        //{
+        //    var ds = new TrainGame_DataServices(MApp_UserInforFormScript.database_Name);
+        //    List<string> rows = ds.ListAllLevels();
+
+        //}
+
         Debug.Log("selected table " + table_name);
         for (int i = 0; i < rows.Count; i++)
         {

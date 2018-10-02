@@ -5,11 +5,13 @@ using SQLite4Unity3d;
 
 public class ShapeMatch_levels
 {
+    [PrimaryKey, AutoIncrement]
+    public int Id { get; set; }
     public int LevelNumber { get; set; }
     public int IsHide { get; set;}
     public int IsMove { get; set; }
     public int GameObjects { get; set; }
-    public int Id { get; set; }
+    //public int Id { get; set; }
 
 
     public override string ToString()

@@ -163,4 +163,15 @@ public class ShapeMatch_DataService
         }
         return result_string;
     }
+
+    int DEFAULT_COLUMN_VALUES = -1;
+    public void UpdateLevelInfo(ShapeMatch_levels level_obj)
+    {
+        //foreach (var l in level_obj)
+        //{
+        Debug.Log(level_obj.IsHide);
+        //}
+        _connection.Update(level_obj);
+    }
+    
 }
