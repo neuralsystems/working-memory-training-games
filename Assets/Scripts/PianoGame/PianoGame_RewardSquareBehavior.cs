@@ -36,7 +36,7 @@ public class PianoGame_RewardSquareBehavior : MonoBehaviour {
             if (show_play_button)
             {
                 GameObject.Find(Camera.main.GetComponent<SceneVariables>().playSound).GetComponent<HomeScreenButtons>().SetHaloToggle(true);
-                //transform.parent.GetComponent<PG_RewardSquareParentBehavior>().ReflectOnScrollList();
+                transform.parent.GetComponent<PG_RewardSquareParentBehavior>().ReflectOnScrollList();
             }
             //transform.parent = Camera.main.GetComponent<SceneVariables>().contentPanel;
             //} else {

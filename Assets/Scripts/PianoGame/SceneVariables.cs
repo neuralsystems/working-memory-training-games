@@ -60,7 +60,8 @@ public class SceneVariables : MonoBehaviour {
 	public string SAMPLE_SQUARE_PARENT = "SampleSquaresParent";
 	public string REWARD_SQUARE_PARENT = "RewardSquareParent";
 	public string USER_INPUT_SQUARE_PARENT = "UserInputSquareParent";
-	public Vector3 target, targetRewardSquare, targetUserSquare ;
+    public string REWARD_SQUARE_SCROLL = "RewardSquareScroll";
+    public Vector3 target, targetRewardSquare, targetUserSquare ;
 	public Transform rewardSquare;
     public Transform reward_content_panel;
 
@@ -73,7 +74,8 @@ public class SceneVariables : MonoBehaviour {
 	public AudioClip[] Audio_Clips = new AudioClip[2] ;
 
     public GameObject RewardPoolObject;
-	void Awake(){
+    public GameObject RewardUIPoolObject;
+    void Awake(){
 		Reset ();
 	}
 
@@ -114,7 +116,7 @@ public class SceneVariables : MonoBehaviour {
 		var init_position = Shared_ScriptForGeneralFunctions.GetPointOnScreen (1, heightPercentageForRewardSquare);
 		var originalPosition = targetRewardSquare;
 		var reward_square_parent_gameobject = GameObject.Find (Camera.main.GetComponent<SceneVariables> ().REWARD_SQUARE_PARENT);
-		var size_of_one_object = rewardSquare.GetComponent<SpriteRenderer> ().bounds.size;
+        var size_of_one_object = rewardSquare.GetComponent<SpriteRenderer> ().bounds.size;
 		int old =  oldSquares.Length;
 		var widthInPixels = size_of_one_object.x;
 		var normalizedWidth = GetNormalizedWidth ( widthInPixels, n);
@@ -148,13 +150,14 @@ public class SceneVariables : MonoBehaviour {
 //				targetRewardSquare.y -= size_of_one_object.y;
 //			}
 
-			yield return null;
+            yield return null;
 		}
         for (int i = n; i < old; i++)
         {
             RewardPoolObject.GetComponent<SimpleObjectPool>().ReturnObject(oldSquares[i]);
         }
         //		GameObject.Find (Camera.main.GetComponent<SceneVariables> ().playSound).GetComponent<HomeScreenButtons> ().SetHaloToggle(true);
+        
     }
 
 	float GetNormalizedWidth( float blockPercent, float blockNumbers){
@@ -190,6 +193,8 @@ public class SceneVariables : MonoBehaviour {
 				shouldCall = true;
 			}
             StartCoroutine(userSquares[i].GetComponent<KeySquareBehavior>().MoveToReward(reward_square_parent_object.transform.GetChild(x).gameObject, shouldCall));
+//-----------------------------------get the reward squares and move them to the frogs
+//-----------------------------------code: from KeySquareUIObjectPool getObject as a child of frogUI and assign corr. sprite
             //StartCoroutine(userSquares[i].GetComponent<KeySquareBehavior>().MoveToReward(reward_content_panel.GetChild(x).gameObject, shouldCall));
             x++;
 		}
