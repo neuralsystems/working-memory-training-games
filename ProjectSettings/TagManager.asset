@@ -68,6 +68,8 @@ TagManager:
   - Pointer
   - OptionTag
   - RewardSquareUIParent
+  - RewardSquareUITag
+  - KeySquareUITag
   layers:
   - Default
   - TransparentFX

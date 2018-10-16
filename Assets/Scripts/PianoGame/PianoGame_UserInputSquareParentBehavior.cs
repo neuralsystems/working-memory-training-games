@@ -41,11 +41,11 @@ public class PianoGame_UserInputSquareParentBehavior : MonoBehaviour
         if (all_match)
         {
             var reward_square_parent = GameObject.Find(Camera.main.GetComponent<SceneVariables>().REWARD_SQUARE_PARENT);
+            var reward_square_ui_scroll = GameObject.Find(Camera.main.GetComponent<SceneVariables>().REWARD_SQUARE_UI_SCROLL);
             //				var new_position = reward_square_parent.transform.position;
             //				new_position.y += reward_square_parent.GetComponent<SpriteRenderer> ().bounds.size.y;
             reward_square_parent.GetComponent<PG_RewardSquareParentBehavior>().ResetPosition();
-            //---------------------------------------------frog parent reset (pos back to screen)
-            //---------------------------------------------code: FrogUIParent's position to be reset
+            reward_square_ui_scroll.GetComponent<RewardSquareUIScrollBehavior>().Show(true);
             //				GetComponentInParent<ParticleSystem> ().Play ();
 
             Camera.main.GetComponent<SceneVariables>().ShowSquares();
@@ -58,8 +58,6 @@ public class PianoGame_UserInputSquareParentBehavior : MonoBehaviour
             Camera.main.GetComponent<PlayTone>().DestroyCueSquares(Camera.main.GetComponent<SceneVariables>().USER_INPUT_SQUARE_TAG);
             GameObject.Find(Camera.main.GetComponent<SceneVariables>().playSound).GetComponent<HomeScreenButtons>().SetHaloToggle(true);
         }
-
-
 
     }
     public void ResetPosition()

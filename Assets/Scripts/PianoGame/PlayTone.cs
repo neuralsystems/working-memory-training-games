@@ -118,8 +118,9 @@ public class PlayTone : MonoBehaviour {
 		DestroyCueSquares (Camera.main.GetComponent<SceneVariables> ().SAMPLE_SQUARE_TAG);
 //		GameObject.Find (GetComponent<SceneVariables> ().REWARD_SQUARE_PARENT).transform.position = GameObject.Find (GetComponent<SceneVariables> ().USER_INPUT_SQUARE_PARENT).transform.position;
 		StartCoroutine(GameObject.Find (GetComponent<SceneVariables> ().REWARD_SQUARE_PARENT).GetComponent<PG_RewardSquareParentBehavior>().MoveToTarget( GameObject.Find (GetComponent<SceneVariables> ().USER_INPUT_SQUARE_PARENT).transform.position));
-//----------------------------frog parent moves down for popping of reward squares
-//----------------------------code: move down frogUIParent and disable reward sqUIs, add func to shift then pop reward squares
+        Debug.Log("PG_RewardSquareParentBehavior: MoveToTarget()");
+        //----------------------------frog parent moves down for popping of reward squares
+        //----------------------------code: move down frogUIParent and disable reward sqUIs, add func to shift then pop reward squares
         yield return StartCoroutine(RepeatTone (true));
 		var rain_particle_system_object = GameObject.FindGameObjectWithTag (Camera.main.GetComponent<SceneVariables> ().RAIN_PARTICLE_SYSTEM_TAG);
 		rain_particle_system_object.GetComponent<ParticleSystem> ().Play ();
@@ -336,6 +337,7 @@ public class PlayTone : MonoBehaviour {
 		var new_position = Shared_ScriptForGeneralFunctions.GetPointOnScreen(Camera.main.GetComponent<SceneVariables>().widthPercentageForRewardSquare, Camera.main.GetComponent<SceneVariables> ().heightPercentageForRewardSquare);
 		new_position.y += reward_square_parent.GetComponentInChildren<SpriteRenderer> ().bounds.size.y + 2f;
 		reward_square_parent.GetComponent<PG_RewardSquareParentBehavior> ().MoveCamera(new_position);
+        Debug.Log("PG_RewardSquareParentBehavior: MoveCamera()");
 		SceneVariables.IS_USER_MODE = false;
 		PlayGame (current_length);
 	}

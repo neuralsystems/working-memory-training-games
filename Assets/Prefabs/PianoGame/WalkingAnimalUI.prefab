@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114137003321394296}
   m_Layer: 5
   m_Name: WalkingAnimalUI
-  m_TagString: Untagged
+  m_TagString: RewardSquareUITag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -38,20 +38,32 @@ GameObject:
   - component: {fileID: 224857493781669762}
   - component: {fileID: 222256061835182340}
   - component: {fileID: 114124225349049516}
+  - component: {fileID: 114091494525076356}
   m_Layer: 5
   m_Name: KeySquareUI
-  m_TagString: Untagged
+  m_TagString: KeySquareUITag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &114124225349049516
+--- !u!114 &114091494525076356
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1844315257082278}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 663676ad995890a4b907496a8de435c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114124225349049516
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1844315257082278}
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SceneVariables : MonoBehaviour {
 	
@@ -15,13 +16,15 @@ public class SceneVariables : MonoBehaviour {
 	public string USER_INPUT_SQUARE_TAG = "UserInputSquareTag";             // tag for the keys spawned when user presses a piano key
     public string REWARD_SQUARE_TAG = "RewardSquareTag";									// // tag for the square spawned at the top of screen 
 	public string NON_REWARD_SQUARE_TAG = "NonRewardSquareTag";
-	public string RAIN_PARTICLE_SYSTEM_TAG = "RainParticleSystemTag";
+    public string REWARD_SQUARE_UI_TAG = "RewardSquareUITag";                                    
+    public string KEY_SQUARE_UI_TAG = "KeySquareUITag";									
+    public string RAIN_PARTICLE_SYSTEM_TAG = "RainParticleSystemTag";
 	public string REWARD_SQUARE_CHILD_TAG = "RewardSquareChildTag";
 	public const string PIANO_KEY_TAG = "PianoKeyTag";
     public Transform contentPanel;
 	// gameobject position related variables 
 	public float heightPercentageForRewardSquare = .9f, widthPercentageForRewardSquare = .50f; // for position of squares on top
-	public float widthPercentage, heightPercentage;										// not used yet 
+    public float widthPercentage, heightPercentage;										// not used yet 
     public const int DEFAULT_VALUE_KEEP_VISIBLE = 1;
 
     // gameplay related variables 
@@ -60,7 +63,7 @@ public class SceneVariables : MonoBehaviour {
 	public string SAMPLE_SQUARE_PARENT = "SampleSquaresParent";
 	public string REWARD_SQUARE_PARENT = "RewardSquareParent";
 	public string USER_INPUT_SQUARE_PARENT = "UserInputSquareParent";
-    public string REWARD_SQUARE_SCROLL = "RewardSquareScroll";
+    public string REWARD_SQUARE_UI_SCROLL = "RewardSquareScroll";
     public Vector3 target, targetRewardSquare, targetUserSquare ;
 	public Transform rewardSquare;
     public Transform reward_content_panel;
@@ -177,6 +180,7 @@ public class SceneVariables : MonoBehaviour {
 
 	public IEnumerator ShowRewardSquares(){
 		var userSquares = GameObject.FindGameObjectsWithTag (USER_INPUT_SQUARE_TAG);
+        var keySquaresUI = GameObject.FindGameObjectsWithTag(KEY_SQUARE_UI_TAG);
 		var x = REWARD_INDEX;
 		var reward_square_parent_object = GameObject.Find (REWARD_SQUARE_PARENT);
         var master_go = GameObject.Find(Shared_Scenevariables.masterGO);
@@ -193,8 +197,7 @@ public class SceneVariables : MonoBehaviour {
 				shouldCall = true;
 			}
             StartCoroutine(userSquares[i].GetComponent<KeySquareBehavior>().MoveToReward(reward_square_parent_object.transform.GetChild(x).gameObject, shouldCall));
-//-----------------------------------get the reward squares and move them to the frogs
-//-----------------------------------code: from KeySquareUIObjectPool getObject as a child of frogUI and assign corr. sprite
+            keySquaresUI[x].GetComponent<KeySquareUIBehavior>().SetImage(userSquares[i].GetComponent<SpriteRenderer>().sprite);
             //StartCoroutine(userSquares[i].GetComponent<KeySquareBehavior>().MoveToReward(reward_content_panel.GetChild(x).gameObject, shouldCall));
             x++;
 		}

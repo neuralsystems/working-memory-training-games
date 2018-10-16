@@ -49,11 +49,11 @@ public class OnKeyPress : MonoBehaviour {
 		if (!SceneVariables.IS_PRESSED && SceneVariables.IS_USER_MODE && SceneVariables.IS_READY) {
 			Debug.Log(Camera.main.GetComponent<PlayTone> ().GetTuneLength () + " " +numOfKeysPressed);
             // uncomment next three lines for enabling the wobble effect of the keys
-            //if(numOfKeysPressed == 0)
+            //if (numofkeyspressed == 0)
             //{
-            //    Camera.main.GetComponent<PlayTone>().ChangeUserModeDisplay(false);
+            //    camera.main.getcomponent<playtone>().changeusermodedisplay(false);
             //}
-			if (Camera.main.GetComponent<PlayTone> ().GetTuneLength () > numOfKeysPressed) {
+            if (Camera.main.GetComponent<PlayTone> ().GetTuneLength () > numOfKeysPressed) {
 				SceneVariables.IS_PRESSED = true;
 				StartCoroutine(PlaySound ());
 				if ((PlayTone.sample != "")) {
@@ -92,7 +92,7 @@ public class OnKeyPress : MonoBehaviour {
 			keysquare.tag = Camera.main.GetComponent<SceneVariables> ().SAMPLE_SQUARE_TAG;
 		}
 		var file_name = keySquareImageName;
-		//Debug.Log ("tried at: "+ folderName + file_name);
+		Debug.Log ("tried at: "+ folderName + file_name);
 		keysquare.GetComponent<SpriteRenderer> ().sprite = Resources.Load (game_name + "/" + folderName + file_name, typeof(Sprite)) as Sprite;
 	}
 
