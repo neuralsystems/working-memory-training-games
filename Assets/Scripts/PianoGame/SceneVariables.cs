@@ -16,7 +16,8 @@ public class SceneVariables : MonoBehaviour {
 	public string USER_INPUT_SQUARE_TAG = "UserInputSquareTag";             // tag for the keys spawned when user presses a piano key
     public string REWARD_SQUARE_TAG = "RewardSquareTag";									// // tag for the square spawned at the top of screen 
 	public string NON_REWARD_SQUARE_TAG = "NonRewardSquareTag";
-    public string REWARD_SQUARE_UI_TAG = "RewardSquareUITag";                                    
+    public string REWARD_SQUARE_UI_TAG = "RewardSquareUITag";
+    public string REWARD_SQUARE_UI_PARENT_TAG = "RewardSquareUIParent";
     public string KEY_SQUARE_UI_TAG = "KeySquareUITag";									
     public string RAIN_PARTICLE_SYSTEM_TAG = "RainParticleSystemTag";
 	public string REWARD_SQUARE_CHILD_TAG = "RewardSquareChildTag";
@@ -196,8 +197,8 @@ public class SceneVariables : MonoBehaviour {
 			if (i == (last)) {
 				shouldCall = true;
 			}
-            StartCoroutine(userSquares[i].GetComponent<KeySquareBehavior>().MoveToReward(reward_square_parent_object.transform.GetChild(x).gameObject, shouldCall));
-            keySquaresUI[x].GetComponent<KeySquareUIBehavior>().SetImage(userSquares[i].GetComponent<SpriteRenderer>().sprite);
+            StartCoroutine(userSquares[i].GetComponent<KeySquareBehavior>().MoveToReward(reward_square_parent_object.transform.GetChild(x).gameObject, keySquaresUI[x], shouldCall));
+            //keySquaresUI[x].GetComponent<KeySquareUIBehavior>().SetImage(userSquares[i].GetComponent<SpriteRenderer>().sprite);
             //StartCoroutine(userSquares[i].GetComponent<KeySquareBehavior>().MoveToReward(reward_content_panel.GetChild(x).gameObject, shouldCall));
             x++;
 		}
@@ -212,6 +213,7 @@ public class SceneVariables : MonoBehaviour {
 		}
 		StartCoroutine(ShowRewardSquares ());
 	}
+
 	public void Reset(){
 		REWARD_INDEX = 0;
 		IS_USER_MODE = false;	

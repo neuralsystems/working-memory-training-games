@@ -54,6 +54,15 @@ public class PianoGame_RewardSquareBehavior : MonoBehaviour {
 //		GetComponent<Outline> ().eraseRenderer = value;
 	}
 
+    public void SetObjAndChildVisibility(bool value)
+    {
+        GetComponent<SpriteRenderer>().enabled = value;
+        foreach(Transform child in transform)
+        {
+            child.GetComponent<SpriteRenderer>().enabled = value;
+        }
+    }
+
 	public void Stand(){
 		GetComponent<Animator> ().SetInteger ("WalkorStand", 1);
 	}

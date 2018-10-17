@@ -135,7 +135,7 @@ public class KeySquareBehavior : MonoBehaviour
         }
     }
 
-    public IEnumerator MoveToReward(GameObject rewardTile, bool shouldCall)
+    public IEnumerator MoveToReward(GameObject rewardTile, GameObject keySquareUI, bool shouldCall)
     {
         var target = rewardTile.transform.position;
         //		transform.localScale = rewardTile.transform.localScale * (rewardTile.GetComponent<SpriteRenderer>().bounds.size.x / GetComponent<SpriteRenderer>().bounds.size.x);
@@ -153,6 +153,9 @@ public class KeySquareBehavior : MonoBehaviour
             transform.parent = rewardTile.transform;
             transform.localPosition = new Vector3(-.17f, -.13f, 0f);
             tag = Camera.main.GetComponent<SceneVariables>().REWARD_SQUARE_CHILD_TAG;
+            keySquareUI.GetComponent<KeySquareUIBehavior>().SetImage(transform.GetComponent<SpriteRenderer>().sprite);     //Enables corresponding UI KeySquare Sprite
+            transform.GetComponent<SpriteRenderer>().enabled = false;                                                      //Disables sprite (as KeySquareUI overlaps sprite)
+
             //GetComponentInParent<ParticleSystem> ().Play ();
             if (shouldCall)
             {

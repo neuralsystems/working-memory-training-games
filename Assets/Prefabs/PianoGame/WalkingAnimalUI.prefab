@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 222256061835182340}
   - component: {fileID: 114124225349049516}
   - component: {fileID: 114091494525076356}
+  - component: {fileID: 50258631399095496}
   m_Layer: 5
   m_Name: KeySquareUI
   m_TagString: KeySquareUITag
@@ -46,6 +47,26 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!50 &50258631399095496
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1844315257082278}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!114 &114091494525076356
 MonoBehaviour:
   m_ObjectHideFlags: 1

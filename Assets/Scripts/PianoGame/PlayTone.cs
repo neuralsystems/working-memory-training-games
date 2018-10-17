@@ -165,13 +165,14 @@ public class PlayTone : MonoBehaviour {
 
 	public IEnumerator PlaySomeTone(string notes, string delimeter, int start, int end, bool isRepeat = false, bool isLastRepeat = false){
 		var reward_square_parent = GameObject.Find(Camera.main.GetComponent<SceneVariables>().REWARD_SQUARE_PARENT);
-//		if (isRepeat) {
-//			var shift =  reward_square_parent.transform.GetChild (0).transform.GetChild (0).GetComponent<SpriteRenderer> ().bounds.size;
-//			Debug.Log ("moving camera down by " + shift);
-//			
-//			transform.position -= Vector3.down * shift.y ;
-//		}
-		OnKeyPress.numOfKeysPressed = 0;
+		var reward_square_ui_parent = GameObject.FindGameObjectWithTag(Camera.main.GetComponent<SceneVariables>().REWARD_SQUARE_UI_PARENT_TAG);
+        //		if (isRepeat) {
+        //			var shift =  reward_square_parent.transform.GetChild (0).transform.GetChild (0).GetComponent<SpriteRenderer> ().bounds.size;
+        //			Debug.Log ("moving camera down by " + shift);
+        //			
+        //			transform.position -= Vector3.down * shift.y ;
+        //		}
+        OnKeyPress.numOfKeysPressed = 0;
 		SceneVariables.IS_USER_MODE = false;
 		
 		for (int i = start; i < end; i++) {
@@ -197,9 +198,16 @@ public class PlayTone : MonoBehaviour {
                     try
                     {
                         var reward_square_child_object = reward_square_parent.transform.GetChild(i).transform.GetChild(0);
+                        //reward_square_child_object.GetComponent<SpriteRenderer>().enabled = true;
                         reward_square_child_object.transform.localScale += new Vector3(1, 1, 1) * .3f;
                         reward_square_child_object.GetComponent<Rigidbody2D>().gravityScale = 2;
                         reward_square_child_object.GetComponent<Rigidbody2D>().velocity = new Vector3(2f, 0f, 0f);
+
+                        var reward_square_ui_child_object = reward_square_ui_parent.transform.GetChild(i).transform.GetChild(0);
+                        reward_square_ui_child_object.GetComponent<RectTransform>().localScale += new Vector3(1, 1, 1) * .3f;
+                        reward_square_ui_child_object.GetComponent<Rigidbody2D>().gravityScale = 40;
+                        reward_square_ui_child_object.GetComponent<Rigidbody2D>().velocity = new Vector3(200f, 0f, 0f);
+
                     }
                     catch (Exception e)
                     {

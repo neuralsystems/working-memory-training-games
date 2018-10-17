@@ -79,7 +79,7 @@ public class PG_RewardSquareParentBehavior : MonoBehaviour {
             {
                 AddChildToContent();
             }
-            transform.GetChild(i).GetComponent<SpriteRenderer>().enabled = false;
+            transform.GetChild(i).GetComponent<PianoGame_RewardSquareBehavior>().SetObjAndChildVisibility(false);
         }
         for(int i = num_own_child; i < num_content_child; i++)
         {
