@@ -125,7 +125,7 @@ public class SceneVariables : MonoBehaviour {
 		var widthInPixels = size_of_one_object.x;
 		var normalizedWidth = GetNormalizedWidth ( widthInPixels, n);
 		Debug.Log (normalizedWidth+" "+ width);
-		targetRewardSquare = Shared_ScriptForGeneralFunctions.GetPointOnScreen(normalizedWidth, heightPercentageForRewardSquare);
+		targetRewardSquare = Shared_ScriptForGeneralFunctions.GetPointOnScreen(normalizedWidth/2, heightPercentageForRewardSquare);
 		originalPosition = targetRewardSquare;
 		for (int i = 0; i < n; i++) {
 			if (i < old) {

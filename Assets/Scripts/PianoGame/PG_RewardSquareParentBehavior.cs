@@ -95,6 +95,7 @@ public class PG_RewardSquareParentBehavior : MonoBehaviour {
     {
         var UI_object = RewardSquareUIPoolObject.GetComponent<SimpleObjectPool>().GetObject();
         UI_object.transform.parent = content_panel;
+        UI_object.GetComponent<RectTransform>().localScale = Vector3.one;
     }
 
     void DeleteLastChildFromContent()

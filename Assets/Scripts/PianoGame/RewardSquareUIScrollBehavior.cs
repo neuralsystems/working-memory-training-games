@@ -26,11 +26,11 @@ public class RewardSquareUIScrollBehavior : MonoBehaviour {
     {
         var scrollRect = transform.GetComponent<ScrollRect>();
         var contentPanel = GameObject.FindWithTag(Camera.main.GetComponent<SceneVariables>().REWARD_SQUARE_UI_PARENT_TAG).GetComponent<RectTransform>();
-        var rewardSqWidth = GameObject.FindWithTag(Camera.main.GetComponent<SceneVariables>().REWARD_SQUARE_UI_TAG).GetComponent<RectTransform>().sizeDelta.x;
+        var rewardSqUIWidth = GameObject.FindWithTag(Camera.main.GetComponent<SceneVariables>().REWARD_SQUARE_UI_TAG).GetComponent<RectTransform>().sizeDelta.x;
         Canvas.ForceUpdateCanvases();
 
         contentPanel.anchoredPosition = (Vector2)scrollRect.transform.InverseTransformPoint(contentPanel.position) - (Vector2)scrollRect.transform.InverseTransformPoint(target.position);
-        contentPanel.anchoredPosition = new Vector2(contentPanel.anchoredPosition.x + rewardSqWidth / 2, 0);
+        contentPanel.anchoredPosition = new Vector2(contentPanel.anchoredPosition.x + rewardSqUIWidth / 2, 0); // assumes top-left pivot
     }
 
     // Update is called once per frame
