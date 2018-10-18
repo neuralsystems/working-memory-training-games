@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PG_RewardSquareParentBehavior : MonoBehaviour {
 
@@ -70,6 +71,7 @@ public class PG_RewardSquareParentBehavior : MonoBehaviour {
     public void ReflectOnScrollList()
     {
         //transform.parent = contentPanel;
+        var rewardSquareUIScroll = GameObject.Find(Camera.main.GetComponent<SceneVariables>().REWARD_SQUARE_UI_SCROLL);  //rewardSquareUIScroll > ViewPort > content_panel
         int num_own_child = transform.childCount;
         int num_content_child = content_panel.transform.childCount;
         Debug.Log("num own count and num content count = " + num_own_child+ " "+ num_content_child  );
@@ -85,7 +87,8 @@ public class PG_RewardSquareParentBehavior : MonoBehaviour {
         {
             DeleteLastChildFromContent();
         }
-
+        rewardSquareUIScroll.GetComponent<ScrollbarStartLeft>().StartLeft();
+//        rewardSquareUIScroll.GetComponent<RewardSquareUIScrollBehavior>().SnapTo(content_panel.GetChild(0).GetComponent<RectTransform>());
     }
     
     void AddChildToContent()

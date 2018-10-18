@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RewardSquareUIScrollBehavior : MonoBehaviour {
 
@@ -20,8 +21,20 @@ public class RewardSquareUIScrollBehavior : MonoBehaviour {
         this.GetComponent<RectTransform>().anchoredPosition = (show) ? showPos: hidePos;
     }
 
-	// Update is called once per frame
-	void Update () {
+    //scrolls to required reward square UI (wrt pivot)
+    public void SnapTo(RectTransform target)
+    {
+        var scrollRect = transform.GetComponent<ScrollRect>();
+        var contentPanel = GameObject.FindWithTag(Camera.main.GetComponent<SceneVariables>().REWARD_SQUARE_UI_PARENT_TAG).GetComponent<RectTransform>();
+        var rewardSqWidth = GameObject.FindWithTag(Camera.main.GetComponent<SceneVariables>().REWARD_SQUARE_UI_TAG).GetComponent<RectTransform>().sizeDelta.x;
+        Canvas.ForceUpdateCanvases();
+
+        contentPanel.anchoredPosition = (Vector2)scrollRect.transform.InverseTransformPoint(contentPanel.position) - (Vector2)scrollRect.transform.InverseTransformPoint(target.position);
+        contentPanel.anchoredPosition = new Vector2(contentPanel.anchoredPosition.x + rewardSqWidth / 2, 0);
+    }
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
 }
