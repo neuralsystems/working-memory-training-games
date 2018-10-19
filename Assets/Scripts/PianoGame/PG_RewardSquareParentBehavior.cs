@@ -6,9 +6,10 @@ using UnityEngine.UI;
 public class PG_RewardSquareParentBehavior : MonoBehaviour {
 
 	public float smoothTime = 10.0050F;
-	private Vector3 velocity = Vector3.zero;
+	Vector3 velocity = Vector3.zero;
 	Vector3 original_position, camera_position;
 	Coroutine scroll_movement;
+
     public Transform content_panel;
     public GameObject RewardSquareUIPoolObject;
 	// Use this for initialization
@@ -46,7 +47,34 @@ public class PG_RewardSquareParentBehavior : MonoBehaviour {
 		StartCoroutine(MoveToTarget(original_position));
 	}
 
-	public void ScrollRewardSquares(bool direction){
+    public int MaximumVisibleRewardSquares()
+    {
+        var rewardSqWidth = GameObject.FindGameObjectWithTag(Camera.main.GetComponent<SceneVariables>().REWARD_SQUARE_TAG).GetComponent<SpriteRenderer>().bounds.size.x;
+        var viewportWidth = Shared_ScriptForGeneralFunctions.GetPointOnScreen(1, 1).x * 2;
+        return (int)(viewportWidth / rewardSqWidth);
+    }
+
+    public void SnapTo(int rewardIndex, int n, int maxVisibleRewardSq)
+    {
+        var rewardSqWidth = GameObject.FindGameObjectWithTag(Camera.main.GetComponent<SceneVariables>().REWARD_SQUARE_TAG).GetComponent<SpriteRenderer>().bounds.size.x;
+        var viewportWidth = Shared_ScriptForGeneralFunctions.GetPointOnScreen(1, 1).x * 2;
+        float targetPosX;
+        if ((n - rewardIndex) >= maxVisibleRewardSq)
+        {
+            targetPosX = -(rewardSqWidth * rewardIndex);
+        }
+        else
+        {
+            targetPosX = -(n * rewardSqWidth - viewportWidth);
+        }
+        var targetPos = new Vector3(targetPosX, transform.position.y);
+        transform.position = targetPos;
+
+        //Debug.Log("targetPos: " + targetPos);
+        //Debug.Log("rewardSqParentPos: " + transform.position);
+    }
+
+    public void ScrollRewardSquares(bool direction){
 		var target = original_position;
 		// right swipe
 		if (direction) {
@@ -87,7 +115,7 @@ public class PG_RewardSquareParentBehavior : MonoBehaviour {
         {
             DeleteLastChildFromContent();
         }
-        rewardSquareUIScroll.GetComponent<ScrollbarStartLeft>().StartLeft();
+        StartCoroutine(rewardSquareUIScroll.GetComponent<ScrollbarStartLeft>().StartLeft());
 //        rewardSquareUIScroll.GetComponent<RewardSquareUIScrollBehavior>().SnapTo(content_panel.GetChild(0).GetComponent<RectTransform>());
     }
     

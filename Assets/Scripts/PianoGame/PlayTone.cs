@@ -165,6 +165,7 @@ public class PlayTone : MonoBehaviour {
 
 	public IEnumerator PlaySomeTone(string notes, string delimeter, int start, int end, bool isRepeat = false, bool isLastRepeat = false){
 		var reward_square_parent = GameObject.Find(Camera.main.GetComponent<SceneVariables>().REWARD_SQUARE_PARENT);
+		var reward_square_ui_scroll = GameObject.Find(Camera.main.GetComponent<SceneVariables>().REWARD_SQUARE_UI_SCROLL);
 		var reward_square_ui_parent = GameObject.FindGameObjectWithTag(Camera.main.GetComponent<SceneVariables>().REWARD_SQUARE_UI_PARENT_TAG);
         //		if (isRepeat) {
         //			var shift =  reward_square_parent.transform.GetChild (0).transform.GetChild (0).GetComponent<SpriteRenderer> ().bounds.size;
@@ -174,8 +175,8 @@ public class PlayTone : MonoBehaviour {
         //		}
         OnKeyPress.numOfKeysPressed = 0;
 		SceneVariables.IS_USER_MODE = false;
-		
-		for (int i = start; i < end; i++) {
+        
+        for (int i = start; i < end; i++) {
 			if (toneTOBePlayed[i] != "") {
                 Debug.Log(toneTOBePlayed[i] + "is played");
                 var token = toneTOBePlayed [i];
@@ -195,13 +196,19 @@ public class PlayTone : MonoBehaviour {
 				}
                 else if (isRepeat && isLastRepeat)
                 {
+                    var maxVisibleRewardSq = reward_square_parent.GetComponent<PG_RewardSquareParentBehavior>().MaximumVisibleRewardSquares();
+                    var n = reward_square_parent.transform.childCount;
+                    if (n > maxVisibleRewardSq)
+                    {
+                        yield return StartCoroutine(reward_square_ui_scroll.GetComponent<RewardSquareUIScrollBehavior>().ScrollTo(i, n, maxVisibleRewardSq));
+                    }
+
                     try
                     {
-                        var reward_square_child_object = reward_square_parent.transform.GetChild(i).transform.GetChild(0);
-                        //reward_square_child_object.GetComponent<SpriteRenderer>().enabled = true;
-                        reward_square_child_object.transform.localScale += new Vector3(1, 1, 1) * .3f;
-                        reward_square_child_object.GetComponent<Rigidbody2D>().gravityScale = 2;
-                        reward_square_child_object.GetComponent<Rigidbody2D>().velocity = new Vector3(2f, 0f, 0f);
+                        //var reward_square_child_object = reward_square_parent.transform.GetChild(i).transform.GetChild(0);
+                        //reward_square_child_object.transform.localScale += new Vector3(1, 1, 1) * .3f;
+                        //reward_square_child_object.GetComponent<Rigidbody2D>().gravityScale = 2;
+                        //reward_square_child_object.GetComponent<Rigidbody2D>().velocity = new Vector3(2f, 0f, 0f);
 
                         var reward_square_ui_child_object = reward_square_ui_parent.transform.GetChild(i).transform.GetChild(0);
                         reward_square_ui_child_object.GetComponent<RectTransform>().localScale += new Vector3(1, 1, 1) * .3f;

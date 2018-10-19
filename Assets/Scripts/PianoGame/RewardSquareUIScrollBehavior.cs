@@ -5,10 +5,11 @@ using UnityEngine.UI;
 
 public class RewardSquareUIScrollBehavior : MonoBehaviour {
 
-    private float height;
-    private Vector2 hidePos;
-    private Vector2 showPos;
-
+    float height;
+    Vector2 hidePos;
+    Vector2 showPos;
+    Vector2 velocity = Vector2.zero;
+    float smoothTime = .5f;
     // Use this for initialization
     void Start () {
         height = this.GetComponent<RectTransform>().sizeDelta.y;
@@ -21,16 +22,28 @@ public class RewardSquareUIScrollBehavior : MonoBehaviour {
         this.GetComponent<RectTransform>().anchoredPosition = (show) ? showPos: hidePos;
     }
 
-    //scrolls to required reward square UI (wrt pivot)
-    public void SnapTo(RectTransform target)
+    //scrolls by shiftCount reward squares
+    public IEnumerator ScrollTo(int rewardIndex, int n, int maxVisibleRewardSq)
     {
-        var scrollRect = transform.GetComponent<ScrollRect>();
-        var contentPanel = GameObject.FindWithTag(Camera.main.GetComponent<SceneVariables>().REWARD_SQUARE_UI_PARENT_TAG).GetComponent<RectTransform>();
-        var rewardSqUIWidth = GameObject.FindWithTag(Camera.main.GetComponent<SceneVariables>().REWARD_SQUARE_UI_TAG).GetComponent<RectTransform>().sizeDelta.x;
-        Canvas.ForceUpdateCanvases();
+        var scrollStep = 1f / (n - maxVisibleRewardSq);
+        var initScrollVal = GetComponent<ScrollRect>().horizontalNormalizedPosition;
+        var scrollTarget = scrollStep * rewardIndex;
 
-        contentPanel.anchoredPosition = (Vector2)scrollRect.transform.InverseTransformPoint(contentPanel.position) - (Vector2)scrollRect.transform.InverseTransformPoint(target.position);
-        contentPanel.anchoredPosition = new Vector2(contentPanel.anchoredPosition.x + rewardSqUIWidth / 2, 0); // assumes top-left pivot
+        if(scrollTarget > 1f)
+        {
+            scrollTarget = 1f;
+        }
+        //Debug.Log("Scroll Step: " + scrollStep);
+        Debug.Log("Scrolling to " + scrollTarget);
+
+        var t = 0f;
+        while (Mathf.Abs(GetComponent<ScrollRect>().horizontalNormalizedPosition - scrollTarget) > 0.01f)
+        {
+            GetComponent<ScrollRect>().horizontalNormalizedPosition = Mathf.Lerp(initScrollVal, scrollTarget, t);
+            t += 0.05f;
+            yield return null;
+        }
+        GetComponent<ScrollRect>().horizontalNormalizedPosition = scrollTarget;
     }
 
     // Update is called once per frame

@@ -5,16 +5,23 @@ using UnityEngine.UI;
 
 public class ScrollbarStartLeft : MonoBehaviour {
 
-    //set left pivot
-    //public GameObject scrollbarContent;
-    //public void StartLeft()
+    public GameObject scrollbarContent;
+    //public IEnumerator StartLeft()
     //{
+    //    yield return null;
+    //    var viewportWidth = transform.GetComponent<RectTransform>().sizeDelta.x;
+    //    var contentWidth = scrollbarContent.GetComponent<RectTransform>().sizeDelta.x;
     //    var anchPos = scrollbarContent.GetComponent<RectTransform>().anchoredPosition;
-    //    scrollbarContent.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, anchPos.y);
+    //    var leftPos = (contentWidth - viewportWidth) / 2;
+    //    if (leftPos > 0f)
+    //    {
+    //        scrollbarContent.GetComponent<RectTransform>().anchoredPosition = new Vector2(leftPos, anchPos.y);
+    //    }
     //}
 
-    public void StartLeft()
+    public IEnumerator StartLeft()
     {
+        yield return null;
         GetComponent<ScrollRect>().horizontalNormalizedPosition = 0;
     }
     // Use this for initialization

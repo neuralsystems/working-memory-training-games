@@ -124,7 +124,8 @@ public class SceneVariables : MonoBehaviour {
 		int old =  oldSquares.Length;
 		var widthInPixels = size_of_one_object.x;
 		var normalizedWidth = GetNormalizedWidth ( widthInPixels, n);
-		Debug.Log (normalizedWidth+" "+ width);
+        var maxVisibleRewardSq = reward_square_parent_gameobject.GetComponent<PG_RewardSquareParentBehavior>().MaximumVisibleRewardSquares();
+        Debug.Log (normalizedWidth+" "+ width);
 		targetRewardSquare = Shared_ScriptForGeneralFunctions.GetPointOnScreen(normalizedWidth/2, heightPercentageForRewardSquare);
 		originalPosition = targetRewardSquare;
 		for (int i = 0; i < n; i++) {
@@ -190,7 +191,16 @@ public class SceneVariables : MonoBehaviour {
         var user_square_parent_go = GameObject.Find(USER_INPUT_SQUARE_PARENT).gameObject;
         user_square_parent_go.GetComponent<ParticleSystem>().Play();
         yield return new WaitForSeconds(sound_manager.GetComponent<SoundManager_Script>().PlayHappySound());
-		for(int i=0;i<=last;i++){
+
+        var n = reward_square_parent_object.transform.childCount;
+        var maxVisibleRewardSq = reward_square_parent_object.GetComponent<PG_RewardSquareParentBehavior>().MaximumVisibleRewardSquares();
+        if (n > maxVisibleRewardSq && x!=0) //shift squares to visibility
+        {
+            yield return StartCoroutine(GameObject.Find(REWARD_SQUARE_UI_SCROLL).GetComponent<RewardSquareUIScrollBehavior>().ScrollTo(REWARD_INDEX, n, maxVisibleRewardSq));
+            reward_square_parent_object.GetComponent<PG_RewardSquareParentBehavior>().SnapTo(REWARD_INDEX, n, maxVisibleRewardSq);
+        }
+
+        for (int i=0;i<=last;i++){
 //		foreach (var userSquare in userSquares) {
 			userSquares[i].transform.parent = null;
 			var shouldCall = false;
@@ -202,7 +212,7 @@ public class SceneVariables : MonoBehaviour {
             //StartCoroutine(userSquares[i].GetComponent<KeySquareBehavior>().MoveToReward(reward_content_panel.GetChild(x).gameObject, shouldCall));
             x++;
 		}
-		REWARD_INDEX = x - overlap;
+        REWARD_INDEX = x - overlap;
 		GameObject.Find (USER_INPUT_SQUARE_PARENT).GetComponent<PianoGame_UserInputSquareParentBehavior> ().ResetPosition ();
 	}
 
