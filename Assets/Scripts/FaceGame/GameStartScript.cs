@@ -8,8 +8,7 @@ public class GameStartScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		Database database = FindObjectOfType<Database>();
-		FaceGame_DataService dataController = new FaceGame_DataService(database.tagsAndNames_sqliteDB);
+		FaceGame_DataService dataController = new FaceGame_DataService(Database.tagsAndNames_sqliteDB);
         // *** uncomment the block if always want to show the basic the one before the pre level 
 
         //var persistant_go = GameObject.Find(Shared_Scenevariables.masterGO);

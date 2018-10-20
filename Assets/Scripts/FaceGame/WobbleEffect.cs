@@ -13,11 +13,9 @@ public class WobbleEffect : MonoBehaviour {
 
 	void SetValues()
 	{
-		Database database = FindObjectOfType<Database>();
-
-		targetScale = database.constants_faceComponentScale;
-        deltaScale = database.constants_wobbleDeltaScale;
-        growFactor = database.constants_wobbleGrowFactor;
+		targetScale = Database.constants_faceComponentScale;
+        deltaScale = Database.constants_wobbleDeltaScale;
+        growFactor = Database.constants_wobbleGrowFactor;
         maxScale = targetScale + deltaScale;
         minScale = targetScale - deltaScale;
 

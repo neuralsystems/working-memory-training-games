@@ -14,7 +14,6 @@ public class LevelManager : MonoBehaviour
 	private int highestLevel = 0;
 	private List<GameObject> sortedPortalList;
 	private GameObject unlocked;
-	private Database database = new Database();
 	private FaceGame_DataService dataController;
 	private string user = "";
     public Text error_text;
@@ -22,15 +21,14 @@ public class LevelManager : MonoBehaviour
     void Start()
 	{
        
-       Database database = FindObjectOfType<Database>();
-       dataController = new FaceGame_DataService(database.tagsAndNames_sqliteDB);
+       dataController = new FaceGame_DataService(Database.tagsAndNames_sqliteDB);
        
         var persistant_go = GameObject.Find(Shared_Scenevariables.masterGO);
         var user_obj = persistant_go.GetComponent<Shared_PersistentScript>().GetCurrentPlayer();
         user = user_obj.Username;
 
 
-        GameObject[] portals = GameObject.FindGameObjectsWithTag(database.tagsAndNames_portals);
+        GameObject[] portals = GameObject.FindGameObjectsWithTag(Database.tagsAndNames_portals);
 
 		sortedPortalList = portals.OrderBy(go => int.Parse(go.name.Substring(6))).ToList();
 
@@ -70,7 +68,7 @@ public class LevelManager : MonoBehaviour
         {
             error_text.text = e.ToString();
         }
-		unlocked = GameObject.Find("Level " + Convert.ToString(highestLevel));
+		unlocked = GameObject.Find(Database.tagsAndNames_levelButton + Convert.ToString(highestLevel));
         float delY = 0.25f * Convert.ToInt16(unlocked.transform.parent.name);
 		FindObjectOfType<Scrollbar>().value = 1f - delY;
         
@@ -95,7 +93,7 @@ public class LevelManager : MonoBehaviour
 		unlocked.GetComponent<WobbleEffect>().StartWobble();
 
 		//Set sprites and level link for unlocked-level buttons
-		unlocked.GetComponent<Button>().onClick.AddListener(() => GameObject.Find(database.tagsAndNames_mapPanel).SetActive(false));
+		unlocked.GetComponent<Button>().onClick.AddListener(() => GameObject.Find(Database.tagsAndNames_mapPanel).SetActive(false));
 		if (int.Parse(unlocked.name.Substring(6)) >= 0)
 		{
 			unlocked.GetComponent<Button>().onClick.AddListener(() => FindObjectOfType<FaceGame_GameManager>().StartLevel());

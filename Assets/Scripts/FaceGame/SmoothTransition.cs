@@ -13,9 +13,8 @@ public class SmoothTransition : MonoBehaviour
 	void SetValues()
 	{
 
-		Database database = FindObjectOfType<Database>();
-		smoothTime = database.constants_smoothTime;
-		speed = database.constants_transitionSpeed;
+		smoothTime = Database.constants_smoothTime;
+		speed = Database.constants_transitionSpeed;
 	}
 
 	public void SetTarget(Vector3 pos, Vector3 scal)
@@ -43,7 +42,7 @@ public class SmoothTransition : MonoBehaviour
 	IEnumerator Transit()
 	{
 		Vector3 velocity = Vector3.zero;
-		float epsilon = FindObjectOfType<Database>().constants_epsilon;
+		float epsilon = Database.constants_epsilon;
 
 		while (new Vector3(Mathf.Abs(transform.position.x - targetPosition.x), Mathf.Abs(transform.position.y - targetPosition.y)).magnitude > epsilon)
 		{

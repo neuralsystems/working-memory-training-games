@@ -7,11 +7,9 @@ public class FadeAway : MonoBehaviour {
 	private float fadePerSecond = 2.5f;
 	private bool fadeIn;
 	private bool fadeOut;
-	private Database database;
     void SetValues()
     {
-        database = FindObjectOfType<Database>();
-        fadePerSecond = database.constants_fadePerSecond;
+        fadePerSecond = Database.constants_fadePerSecond;
 
     }
 

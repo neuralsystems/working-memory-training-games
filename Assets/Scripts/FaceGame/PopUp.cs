@@ -7,9 +7,8 @@ public class PopUp : MonoBehaviour
 
     void Start()
     {
-        Database database = FindObjectOfType<Database>();
-        float targetScale = database.constants_faceComponentScale;
-        float speed = database.constants_popSpeed;
+        float targetScale = Database.constants_faceComponentScale;
+        float speed = Database.constants_popSpeed;
 
         StartCoroutine(Pop(targetScale, speed));
     }

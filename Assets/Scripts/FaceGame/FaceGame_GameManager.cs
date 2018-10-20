@@ -52,11 +52,11 @@ public class FaceGame_GameManager : MonoBehaviour
         database = FindObjectOfType<Database>();
         
         //Initial amount of time for which face is shown
-        faceTime = database.constants_faceShownForSeconds;
+        faceTime = Database.constants_faceShownForSeconds;
         float faceTimeInit = faceTime;
 
         //Creating object for sqlite database access 
-        dataController = new FaceGame_DataService(database.tagsAndNames_sqliteDB);
+        dataController = new FaceGame_DataService(Database.tagsAndNames_sqliteDB);
         var persistant_go = GameObject.Find(Shared_Scenevariables.masterGO);
         var user_obj = persistant_go.GetComponent<Shared_PersistentScript>().GetCurrentPlayer();
 		user = user_obj.Username;
@@ -90,10 +90,10 @@ public class FaceGame_GameManager : MonoBehaviour
 		List<List<int>> randomOptions = new List<List<int>>();
 		GenerateRandomOptionsForFaceComponent(randomOptions);
 
-		ProgressBarBehaviour progressBar = GameObject.Find(database.tagsAndNames_progressBar).GetComponent<ProgressBarBehaviour>();
+		ProgressBarBehaviour progressBar = GameObject.Find(Database.tagsAndNames_progressBar).GetComponent<ProgressBarBehaviour>();
 		SetProgressBar(progressBar);
 
-		GameObject.Find(database.tagsAndNames_tempBackground).GetComponent<SpriteRenderer>().enabled = false;
+		GameObject.Find(Database.tagsAndNames_tempBackground).GetComponent<SpriteRenderer>().enabled = false;
 
 		//Repeat face NumOfRepeat times for every NumOfComp
 		for (mainIndex = progressInSubLevel; mainIndex < levelData.NumOfCompletions; mainIndex++)
@@ -130,10 +130,10 @@ public class FaceGame_GameManager : MonoBehaviour
 
 	IEnumerator GameStart(List<int> randomOptions, ProgressBarBehaviour progressBar, float faceTimeInit)
 	{
-		float smoothTime = database.constants_smoothTime;
+		float smoothTime = Database.constants_smoothTime;
 		GameObject item = Instantiate(itemPrefab);
 		GameObject faceComponents = Instantiate(faceComponentsPrefab, item.transform);
-		Transform[] faceComponent = new Transform[database.constants_noOfFaceComponents];
+		Transform[] faceComponent = new Transform[Database.constants_noOfFaceComponents];
 		SpriteRenderer modal = (SpriteRenderer)Instantiate(modalPrefab, item.transform);
 		SpriteRenderer face = (SpriteRenderer)Instantiate(facePrefab, item.transform);
 		SpriteRenderer modalPart = new SpriteRenderer();
@@ -174,7 +174,7 @@ public class FaceGame_GameManager : MonoBehaviour
 		//Code dor PRE LEVEL
 		if (tutorial)
 		{
-			faceComponent[0].GetChild(0).transform.position = new Vector3(database.constants_faceBaseOffset2, 0f);
+			faceComponent[0].GetChild(0).transform.position = new Vector3(Database.constants_faceBaseOffset2, 0f);
 		}
 		else
 		{
@@ -230,7 +230,7 @@ public class FaceGame_GameManager : MonoBehaviour
 
 	void Cover(SpriteRenderer modal, bool val)
 	{
-		GameObject cover = GameObject.Find(database.tagsAndNames_cover);
+		GameObject cover = GameObject.Find(Database.tagsAndNames_cover);
 		if (val)
 		{
 			cover.transform.position = modal.transform.position;
@@ -262,7 +262,7 @@ public class FaceGame_GameManager : MonoBehaviour
         faceComponent[i] = (Transform)Instantiate(faceComponentPrefab, faceComponents.transform); //Each faceComponent to consist of 'database.NO_OF_OPTIONS' options
         
 		//Randomizing optionPositions under this particular faceComponent
-		RandomizeOptionsWithoutRepeat(database.constants_optionPosLevel);
+		RandomizeOptionsWithoutRepeat(Database.constants_optionPosLevel);
 
 		//Code dor PRE LEVEL
 		Option[] option;
@@ -270,32 +270,34 @@ public class FaceGame_GameManager : MonoBehaviour
 		{
 			option = new Option[1]; //options to be added under this particular faceComponent
 			option[0] = (Option)Instantiate(optionPrefab, faceComponent[i].transform);
-			option[0].gameObject.transform.position = database.constants_optionPosLevel[0]; //optionPosition
-			option[0].pos = new Vector3(database.constants_faceBaseOffset2, 0f); //Position to transfer to on clicking
+			option[0].gameObject.transform.position = Database.constants_optionPosLevel[0]; //optionPosition
+			option[0].transform.position -= new Vector3(0f, Database.constants_optionBGShift[level][i]);
+            option[0].pos = new Vector3(Database.constants_faceBaseOffset2, 0f); //Position to transfer to on clicking
 			option[0].gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("FaceGame/Level_" + Convert.ToString(level + 1) + "/Parts/Part_" + Convert.ToString(i + 1) + Convert.ToString(randomOptions[0])); //Sprite Position allocation
 			option[0].correctKey = true; //Since first option-index is assigned as the modalComponent    
-			option[0].transform.GetChild(0).position += new Vector3(0f,database.constants_optionBGShift[0]);
+			option[0].transform.GetChild(0).position += new Vector3(0f,Database.constants_optionBGShift[level][i]);
 			option[0].GetComponent<WobbleEffect>().StartWobble();
-            //tag = database.tagsAndNames_optionTag;
+            //tag = Database.tagsAndNames_optionTag;
 		}
 		else
 		{
-			option = new Option[database.constants_NO_OF_OPTIONS]; //options to be added under this particular faceComponent      
-			for (int k = 0; k < database.constants_NO_OF_OPTIONS; k++)
+			option = new Option[Database.constants_NO_OF_OPTIONS]; //options to be added under this particular faceComponent      
+			for (int k = 0; k < Database.constants_NO_OF_OPTIONS; k++)
 			{
 				option[k] = (Option)Instantiate(optionPrefab, faceComponent[i].transform);
-				option[k].gameObject.transform.position = database.constants_optionPosLevel[k]; //optionPosition
-				option[k].gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("FaceGame/Level_" + Convert.ToString(level + 1) + "/Parts/Part_" + Convert.ToString(i + 1) + Convert.ToString(randomOptions[k])); //Sprite Position allocation
-				option[k].transform.GetChild(0).position += new Vector3(0f, database.constants_optionBGShift[i]);
+				option[k].gameObject.transform.position = Database.constants_optionPosLevel[k]; //optionPosition
+			    option[k].transform.position -= new Vector3(0f, Database.constants_optionBGShift[level][i]);
+                option[k].gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("FaceGame/Level_" + Convert.ToString(level + 1) + "/Parts/Part_" + Convert.ToString(i + 1) + Convert.ToString(randomOptions[k])); //Sprite Position allocation
+				option[k].transform.GetChild(0).position += new Vector3(0f, Database.constants_optionBGShift[level][i]);
 				option[k].GetComponent<WobbleEffect>().StartWobble();
                 
 				if (preLevel && mainIndex == 1)
                 {
-                    option[k].pos = new Vector3(database.constants_faceBaseOffset2, 0f); //Position to transfer to on clicking
+                    option[k].pos = new Vector3(Database.constants_faceBaseOffset2, 0f); //Position to transfer to on clicking
                 }
                 else
                 {
-                    option[k].pos = new Vector3(database.constants_faceBaseOffset, 0f); //Position to transfer to on clicking
+                    option[k].pos = new Vector3(Database.constants_faceBaseOffset, 0f); //Position to transfer to on clicking
                 }
 
 				//the correct option is the first option of the list
@@ -318,7 +320,7 @@ public class FaceGame_GameManager : MonoBehaviour
         modal.gameObject.SetActive(true);
         modal.transform.position = new Vector3(Camera.main.rect.width * 10f, 0f);
         modal.gameObject.AddComponent<SmoothTransition>();
-		modal.GetComponent<SmoothTransition>().SetTarget(new Vector3(database.constants_faceBaseOffset, 0f), new Vector3(database.constants_faceComponentScale, database.constants_faceComponentScale));
+		modal.GetComponent<SmoothTransition>().SetTarget(new Vector3(Database.constants_faceBaseOffset, 0f), new Vector3(Database.constants_faceComponentScale, Database.constants_faceComponentScale));
 		yield return new WaitForSeconds(time); //shows modal for "faceTime" seconds and then returns
 
     }
@@ -334,7 +336,7 @@ public class FaceGame_GameManager : MonoBehaviour
         modal.gameObject.SetActive(true);
 		modal.transform.position = new Vector3(Camera.main.rect.width * 10f, 0f);
         modal.gameObject.AddComponent<SmoothTransition>();
-		modal.GetComponent<SmoothTransition>().SetTarget(new Vector3(database.constants_faceBaseOffset2, 0f), new Vector3(database.constants_faceComponentScale, database.constants_faceComponentScale));
+		modal.GetComponent<SmoothTransition>().SetTarget(new Vector3(Database.constants_faceBaseOffset2, 0f), new Vector3(Database.constants_faceComponentScale, Database.constants_faceComponentScale));
         yield return null;
     }
 
@@ -355,7 +357,7 @@ public class FaceGame_GameManager : MonoBehaviour
 		int count = 0;
 		while ((rnd[0] == rand[0])&&count<10)
 		{
-			FindObjectOfType<RandomizeArray>().Randomize<Vector3>(database.constants_optionPosLevel);
+			FindObjectOfType<RandomizeArray>().Randomize<Vector3>(Database.constants_optionPosLevel);
 			count++;
 
 		}
@@ -367,7 +369,7 @@ public class FaceGame_GameManager : MonoBehaviour
     {
 		ParticleSystem particleEffect = FindObjectOfType<ParticleSystem>();
         float currentValue = progressBar.Value;
-        float faceTimeDecr = database.constants_faceTimeDecr;
+        float faceTimeDecr = Database.constants_faceTimeDecr;
         float finalValue = currentValue + deltaProgress;
 
         //Increase progress value in progress bar
@@ -388,7 +390,7 @@ public class FaceGame_GameManager : MonoBehaviour
 	IEnumerator WrongMatch()
 	{
 
-        GameObject[] wrongCh = GameObject.FindGameObjectsWithTag(database.tagsAndNames_wrongChoice);
+        GameObject[] wrongCh = GameObject.FindGameObjectsWithTag(Database.tagsAndNames_wrongChoice);
         int count = wrongCh.Length;
 
 		//loop count decreased due to repetition
@@ -412,19 +414,19 @@ public class FaceGame_GameManager : MonoBehaviour
 
 	IEnumerator FaceModalOverlap(SpriteRenderer modal, SpriteRenderer face)
 	{
-		GameObject[] rightCh = GameObject.FindGameObjectsWithTag(database.tagsAndNames_rightChoice);
-		GameObject[] wrongCh = GameObject.FindGameObjectsWithTag(database.tagsAndNames_wrongChoice);
+		GameObject[] rightCh = GameObject.FindGameObjectsWithTag(Database.tagsAndNames_rightChoice);
+		GameObject[] wrongCh = GameObject.FindGameObjectsWithTag(Database.tagsAndNames_wrongChoice);
 		modal.transform.GetChild(0).gameObject.AddComponent<FadeAway>();
 		modal.GetComponentInChildren<FadeAway>().StartFadeOut();
 
-		face.GetComponent<SmoothTransition>().SetTarget(new Vector3(database.constants_faceBaseOffset2, face.transform.position.y), face.transform.localScale);
+		face.GetComponent<SmoothTransition>().SetTarget(new Vector3(Database.constants_faceBaseOffset2, face.transform.position.y), face.transform.localScale);
         foreach (GameObject obj in rightCh)
         {
-            obj.GetComponent<SmoothTransition>().SetTarget(new Vector3(database.constants_faceBaseOffset2, obj.transform.position.y), obj.transform.localScale);
+            obj.GetComponent<SmoothTransition>().SetTarget(new Vector3(Database.constants_faceBaseOffset2, obj.transform.position.y), obj.transform.localScale);
         }
         foreach (GameObject obj in wrongCh)
         {
-            obj.GetComponent<SmoothTransition>().SetTarget(new Vector3(database.constants_faceBaseOffset2, obj.transform.position.y), obj.transform.localScale);
+            obj.GetComponent<SmoothTransition>().SetTarget(new Vector3(Database.constants_faceBaseOffset2, obj.transform.position.y), obj.transform.localScale);
         }
 
         //Comparison for wrong selection
@@ -432,14 +434,14 @@ public class FaceGame_GameManager : MonoBehaviour
 		{
 			yield return new WaitForSeconds(2f);
 		
-			face.GetComponent<SmoothTransition>().SetTarget(new Vector3(database.constants_faceBaseOffset, face.transform.position.y), face.transform.localScale);
+			face.GetComponent<SmoothTransition>().SetTarget(new Vector3(Database.constants_faceBaseOffset, face.transform.position.y), face.transform.localScale);
 			foreach (GameObject obj in rightCh)
 			{
-				obj.GetComponent<SmoothTransition>().SetTarget(new Vector3(database.constants_faceBaseOffset, obj.transform.position.y), obj.transform.localScale);
+				obj.GetComponent<SmoothTransition>().SetTarget(new Vector3(Database.constants_faceBaseOffset, obj.transform.position.y), obj.transform.localScale);
 			}
 			foreach (GameObject obj in wrongCh)
 			{
-				obj.GetComponent<SmoothTransition>().SetTarget(new Vector3(database.constants_faceBaseOffset, obj.transform.position.y), obj.transform.localScale);
+				obj.GetComponent<SmoothTransition>().SetTarget(new Vector3(Database.constants_faceBaseOffset, obj.transform.position.y), obj.transform.localScale);
 			}
 
 			yield return new WaitForSeconds(2f);
@@ -538,7 +540,7 @@ public class FaceGame_GameManager : MonoBehaviour
 		}
 		else
 		{
-			SceneManager.LoadScene(database.scenes_gameStart);
+			SceneManager.LoadScene(Database.scenes_gameStart);
 		}
 		yield return null;
     }

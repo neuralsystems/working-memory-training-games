@@ -8,8 +8,7 @@ public class Blink : MonoBehaviour
 
 	void Start()
     {
-        Database database = FindObjectOfType<Database>();
-        float blinkTime = database.constants_blinkTime;
+        float blinkTime = Database.constants_blinkTime;
 		blink = BlinkEffect(blinkTime);
     }
 

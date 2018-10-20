@@ -15,9 +15,9 @@ public class Component : MonoBehaviour
         SpriteRenderer optionBG;
         GameObject component;
         Database database = FindObjectOfType<Database>();
-        float scaleToRadiusConversionFactor = database.constants_scaleToRadiusConversionFactor;
-        float sizeToScaleConversionFactor = database.constants_sizeToScaleConversionFactor;
-        float smoothTime = database.constants_smoothTime;
+        float scaleToRadiusConversionFactor = Database.constants_scaleToRadiusConversionFactor;
+        float sizeToScaleConversionFactor = Database.constants_sizeToScaleConversionFactor;
+        float smoothTime = Database.constants_smoothTime;
         int count = transform.childCount;
               
 		if (tutorial)
@@ -32,16 +32,16 @@ public class Component : MonoBehaviour
             
 			if (mainIndex != 0)
 			{
-				transform.GetChild(0).GetComponent<SmoothTransition>().SetTarget(database.constants_optionPosLevel[0], transform.GetChild(0).transform.localScale);
+				transform.GetChild(0).GetComponent<SmoothTransition>().SetTarget(Database.constants_optionPosLevel[0], transform.GetChild(0).transform.localScale);
 			}
 			else
 			{
 				Vector3 temp = new Vector3(0f, 0f);
-				for (int i = 0; i < database.constants_optionPosLevel.Count; i++)
+				for (int i = 0; i < Database.constants_optionPosLevel.Count; i++)
 				{
-					temp += database.constants_optionPosLevel[i];
+					temp += Database.constants_optionPosLevel[i];
 				}
-				transform.GetChild(0).GetComponent<SmoothTransition>().SetTarget(temp/database.constants_optionPosLevel.Count, transform.GetChild(0).transform.localScale);
+				transform.GetChild(0).GetComponent<SmoothTransition>().SetTarget(temp/Database.constants_optionPosLevel.Count, transform.GetChild(0).transform.localScale);
 			}
 		}
 		yield return new WaitForSeconds(1.5f);

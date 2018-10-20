@@ -8,7 +8,7 @@ public class Diminish : MonoBehaviour
     void Start()
     {
 		Database database = new Database();
-        float speed = database.constants_diminishSpeed;
+        float speed = Database.constants_diminishSpeed;
 
         StartCoroutine(Dim(speed));
     }

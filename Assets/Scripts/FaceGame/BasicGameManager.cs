@@ -30,7 +30,7 @@ public class BasicGameManager : MonoBehaviour {
     public void GetDetails()
     {
         database = FindObjectOfType<Database>();
-        dataController = new FaceGame_DataService(database.tagsAndNames_sqliteDB);
+        dataController = new FaceGame_DataService(Database.tagsAndNames_sqliteDB);
 
         var persistant_go = GameObject.Find(Shared_Scenevariables.masterGO);
         var user_obj = persistant_go.GetComponent<Shared_PersistentScript>().GetCurrentPlayer();
@@ -45,14 +45,14 @@ public class BasicGameManager : MonoBehaviour {
         iterations = levelData.NumOfCompletions;
         if (levelData.LevelNumber > -1)
         {
-            SceneManager.LoadScene(database.scenes_level);
+            SceneManager.LoadScene(Database.scenes_level);
         }
     }
 	public IEnumerator StartLevel2()
 	{
 
         
-        //dataController = new FaceGame_DataService(database.tagsAndNames_sqliteDB);
+        //dataController = new FaceGame_DataService(Database.tagsAndNames_sqliteDB);
         for (int i = 0; i < totalLevels; i++)
 		{
 			yield return StartCoroutine(BasicLevel(i));
@@ -80,16 +80,16 @@ public class BasicGameManager : MonoBehaviour {
 		Option faceComponent = new Option();
 		ParticleSystem particleEffect = FindObjectOfType<ParticleSystem>();
 
-		GameObject.Find(database.tagsAndNames_tempBackground).GetComponent<SpriteRenderer>().enabled = false;
+		GameObject.Find(Database.tagsAndNames_tempBackground).GetComponent<SpriteRenderer>().enabled = false;
 
 		int noOfOptions = 1;
         if (index == 0)
         {
-            noOfOptions = Math.Min(database.constants_NO_OF_OPTIONS, subIndex + 1);
+            noOfOptions = Math.Min(Database.constants_NO_OF_OPTIONS, subIndex + 1);
         }
         else
         {
-            noOfOptions = database.constants_NO_OF_OPTIONS;
+            noOfOptions = Database.constants_NO_OF_OPTIONS;
         }
 		Option[] options = new Option[noOfOptions];
         
@@ -114,7 +114,7 @@ public class BasicGameManager : MonoBehaviour {
 			//if option chosen is wrong
 			else
 			{
-				GameObject[] objs = GameObject.FindGameObjectsWithTag(database.tagsAndNames_wrongChoice);
+				GameObject[] objs = GameObject.FindGameObjectsWithTag(Database.tagsAndNames_wrongChoice);
 				Option obj = new Option();
 				foreach (var temp in objs)
 				{
@@ -135,7 +135,7 @@ public class BasicGameManager : MonoBehaviour {
 
 				obj.GetComponentInChildren<FadeAway>().StartFadeIn();
 
-				obj.GetComponent<SmoothTransition>().SetTarget(obj.optionPos, new Vector3(database.constants_faceComponentScale, database.constants_faceComponentScale));
+				obj.GetComponent<SmoothTransition>().SetTarget(obj.optionPos, new Vector3(Database.constants_faceComponentScale, Database.constants_faceComponentScale));
 
 				obj.transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
 
@@ -156,17 +156,17 @@ public class BasicGameManager : MonoBehaviour {
 
     void ChangeTouch(bool val)
     {
-        var all_options = GameObject.FindGameObjectsWithTag(database.tagsAndNames_optionTag);
+        var all_options = GameObject.FindGameObjectsWithTag(Database.tagsAndNames_optionTag);
         foreach(var opt in all_options)
         {
             opt.GetComponent<Option>().SetTouch(val);
         }
-        all_options = GameObject.FindGameObjectsWithTag(database.tagsAndNames_rightChoice);
+        all_options = GameObject.FindGameObjectsWithTag(Database.tagsAndNames_rightChoice);
         foreach (var opt in all_options)
         {
             opt.GetComponent<Option>().SetTouch(val);
         }
-        all_options = GameObject.FindGameObjectsWithTag(database.tagsAndNames_wrongChoice);
+        all_options = GameObject.FindGameObjectsWithTag(Database.tagsAndNames_wrongChoice);
         foreach (var opt in all_options)
         {
             opt.GetComponent<Option>().SetTouch(val);
@@ -177,12 +177,12 @@ public class BasicGameManager : MonoBehaviour {
         //Face Component (eg. hair) to match
 		faceComponent = (Option)Instantiate(faceComponentPrefab, item.transform);
 
-		faceComponent.transform.position = new Vector3(database.constants_faceBaseOffset3, -database.constants_optionBGShift[index]);
+		faceComponent.transform.position = new Vector3(Database.constants_faceBaseOffset3, -Database.constants_optionBGShift[levelData.FaceLevel][index]);
 
 		faceComponent.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("FaceGame/Level_1/Parts/Part_" + Convert.ToString(index + 1) + Convert.ToString(subIndex+1));
 		faceComponent.GetComponent<SpriteRenderer>().enabled = true;
 
-		RandomizeOptionsWithoutRepeat(database.constants_optionPosBasic);
+		RandomizeOptionsWithoutRepeat(Database.constants_optionPosBasic);
 
 		//getting 3 random options, first one being correct
 		List<int> rand = GetRandOptions(subIndex);
@@ -192,29 +192,29 @@ public class BasicGameManager : MonoBehaviour {
         {
 			options[i] = (Option)Instantiate(optionsPrefab, item.transform);
 
-			options[i].transform.position = database.constants_optionPosBasic[i];
-			options[i].transform.position -= new Vector3(0f, database.constants_optionBGShift[index]);
-			options[i].transform.GetChild(0).transform.position += new Vector3(0f, database.constants_optionBGShift[index]);
+			options[i].transform.position = Database.constants_optionPosBasic[i];
+			options[i].transform.position -= new Vector3(0f, Database.constants_optionBGShift[levelData.FaceLevel][index]);
+			options[i].transform.GetChild(0).transform.position += new Vector3(0f, Database.constants_optionBGShift[levelData.FaceLevel][index]);
 			options[i].optionPos = options[i].transform.position;
-            options[i].tag = database.tagsAndNames_optionTag;
+            options[i].tag = Database.tagsAndNames_optionTag;
 			options[i].GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("FaceGame/Level_1/Parts/Part_" + Convert.ToString(index + 1) + Convert.ToString(rand[i]));
 			options[i].GetComponent<SpriteRenderer>().enabled = true;
 			options[i].transform.GetChild(0).GetComponent<SpriteRenderer>().enabled = true;
 
-			float targetScale = options[i].GetComponent<SpriteRenderer>().bounds.size.x * database.constants_sizeToScaleConversionFactor;
+			float targetScale = options[i].GetComponent<SpriteRenderer>().bounds.size.x * Database.constants_sizeToScaleConversionFactor;
 			options[i].transform.GetChild(0).localScale = new Vector3(targetScale, targetScale, 0f);
-			options[i].GetComponent<CircleCollider2D>().radius = targetScale * database.constants_scaleToRadiusConversionFactor;
+			options[i].GetComponent<CircleCollider2D>().radius = targetScale * Database.constants_scaleToRadiusConversionFactor;
 			options[i].GetComponent<CircleCollider2D>().enabled = true;
 
 			options[i].GetComponent<WobbleEffect>().StartWobble();
 
 			if (i != 0) //final position of option for incorrect match
 			{
-				options[i].pos = new Vector3(database.constants_faceBaseOffset3 + 0.4f, -database.constants_optionBGShift[index]);
+				options[i].pos = new Vector3(Database.constants_faceBaseOffset3 + 0.4f, -Database.constants_optionBGShift[levelData.FaceLevel][index]);
 			}
 			else //final pos for correct match
 			{
-				options[i].pos = new Vector3(database.constants_faceBaseOffset3, -database.constants_optionBGShift[index]);
+				options[i].pos = new Vector3(Database.constants_faceBaseOffset3, -Database.constants_optionBGShift[levelData.FaceLevel][index]);
 			}
         }
         
@@ -225,7 +225,7 @@ public class BasicGameManager : MonoBehaviour {
 	IEnumerator Hide(GameObject item)
 	{
 		item.AddComponent<SmoothTransition>();
-		item.GetComponent<SmoothTransition>().SetTarget(new Vector3(-20f, 0f), new Vector3(database.constants_faceComponentScale, database.constants_faceComponentScale), 0.2f, 2f);
+		item.GetComponent<SmoothTransition>().SetTarget(new Vector3(-20f, 0f), new Vector3(Database.constants_faceComponentScale, Database.constants_faceComponentScale), 0.2f, 2f);
 		yield return new WaitForSeconds(0.5f);
 
 		Destroy(item);
@@ -244,7 +244,7 @@ public class BasicGameManager : MonoBehaviour {
         int count = 0;
         while ((rnd[0] == rand[0]) && count < 10)
         {
-			FindObjectOfType<RandomizeArray>().Randomize<Vector3>(database.constants_optionPosBasic);
+			FindObjectOfType<RandomizeArray>().Randomize<Vector3>(Database.constants_optionPosBasic);
             count++;
 
         }
@@ -261,14 +261,14 @@ public class BasicGameManager : MonoBehaviour {
 		dataController.SetLevel(levelData.LevelNumber + 1, user);
 		dataController.SetProgress(user, 0);
         
-		SceneManager.LoadScene(database.scenes_level);
+		SceneManager.LoadScene(Database.scenes_level);
 	}
 
 	List<int> GetRandOptions(int subIndex)
 	{
 		List<int> rand = new List<int>();
 		List<int> rand1 = new List<int>();
-		for (int i = 1; i <= database.constants_NO_OF_COMPONENTS_LV1; i++)
+		for (int i = 1; i <= Database.constants_NO_OF_COMPONENTS_LV1; i++)
         {
             if (i != (subIndex + 1))
             {

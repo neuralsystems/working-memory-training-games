@@ -16,12 +16,11 @@ public class MakeItRainObjects : MonoBehaviour {
 
     void Start() {
 
-        Database database = FindObjectOfType<Database>();
-        rainingTime = database.constants_rainingTime;
-        waitingTime = database.constants_rainingIntervalTime;
-        positionsCount = (float)database.constants_rainingPositionsCount;
+        rainingTime = Database.constants_rainingTime;
+        waitingTime = Database.constants_rainingIntervalTime;
+        positionsCount = (float)Database.constants_rainingPositionsCount;
 
-		screenSize = Camera.main.ViewportToWorldPoint(new Vector3(database.viewPortHeight, database.viewPortWidth));
+		screenSize = Camera.main.ViewportToWorldPoint(new Vector3(Database.viewPortHeight, Database.viewPortWidth));
 
         //fixing positions from which objects fall
         for(float i=0f; i<positionsCount; i = i+1) {

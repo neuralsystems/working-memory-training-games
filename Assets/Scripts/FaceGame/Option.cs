@@ -32,11 +32,11 @@ public class Option : MonoBehaviour
         if (!correctKey)
         {
 			database.ifRight = false; //flag for noting unsuccessful game plays
-            gameObject.tag = database.tagsAndNames_wrongChoice;
+            gameObject.tag = Database.tagsAndNames_wrongChoice;
         }
         else
         {
-            gameObject.tag = database.tagsAndNames_rightChoice;
+            gameObject.tag = Database.tagsAndNames_rightChoice;
         }
 
         //fade away option background
@@ -50,7 +50,7 @@ public class Option : MonoBehaviour
 
         //transition onto facebase
 		gameObject.GetComponent<SmoothTransition>().enabled = true;
-		gameObject.GetComponent<SmoothTransition>().SetTarget(pos, new Vector3(database.constants_faceComponentScale, database.constants_faceComponentScale)) ;
+		gameObject.GetComponent<SmoothTransition>().SetTarget(pos, new Vector3(Database.constants_faceComponentScale, Database.constants_faceComponentScale)) ;
 
     }
 
