@@ -126,8 +126,8 @@ public class SceneVariables : MonoBehaviour {
 		var normalizedWidth = GetNormalizedWidth ( widthInPixels, n);
         var maxVisibleRewardSq = reward_square_parent_gameobject.GetComponent<PG_RewardSquareParentBehavior>().MaximumVisibleRewardSquares();
         Debug.Log (normalizedWidth+" "+ width);
-		targetRewardSquare = Shared_ScriptForGeneralFunctions.GetPointOnScreen(normalizedWidth/2, heightPercentageForRewardSquare);
-		originalPosition = targetRewardSquare;
+        targetRewardSquare = Shared_ScriptForGeneralFunctions.GetPointOnScreen(normalizedWidth, heightPercentageForRewardSquare);
+        originalPosition = targetRewardSquare;
 		for (int i = 0; i < n; i++) {
 			if (i < old) {
                 Debug.Log("moving old ones " + (i == n - 1));
@@ -169,8 +169,8 @@ public class SceneVariables : MonoBehaviour {
 		SCREEN_WIDTH = Camera.main.pixelWidth;
 		SCREEN_HEIGHT = Camera.main.pixelHeight;
 		var width = Camera.main.ScreenToWorldPoint (new Vector3 (SCREEN_WIDTH, SCREEN_HEIGHT * heightPercentageForRewardSquare, Camera.main.nearClipPlane)).x - Camera.main.ScreenToWorldPoint (new Vector3 (0, SCREEN_HEIGHT * heightPercentageForRewardSquare, Camera.main.nearClipPlane)).x;
-		Debug.Log ("value is " + (width - (blockNumbers * blockPercent)) / (width * 2.0f));
-		return Mathf.Max(.1f,(width - (blockNumbers * blockPercent)) / (width * 2.0f ));
+		Debug.Log ("value is " + (width - ((blockNumbers-1) * blockPercent)) / (width * 2.0f));
+		return Mathf.Max(0.05f,(width - ((blockNumbers-1) * blockPercent)) / (width * 2.0f ));
 	}
 
 	public Vector3 GetPointOnScreen(float width_percentage, float height_percentage){
@@ -194,7 +194,7 @@ public class SceneVariables : MonoBehaviour {
 
         var n = reward_square_parent_object.transform.childCount;
         var maxVisibleRewardSq = reward_square_parent_object.GetComponent<PG_RewardSquareParentBehavior>().MaximumVisibleRewardSquares();
-        if (n > maxVisibleRewardSq && x!=0) //shift squares to visibility
+        if (n > maxVisibleRewardSq) //shift squares to visibility
         {
             yield return StartCoroutine(GameObject.Find(REWARD_SQUARE_UI_SCROLL).GetComponent<RewardSquareUIScrollBehavior>().ScrollTo(REWARD_INDEX, n, maxVisibleRewardSq));
             reward_square_parent_object.GetComponent<PG_RewardSquareParentBehavior>().SnapTo(REWARD_INDEX, n, maxVisibleRewardSq);

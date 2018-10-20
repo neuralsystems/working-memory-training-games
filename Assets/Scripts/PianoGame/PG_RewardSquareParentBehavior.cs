@@ -49,14 +49,14 @@ public class PG_RewardSquareParentBehavior : MonoBehaviour {
 
     public int MaximumVisibleRewardSquares()
     {
-        var rewardSqWidth = GameObject.FindGameObjectWithTag(Camera.main.GetComponent<SceneVariables>().REWARD_SQUARE_TAG).GetComponent<SpriteRenderer>().bounds.size.x;
+        var rewardSqWidth = Camera.main.GetComponent<SceneVariables>().rewardSquare.GetComponent<SpriteRenderer>().bounds.size.x;
         var viewportWidth = Shared_ScriptForGeneralFunctions.GetPointOnScreen(1, 1).x * 2;
         return (int)(viewportWidth / rewardSqWidth);
     }
 
     public void SnapTo(int rewardIndex, int n, int maxVisibleRewardSq)
     {
-        var rewardSqWidth = GameObject.FindGameObjectWithTag(Camera.main.GetComponent<SceneVariables>().REWARD_SQUARE_TAG).GetComponent<SpriteRenderer>().bounds.size.x;
+        var rewardSqWidth = Camera.main.GetComponent<SceneVariables>().rewardSquare.GetComponent<SpriteRenderer>().bounds.size.x;
         var viewportWidth = Shared_ScriptForGeneralFunctions.GetPointOnScreen(1, 1).x * 2;
         float targetPosX;
         if ((n - rewardIndex) >= maxVisibleRewardSq)
@@ -99,7 +99,7 @@ public class PG_RewardSquareParentBehavior : MonoBehaviour {
     public void ReflectOnScrollList()
     {
         //transform.parent = contentPanel;
-        var rewardSquareUIScroll = GameObject.Find(Camera.main.GetComponent<SceneVariables>().REWARD_SQUARE_UI_SCROLL);  //rewardSquareUIScroll > ViewPort > content_panel
+        var rewardSquareScroll = GameObject.Find(Camera.main.GetComponent<SceneVariables>().REWARD_SQUARE_UI_SCROLL);  //rewardSquareUIScroll > ViewPort > content_panel
         int num_own_child = transform.childCount;
         int num_content_child = content_panel.transform.childCount;
         Debug.Log("num own count and num content count = " + num_own_child+ " "+ num_content_child  );
@@ -115,10 +115,11 @@ public class PG_RewardSquareParentBehavior : MonoBehaviour {
         {
             DeleteLastChildFromContent();
         }
-        StartCoroutine(rewardSquareUIScroll.GetComponent<ScrollbarStartLeft>().StartLeft());
-//        rewardSquareUIScroll.GetComponent<RewardSquareUIScrollBehavior>().SnapTo(content_panel.GetChild(0).GetComponent<RectTransform>());
+        StartCoroutine(rewardSquareScroll.GetComponent<ScrollbarStartLeft>().StartLeft());
+        rewardSquareScroll.GetComponent<RewardSquareUIScrollBehavior>().Show(true);
+        //        rewardSquareUIScroll.GetComponent<RewardSquareUIScrollBehavior>().SnapTo(content_panel.GetChild(0).GetComponent<RectTransform>());
     }
-    
+
     void AddChildToContent()
     {
         var UI_object = RewardSquareUIPoolObject.GetComponent<SimpleObjectPool>().GetObject();

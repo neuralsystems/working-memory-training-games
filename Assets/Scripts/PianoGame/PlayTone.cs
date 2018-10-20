@@ -111,18 +111,32 @@ public class PlayTone : MonoBehaviour {
 	}
 
 
-	public IEnumerator DisplayOnLevelComplete(){
-		Debug.Log ("called DisplayOnLevelComplete");
+    public IEnumerator DisplayOnLevelComplete() {
+        Debug.Log("called DisplayOnLevelComplete");
         ChangeLevel();
-        DestroyCueSquares (Camera.main.GetComponent<SceneVariables> ().USER_INPUT_SQUARE_TAG);
-		DestroyCueSquares (Camera.main.GetComponent<SceneVariables> ().SAMPLE_SQUARE_TAG);
-//		GameObject.Find (GetComponent<SceneVariables> ().REWARD_SQUARE_PARENT).transform.position = GameObject.Find (GetComponent<SceneVariables> ().USER_INPUT_SQUARE_PARENT).transform.position;
-		StartCoroutine(GameObject.Find (GetComponent<SceneVariables> ().REWARD_SQUARE_PARENT).GetComponent<PG_RewardSquareParentBehavior>().MoveToTarget( GameObject.Find (GetComponent<SceneVariables> ().USER_INPUT_SQUARE_PARENT).transform.position));
+        DestroyCueSquares(Camera.main.GetComponent<SceneVariables>().USER_INPUT_SQUARE_TAG);
+        DestroyCueSquares(Camera.main.GetComponent<SceneVariables>().SAMPLE_SQUARE_TAG);
+        //		GameObject.Find (GetComponent<SceneVariables> ().REWARD_SQUARE_PARENT).transform.position = GameObject.Find (GetComponent<SceneVariables> ().USER_INPUT_SQUARE_PARENT).transform.position;
+
+        var rewardSquareScroll = GameObject.Find(GetComponent<SceneVariables>().REWARD_SQUARE_UI_SCROLL);
+        var rewardSquareUIParent = GameObject.FindGameObjectWithTag(Camera.main.GetComponent<SceneVariables>().REWARD_SQUARE_UI_PARENT_TAG);
+        var shiftHeight = rewardSquareScroll.GetComponent<RectTransform>().sizeDelta.y;
+        var rewardScrollPos = rewardSquareScroll.GetComponent<RectTransform>().anchoredPosition;
+        //StartCoroutine(GameObject.Find (GetComponent<SceneVariables> ().REWARD_SQUARE_PARENT).GetComponent<PG_RewardSquareParentBehavior>().MoveToTarget( GameObject.Find (GetComponent<SceneVariables> ().USER_INPUT_SQUARE_PARENT).transform.position));
+        StartCoroutine(rewardSquareScroll.GetComponent<RewardSquareUIScrollBehavior>().MoveToAnchoredPosition(new Vector2(rewardScrollPos.x, rewardScrollPos.y - shiftHeight)));
         Debug.Log("PG_RewardSquareParentBehavior: MoveToTarget()");
         //----------------------------frog parent moves down for popping of reward squares
         //----------------------------code: move down frogUIParent and disable reward sqUIs, add func to shift then pop reward squares
-        yield return StartCoroutine(RepeatTone (true));
-		var rain_particle_system_object = GameObject.FindGameObjectWithTag (Camera.main.GetComponent<SceneVariables> ().RAIN_PARTICLE_SYSTEM_TAG);
+        yield return StartCoroutine(RepeatTone(true));
+
+        //resetting keySquare for next level
+        foreach (Transform rewardSquareUI in rewardSquareUIParent.transform)
+        {
+            var keySquareUI = rewardSquareUI.GetChild(0);
+            keySquareUI.GetComponent<KeySquareUIBehavior>().Pop(false);
+        }
+        rewardSquareScroll.GetComponent<RewardSquareUIScrollBehavior>().Show(false);
+        var rain_particle_system_object = GameObject.FindGameObjectWithTag (Camera.main.GetComponent<SceneVariables> ().RAIN_PARTICLE_SYSTEM_TAG);
 		rain_particle_system_object.GetComponent<ParticleSystem> ().Play ();
 		yield return StartCoroutine(WaitForRainToStop(rain_particle_system_object.GetComponent<ParticleSystem>()));
 	}
@@ -211,9 +225,7 @@ public class PlayTone : MonoBehaviour {
                         //reward_square_child_object.GetComponent<Rigidbody2D>().velocity = new Vector3(2f, 0f, 0f);
 
                         var reward_square_ui_child_object = reward_square_ui_parent.transform.GetChild(i).transform.GetChild(0);
-                        reward_square_ui_child_object.GetComponent<RectTransform>().localScale += new Vector3(1, 1, 1) * .3f;
-                        reward_square_ui_child_object.GetComponent<Rigidbody2D>().gravityScale = 40;
-                        reward_square_ui_child_object.GetComponent<Rigidbody2D>().velocity = new Vector3(200f, 0f, 0f);
+                        reward_square_ui_child_object.GetComponent<KeySquareUIBehavior>().Pop(true);
 
                     }
                     catch (Exception e)

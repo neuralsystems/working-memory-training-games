@@ -8,8 +8,7 @@ public class RewardSquareUIScrollBehavior : MonoBehaviour {
     float height;
     Vector2 hidePos;
     Vector2 showPos;
-    Vector2 velocity = Vector2.zero;
-    float smoothTime = .5f;
+
     // Use this for initialization
     void Start () {
         height = this.GetComponent<RectTransform>().sizeDelta.y;
@@ -22,25 +21,31 @@ public class RewardSquareUIScrollBehavior : MonoBehaviour {
         this.GetComponent<RectTransform>().anchoredPosition = (show) ? showPos: hidePos;
     }
 
+    public IEnumerator MoveToAnchoredPosition(Vector2 pos)
+    {
+        while(Vector2.Distance(transform.GetComponent<RectTransform>().anchoredPosition, pos) > 0.01f)
+        {
+            Vector2.MoveTowards(transform.GetComponent<RectTransform>().anchoredPosition, pos, Time.deltaTime);
+            yield return null;
+        }
+        transform.GetComponent<RectTransform>().anchoredPosition = pos;
+    }
+
     //scrolls by shiftCount reward squares
     public IEnumerator ScrollTo(int rewardIndex, int n, int maxVisibleRewardSq)
     {
         var scrollStep = 1f / (n - maxVisibleRewardSq);
         var initScrollVal = GetComponent<ScrollRect>().horizontalNormalizedPosition;
-        var scrollTarget = scrollStep * rewardIndex;
-
-        if(scrollTarget > 1f)
-        {
-            scrollTarget = 1f;
-        }
+        var scrollTarget = Mathf.Min(1f,scrollStep * rewardIndex);
+        
         //Debug.Log("Scroll Step: " + scrollStep);
         Debug.Log("Scrolling to " + scrollTarget);
 
         var t = 0f;
-        while (Mathf.Abs(GetComponent<ScrollRect>().horizontalNormalizedPosition - scrollTarget) > 0.01f)
+        while (Mathf.Abs(GetComponent<ScrollRect>().horizontalNormalizedPosition - scrollTarget) > 0.02f)
         {
             GetComponent<ScrollRect>().horizontalNormalizedPosition = Mathf.Lerp(initScrollVal, scrollTarget, t);
-            t += 0.05f;
+            t += 0.1f;
             yield return null;
         }
         GetComponent<ScrollRect>().horizontalNormalizedPosition = scrollTarget;
