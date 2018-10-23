@@ -31,6 +31,13 @@ public class RewardSquareUIScrollBehavior : MonoBehaviour {
         transform.GetComponent<RectTransform>().anchoredPosition = pos;
     }
 
+    public IEnumerator MoveDown()
+    {
+        var shiftHeight = transform.GetComponent<RectTransform>().sizeDelta.y;
+        var anchPos = transform.GetComponent<RectTransform>().anchoredPosition;
+        yield return StartCoroutine(MoveToAnchoredPosition(new Vector2(anchPos.x, anchPos.y - shiftHeight)));
+    }
+
     //scrolls by shiftCount reward squares
     public IEnumerator ScrollTo(int rewardIndex, int n, int maxVisibleRewardSq)
     {

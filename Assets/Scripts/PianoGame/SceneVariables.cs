@@ -43,8 +43,9 @@ public class SceneVariables : MonoBehaviour {
 	public static float INITIAL_ANGLE = 90;
 	public static float stepSize = 2.14f;
 	public static bool IS_READY = true;
-	public static int error_count = 0, max_allowed_error = 5, min_tone_length = 2;		// used to make the game adaptive by counting the userś performace as # of consequtive correct or incorrect
-	public static float MIN_DISTANCE = 0.1f;												// if an object is MIN_DISTANCE away from target we will set it's postion equal to target position (see move functions)
+	public static int error_count = 0, sequence_error_count = 0, max_allowed_error = 5, min_tone_length = 2;        // used to make the game adaptive by counting the userś performace as # of consequtive correct or incorrect
+    public static float level_decrease_error = 0.7f;
+    public static float MIN_DISTANCE = 0.1f;												// if an object is MIN_DISTANCE away from target we will set it's postion equal to target position (see move functions)
 	public bool correctMatch = false;
 	public int level = 1;
 	public int CONSECUTIVE_CORRECT_THRESHOLD = 5;
@@ -114,7 +115,15 @@ public class SceneVariables : MonoBehaviour {
 				Destroy (child.gameObject);
 			}
 		}
-		Debug.Log("already have "+ oldSquares.Length + "squares ");
+        GameObject[] oldUISquares = GameObject.FindGameObjectsWithTag(REWARD_SQUARE_UI_TAG);
+        foreach (GameObject old_square_ui_object in oldUISquares)
+        {
+            foreach (Transform child in old_square_ui_object.transform)
+            {
+                child.GetComponent<KeySquareUIBehavior>().Pop(false); //resets visibility, position
+            }
+        }
+        Debug.Log("already have "+ oldSquares.Length + "squares ");
 		var SCREEN_WIDTH = Camera.main.pixelWidth;
 		var SCREEN_HEIGHT = Camera.main.pixelHeight;
 		var init_position = Shared_ScriptForGeneralFunctions.GetPointOnScreen (1, heightPercentageForRewardSquare);

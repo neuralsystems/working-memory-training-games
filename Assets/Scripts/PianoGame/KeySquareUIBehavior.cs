@@ -36,8 +36,9 @@ public class KeySquareUIBehavior : MonoBehaviour {
             transform.GetComponent<Image>().enabled = false;
         }
     }
-	// Update is called once per frame
-	void Update () {
+    
+    // Update is called once per frame
+    void Update () {
 		
 	}
 }

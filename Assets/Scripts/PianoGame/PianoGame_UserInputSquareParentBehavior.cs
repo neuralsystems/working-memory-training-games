@@ -44,6 +44,7 @@ public class PianoGame_UserInputSquareParentBehavior : MonoBehaviour
             var reward_square_ui_scroll = GameObject.Find(Camera.main.GetComponent<SceneVariables>().REWARD_SQUARE_UI_SCROLL);
             //				var new_position = reward_square_parent.transform.position;
             //				new_position.y += reward_square_parent.GetComponent<SpriteRenderer> ().bounds.size.y;
+            SceneVariables.sequence_error_count = 0;
             reward_square_parent.GetComponent<PG_RewardSquareParentBehavior>().ResetPosition();
             reward_square_ui_scroll.GetComponent<RewardSquareUIScrollBehavior>().Show(true);
             //				GetComponentInParent<ParticleSystem> ().Play ();
@@ -55,8 +56,11 @@ public class PianoGame_UserInputSquareParentBehavior : MonoBehaviour
         }
         else
         {
+            SceneVariables.sequence_error_count++;
+            Camera.main.GetComponent<PlayTone>().CheckWhilePlay();
             Camera.main.GetComponent<PlayTone>().DestroyCueSquares(Camera.main.GetComponent<SceneVariables>().USER_INPUT_SQUARE_TAG);
             GameObject.Find(Camera.main.GetComponent<SceneVariables>().playSound).GetComponent<HomeScreenButtons>().SetHaloToggle(true);
+
         }
 
     }

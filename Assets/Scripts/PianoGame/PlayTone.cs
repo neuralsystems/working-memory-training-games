@@ -111,34 +111,33 @@ public class PlayTone : MonoBehaviour {
 	}
 
 
-    public IEnumerator DisplayOnLevelComplete() {
+    public IEnumerator DisplayOnLevelComplete(bool total_sequence_played) {
         Debug.Log("called DisplayOnLevelComplete");
-        ChangeLevel();
+
+        if (total_sequence_played) { ChangeLevel(); }
+
         DestroyCueSquares(Camera.main.GetComponent<SceneVariables>().USER_INPUT_SQUARE_TAG);
         DestroyCueSquares(Camera.main.GetComponent<SceneVariables>().SAMPLE_SQUARE_TAG);
         //		GameObject.Find (GetComponent<SceneVariables> ().REWARD_SQUARE_PARENT).transform.position = GameObject.Find (GetComponent<SceneVariables> ().USER_INPUT_SQUARE_PARENT).transform.position;
 
-        var rewardSquareScroll = GameObject.Find(GetComponent<SceneVariables>().REWARD_SQUARE_UI_SCROLL);
-        var rewardSquareUIParent = GameObject.FindGameObjectWithTag(Camera.main.GetComponent<SceneVariables>().REWARD_SQUARE_UI_PARENT_TAG);
-        var shiftHeight = rewardSquareScroll.GetComponent<RectTransform>().sizeDelta.y;
-        var rewardScrollPos = rewardSquareScroll.GetComponent<RectTransform>().anchoredPosition;
-        //StartCoroutine(GameObject.Find (GetComponent<SceneVariables> ().REWARD_SQUARE_PARENT).GetComponent<PG_RewardSquareParentBehavior>().MoveToTarget( GameObject.Find (GetComponent<SceneVariables> ().USER_INPUT_SQUARE_PARENT).transform.position));
-        StartCoroutine(rewardSquareScroll.GetComponent<RewardSquareUIScrollBehavior>().MoveToAnchoredPosition(new Vector2(rewardScrollPos.x, rewardScrollPos.y - shiftHeight)));
-        Debug.Log("PG_RewardSquareParentBehavior: MoveToTarget()");
-        //----------------------------frog parent moves down for popping of reward squares
-        //----------------------------code: move down frogUIParent and disable reward sqUIs, add func to shift then pop reward squares
-        yield return StartCoroutine(RepeatTone(true));
-
-        //resetting keySquare for next level
-        foreach (Transform rewardSquareUI in rewardSquareUIParent.transform)
+        var reward_square_scroll = GameObject.Find(GetComponent<SceneVariables>().REWARD_SQUARE_UI_SCROLL);
+        if (total_sequence_played)
         {
-            var keySquareUI = rewardSquareUI.GetChild(0);
-            keySquareUI.GetComponent<KeySquareUIBehavior>().Pop(false);
+            StartCoroutine(reward_square_scroll.GetComponent<RewardSquareUIScrollBehavior>().MoveDown());
+            Debug.Log("RewardSquareUIScrollBehavior: MoveDown()");
+            //StartCoroutine(GameObject.Find (GetComponent<SceneVariables> ().REWARD_SQUARE_PARENT).GetComponent<PG_RewardSquareParentBehavior>().MoveToTarget( GameObject.Find (GetComponent<SceneVariables> ().USER_INPUT_SQUARE_PARENT).transform.position));
+
+            yield return StartCoroutine(RepeatTone(true));
         }
-        rewardSquareScroll.GetComponent<RewardSquareUIScrollBehavior>().Show(false);
-        var rain_particle_system_object = GameObject.FindGameObjectWithTag (Camera.main.GetComponent<SceneVariables> ().RAIN_PARTICLE_SYSTEM_TAG);
-		rain_particle_system_object.GetComponent<ParticleSystem> ().Play ();
-		yield return StartCoroutine(WaitForRainToStop(rain_particle_system_object.GetComponent<ParticleSystem>()));
+
+        reward_square_scroll.GetComponent<RewardSquareUIScrollBehavior>().Show(false);
+
+        if (total_sequence_played)
+        { 
+            var rain_particle_system_object = GameObject.FindGameObjectWithTag(Camera.main.GetComponent<SceneVariables>().RAIN_PARTICLE_SYSTEM_TAG);
+            rain_particle_system_object.GetComponent<ParticleSystem>().Play();
+            yield return StartCoroutine(WaitForRainToStop(rain_particle_system_object.GetComponent<ParticleSystem>()));
+        }
 	}
 
     void ChangeLevel()
@@ -382,12 +381,25 @@ public class PlayTone : MonoBehaviour {
         }
 
 	}
+    public void CheckWhilePlay()
+    {
+        Debug.Log("CheckWhilePlauy");
+        if ((SceneVariables.sequence_error_count*1f)/CONSECUTIVE_CORRECT_THRESHOLD >= SceneVariables.level_decrease_error)
+        {
+            SceneVariables.error_count = SceneVariables.sequence_error_count;
+            num_of_notes = CONSECUTIVE_CORRECT_THRESHOLD;
+            ChangeLevel();
+            StartCoroutine(DisplayOnLevelComplete(false));
+            StartCoroutine(LoadNextLevel());
+        }
+        Debug.Log("sequence_error_count: " + SceneVariables.sequence_error_count + " threshold: " + CONSECUTIVE_CORRECT_THRESHOLD);
+    }
 
 	public void CheckOnComplete(){
 		Debug.Log ("Checked for level complete");
 		if (consequtive_correct >= CONSECUTIVE_CORRECT_THRESHOLD) {
 			SceneVariables.IS_USER_MODE = false;
-			StartCoroutine (DisplayOnLevelComplete ());
+			StartCoroutine (DisplayOnLevelComplete (true));
 		}
         else
         {
