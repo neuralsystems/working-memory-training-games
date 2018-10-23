@@ -237,6 +237,7 @@ public class SceneVariables : MonoBehaviour {
 		REWARD_INDEX = 0;
 		IS_USER_MODE = false;	
 		IS_READY = true;
+        sequence_error_count = 0;
         error_count = 0;
         OnKeyPress.numOfKeysPressed = 0;
 		GameObject.Find (REWARD_SQUARE_PARENT).transform.position = GetPointOnScreen (widthPercentageForRewardSquare, heightPercentageForRewardSquare);

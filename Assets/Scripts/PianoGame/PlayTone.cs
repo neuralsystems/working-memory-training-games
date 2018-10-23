@@ -114,7 +114,7 @@ public class PlayTone : MonoBehaviour {
     public IEnumerator DisplayOnLevelComplete(bool total_sequence_played) {
         Debug.Log("called DisplayOnLevelComplete");
 
-        if (total_sequence_played) { ChangeLevel(); }
+        if (total_sequence_played) { ChangeLevel(SceneVariables.error_count, num_of_notes); }
 
         DestroyCueSquares(Camera.main.GetComponent<SceneVariables>().USER_INPUT_SQUARE_TAG);
         DestroyCueSquares(Camera.main.GetComponent<SceneVariables>().SAMPLE_SQUARE_TAG);
@@ -140,7 +140,7 @@ public class PlayTone : MonoBehaviour {
         }
 	}
 
-    void ChangeLevel()
+    void ChangeLevel(int error_count, int total)
     {
         var persistan_go = GameObject.Find(Shared_Scenevariables.masterGO);
         // ***************************** //
@@ -159,7 +159,7 @@ public class PlayTone : MonoBehaviour {
         //    change_by = 1;
         //}
         //Debug.Log(change_by + "is the change_by and error count = " + SceneVariables.error_count);
-        persistan_go.GetComponent<Shared_PersistentScript>().IncreaseLevelPianoGame(SceneVariables.error_count *1.0f, num_of_notes *1.0f);
+        persistan_go.GetComponent<Shared_PersistentScript>().IncreaseLevelPianoGame(error_count *1.0f, total *1.0f);
     }
 	public IEnumerator WaitForRainToStop(ParticleSystem rain){
 		if (rain.isPlaying) {
@@ -381,14 +381,13 @@ public class PlayTone : MonoBehaviour {
         }
 
 	}
+
     public void CheckWhilePlay()
     {
         Debug.Log("CheckWhilePlauy");
         if ((SceneVariables.sequence_error_count*1f)/CONSECUTIVE_CORRECT_THRESHOLD >= SceneVariables.level_decrease_error)
         {
-            SceneVariables.error_count = SceneVariables.sequence_error_count;
-            num_of_notes = CONSECUTIVE_CORRECT_THRESHOLD;
-            ChangeLevel();
+            ChangeLevel(SceneVariables.sequence_error_count, CONSECUTIVE_CORRECT_THRESHOLD);
             StartCoroutine(DisplayOnLevelComplete(false));
             StartCoroutine(LoadNextLevel());
         }
