@@ -46,7 +46,7 @@ public class PianoGame_UserInputSquareParentBehavior : MonoBehaviour
             //				new_position.y += reward_square_parent.GetComponent<SpriteRenderer> ().bounds.size.y;
             SceneVariables.sequence_error_count = 0;
             reward_square_parent.GetComponent<PG_RewardSquareParentBehavior>().ResetPosition();
-            reward_square_ui_scroll.GetComponent<RewardSquareUIScrollBehavior>().Show(true);
+            //StartCoroutine(reward_square_ui_scroll.GetComponent<RewardSquareUIScrollBehavior>().Show(true));
             //				GetComponentInParent<ParticleSystem> ().Play ();
 
             Camera.main.GetComponent<SceneVariables>().ShowSquares();

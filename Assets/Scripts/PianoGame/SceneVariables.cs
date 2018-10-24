@@ -44,7 +44,6 @@ public class SceneVariables : MonoBehaviour {
 	public static float stepSize = 2.14f;
 	public static bool IS_READY = true;
 	public static int error_count = 0, sequence_error_count = 0, max_allowed_error = 5, min_tone_length = 2;        // used to make the game adaptive by counting the userś performace as # of consequtive correct or incorrect
-    public static float level_decrease_error = 0.7f;
     public static float MIN_DISTANCE = 0.1f;												// if an object is MIN_DISTANCE away from target we will set it's postion equal to target position (see move functions)
 	public bool correctMatch = false;
 	public int level = 1;
@@ -137,7 +136,11 @@ public class SceneVariables : MonoBehaviour {
         Debug.Log (normalizedWidth+" "+ width);
         targetRewardSquare = Shared_ScriptForGeneralFunctions.GetPointOnScreen(normalizedWidth, heightPercentageForRewardSquare);
         originalPosition = targetRewardSquare;
-		for (int i = 0; i < n; i++) {
+        for (int i = n; i < old; i++)
+        {
+            RewardPoolObject.GetComponent<SimpleObjectPool>().ReturnObject(oldSquares[i]);
+        }
+        for (int i = 0; i < n; i++) {
 			if (i < old) {
                 Debug.Log("moving old ones " + (i == n - 1));
 				StartCoroutine (oldSquares [i].GetComponent<PianoGame_RewardSquareBehavior> ().MoveToTarget (targetRewardSquare, i == n-1, REWARD_SQUARE_TAG));
@@ -166,12 +169,9 @@ public class SceneVariables : MonoBehaviour {
 
             yield return null;
 		}
-        for (int i = n; i < old; i++)
-        {
-            RewardPoolObject.GetComponent<SimpleObjectPool>().ReturnObject(oldSquares[i]);
-        }
+
         //		GameObject.Find (Camera.main.GetComponent<SceneVariables> ().playSound).GetComponent<HomeScreenButtons> ().SetHaloToggle(true);
-        
+
     }
 
 	float GetNormalizedWidth( float blockPercent, float blockNumbers){

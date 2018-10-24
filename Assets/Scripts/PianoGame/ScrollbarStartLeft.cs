@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ScrollbarStartLeft : MonoBehaviour {
 
-    public GameObject scrollbarContent;
+    //public GameObject scrollbarContent;
     //public IEnumerator StartLeft()
     //{
     //    yield return null;

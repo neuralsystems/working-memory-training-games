@@ -6,19 +6,25 @@ using UnityEngine.UI;
 public class RewardSquareUIScrollBehavior : MonoBehaviour {
 
     float height;
-    Vector2 hidePos;
-    Vector2 showPos;
-
+    
     // Use this for initialization
     void Start () {
         height = this.GetComponent<RectTransform>().sizeDelta.y;
-        showPos = this.GetComponent<RectTransform>().anchoredPosition;
-        hidePos = new Vector2(showPos.x, showPos.y + height);
     }
 
-    public void Show(bool show)
+    public IEnumerator Show(bool val)
     {
-        this.GetComponent<RectTransform>().anchoredPosition = (show) ? showPos: hidePos;
+        if (val)
+        {
+            yield return null;
+            GetComponent<ScrollRect>().horizontalNormalizedPosition = 0;
+        }
+        yield return null;
+        var contentPanel = Camera.main.GetComponent<SceneVariables>().contentPanel;
+        foreach (Transform rewardSq in contentPanel)
+        {
+            rewardSq.GetComponent<Image>().enabled = val;
+        }
     }
 
     public IEnumerator MoveToAnchoredPosition(Vector2 pos)
@@ -33,7 +39,7 @@ public class RewardSquareUIScrollBehavior : MonoBehaviour {
 
     public IEnumerator MoveDown()
     {
-        var shiftHeight = transform.GetComponent<RectTransform>().sizeDelta.y;
+        var shiftHeight = height;
         var anchPos = transform.GetComponent<RectTransform>().anchoredPosition;
         yield return StartCoroutine(MoveToAnchoredPosition(new Vector2(anchPos.x, anchPos.y - shiftHeight)));
     }

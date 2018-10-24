@@ -61,11 +61,11 @@ public class PG_RewardSquareParentBehavior : MonoBehaviour {
         float targetPosX;
         if ((n - rewardIndex) >= maxVisibleRewardSq)
         {
-            targetPosX = -(rewardSqWidth * rewardIndex);
+            targetPosX = -(rewardSqWidth * rewardIndex); //snap to position: rewardIndex
         }
         else
         {
-            targetPosX = -(n * rewardSqWidth - viewportWidth);
+            targetPosX = -(n * rewardSqWidth - viewportWidth); //snap to end of reward square list
         }
         var targetPos = new Vector3(targetPosX, transform.position.y);
         transform.position = targetPos;
@@ -96,7 +96,7 @@ public class PG_RewardSquareParentBehavior : MonoBehaviour {
 		StartCoroutine (MoveToTarget (new_position));
 	}
 
-    public void ReflectOnScrollList()
+    public IEnumerator ReflectOnScrollList()
     {
         //transform.parent = contentPanel;
         var rewardSquareScroll = GameObject.Find(Camera.main.GetComponent<SceneVariables>().REWARD_SQUARE_UI_SCROLL);  //rewardSquareUIScroll > ViewPort > content_panel
@@ -109,14 +109,19 @@ public class PG_RewardSquareParentBehavior : MonoBehaviour {
             {
                 AddChildToContent();
             }
-            transform.GetChild(i).GetComponent<PianoGame_RewardSquareBehavior>().SetObjAndChildVisibility(false);
         }
         for(int i = num_own_child; i < num_content_child; i++)
         {
+            Debug.Log("Calling Delete UI pool object");
             DeleteLastChildFromContent();
         }
-        StartCoroutine(rewardSquareScroll.GetComponent<ScrollbarStartLeft>().StartLeft());
-        rewardSquareScroll.GetComponent<RewardSquareUIScrollBehavior>().Show(true);
+
+        yield return StartCoroutine(rewardSquareScroll.GetComponent<RewardSquareUIScrollBehavior>().Show(true)); //show ui rewardsqs, then disable normal reward sqs
+
+        for (int i = 0; i < num_own_child; i++)
+        {
+            transform.GetChild(i).GetComponent<PianoGame_RewardSquareBehavior>().SetObjAndChildVisibility(false);
+        }
         //        rewardSquareUIScroll.GetComponent<RewardSquareUIScrollBehavior>().SnapTo(content_panel.GetChild(0).GetComponent<RectTransform>());
     }
 
@@ -131,6 +136,7 @@ public class PG_RewardSquareParentBehavior : MonoBehaviour {
     {
         var _last_index = content_panel.transform.childCount - 1;
         RewardSquareUIPoolObject.GetComponent<SimpleObjectPool>().ReturnObject(content_panel.transform.GetChild(_last_index).gameObject);
+        Debug.Log("Deleting UI pool object");
     }
 }
 

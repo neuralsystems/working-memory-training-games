@@ -114,23 +114,22 @@ public class PlayTone : MonoBehaviour {
     public IEnumerator DisplayOnLevelComplete(bool total_sequence_played) {
         Debug.Log("called DisplayOnLevelComplete");
 
-        if (total_sequence_played) { ChangeLevel(SceneVariables.error_count, num_of_notes); }
-
         DestroyCueSquares(Camera.main.GetComponent<SceneVariables>().USER_INPUT_SQUARE_TAG);
         DestroyCueSquares(Camera.main.GetComponent<SceneVariables>().SAMPLE_SQUARE_TAG);
         //		GameObject.Find (GetComponent<SceneVariables> ().REWARD_SQUARE_PARENT).transform.position = GameObject.Find (GetComponent<SceneVariables> ().USER_INPUT_SQUARE_PARENT).transform.position;
 
-        var reward_square_scroll = GameObject.Find(GetComponent<SceneVariables>().REWARD_SQUARE_UI_SCROLL);
         if (total_sequence_played)
         {
-            StartCoroutine(reward_square_scroll.GetComponent<RewardSquareUIScrollBehavior>().MoveDown());
-            Debug.Log("RewardSquareUIScrollBehavior: MoveDown()");
+            //StartCoroutine(reward_square_scroll.GetComponent<RewardSquareUIScrollBehavior>().MoveDown());
+            //Debug.Log("RewardSquareUIScrollBehavior: MoveDown()");
             //StartCoroutine(GameObject.Find (GetComponent<SceneVariables> ().REWARD_SQUARE_PARENT).GetComponent<PG_RewardSquareParentBehavior>().MoveToTarget( GameObject.Find (GetComponent<SceneVariables> ().USER_INPUT_SQUARE_PARENT).transform.position));
+            ChangeLevel(SceneVariables.error_count, num_of_notes, true);
 
             yield return StartCoroutine(RepeatTone(true));
         }
 
-        reward_square_scroll.GetComponent<RewardSquareUIScrollBehavior>().Show(false);
+        var reward_square_scroll = GameObject.Find(GetComponent<SceneVariables>().REWARD_SQUARE_UI_SCROLL);
+        yield return StartCoroutine(reward_square_scroll.GetComponent<RewardSquareUIScrollBehavior>().Show(false));
 
         if (total_sequence_played)
         { 
@@ -140,7 +139,7 @@ public class PlayTone : MonoBehaviour {
         }
 	}
 
-    void ChangeLevel(int error_count, int total)
+    int ChangeLevel(int error_count, int total, bool levelComplete)
     {
         var persistan_go = GameObject.Find(Shared_Scenevariables.masterGO);
         // ***************************** //
@@ -159,8 +158,9 @@ public class PlayTone : MonoBehaviour {
         //    change_by = 1;
         //}
         //Debug.Log(change_by + "is the change_by and error count = " + SceneVariables.error_count);
-        persistan_go.GetComponent<Shared_PersistentScript>().IncreaseLevelPianoGame(error_count *1.0f, total *1.0f);
+        return persistan_go.GetComponent<Shared_PersistentScript>().IncreaseLevelPianoGame(error_count *1.0f, total *1.0f, levelComplete);
     }
+
 	public IEnumerator WaitForRainToStop(ParticleSystem rain){
 		if (rain.isPlaying) {
 			yield return null;
@@ -384,10 +384,9 @@ public class PlayTone : MonoBehaviour {
 
     public void CheckWhilePlay()
     {
-        Debug.Log("CheckWhilePlauy");
-        if ((SceneVariables.sequence_error_count*1f)/CONSECUTIVE_CORRECT_THRESHOLD >= SceneVariables.level_decrease_error)
+        Debug.Log("CheckWhilePlay");
+        if (ChangeLevel(SceneVariables.sequence_error_count, CONSECUTIVE_CORRECT_THRESHOLD, false) != 0)
         {
-            ChangeLevel(SceneVariables.sequence_error_count, CONSECUTIVE_CORRECT_THRESHOLD);
             StartCoroutine(DisplayOnLevelComplete(false));
             StartCoroutine(LoadNextLevel());
         }

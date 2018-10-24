@@ -70,7 +70,7 @@ public class Shared_PersistentScript : MonoBehaviour {
 	public void IncreaseLevelBasketGame( float error_count, float total ){
         //currentLevel += val;
         var pre_level = "BasketGame_PreScene1";
-        int val = SetLevel(error_count, total);
+        int val = SetLevel(error_count, total, true);
         var ds = new BasketGame_DataService(BasketGame_SceneVariables.DATABASE_NAME);
         var current_level = ds.GetUserProgress(GetCurrentPlayer().Username);
         bool load_pre_level = false;
@@ -90,7 +90,7 @@ public class Shared_PersistentScript : MonoBehaviour {
     //used for changing levels including both increase as well as decrease
     public void IncreaseLevelTrainGame(float error_count, float total)
     {
-        int val = SetLevel(error_count, total);
+        int val = SetLevel(error_count, total, true);
         var ds = new TrainGame_DataServices(TrainGame_SceneVariables.DATABASE_NAME);
         var current_level = ds.GetUserProgress(GetCurrentPlayer().Username);
         ds.UpdateUserProgress(GetCurrentPlayer().Username, Mathf.Max(current_level.Level_Obj + val, min_level_value));
@@ -117,12 +117,16 @@ public class Shared_PersistentScript : MonoBehaviour {
 	}
 
     //used for changing levels including both increase as well as decrease
-    public void IncreaseLevelPianoGame(float error_count, float total)
+    public int IncreaseLevelPianoGame(float error_count, float total, bool levelComplete)
     {
-        int val = SetLevel(error_count, total);
+        int val = SetLevel(error_count, total, levelComplete);
         var ds = new DataService(SceneVariables.DATABASE_NAME);
         var current_level = ds.GetUserProgress(GetCurrentPlayer().Username);
-        ds.UpdateUserProgress(GetCurrentPlayer().Username, Mathf.Max(current_level.Level_Obj + val, min_level_value));
+        if (val != 0)
+        {
+            ds.UpdateUserProgress(GetCurrentPlayer().Username, Mathf.Max(current_level.Level_Obj + val, min_level_value));
+        }
+        return val;
     }
 
     public PianoGame_Levels GetNewPianoGameLevelDetails()
@@ -144,7 +148,7 @@ public class Shared_PersistentScript : MonoBehaviour {
 
     }
 
-     int SetLevel(float error_count, float total)
+     int SetLevel(float error_count, float total, bool levelComplete)
     {
         var error_rate_for_increment = .2f;
         var error_rate_for_decrement_1 = .7f;
@@ -155,22 +159,38 @@ public class Shared_PersistentScript : MonoBehaviour {
         // decrease level by 1 if error rate is 70% or above 
         // decrease level by 2 if error rate is 90% or above
         // keep it the same if it is between 20 or 70
-        if (error_count > total * error_rate_for_decrement_2)
+        if (levelComplete)
         {
-            Debug.Log("Decreasing level by 2");
-            return -2;
+            if (error_count > total * error_rate_for_decrement_2)
+            {
+                Debug.Log("Decreasing level by 2");
+                return -2;
+            }
+            else if (error_count > total * error_rate_for_decrement_1)
+            {
+                Debug.Log("decreasing level by 1");
+                return -1;
+            }
+            else if (error_count > total * error_rate_for_increment)
+            {
+                Debug.Log("keeping the level same");
+                return 0;
+            }
+            Debug.Log("increasing level by 1");
+            return 1;
         }
-        else if (error_count > total * error_rate_for_decrement_1)
+        else
         {
-            Debug.Log("decreasing level by 1");
-            return -1;
-        } else if (error_count > total * error_rate_for_increment)
-        {
-            Debug.Log("keeping the level same");
-            return 0;
+            if (error_count > total * error_rate_for_decrement_1)
+            {
+                Debug.Log("decreasing level by 1");
+                return -1;
+            }
+            else
+            {
+                return 0;
+            }
         }
-        Debug.Log("increasing level by 1");
-        return 1;
     }
 
     void LogTime()
