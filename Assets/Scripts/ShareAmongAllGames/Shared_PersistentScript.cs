@@ -88,12 +88,16 @@ public class Shared_PersistentScript : MonoBehaviour {
     }
 
     //used for changing levels including both increase as well as decrease
-    public void IncreaseLevelTrainGame(float error_count, float total)
+    public int IncreaseLevelTrainGame(float error_count, float total, bool levelComplete)
     {
-        int val = SetLevel(error_count, total, true);
+        int val = SetLevel(error_count, total, levelComplete);
         var ds = new TrainGame_DataServices(TrainGame_SceneVariables.DATABASE_NAME);
         var current_level = ds.GetUserProgress(GetCurrentPlayer().Username);
-        ds.UpdateUserProgress(GetCurrentPlayer().Username, Mathf.Max(current_level.Level_Obj + val, min_level_value));
+        if (val != 0)
+        {
+            ds.UpdateUserProgress(GetCurrentPlayer().Username, Mathf.Max(current_level.Level_Obj + val, min_level_value));
+        }
+        return val;
     }
 
     public TrainGame_Levels GetNewTrainGameLevelDetails(){

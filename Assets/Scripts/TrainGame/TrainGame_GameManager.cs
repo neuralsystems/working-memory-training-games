@@ -8,7 +8,7 @@ public class TrainGame_GameManager : MonoBehaviour {
 	public GameObject BLOCK_TRAIN, static_game_object;
 	public bool Should_Block;
 	int numofBogies = 2;
-	int error_count ;
+    int error_count, single_match_error_count;
     public Canvas level_canvas;
     public Transform level_content;
     public Transform track_1, track_2;
@@ -23,6 +23,7 @@ public class TrainGame_GameManager : MonoBehaviour {
     {
         static_game_object = GameObject.Find(Shared_Scenevariables.masterGO);
         error_count = 0;
+        single_match_error_count = 0;
         var level_details = static_game_object.GetComponent<Shared_PersistentScript>().GetNewTrainGameLevelDetails();
         numofBogies = level_details.GetNumofBogie();
         Should_Block = level_details.ShouldBlockTrain();
@@ -105,8 +106,19 @@ public class TrainGame_GameManager : MonoBehaviour {
 
 	}
 
-	public void FinalAnimation(){
-		ChangeGameLevel ();
+    public void CheckPerformance()
+    {
+        Debug.Log("performance check- single_match_error: " + single_match_error_count + " numOfBogies: " + numofBogies);
+        if(ChangeGameLevel(single_match_error_count, numofBogies, false)!=0)
+        {
+            LoadNextLevel();
+            Destroy(GameObject.FindGameObjectWithTag(TrainGame_SceneVariables.ENGINE_TAG));
+        }
+    }
+    
+	public void FinalAnimation()
+    {
+		ChangeGameLevel (error_count, numofBogies, true);
 		StartCoroutine (GameObject.FindGameObjectWithTag (TrainGame_SceneVariables.ENGINE_TAG).GetComponent<TrainGame_Engine_Behavior> ().FinalAnimation ());
 //		if (Should_Block) {
 //			StartCoroutine (BLOCK_TRAIN.GetComponent<TrainGame_BlockTrainBehavior> ().UnBlockView ());	
@@ -115,9 +127,15 @@ public class TrainGame_GameManager : MonoBehaviour {
 
 	public void ErrorDetected(){
 		error_count++;
+        single_match_error_count++;
 	}
 
-	void ChangeGameLevel(){
+    public void ResetError()
+    {
+        single_match_error_count = 0;
+    }
+
+	int ChangeGameLevel(int error_count, int numofBogies, bool levelComplete){
         // ***************************** //
         // moved this function to the shared_persistantScript.cs to keep it common for train, basket and piano game
         // **************************** //
@@ -131,7 +149,7 @@ public class TrainGame_GameManager : MonoBehaviour {
         //      {
         //          change = -1;
         //      }
-        static_game_object.GetComponent<Shared_PersistentScript>().IncreaseLevelTrainGame(error_count*1.0f, numofBogies*1.0f);
+        return static_game_object.GetComponent<Shared_PersistentScript>().IncreaseLevelTrainGame(error_count*1.0f, numofBogies*1.0f, levelComplete);
     }
 
     public void LoadNextLevel()
