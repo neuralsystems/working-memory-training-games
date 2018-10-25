@@ -109,7 +109,8 @@ public class TrainGame_GameManager : MonoBehaviour {
     public void CheckPerformance()
     {
         Debug.Log("performance check- single_match_error: " + single_match_error_count + " numOfBogies: " + numofBogies);
-        if(ChangeGameLevel(single_match_error_count, numofBogies, false)!=0)
+        int levelChange = ChangeGameLevel(single_match_error_count, numofBogies, false);
+        if (levelChange!=0)
         {
             LoadNextLevel();
             Destroy(GameObject.FindGameObjectWithTag(TrainGame_SceneVariables.ENGINE_TAG));

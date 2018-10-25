@@ -58,7 +58,7 @@ public class FruitBehavior : MonoBehaviour {
 	}
 
 	public void OnComplete(){
-
+        Debug.Log("OnComplete");
         Camera.main.GetComponent<BasketGame_GameManager>().MaxChanceExceed();
         //if (!Camera.main.GetComponent<BasketGame_GameManager>().MaxChanceExceed())
         //{
@@ -132,6 +132,7 @@ public class FruitBehavior : MonoBehaviour {
 	}
 
 	public void Projectile(){
+        Debug.Log("Projectile");
 //			GetComponent<Rigidbody2D>().velocity = new Vector3(10,10,0);
 		Camera.main.GetComponent<BasketGame_GameManager>().IncreaseErrorCount();
 		StartCoroutine(MovetoOriginalPosition());
@@ -150,7 +151,7 @@ public class FruitBehavior : MonoBehaviour {
 	}
 
 	public IEnumerator MovetoOriginalPosition(){
-		
+        Debug.Log("MovetoOriginalPosition");
 		ResetProperties ();
 		StartCoroutine(MoveToTarget (original_position));
 		yield return StartCoroutine(Shared_ScriptForGeneralFunctions.ScaleDown (this.gameObject, original_size.x, 0.3f));
@@ -178,6 +179,7 @@ public class FruitBehavior : MonoBehaviour {
 
 	public IEnumerator MoveToTarget ( Vector3 target)
 	{
+        Debug.Log("MoveToTarget start");
 		while(Vector3.Distance (transform.position, target) > Mathf.Min(minDistance,0.0001f)) {
 			//			Debug.Log ("first if");
 			transform.position = Vector3.SmoothDamp (transform.position, target, ref velocity, smoothTime);
@@ -192,6 +194,7 @@ public class FruitBehavior : MonoBehaviour {
 
 		}
 		yield return new WaitForSeconds (0.5f);
+        Debug.Log("MoveToTarget end");
 		OnComplete ();
 //		}
 

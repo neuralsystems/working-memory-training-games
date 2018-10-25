@@ -67,34 +67,39 @@ public class Shared_PersistentScript : MonoBehaviour {
 	}
 
     //used for changing levels including both increase as well as decrease
-	public void IncreaseLevelBasketGame( float error_count, float total ){
+	public int IncreaseLevelBasketGame( float error_count, float total, bool levelComplete){
         //currentLevel += val;
-        var pre_level = "BasketGame_PreScene1";
-        int val = SetLevel(error_count, total, true);
-        var ds = new BasketGame_DataService(BasketGame_SceneVariables.DATABASE_NAME);
-        var current_level = ds.GetUserProgress(GetCurrentPlayer().Username);
-        bool load_pre_level = false;
-        if(current_level.Level_Obj + val <= 0)
+        int val = SetLevel(error_count, total, levelComplete);
+        if (val == 0 && !levelComplete) { }
+        else
         {
-            current_level.PreLevelCompleted = 0;
-            load_pre_level = true;
+            var pre_level = "BasketGame_PreScene1";
+            var ds = new BasketGame_DataService(BasketGame_SceneVariables.DATABASE_NAME);
+            var current_level = ds.GetUserProgress(GetCurrentPlayer().Username);
+            bool load_pre_level = false;
+            if (current_level.Level_Obj + val <= 0)
+            {
+                current_level.PreLevelCompleted = 0;
+                load_pre_level = true;
+            }
+            ds.UpdateUserProgress(GetCurrentPlayer().Username, Mathf.Max(current_level.Level_Obj + val, min_level_value), current_level.PreLevelCompleted);
+            if (load_pre_level)
+            {
+                SceneManager.LoadScene(pre_level);
+            }
         }
-        ds.UpdateUserProgress(GetCurrentPlayer().Username, Mathf.Max(current_level.Level_Obj + val, min_level_value), current_level.PreLevelCompleted);
-        if (load_pre_level)
-        {
-            SceneManager.LoadScene(pre_level);
-        }
-
+        return val;
     }
 
     //used for changing levels including both increase as well as decrease
     public int IncreaseLevelTrainGame(float error_count, float total, bool levelComplete)
     {
         int val = SetLevel(error_count, total, levelComplete);
-        var ds = new TrainGame_DataServices(TrainGame_SceneVariables.DATABASE_NAME);
-        var current_level = ds.GetUserProgress(GetCurrentPlayer().Username);
-        if (val != 0)
+        if (val == 0 && !levelComplete) { }
+        else
         {
+            var ds = new TrainGame_DataServices(TrainGame_SceneVariables.DATABASE_NAME);
+            var current_level = ds.GetUserProgress(GetCurrentPlayer().Username);
             ds.UpdateUserProgress(GetCurrentPlayer().Username, Mathf.Max(current_level.Level_Obj + val, min_level_value));
         }
         return val;
@@ -124,10 +129,11 @@ public class Shared_PersistentScript : MonoBehaviour {
     public int IncreaseLevelPianoGame(float error_count, float total, bool levelComplete)
     {
         int val = SetLevel(error_count, total, levelComplete);
-        var ds = new DataService(SceneVariables.DATABASE_NAME);
-        var current_level = ds.GetUserProgress(GetCurrentPlayer().Username);
-        if (val != 0)
+        if (val == 0 && !levelComplete) { }
+        else
         {
+            var ds = new DataService(SceneVariables.DATABASE_NAME);
+            var current_level = ds.GetUserProgress(GetCurrentPlayer().Username);
             ds.UpdateUserProgress(GetCurrentPlayer().Username, Mathf.Max(current_level.Level_Obj + val, min_level_value));
         }
         return val;

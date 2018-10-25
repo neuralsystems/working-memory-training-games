@@ -385,7 +385,8 @@ public class PlayTone : MonoBehaviour {
     public void CheckWhilePlay()
     {
         Debug.Log("CheckWhilePlay");
-        if (ChangeLevel(SceneVariables.sequence_error_count, CONSECUTIVE_CORRECT_THRESHOLD, false) != 0)
+        int levelChange = ChangeLevel(SceneVariables.sequence_error_count, CONSECUTIVE_CORRECT_THRESHOLD, false);
+        if (levelChange != 0)
         {
             StartCoroutine(DisplayOnLevelComplete(false));
             StartCoroutine(LoadNextLevel());

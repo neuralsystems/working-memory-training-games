@@ -80,6 +80,6 @@ public class PlaceBasket : MonoBehaviour {
 		}
 //		StartCoroutine(MoveObjectsOutOfParking(1));
 //		StartCoroutine(Camera.main.GetComponent<BasketGame_GameManager>().MakeFruit());
-		StartCoroutine(Camera.main.GetComponent<BasketGame_GameManager>().HangFruitOnTree());
+		StartCoroutine(Camera.main.GetComponent<BasketGame_GameManager>().HangFruitOnTree(n));
 	}
 }

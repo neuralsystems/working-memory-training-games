@@ -70,6 +70,7 @@ public class BasketBehavior : MonoBehaviour {
 			var fruitList = Camera.main.GetComponent<BasketGame_SceneVariables> ().objectColorMap [basketName];
 
 			if (fruitList.Contains (collision.gameObject.GetComponent<FruitBehavior> ().fruitName)) {
+                Camera.main.GetComponent<BasketGame_GameManager>().ResetError();    
 
 				GetComponent<ParticleSystem> ().Play ();
 				currentIns += 1;
@@ -101,7 +102,7 @@ public class BasketBehavior : MonoBehaviour {
 				//				Debug.Log ("distance from lower bound " + Mathf.Abs (transform.position.y - lowerBound));
 				if (Mathf.Abs (transform.position.y - lowerBound) < BasketGame_SceneVariables.minDistance) {
 					//					Destroy (collision.gameObject);
-					StartCoroutine (BaksetAnimation ());
+					StartCoroutine (BasketAnimation ());
 				}
 				StartCoroutine (Camera.main.GetComponent<BasketGame_GameManager> ().PlayGirlAnimation ());
 				if (capacity <= currentIns) {
@@ -125,7 +126,7 @@ public class BasketBehavior : MonoBehaviour {
 		return capacity > currentIns;
 	}
 
-	public IEnumerator BaksetAnimation(){
+	public IEnumerator BasketAnimation(){
 //		yield return 
 		yield return StartCoroutine (MoveBasket (new Vector3 (transform.position.x, rotationHeight, transform.position.z)));
 //		foreach (Transform fruit in transform) {
