@@ -61,6 +61,7 @@ public class BasketBehavior : MonoBehaviour {
 	}
 	IEnumerator AfterCollision(Collision2D collision){
 		yield return null;
+        yield return StartCoroutine(collision.gameObject.GetComponent<FruitBehavior>().DetectAnotherCollision());
 		var has = collision.gameObject.GetComponent<FruitBehavior> ().hasCollide;
 		collision.gameObject.GetComponent<FruitBehavior> ().hasCollide = true;
 		if (collision.gameObject.tag == BasketGame_SceneVariables.fruitTag && (!has)) {

@@ -191,7 +191,7 @@ public class FruitBehavior : MonoBehaviour {
 	public IEnumerator MoveToTarget ( Vector3 target)
 	{
         Debug.Log("MoveToTarget start");
-		while(Vector3.Distance (transform.position, target) > Mathf.Min(minDistance,0.0001f)) {
+		while(Vector3.Distance (transform.position, target) > Mathf.Min(minDistance,0.0001f) && !hasCollide) {
 			//			Debug.Log ("first if");
 			transform.position = Vector3.SmoothDamp (transform.position, target, ref velocity, smoothTime);
 			yield return null;
@@ -221,8 +221,13 @@ public class FruitBehavior : MonoBehaviour {
 
 
 
-	public bool HasCollided(){
-		return hasCollide;
+	public IEnumerator DetectAnotherCollision(){
+        float rand = Random.Range(1f, 20f);
+        for(int i=0; i<(int)rand; i++)
+        {
+            yield return null;
+        }
+        Debug.Log("Rand: " + rand);
 	}
 
 	public IEnumerator EatFruit(){

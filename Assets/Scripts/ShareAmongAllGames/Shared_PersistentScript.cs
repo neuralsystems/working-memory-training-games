@@ -163,6 +163,7 @@ public class Shared_PersistentScript : MonoBehaviour {
         var error_rate_for_increment = .2f;
         var error_rate_for_decrement_1 = .7f;
         var error_rate_for_decrement_2 = .9f;
+        var min_error_count_threshold = 3f;
         //int change = 0;
         // [****** LEVEL CHANGE SCHEMA ******] //
         // increase level by 1 if error rate is  <= 20%
@@ -191,7 +192,8 @@ public class Shared_PersistentScript : MonoBehaviour {
         }
         else
         {
-            if (error_count > total * error_rate_for_decrement_1)
+            var threshold = Mathf.Max(min_error_count_threshold, total * error_rate_for_decrement_1);
+            if (error_count > threshold)
             {
                 Debug.Log("decreasing level by 1");
                 return -1;

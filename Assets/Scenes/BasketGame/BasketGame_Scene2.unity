@@ -5469,6 +5469,7 @@ MonoBehaviour:
   Girl: {fileID: 2074039980}
   persistent_go: {fileID: 1170745956}
   Error_Count: 0
+  single_match_error_count: 0
   level_canvas: {fileID: 2146678344}
   level_content: {fileID: 2146678351}
   sound_manager: {fileID: 1253749760}
