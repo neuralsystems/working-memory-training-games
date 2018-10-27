@@ -98,8 +98,10 @@ public class BasketGame_GameManager : MonoBehaviour {
             //			Debug.Log("called me to fall ");
 
             var random_fruit_array = GameObject.FindGameObjectsWithTag (BasketGame_SceneVariables.hangingFruitTag);
-			if (random_fruit_array.Length > 0) {
+			if (random_fruit_array.Length > 0)
+            {
                 int levelChange = ChangeLevel(single_match_error_count, num_of_fruits/num_of_baskets, false); //changes ONLY on LOW PERFORMANCE
+                yield return null;
                 if (levelChange == 0)
                 {
                     num_of_presentations++;
@@ -119,8 +121,9 @@ public class BasketGame_GameManager : MonoBehaviour {
                         Destroy(hanging_fruit);
                     }
                 }
-				yield return null;
-			} else {
+			}
+            else
+            {
 				rain_particlesystem_object.Play ();
 				yield return new WaitForSeconds(rain_particlesystem_object.main.duration);
                 //SceneManager.LoadScene (SceneManager.GetActiveScene().name);

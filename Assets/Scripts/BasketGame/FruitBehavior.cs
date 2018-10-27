@@ -28,7 +28,7 @@ public class FruitBehavior : MonoBehaviour {
 	public AudioClip FRUIT_FALLING;
 	public bool hasCollide = false;
 	string original_layer;
-
+    public static bool outOfLimit = false;
 	void Start () {
 		
 //		StartCoroutine (FadeCycle());
@@ -48,14 +48,24 @@ public class FruitBehavior : MonoBehaviour {
 
 	// change this function it is causing abnormal behavior
 	void DestroyWhenOutofLimit(){
-		var lower_limit = Shared_ScriptForGeneralFunctions.GetPointOnScreen (-1, -1);
+
+        var lower_limit = Shared_ScriptForGeneralFunctions.GetPointOnScreen (-1, -1);
 		var upper_limit = Shared_ScriptForGeneralFunctions.GetPointOnScreen (2, 2);
 		if (transform.position.y <= lower_limit.y || transform.position.x >= upper_limit.x || transform.position.x <= lower_limit.x) {
 			if (tag == BasketGame_SceneVariables.fruitTag) {
-				Projectile ();
+                Debug.Log("Destroy when out of limit, fruit_id: " + gameObject.GetInstanceID());
+                if (!outOfLimit)
+                {
+                    Projectile();
+                    outOfLimit = true;
+                }
 			}
 		}
-	}
+        //else
+        //{
+        //    outOfLimit = false;
+        //}
+    }
 
 	public void OnComplete(){
         Debug.Log("OnComplete");
@@ -135,6 +145,7 @@ public class FruitBehavior : MonoBehaviour {
         Debug.Log("Projectile");
 //			GetComponent<Rigidbody2D>().velocity = new Vector3(10,10,0);
 		Camera.main.GetComponent<BasketGame_GameManager>().IncreaseErrorCount();
+        
 		StartCoroutine(MovetoOriginalPosition());
 //		OnComplete();
 	}
@@ -145,7 +156,7 @@ public class FruitBehavior : MonoBehaviour {
 		var bubble_x = GetComponentInChildren<Transform> ().localScale.x;
 		GetComponent<BasketGame_DetectTouch>().SetBoxCollider(2);
 		StartCoroutine(Shared_ScriptForGeneralFunctions.ScaleUp (gameObject, 1f, .3f));
-		iTween.MoveTo(gameObject,iTween.Hash("path",iTweenPath.GetPath(fruitPath),"speed",path_speed,"easetype","linear","oncomplete","Projectile"));
+		iTween.MoveTo(gameObject,iTween.Hash("path",iTweenPath.GetPath(fruitPath),"speed",path_speed,"easetype","linear","oncomplete","Projectile")); //source of error?
 		yield return new WaitForSeconds (1f);
 		SetTouch (true);
 	}
@@ -156,9 +167,9 @@ public class FruitBehavior : MonoBehaviour {
 		StartCoroutine(MoveToTarget (original_position));
 		yield return StartCoroutine(Shared_ScriptForGeneralFunctions.ScaleDown (this.gameObject, original_size.x, 0.3f));
 		GetComponent<SpriteRenderer> ().enabled = false;
-        
+        outOfLimit = false;
 
-	}
+    }
 
 
 	public void ResetProperties(){
