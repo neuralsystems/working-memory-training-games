@@ -10886,6 +10886,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 22
       objectReference: {fileID: 0}
+    - target: {fileID: 114956355939304944, guid: bbc8b409699385f40b0e2d3f3f1cadfe,
+        type: 2}
+      propertyPath: m_ScreenMatchMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114956355939304944, guid: bbc8b409699385f40b0e2d3f3f1cadfe,
+        type: 2}
+      propertyPath: m_MatchWidthOrHeight
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bbc8b409699385f40b0e2d3f3f1cadfe, type: 2}
   m_IsPrefabAsset: 0

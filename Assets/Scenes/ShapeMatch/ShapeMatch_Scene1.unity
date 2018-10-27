@@ -1027,6 +1027,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Box: {fileID: 153895658}
   Tap_Count: 0
+  Wrong_Tap_Count: 0
   RepeatLevel: 0
   SampleObject: {fileID: 885926177}
   LevelNumber: 0
@@ -1452,7 +1453,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 509, y: 318}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 1
+  m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96

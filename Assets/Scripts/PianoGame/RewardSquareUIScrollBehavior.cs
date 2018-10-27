@@ -58,7 +58,7 @@ public class RewardSquareUIScrollBehavior : MonoBehaviour {
         while (Mathf.Abs(GetComponent<ScrollRect>().horizontalNormalizedPosition - scrollTarget) > 0.02f)
         {
             GetComponent<ScrollRect>().horizontalNormalizedPosition = Mathf.Lerp(initScrollVal, scrollTarget, t);
-            t += 0.1f;
+            t += 0.15f;
             yield return null;
         }
         GetComponent<ScrollRect>().horizontalNormalizedPosition = scrollTarget;
