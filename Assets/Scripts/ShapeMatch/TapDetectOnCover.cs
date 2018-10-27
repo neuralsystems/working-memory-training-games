@@ -41,6 +41,7 @@ public class TapDetectOnCover : MonoBehaviour
         if (targetsprite.sprite == playersprite.sprite)                                     // comparing the sprites of both the objects
         {
             
+            Camera.main.GetComponent<MainScript>().Wrong_Tap_Count=0;                         // resetting no. of wrong taps done for matching the game object for a particular shape
             Camera.main.GetComponent<SoundManager_Script>().PlayNeutralSound();                   // playing fitting sound
             yield return new WaitForSeconds(0.4f);
             Camera.main.GetComponent<SoundManager_Script>().PlayHappySound();               // playing appreciating sounds
@@ -58,7 +59,7 @@ public class TapDetectOnCover : MonoBehaviour
                 Camera.main.GetComponent<SoundManager_Script>().PlayHappySound();
                 yield return new WaitForSeconds(1f);
                 Destroy(transform.parent.gameObject);
-                Camera.main.GetComponent<NewLevel>().New_Level();                               // calling script for starting new level
+                Camera.main.GetComponent<NewLevel>().New_Level(true);                               // calling script for starting new level
             }
             else
             {
@@ -69,10 +70,20 @@ public class TapDetectOnCover : MonoBehaviour
         }
         else
         {
+            Camera.main.GetComponent<MainScript>().Wrong_Tap_Count++;                         // counting no. of wrong taps done for matching the game object for a particular shape
             //Camera.main.GetComponent<SoundManager_Script>().PlaySadSound();                               // when the sprites dont match
             Debug.Log(" both objects do not match");
             StartCoroutine(backAgain(playerPosition));
-            ResetWhenNotMatch();                                                                    // calling reset function when not matching
+
+            Debug.Log("goInLevel: " + Camera.main.GetComponent<MainScript>().GameObjectsInLevel);
+            if (CheckBadPerformance())
+            {
+                Camera.main.GetComponent<NewLevel>().New_Level(false);
+            }
+            else
+            {
+                ResetWhenNotMatch();                                                                    // calling reset function when not matching
+            }
         }
     }
     IEnumerator backAgain(Vector3 playerpos)                                                        // fuction to move the game object to some position
@@ -142,6 +153,15 @@ public class TapDetectOnCover : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         Destroy(target);                                                                                // destroying the target game object
         Camera.main.GetComponent<MainScript>().Box.GetComponent<Renderer>().enabled = false;
+    }
+    bool CheckBadPerformance()
+    {
+        var error_threshold = Mathf.Max(3, 0.7f * (Camera.main.GetComponent<MainScript>().GameObjectsInLevel));
+        if (Camera.main.GetComponent<MainScript>().Wrong_Tap_Count >= error_threshold)
+        {
+            return true;
+        }
+        return false;
     }
     float Scale_size()
     {

@@ -30,7 +30,7 @@ public class FaceGame_GameManager : MonoBehaviour
 	private bool tutorial = false;
 	private bool preLevel = true;
 	private int repeat = 0;
-
+    List<int> rand = new List<int>();
 	//Prefabs used for dynamic instantiation
 	public GameObject itemPrefab;
 	public GameObject faceComponentsPrefab;
@@ -476,18 +476,24 @@ public class FaceGame_GameManager : MonoBehaviour
 	}
     void GenerateRandomOptionsForFaceComponent(List<List<int>> randomOptions)
     {
+        rand.Clear();
+        for(int i=1; i <= levelData.NumOfCompletions; i++)
+        {
+            rand.Add(i);
+        }
+        FindObjectOfType<RandomizeArray>().Randomize<int>(rand);
         for (int i = 1; i <= levelData.NumOfCompletions; i++)
         {
             List<int> randIndicesMain = new List<int>();
             List<int> randIndices = new List<int>();
 
-            randIndicesMain.Add(i);
+            randIndicesMain.Add(rand[i-1]);
 
             for (int k = 1; k <= levelData.NumOfCompletions; k++)
             {
                 randIndices.Add(k);
             }
-            randIndices.Remove(i);
+            randIndices.Remove(rand[i-1]);
 
             //Randomizing the index list
             FindObjectOfType<RandomizeArray>().Randomize<int>(randIndices);

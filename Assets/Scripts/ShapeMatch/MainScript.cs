@@ -6,6 +6,7 @@ public class MainScript : MonoBehaviour
 {
     public GameObject Box;
     [HideInInspector]public int Tap_Count=0;
+    [HideInInspector]public int Wrong_Tap_Count=0;
     public int RepeatLevel;
     public GameObject SampleObject;
     private Sprite[] SpritesArray;

@@ -63,23 +63,24 @@ public class BasicGameManager : MonoBehaviour {
 
     IEnumerator BasicLevel(int index)
     {
-        
+        List<int> randIndices = new List<int>();
+        GenerateRandIndices(randIndices, iterations);
+        Debug.Log("randIndices.Count: " + randIndices.Count);
         //Sub Levels of a level - no.of options increases
 		for (int i = 0; i < iterations; i++)
         {
-			yield return StartCoroutine(Iteration(index,i));
+			yield return StartCoroutine(Iteration(index,i,randIndices[i]));
         }
 
     }
 
-	IEnumerator Iteration(int index, int subIndex)
+	IEnumerator Iteration(int index, int subIndex, int randIndex)
     {
 
         //All gameobjects per level are children to item
         GameObject item = new GameObject();
 		Option faceComponent = new Option();
 		ParticleSystem particleEffect = FindObjectOfType<ParticleSystem>();
-
 		GameObject.Find(Database.tagsAndNames_tempBackground).GetComponent<SpriteRenderer>().enabled = false;
 
 		int noOfOptions = 1;
@@ -94,7 +95,7 @@ public class BasicGameManager : MonoBehaviour {
 		Option[] options = new Option[noOfOptions];
         
         //Instantiating and enabling sprites and colliders for the face component and options
-		SetFaceComponentnOptions(index,subIndex, noOfOptions, item, faceComponent, options);
+		SetFaceComponentnOptions(index, randIndex, noOfOptions, item, faceComponent, options);
 		do
 		{
 			database.ifRight = true;
@@ -172,20 +173,20 @@ public class BasicGameManager : MonoBehaviour {
             opt.GetComponent<Option>().SetTouch(val);
         }
     }
-	void SetFaceComponentnOptions(int index, int subIndex, int noOfOptions, GameObject item, Option faceComponent,Option[] options)
+	void SetFaceComponentnOptions(int index, int randIndex, int noOfOptions, GameObject item, Option faceComponent,Option[] options)
     {
         //Face Component (eg. hair) to match
 		faceComponent = (Option)Instantiate(faceComponentPrefab, item.transform);
 
 		faceComponent.transform.position = new Vector3(Database.constants_faceBaseOffset3, -Database.constants_optionBGShift[levelData.FaceLevel][index]);
 
-		faceComponent.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("FaceGame/Level_1/Parts/Part_" + Convert.ToString(index + 1) + Convert.ToString(subIndex+1));
+		faceComponent.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("FaceGame/Level_1/Parts/Part_" + Convert.ToString(index + 1) + Convert.ToString(randIndex+1));
 		faceComponent.GetComponent<SpriteRenderer>().enabled = true;
 
 		RandomizeOptionsWithoutRepeat(Database.constants_optionPosBasic);
 
 		//getting 3 random options, first one being correct
-		List<int> rand = GetRandOptions(subIndex);
+		List<int> rand = GetRandOptions(randIndex);
       
 		//Options
 		for (int i = 0; i < noOfOptions; i++)
@@ -231,7 +232,24 @@ public class BasicGameManager : MonoBehaviour {
 		Destroy(item);
 		yield return null;
 	}
-    
+
+    void GenerateRandIndices(List<int> randIndices, int iterations)
+    {
+        for (int i=0; i<Database.constants_NO_OF_COMPONENTS_LV1; i++)
+        {
+            randIndices.Add(i);
+        }
+        FindObjectOfType<RandomizeArray>().Randomize<int>(randIndices);
+        while(randIndices.Count != iterations)
+        {
+            randIndices.RemoveAt(randIndices.Count - 1);
+        }
+        Debug.Log("randIndices: ");
+        foreach(int i in randIndices)
+        {
+            Debug.Log(i);
+        }
+    }
     //Correct option isnt at the same position consectutively
     void RandomizeOptionsWithoutRepeat(List<Vector3> rand)
     {
@@ -264,13 +282,13 @@ public class BasicGameManager : MonoBehaviour {
 		SceneManager.LoadScene(Database.scenes_level);
 	}
 
-	List<int> GetRandOptions(int subIndex)
+	List<int> GetRandOptions(int randIndex)
 	{
 		List<int> rand = new List<int>();
 		List<int> rand1 = new List<int>();
 		for (int i = 1; i <= Database.constants_NO_OF_COMPONENTS_LV1; i++)
         {
-            if (i != (subIndex + 1))
+            if (i != (randIndex + 1))
             {
                 rand.Add(i);
             }
@@ -281,7 +299,7 @@ public class BasicGameManager : MonoBehaviour {
         {
 			rand.RemoveAt(i - 1);
         }
-		rand1.Add(subIndex + 1);
+		rand1.Add(randIndex + 1);
 		foreach (var num in rand)
         {
 			rand1.Add(num);
