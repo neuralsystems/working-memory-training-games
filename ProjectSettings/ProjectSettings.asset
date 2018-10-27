@@ -155,7 +155,7 @@ PlayerSettings:
     Standalone: org.Treadwill.WorkingmemoryGames
   buildNumber: {}
   AndroidBundleVersionCode: 1
-  AndroidMinSdkVersion: 25
+  AndroidMinSdkVersion: 22
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
   aotOptions: 
