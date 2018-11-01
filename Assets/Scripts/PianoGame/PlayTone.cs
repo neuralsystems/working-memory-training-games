@@ -25,6 +25,10 @@ public class PlayTone : MonoBehaviour {
     public Transform level_content;
     int num_of_notes;
     public GameObject piano_go;
+    bool pianoScaleReset = false;
+    float ratio = 1f;
+    float initRatio = 1f;
+
     void Awake(){
 		current_length = initial_length;
 		camera_position = Camera.main.transform.position;
@@ -33,7 +37,29 @@ public class PlayTone : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         //StartGame();
-	}
+
+        ratio = Camera.main.aspect;
+        initRatio = SceneVariables.initRatio;
+
+
+    }
+
+    private void Update()
+    {
+        ratio = Camera.main.aspect;
+        initRatio = SceneVariables.initRatio;
+
+        if (Screen.width > 100 && !pianoScaleReset)
+        {
+            var piano = GameObject.Find(SceneVariables.PIANO).transform;
+            piano.localScale = new Vector3(piano.localScale.x * (ratio / initRatio), piano.localScale.y); //changing size of piano according to screen size
+
+            var button = GameObject.Find(SceneVariables.PLAY_SOUND).transform;
+            button.position = new Vector3(button.position.x * (ratio / initRatio), button.position.y);
+
+            pianoScaleReset = true;
+        }
+    }
 
     public void StartGame()
     {
@@ -407,4 +433,5 @@ public class PlayTone : MonoBehaviour {
         }
 
     }
+
 }

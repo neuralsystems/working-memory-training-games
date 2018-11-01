@@ -36,6 +36,7 @@ public class SceneVariables : MonoBehaviour {
 	public static string USER_STRING = "";												// not used yet and not sure why added
 	public static bool IS_USER_MODE = false;												// to chek if press can be enabled for the user, is false when the computer is playing a tune, true at other time
 	public static Color PRESSED_COLOR = new Color (0.5f, 0.5f, 0.5f, 1f);				// color of the key when it is in pressed state
+	public static float initRatio = 1.6f;													// screen size ratio used to develop game 
 	// these variable were used earlier however now they are not part of the active gameplay but removing them will cause error
 	public static float SPEED = 10.0f;													
 	public static float DELAY_TO_START=.5f;
@@ -65,6 +66,8 @@ public class SceneVariables : MonoBehaviour {
 	public string REWARD_SQUARE_PARENT = "RewardSquareParent";
 	public string USER_INPUT_SQUARE_PARENT = "UserInputSquareParent";
     public string REWARD_SQUARE_UI_SCROLL = "RewardSquareScroll";
+    public static string PIANO = "Piano";
+    public static string PLAY_SOUND = "PlaySound";
     public Vector3 target, targetRewardSquare, targetUserSquare ;
 	public Transform rewardSquare;
     public Transform reward_content_panel;
