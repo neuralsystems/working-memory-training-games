@@ -32,7 +32,7 @@ public class Shared_AddOptionsToDropDown : MonoBehaviour {
         }
         if (code == 3)                             // code for adding years
         {
-            for (int i = 1990; i < 2018; i++)
+            for (int i = 1970; i < 2019; i++)
             {
                 l.Add(i.ToString());
             }

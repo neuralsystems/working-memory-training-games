@@ -64,7 +64,7 @@ public class MApp_UserInforFormScript : MonoBehaviour {
 
     public void DisplayDOB()
     {
-        dob.text = "born on: " + GetDOB();
+        dob.text = "born on: " + GetDOB().ToString("yyyy-MM-dd");
     }
     DateTime GetDOB()
     {
