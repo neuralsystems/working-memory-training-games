@@ -4,21 +4,35 @@ using UnityEngine;
 using System.Linq;
 public class BasketGame_SceneVariables : MonoBehaviour {
 
-	public const string Game_Name = "BasketGame";
-	public static string basketTag = "BasketTag", fruitTag ="FruitTag", fullBasket = "FullBasketTag", bubbleTag = "BubbleTag", hangingFruitTag = "HangingFruitTag", inBasketFruitTag = "InBasketFruitTag";
+    //* [Constant and static variables [shared throughout the games, like tags, database related variables, layer names, global variables, important spawn positions, foldernames etc ..]]
+    public const string Game_Name = "BasketGame";
+    //public const string masterGO = "MasterGameObject";
+    public const int VALUE_FOR_PRE_LEVEL_COMPLETE = 1;
+    public const string DATABASE_NAME = "WorkingMemoryGames_DB1.db";
+    public static string basketTag = "BasketTag";
+    public static string fruitTag ="FruitTag";
+    public static string fullBasket = "FullBasketTag";
+    public static string bubbleTag = "BubbleTag";
+    public static string hangingFruitTag = "HangingFruitTag";
+    public static string inBasketFruitTag = "InBasketFruitTag";
+    public static string baloonTag = "BaloonTag";
+	public const string eatenFruitTag = "EatenFruitTag";
 	public string RAIN_PARTICLE_SYSTEM_TAG = "RainParticleSystemTag";
-	public static Vector3 initVector = new Vector3(-5.6f,-1.5f,0f);
-	public int basketCapacity = 15; 				// max number of fruit in a basket
-	public static string basketFolderName = "Basket/",fruitFolderName = "Fruits/", withOutline = "WithOutline/", withoutOutline = "WithoutOutline/";
+    public static Vector3 initVector = new Vector3(-5.6f,-1.5f,0f);
+    public static string basketFolderName = "Basket/", fruitFolderName = "Fruits/", withOutline = "WithOutline/", withoutOutline = "WithoutOutline/";
+
+    public int basketCapacity = 15; 				// max number of fruit in a basket
 	public static float waitTime = .05f;
 	public static string targetObject = "TargetObject";
-	public const string DATABASE_NAME = "BasketGame_DB.db";
 	public bool isOutline = false;
-	public static float minDistance = .1f;									// min distance after which the position of object is set equal to target
-	public string[] paths = new string[]{
+    public static float minDistance = .1f;                                  // min distance after which the position of object is set equal to target
+
+    // itween path names
+    public string[] paths = new string[]{
 		"FruitPath1",
 		"FruitPath2"
 	};
+    // basket image names
 	public static string[] baskets = new string[]{ 
 //		"Bluebasket",
 		"redbasket",
@@ -30,6 +44,7 @@ public class BasketGame_SceneVariables : MonoBehaviour {
 	
 	};
 
+    // fruit image names
 	public static string[] fruits = new string[] {
 		"Apple",
 		"Banana",
@@ -47,10 +62,11 @@ public class BasketGame_SceneVariables : MonoBehaviour {
 	public  Dictionary <string, string[]> objectColorMap = new Dictionary<string, string[]>{
 //		{"Bluebasket",new string[]{}},
 		{"redbasket",new string []{"Apple"}},
-		{"orangebasket",new string[] {"Orange"}},
-		{"yellowbasket",new string[] {"Banana", "Lemon"}},
+		{"orangebasket",new string[] {"Orange1"}},
+		{"yellowbasket",new string[] {"Banana1", "Lemon1"}},
 		{"purplebasket",new string[] {"Beetroot"}},
 		{"greenbasket",new string[] {"GreenApple"}},
+        //{"colored", new string[] {""} }
 //		{"Brownbasket",new string[] {}},
 	
 	};
@@ -64,6 +80,7 @@ public class BasketGame_SceneVariables : MonoBehaviour {
 		
 	}
 
+    // function that returns n baskets of different color
 	public static string[] GetBaskets(int n){
 //		RandomizingArray ra = new RandomizingArray ();
 		List <string> localBaskets = RandomizingArray.RandomizeStrings(baskets);

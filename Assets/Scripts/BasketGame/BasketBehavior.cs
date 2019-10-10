@@ -12,7 +12,7 @@ public class BasketBehavior : MonoBehaviour {
 	public float smoothTime = 0.2f;
 	public float  numOfRounds =  2f, inTime = 2f;
 	public Vector3 originalPosition;
-	public float num_of_fruits;
+	float num_of_fruits;
 	public float reduce_height_by;
 
 	// Use this for initialization
@@ -32,14 +32,14 @@ public class BasketBehavior : MonoBehaviour {
 		foreach (Transform child in transform) {
 			child.gameObject.transform.localScale = new Vector3 (.4f, .4f, 1f);
 		}
-		num_of_fruits = 3f;
+		num_of_fruits = 5f;
 		tag = basket_tag;
 		GetComponent<BasketBehavior> ().basketName = name;
 		transform.localScale = scale;
 		transform.position = basket_pos;
 		rotationHeight = GetRotationHeight ();
 		lowerBound = Camera.main.GetComponent<BasketGame_SceneVariables> ().GetPointOnScreen (0, 0).y;
-		lowerBound -= GetComponent<SpriteRenderer> ().bounds.size.y / 2;
+		lowerBound -= (.75f * GetComponent<SpriteRenderer> ().bounds.size.y) / 2;
 		reduce_height_by = (transform.position.y - lowerBound) / num_of_fruits;
 		capacity = bas_capacity;
 		Debug.Log(capacity);
@@ -61,6 +61,7 @@ public class BasketBehavior : MonoBehaviour {
 	}
 	IEnumerator AfterCollision(Collision2D collision){
 		yield return null;
+        yield return StartCoroutine(collision.gameObject.GetComponent<FruitBehavior>().DetectAnotherCollision());
 		var has = collision.gameObject.GetComponent<FruitBehavior> ().hasCollide;
 		collision.gameObject.GetComponent<FruitBehavior> ().hasCollide = true;
 		if (collision.gameObject.tag == BasketGame_SceneVariables.fruitTag && (!has)) {
@@ -70,6 +71,7 @@ public class BasketBehavior : MonoBehaviour {
 			var fruitList = Camera.main.GetComponent<BasketGame_SceneVariables> ().objectColorMap [basketName];
 
 			if (fruitList.Contains (collision.gameObject.GetComponent<FruitBehavior> ().fruitName)) {
+                Camera.main.GetComponent<BasketGame_GameManager>().ResetError();    
 
 				GetComponent<ParticleSystem> ().Play ();
 				currentIns += 1;
@@ -85,7 +87,7 @@ public class BasketBehavior : MonoBehaviour {
 				collision.gameObject.transform.localScale = new Vector3 (1f, 1f, 1f);
 				collision.gameObject.tag = BasketGame_SceneVariables.inBasketFruitTag;
 				collision.gameObject.GetComponent<FruitBehavior> ().ResetProperties ();
-				yield return new WaitForSeconds (2f);
+				yield return new WaitForSeconds (1f);
 				foreach (GameObject g in gos) {
 					//					Debug.Log ("in loop " + g.transform.localPosition.y );
 					if (Mathf.Abs (g.transform.position.y - lowerBound) > BasketGame_SceneVariables.minDistance) {
@@ -101,7 +103,7 @@ public class BasketBehavior : MonoBehaviour {
 				//				Debug.Log ("distance from lower bound " + Mathf.Abs (transform.position.y - lowerBound));
 				if (Mathf.Abs (transform.position.y - lowerBound) < BasketGame_SceneVariables.minDistance) {
 					//					Destroy (collision.gameObject);
-					StartCoroutine (BaksetAnimation ());
+					StartCoroutine (BasketAnimation ());
 				}
 				StartCoroutine (Camera.main.GetComponent<BasketGame_GameManager> ().PlayGirlAnimation ());
 				if (capacity <= currentIns) {
@@ -125,7 +127,7 @@ public class BasketBehavior : MonoBehaviour {
 		return capacity > currentIns;
 	}
 
-	public IEnumerator BaksetAnimation(){
+	public IEnumerator BasketAnimation(){
 //		yield return 
 		yield return StartCoroutine (MoveBasket (new Vector3 (transform.position.x, rotationHeight, transform.position.z)));
 //		foreach (Transform fruit in transform) {

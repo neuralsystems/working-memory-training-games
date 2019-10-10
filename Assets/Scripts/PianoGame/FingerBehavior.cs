@@ -14,11 +14,11 @@ public class FingerBehavior : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (SceneVariables.IS_USER_MODE) {
-			GetComponent<SpriteRenderer> ().enabled = false;
-		}else if (!SceneVariables.IS_USER_MODE){
-			GetComponent<SpriteRenderer> ().enabled = true;
-		}
+		//if (SceneVariables.IS_USER_MODE) {
+		//	GetComponent<SpriteRenderer> ().enabled = false;
+		//}else if (!SceneVariables.IS_USER_MODE){
+		//	GetComponent<SpriteRenderer> ().enabled = true;
+		//}
 	}
 
 	public IEnumerator MoveAndPlayAnimation(Vector3 target){

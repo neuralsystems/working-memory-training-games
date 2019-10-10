@@ -26,9 +26,9 @@ public class Tones : MonoBehaviour {
 	}
 
 	public string GetToneAtRandom(){
-		var sc = Camera.main.GetComponent<SceneVariables> ();
-		DataService ds = new DataService (sc.DATABASE_NAME);
-		var tones = ds.GetRandomToneForLevel (sc.level);
+		//var sc = Camera.main.GetComponent<SceneVariables> ();
+		DataService ds = new DataService (SceneVariables.DATABASE_NAME);
+		var tones = ds.GetRandomTone();
 		foreach (var tone in tones) {
 			Debug.Log (tone.ToneName);
 			return tone.GetTone ();
@@ -38,4 +38,18 @@ public class Tones : MonoBehaviour {
 	public string GetDelimeter(){
 		return this.delimeter;
 	}
+
+    public string GetToneAtRandomForLevel(int level_number)
+    {
+        //var sc = Camera.main.GetComponent<SceneVariables> ();
+        Debug.Log("getting tone for current level");
+        DataService ds = new DataService(SceneVariables.DATABASE_NAME);
+        var tones = ds.GetRandomToneForLevel(level_number);
+        foreach (var tone in tones)
+        {
+            Debug.Log(tone.ToneName);
+            return tone.GetTone();
+        }
+        return "Do";
+    }
 }

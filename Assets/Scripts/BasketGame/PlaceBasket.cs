@@ -10,17 +10,40 @@ public class PlaceBasket : MonoBehaviour {
 	public Transform Basket_Prefab;
 	public GameObject persistent_go;
 	int capacity;
-	// Use this for initialization
-	void Start () {
-		persistent_go = GameObject.Find ("PersistentGameObject");
-		var level_details = persistent_go.GetComponent<Shared_PersistentScript> ().GetNewLevelDetails ();
-		capacity = level_details.GetCapacity ();
-		PlaceNBaskets (level_details.GetNumofBaskets());
-		Debug.Log(capacity);
+    AndroidJavaObject currentActivity;
+    string toastString;
+    public Text t;
+    // Use this for initialization
+    void Start () {
+        
 	}
-		
-	// Update is called once per frame
-	void Update () {
+
+    public void SetUpGame()
+    {
+        persistent_go = GameObject.Find(Shared_Scenevariables.masterGO);
+        var level_details = persistent_go.GetComponent<Shared_PersistentScript>().GetNewBasketGameLevelDetails();
+        capacity = level_details.GetCapacity();
+        PlaceNBaskets(level_details.GetNumofBaskets());
+        Debug.Log(capacity);
+    }
+    void ShowToast(string toast_msg)
+    {
+        AndroidJavaClass UnityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+        currentActivity = UnityPlayer.GetStatic<AndroidJavaObject>("currenActivity");
+        this.toastString = toast_msg;
+        currentActivity.Call("runOnUiThreads", new AndroidJavaRunnable(DisplayToast));
+    }
+
+    void DisplayToast()
+    {
+        AndroidJavaObject context = currentActivity.Call<AndroidJavaObject>("getApplicationContext");
+        AndroidJavaClass Toast = new AndroidJavaClass("android.widget.Toast");
+        AndroidJavaObject javaString = new AndroidJavaObject("java.lang.String", toastString);
+        AndroidJavaObject toast = Toast.CallStatic<AndroidJavaObject>("makeText", context, javaString, Toast.GetStatic<int>("LENGTH_SHORT"));
+        toast.Call("show");
+    }
+    // Update is called once per frame
+    void Update () {
 		
 	}
 
@@ -29,7 +52,7 @@ public class PlaceBasket : MonoBehaviour {
 	public void PlaceNBaskets(int n){
 //		n += 1;
 		string[] basketArray = BasketGame_SceneVariables.GetBaskets (n);
-		Debug.Log ("basketArray[0] "+basketArray[0]);
+		Debug.Log ("basketArray[0] "+ basketArray.Length+ " " + n);
 		float height_percentage = .00f, width_percentage = 1f, left_margin = .2f, right_margin = 0.05f;
 		var percent_for_one_object = (width_percentage - left_margin - right_margin) / (n +1);
 		var max_allowed_size = 1f;
@@ -57,6 +80,6 @@ public class PlaceBasket : MonoBehaviour {
 		}
 //		StartCoroutine(MoveObjectsOutOfParking(1));
 //		StartCoroutine(Camera.main.GetComponent<BasketGame_GameManager>().MakeFruit());
-		StartCoroutine(Camera.main.GetComponent<BasketGame_GameManager>().HangFruitOnTree());
+		StartCoroutine(Camera.main.GetComponent<BasketGame_GameManager>().HangFruitOnTree(n));
 	}
 }

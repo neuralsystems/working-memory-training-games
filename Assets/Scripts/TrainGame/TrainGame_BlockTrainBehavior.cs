@@ -17,7 +17,7 @@ public class TrainGame_BlockTrainBehavior : MonoBehaviour {
 		
 	}
 
-	IEnumerator MoveToTarget ( Vector3 target)
+	IEnumerator MoveToTarget (Vector3 target)
 	{
 
 		while (Vector3.Distance (transform.position, target) > Mathf.Min(minDistance,0.1f)) {
@@ -32,6 +32,17 @@ public class TrainGame_BlockTrainBehavior : MonoBehaviour {
 		var target = original_position;
 		target.x = block_position.x;
 		yield return StartCoroutine (MoveToTarget (target));
-		 
+		var go = GameObject.FindGameObjectsWithTag (TrainGame_SceneVariables.BOGIE_TAG);
+		foreach (var g in go) {
+			StartCoroutine (g.GetComponent<TrainGame_BogieBehavior> ().SetTouch (true));
+		}
 	}
+
+	public IEnumerator UnBlockView(){
+		var block_position = Shared_ScriptForGeneralFunctions.GetPointOnScreen (2.5f, 1f);
+		var target = original_position;
+		target.x = block_position.x;
+		yield return StartCoroutine (MoveToTarget (target));
+	}
+
 }

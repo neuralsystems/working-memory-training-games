@@ -6,6 +6,7 @@ public class BasketGame_BubbleBehavior : MonoBehaviour {
 
 	float smoothTime = 0.1f;
 	Vector3 velocity = Vector3.zero;
+	public AudioClip burstClip;
 	// Use this for initialization
 	void Start () {
 		
@@ -35,4 +36,15 @@ public class BasketGame_BubbleBehavior : MonoBehaviour {
 		
 		StartCoroutine ( MoveTowardsFruit(target));
 	}
+
+
+//	public IEnumerator BeforeGoDestroy(){
+//		if (GetComponent<AudioSource>()) {
+//			GetComponent<AudioSource> ().enabled = true;
+//			Debug.Log("AudioPlayed");
+//			GetComponent<AudioSource> ().PlayOneShot (burstClip);
+//		}
+//		yield return new WaitForSeconds (GetComponent<AudioSource> ().clip.length);
+//		Destroy (gameObject);
+//	}
 }

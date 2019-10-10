@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Text.RegularExpressions;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 public class PlayTone : MonoBehaviour {
 
 
-	public static string sample,original_tone;
+    public static string sample;
+    string original_tone;
 	Tones tones;
 	public int initial_length, gradient, consequtive_correct = 0;
 	public int current_length;
@@ -15,72 +17,175 @@ public class PlayTone : MonoBehaviour {
 	public int incrementForNextLevel = 1;
 	List <string> toneTOBePlayed = new List<string>(); 
 	public Transform blockSquare;
-	void Awake(){
+	Vector3 camera_position;
+    public float WAIT_TIME, PLAY_TIME;
+    const string KeySquareObjectPool = "KeySquareObjectPool";
+    int CONSECUTIVE_CORRECT_THRESHOLD;
+    public Canvas level_canvas;
+    public Transform level_content;
+    int num_of_notes;
+    public GameObject piano_go;
+    bool pianoScaleReset = false;
+    float ratio = 1f;
+    float initRatio = 1f;
+
+    void Awake(){
 		current_length = initial_length;
-	}
-	// Use this for initialization
-	void Start () {
-		tones = Camera.main.GetComponent<Tones>();
-//		initial_length = 50;
-//		gradient = initial_length -1;
-		gradient =1;
-		current_length = initial_length;
-		sample = "";
-		original_tone  = tones.GetToneAtRandom ();
-		GetNotes(original_tone, tones.GetDelimeter ());
-		var numOfEmptyRewardSquare = initial_length + (gradient * (Camera.main.GetComponent<SceneVariables> ().CONSECUTIVE_CORRECT_THRESHOLD - 1));
-		StartCoroutine(Camera.main.GetComponent<SceneVariables>().PlaceEmptyRewardSquare(numOfEmptyRewardSquare));
-	}
-	
-	// Update is called once per frame
-	void Update () {
+		camera_position = Camera.main.transform.position;
 	}
 
+	// Use this for initialization
+	void Start () {
+        //StartGame();
+
+        ratio = Camera.main.aspect;
+        initRatio = SceneVariables.initRatio;
+
+
+    }
+
+    private void Update()
+    {
+        ratio = Camera.main.aspect;
+        initRatio = SceneVariables.initRatio;
+
+        if (Screen.width > 100 && !pianoScaleReset)
+        {
+            var piano = GameObject.Find(SceneVariables.PIANO).transform;
+            piano.localScale = new Vector3(piano.localScale.x * (ratio / initRatio), piano.localScale.y); //changing size of piano according to screen size
+
+            var button = GameObject.Find(SceneVariables.PLAY_SOUND).transform;
+            button.position = new Vector3(button.position.x * (ratio / initRatio), button.position.y);
+
+            pianoScaleReset = true;
+        }
+    }
+
+    public void StartGame()
+    {
+        GetLevelDetails();
+        
+        tones = Camera.main.GetComponent<Tones>();
+
+        //      initial_length = 1;
+        //      WAIT_TIME = 1.0f;
+        //      PLAY_TIME = 1.0f;
+        //gradient = 1;
+        consequtive_correct = 0;
+        sample = "";
+        previous = 0;
+        GetNotes(original_tone, tones.GetDelimeter());
+        Camera.main.GetComponent<SceneVariables>().Reset();
+        var numOfEmptyRewardSquare = initial_length + (gradient * (CONSECUTIVE_CORRECT_THRESHOLD - 1));
+        num_of_notes = numOfEmptyRewardSquare;
+        StartCoroutine(Camera.main.GetComponent<SceneVariables>().PlaceEmptyRewardSquare(numOfEmptyRewardSquare));
+    }
+
+    void GetLevelDetails()
+    {
+
+        Debug.Log("getting levels details");
+        var persistan_go = GameObject.Find(Shared_Scenevariables.masterGO);
+        var level_obj = persistan_go.GetComponent<Shared_PersistentScript>().GetNewPianoGameLevelDetails();
+        tones = Camera.main.GetComponent<Tones>();
+        original_tone = tones.GetToneAtRandomForLevel(level_obj.LevelNumber);
+        initial_length = level_obj.InitialLength;
+        gradient = level_obj.Gradient;
+        WAIT_TIME = level_obj.WaitTime;
+        PLAY_TIME = level_obj.PlayTime;
+        SceneVariables.PLAY_TIME = PLAY_TIME;
+        SceneVariables.WAIT_TIME = WAIT_TIME;
+        current_length = initial_length;
+        CONSECUTIVE_CORRECT_THRESHOLD = level_obj.Threshold;
+    }
+	
 	public void Repeat(){
 		sample = "";
 		SceneVariables.IS_READY = true;
-		GameObject.Find (Camera.main.GetComponent<SceneVariables> ().playSound).GetComponent<HomeScreenButtons> ().SetHaloToggle(true);
+		
 	}
 
 	public void Next(){
-		Debug.Log ("called next");
-		if (SceneVariables.error_count > SceneVariables.max_allowed_error) {
-			current_length = Mathf.Max (current_length - gradient, SceneVariables.min_tone_length);
-		} else {
-			SceneVariables.error_count -= Mathf.Max (SceneVariables.error_count - 1, 0);
-			current_length += gradient;
-			previous += gradient;
-		}
+        //if (SceneVariables.error_count > SceneVariables.max_allowed_error) {
+        //          current_length = current_length * 1;
+        //} else {
+        //SceneVariables.error_count -= Mathf.Max (SceneVariables.error_count - 1, 0);
+        Debug.Log("next is called");
+		current_length += gradient;
+		previous += gradient;
+		//}
 		consequtive_correct++;
 		sample = "";
 		SceneVariables.IS_READY = true;
 	}
 
 	public IEnumerator LoadNextLevel(){
-		Debug.Log ("called LoadNextLevel");
-		consequtive_correct = 0;
-		initial_length += incrementForNextLevel;
-		current_length = initial_length;
-		gradient = 1;
-		previous = 0;
-		Camera.main.GetComponent<SceneVariables> ().Reset ();
-		var numOfEmptyRewardSquare = initial_length + (gradient * (Camera.main.GetComponent<SceneVariables> ().CONSECUTIVE_CORRECT_THRESHOLD - 1));
-		StartCoroutine(Camera.main.GetComponent<SceneVariables>().PlaceEmptyRewardSquare(numOfEmptyRewardSquare));
+        //Debug.Log ("called LoadNextLevel");
+        //consequtive_correct = 0;
+        ////initial_length += incrementForNextLevel;
+        ////current_length = initial_length;
+        ////gradient = 1;
+        //      GetLevelDetails();
+        //      previous = 0;
+        //Camera.main.GetComponent<SceneVariables> ().Reset ();
+        //var numOfEmptyRewardSquare = initial_length + (gradient * (CONSECUTIVE_CORRECT_THRESHOLD - 1));
+        //StartCoroutine(Camera.main.GetComponent<SceneVariables>().PlaceEmptyRewardSquare(numOfEmptyRewardSquare));
+        //StartGame();
+        level_canvas.gameObject.SetActive(true);
+        StartCoroutine(level_content.GetComponent<LevelScreenManager>().ShowTransition());
 		yield return null;
 	}
 
 
-	public IEnumerator DisplayOnLevelComplete(){
-		Debug.Log ("called DisplayOnLevelComplete");
-		DestroyCueSquares (Camera.main.GetComponent<SceneVariables> ().USER_INPUT_SQUARE_TAG);
-		DestroyCueSquares (Camera.main.GetComponent<SceneVariables> ().SAMPLE_SQUARE_TAG);
-//		GameObject.Find (GetComponent<SceneVariables> ().REWARD_SQUARE_PARENT).transform.position = GameObject.Find (GetComponent<SceneVariables> ().USER_INPUT_SQUARE_PARENT).transform.position;
-		StartCoroutine(GameObject.Find (GetComponent<SceneVariables> ().REWARD_SQUARE_PARENT).GetComponent<PG_RewardSquareParentBehavior>().MoveToTarget( GameObject.Find (GetComponent<SceneVariables> ().USER_INPUT_SQUARE_PARENT).transform.position));
-		yield return StartCoroutine(RepeatTone (true));
-		var rain_particle_system_object = GameObject.FindGameObjectWithTag (Camera.main.GetComponent<SceneVariables> ().RAIN_PARTICLE_SYSTEM_TAG);
-		rain_particle_system_object.GetComponent<ParticleSystem> ().Play ();
-		yield return StartCoroutine(WaitForRainToStop(rain_particle_system_object.GetComponent<ParticleSystem>()));
+    public IEnumerator DisplayOnLevelComplete(bool total_sequence_played) {
+        Debug.Log("called DisplayOnLevelComplete");
+
+        DestroyCueSquares(Camera.main.GetComponent<SceneVariables>().USER_INPUT_SQUARE_TAG);
+        DestroyCueSquares(Camera.main.GetComponent<SceneVariables>().SAMPLE_SQUARE_TAG);
+        //		GameObject.Find (GetComponent<SceneVariables> ().REWARD_SQUARE_PARENT).transform.position = GameObject.Find (GetComponent<SceneVariables> ().USER_INPUT_SQUARE_PARENT).transform.position;
+
+        if (total_sequence_played)
+        {
+            //StartCoroutine(reward_square_scroll.GetComponent<RewardSquareUIScrollBehavior>().MoveDown());
+            //Debug.Log("RewardSquareUIScrollBehavior: MoveDown()");
+            //StartCoroutine(GameObject.Find (GetComponent<SceneVariables> ().REWARD_SQUARE_PARENT).GetComponent<PG_RewardSquareParentBehavior>().MoveToTarget( GameObject.Find (GetComponent<SceneVariables> ().USER_INPUT_SQUARE_PARENT).transform.position));
+            ChangeLevel(SceneVariables.error_count, num_of_notes, true);
+
+            yield return StartCoroutine(RepeatTone(true));
+        }
+
+        var reward_square_scroll = GameObject.Find(GetComponent<SceneVariables>().REWARD_SQUARE_UI_SCROLL);
+        yield return StartCoroutine(reward_square_scroll.GetComponent<RewardSquareUIScrollBehavior>().Show(false));
+
+        if (total_sequence_played)
+        { 
+            var rain_particle_system_object = GameObject.FindGameObjectWithTag(Camera.main.GetComponent<SceneVariables>().RAIN_PARTICLE_SYSTEM_TAG);
+            rain_particle_system_object.GetComponent<ParticleSystem>().Play();
+            yield return StartCoroutine(WaitForRainToStop(rain_particle_system_object.GetComponent<ParticleSystem>()));
+        }
 	}
+
+    int ChangeLevel(int error_count, int total, bool levelComplete)
+    {
+        var persistan_go = GameObject.Find(Shared_Scenevariables.masterGO);
+        // ***************************** //
+        // moved this function to the shared_persistantScript.cs to keep it common for train, basket and piano game
+        // **************************** //
+
+        //int change_by = 0; 
+        //if(SceneVariables.error_count > 0.9f  * num_of_notes)
+        //{
+        //    change_by = -2;
+        //} else if(SceneVariables. error_count > 0.7f * num_of_notes)
+        //{
+        //    change_by = -1;
+        //} else if( SceneVariables.error_count < 0.2f * num_of_notes)
+        //{
+        //    change_by = 1;
+        //}
+        //Debug.Log(change_by + "is the change_by and error count = " + SceneVariables.error_count);
+        return persistan_go.GetComponent<Shared_PersistentScript>().IncreaseLevelPianoGame(error_count *1.0f, total *1.0f, levelComplete);
+    }
 
 	public IEnumerator WaitForRainToStop(ParticleSystem rain){
 		if (rain.isPlaying) {
@@ -99,52 +204,82 @@ public class PlayTone : MonoBehaviour {
 
 	public IEnumerator PlaySomeTone(string notes, string delimeter, int start, int end, bool isRepeat = false, bool isLastRepeat = false){
 		var reward_square_parent = GameObject.Find(Camera.main.GetComponent<SceneVariables>().REWARD_SQUARE_PARENT);
-//		if (isRepeat) {
-//			var shift =  reward_square_parent.transform.GetChild (0).transform.GetChild (0).GetComponent<SpriteRenderer> ().bounds.size;
-//			Debug.Log ("moving camera down by " + shift);
-//			
-//			transform.position -= Vector3.down * shift.y ;
-//		}
-		OnKeyPress.numOfKeysPressed = 0;
+		var reward_square_ui_scroll = GameObject.Find(Camera.main.GetComponent<SceneVariables>().REWARD_SQUARE_UI_SCROLL);
+		var reward_square_ui_parent = GameObject.FindGameObjectWithTag(Camera.main.GetComponent<SceneVariables>().REWARD_SQUARE_UI_PARENT_TAG);
+        //		if (isRepeat) {
+        //			var shift =  reward_square_parent.transform.GetChild (0).transform.GetChild (0).GetComponent<SpriteRenderer> ().bounds.size;
+        //			Debug.Log ("moving camera down by " + shift);
+        //			
+        //			transform.position -= Vector3.down * shift.y ;
+        //		}
+        OnKeyPress.numOfKeysPressed = 0;
 		SceneVariables.IS_USER_MODE = false;
-		Debug.Log (notes + "is played");
-		for (int i = start; i < end; i++) {
+        
+        for (int i = start; i < end; i++) {
 			if (toneTOBePlayed[i] != "") {
-				var token = toneTOBePlayed [i];
+                Debug.Log(toneTOBePlayed[i] + "is played");
+                var token = toneTOBePlayed [i];
 				string token1 =token.ToUpper ();
 				var g = GameObject.Find (token1).gameObject;
 				var original_layer = "Game";
 				string game_layer = "Game";
-				if (isRepeat) {
-					Debug.Log ("Color set");
-					var reward_square_child_object = reward_square_parent.transform.GetChild (i).transform.GetChild (0);
+				if (isRepeat && !isLastRepeat) {
+                    //Debug.Log ("Color set");
+                    Debug.Log("i = " + i);
+                    var reward_square_child_object = reward_square_parent.transform.GetChild (i).transform.GetChild (0);
 					original_layer = reward_square_child_object.GetComponent<SpriteRenderer> ().sortingLayerName;
 					reward_square_child_object.GetComponent<SpriteRenderer> ().sortingLayerName = game_layer;
 					var y_index = reward_square_child_object.transform.localPosition;
 					y_index.y = y_index.y -  1f;
-					reward_square_child_object.transform.localScale += new Vector3(1,1,1) * 1;
+					reward_square_child_object.transform.localScale += new Vector3(1,1,1) * .3f;
 				}
-				g.GetComponent<OnKeyPress> ().PlaySound(isRepeat);
-				yield return new WaitForSeconds (SceneVariables.WAIT_TIME);
-				if (isRepeat) {
+                else if (isRepeat && isLastRepeat)
+                {
+                    var maxVisibleRewardSq = reward_square_parent.GetComponent<PG_RewardSquareParentBehavior>().MaximumVisibleRewardSquares();
+                    var n = reward_square_parent.transform.childCount;
+                    if (n > maxVisibleRewardSq)
+                    {
+                        yield return StartCoroutine(reward_square_ui_scroll.GetComponent<RewardSquareUIScrollBehavior>().ScrollTo(i, n, maxVisibleRewardSq));
+                    }
+
+                    try
+                    {
+                        //var reward_square_child_object = reward_square_parent.transform.GetChild(i).transform.GetChild(0);
+                        //reward_square_child_object.transform.localScale += new Vector3(1, 1, 1) * .3f;
+                        //reward_square_child_object.GetComponent<Rigidbody2D>().gravityScale = 2;
+                        //reward_square_child_object.GetComponent<Rigidbody2D>().velocity = new Vector3(2f, 0f, 0f);
+
+                        var reward_square_ui_child_object = reward_square_ui_parent.transform.GetChild(i).transform.GetChild(0);
+                        reward_square_ui_child_object.GetComponent<KeySquareUIBehavior>().Pop(true);
+
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.Log("Nothing to SHow");
+                    }
+
+
+                }
+
+                yield return StartCoroutine(g.GetComponent<OnKeyPress> ().PlaySound(isRepeat));
+                yield return new WaitForSeconds(.2f);
+                if (isRepeat && !isLastRepeat) {
 					var reward_square_child_object = reward_square_parent.transform.GetChild (i).transform.GetChild (0);
 					reward_square_child_object.GetComponent<SpriteRenderer> ().sortingLayerName = original_layer;
-					if (isLastRepeat) {
-						reward_square_child_object.GetComponent<Rigidbody2D> ().gravityScale = 2;
-					} else {
-						reward_square_child_object.transform.localScale -= new Vector3 (1, 1, 1) * 1;
-					}
-
-				}
+                    reward_square_child_object.transform.localScale -= new Vector3(1, 1, 1) * .3f;
+                } 
 
 			} else {
-				yield return new WaitForSeconds (SceneVariables.WAIT_TIME);
+				yield return new WaitForSeconds (WAIT_TIME);
 			}
 		}
-		yield return new WaitForSeconds (SceneVariables.PLAY_TIME);
+		//yield return new WaitForSeconds (PLAY_TIME);
 		if (!isRepeat) {
 			SceneVariables.IS_USER_MODE = true;
-		}
+
+            // uncomment next line to enable wobble effect
+            ChangeUserModeDisplay(true);
+        }
 //		else if (isRepeat) {
 //			var shift =  reward_square_parent.transform.GetChild (0).transform.GetChild (0).GetComponent<SpriteRenderer> ().bounds.size;
 //			Debug.Log ("moving camera down by " + shift);
@@ -154,12 +289,30 @@ public class PlayTone : MonoBehaviour {
 	}
 		
 
+    public void ChangeUserModeDisplay(bool val)
+    {
+        var num_child = piano_go.transform.childCount;
+        //piano_go.GetComponent<Scalling>().SetScale(true);
+        //for(int i = 0;i < num_child;i++)
+        //{
+        //   piano_go.transform.GetChild(i).GetComponent<OnKeyPress>().DisplayUserMode(val);
+        //}
+    }
+
 	public IEnumerator RepeatTone(bool isLastRepeat = false){
 		string delimeter = tones.GetDelimeter ();
 		sample = GetFirstnNotes (original_tone, delimeter,current_length);
-		yield return StartCoroutine(PlaySomeTone (sample,tones.GetDelimeter(), 0, current_length-gradient,true, isLastRepeat));
+        var til = current_length - gradient;
+        if (isLastRepeat)
+        {
+            WAIT_TIME = 0.7f;
+            PLAY_TIME = 0.5f;
+            til = toneTOBePlayed.Count;
+         }
+        Debug.Log("til = " + til);
+		yield return StartCoroutine(PlaySomeTone (sample,tones.GetDelimeter(), 0, til ,true, isLastRepeat));
 //		Camera.main.GetComponent<SceneVariables> ().GetRandomClapping ();
-		if (consequtive_correct < Camera.main.GetComponent<SceneVariables> ().CONSECUTIVE_CORRECT_THRESHOLD) {
+		if (consequtive_correct < CONSECUTIVE_CORRECT_THRESHOLD) {
 			GameObject.Find (Camera.main.GetComponent<SceneVariables> ().playSound).GetComponent<HomeScreenButtons> ().SetHaloToggle (true);
 		}
 	}
@@ -196,6 +349,7 @@ public class PlayTone : MonoBehaviour {
 
 	void GetNotes(string tone,string delimeter){
 		string[] tokens = TailorTone(tone).Split(new[] { delimeter }, StringSplitOptions.None);
+        toneTOBePlayed.Clear();
 		foreach (string token in tokens) {
 			toneTOBePlayed.Add (token);
 		}
@@ -233,8 +387,9 @@ public class PlayTone : MonoBehaviour {
 		var reward_square = GameObject.FindGameObjectsWithTag (Camera.main.GetComponent<SceneVariables> ().REWARD_SQUARE_TAG)[0];
 		var reward_square_parent = GameObject.Find (Camera.main.GetComponent<SceneVariables> ().REWARD_SQUARE_PARENT);
 		var new_position = Shared_ScriptForGeneralFunctions.GetPointOnScreen(Camera.main.GetComponent<SceneVariables>().widthPercentageForRewardSquare, Camera.main.GetComponent<SceneVariables> ().heightPercentageForRewardSquare);
-		new_position.y += reward_square_parent.GetComponent<SpriteRenderer> ().bounds.size.y;
-		StartCoroutine(reward_square_parent.GetComponent<PG_RewardSquareParentBehavior> ().MoveToTarget (new_position));
+		new_position.y += reward_square_parent.GetComponentInChildren<SpriteRenderer> ().bounds.size.y + 2f;
+		reward_square_parent.GetComponent<PG_RewardSquareParentBehavior> ().MoveCamera(new_position);
+        Debug.Log("PG_RewardSquareParentBehavior: MoveCamera()");
 		SceneVariables.IS_USER_MODE = false;
 		PlayGame (current_length);
 	}
@@ -245,21 +400,38 @@ public class PlayTone : MonoBehaviour {
 
 	public void DestroyCueSquares(string tag){
 		var gs = GameObject.FindGameObjectsWithTag (tag);
-		foreach (var g in gs) {
-			Destroy (g);
-		}
+        var ks = GameObject.Find(KeySquareObjectPool);
+        foreach (var g in gs) {
+            //ks.GetComponent<SimpleObjectPool>().ReturnObject(g);
+            Destroy(g);
+        }
 
 	}
+
+    public void CheckWhilePlay()
+    {
+        Debug.Log("CheckWhilePlay");
+        int levelChange = ChangeLevel(SceneVariables.sequence_error_count, CONSECUTIVE_CORRECT_THRESHOLD, false);
+        if (levelChange != 0)
+        {
+            StartCoroutine(DisplayOnLevelComplete(false));
+            StartCoroutine(LoadNextLevel());
+        }
+        Debug.Log("sequence_error_count: " + SceneVariables.sequence_error_count + " threshold: " + CONSECUTIVE_CORRECT_THRESHOLD);
+    }
 
 	public void CheckOnComplete(){
 		Debug.Log ("Checked for level complete");
-		if (consequtive_correct >= Camera.main.GetComponent<SceneVariables> ().CONSECUTIVE_CORRECT_THRESHOLD) {
+		if (consequtive_correct >= CONSECUTIVE_CORRECT_THRESHOLD) {
 			SceneVariables.IS_USER_MODE = false;
-			StartCoroutine (DisplayOnLevelComplete ());
-		} else {
-			StartCoroutine(RepeatTone ());
-
+			StartCoroutine (DisplayOnLevelComplete (true));
 		}
+        else
+        {
+            //startcoroutine(repeattone ());
+            GameObject.Find(Camera.main.GetComponent<SceneVariables>().playSound).GetComponent<HomeScreenButtons>().SetHaloToggle(true);
+        }
 
-	}
+    }
+
 }

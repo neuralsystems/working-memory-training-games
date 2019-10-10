@@ -33,7 +33,7 @@ public class HomeScreenButtons : MonoBehaviour {
 	}
 
 	void OnMouseDown(){
-		Debug.Log ("Called for" + this.gameObject.name);
+		//Debug.Log ("Called for" + this.gameObject.name);
 		if (this.gameObject.name == "Close") {
 			Application.Quit ();
 		} else if (this.gameObject.name == "Play") {
@@ -89,7 +89,7 @@ public class HomeScreenButtons : MonoBehaviour {
 	}
 
 	public void SetHaloToggle(bool value){
-		Debug.Log ("Set halo called with value = " + value);
+		//Debug.Log ("Set halo called with value = " + value);
 		GetComponent<SpriteRenderer> ().enabled = value;
 		shouldToggle = value;
 		GetComponent<Light> ().intensity = 0;

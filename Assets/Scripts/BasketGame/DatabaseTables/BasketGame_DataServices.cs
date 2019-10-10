@@ -1,5 +1,6 @@
 ﻿using SQLite4Unity3d;
 using UnityEngine;
+using System;
 #if !UNITY_EDITOR
 using System.Collections;
 using System.IO;
@@ -60,18 +61,96 @@ public class BasketGame_DataService  {
 
 		}
 
-		public IEnumerable<Levels> GetLevels(){
-		return _connection.Table<Levels>();
+		public IEnumerable<BasketGame_Levels> GetLevels(){
+		return _connection.Table<BasketGame_Levels>();
 		}
 
-		public IEnumerable<Levels> GetLevelsObject( int currentLevel){
-		return _connection.Table<Levels>().Where(x => x.LevelNumber == currentLevel);
+		public IEnumerable<BasketGame_Levels> GetLevelsObject( int currentLevel){
+		return _connection.Table<BasketGame_Levels>().Where(x => x.LevelNumber == currentLevel);
 		}
 
-		public IEnumerable<Levels> GetRandomLevel(){
-		const string command = "SELECT * FROM Levels ORDER BY RANDOM() LIMIT 1";
-		return _connection.Query<Levels>(command);
+		public IEnumerable<BasketGame_Levels> GetRandomLevel(){
+		const string command = "SELECT * FROM BasketGame_Levels ORDER BY RANDOM() LIMIT 1";
+		return _connection.Query<BasketGame_Levels>(command);
 		}
+        
+        public void UpdateUserProgress(string username, int level_number, int pre_completed)
+        {
+            var user_level_obj = GetUserProgress(username);
+            user_level_obj.Level_Obj = level_number;
+            user_level_obj.PreLevelCompleted = pre_completed;
+            _connection.Update(user_level_obj);
+        
+        }
 
+        public void MarkPreLevelCompleted(string username)
+        {
+            var user_level_obj = GetUserProgress(username);
+            user_level_obj.PreLevelCompleted = BasketGame_SceneVariables.VALUE_FOR_PRE_LEVEL_COMPLETE;
+            user_level_obj.LastModified = DateTime.Now;
+            _connection.Update(user_level_obj);
 
-		}
+        }
+
+        public UserProgress_BasketGame GetUserProgress(string username)
+        {
+            //var _game_name = GetGameName();
+            var user_level = _connection.Table<UserProgress_BasketGame>().Where(x => x.User_Obj == username);/*.Where(x => x.Game_name == _game_name);*/
+            foreach (var user_level_obj in user_level)
+            {
+               return user_level_obj;
+            }
+            return AddUserProgress(username);
+        }
+
+        public UserProgress_BasketGame AddUserProgress(string username)
+        {
+            var default_level = 1;
+            var max_ids =_connection.Query< UserProgress_BasketGame>("SELECT *, max(Id) FROM UserProgress_BasketGame LIMIT 1");
+            int id = 0;
+            foreach(var max_id in max_ids)
+            {
+                id = max_id.Id;
+            }
+            _connection.Insert(new UserProgress_BasketGame() {  User_Obj = username, Level_Obj = default_level, DateCreated = DateTime.Now,LastModified = DateTime.Now  });
+            return GetUserProgress(username);
+        }
+
+    //public int GetGameName()
+    //{
+    //    var gn = BasketGame_SceneVariables.Game_Name;
+    //    var gns = _connection.Table<Games>().Where(x => x.GameName == gn);
+    //    var l = 1;
+    //    foreach(var g in gns)
+    //    {
+    //        return g.Id;
+    //    }
+    //    return l;
+    //}
+    public void AddLevels(List<BasketGame_Levels> levels_list)
+    {
+        _connection.InsertAll(levels_list);
+    }
+
+    public void AddLevel(BasketGame_Levels level_obj)
+    {
+        _connection.Insert(level_obj);
+    }
+
+    public void DeleteLevel(BasketGame_Levels level_obj)
+    {
+        _connection.Delete(level_obj);
+
+    }
+    public List<string> ListAllLevels()
+    {
+
+        var result = _connection.Table<BasketGame_Levels>();
+        List<string> result_string = new List<string>();
+        foreach (var r in result)
+        {
+            result_string.Add(r.ToString());
+        }
+        return result_string;
+    }
+}

@@ -5,7 +5,7 @@ using UnityEngine;
 public class FruitBehavior : MonoBehaviour {
 
 	// Use this for initialization
-	int speed = 2;
+	int speed = 5;
 	public float lowerLimit = -10f;
 	public string fruitName;
 	public string fruitPath;
@@ -28,10 +28,10 @@ public class FruitBehavior : MonoBehaviour {
 	public AudioClip FRUIT_FALLING;
 	public bool hasCollide = false;
 	string original_layer;
-
+    public static bool outOfLimit = false;
 	void Start () {
 		
-		StartCoroutine (FadeCycle());
+//		StartCoroutine (FadeCycle());
 		fruitPath = Camera.main.GetComponent<BasketGame_SceneVariables>().GetPath ();
 	}
 	
@@ -48,19 +48,36 @@ public class FruitBehavior : MonoBehaviour {
 
 	// change this function it is causing abnormal behavior
 	void DestroyWhenOutofLimit(){
-		var lower_limit = Shared_ScriptForGeneralFunctions.GetPointOnScreen (-1, -1);
+
+        var lower_limit = Shared_ScriptForGeneralFunctions.GetPointOnScreen (-1, -1);
 		var upper_limit = Shared_ScriptForGeneralFunctions.GetPointOnScreen (2, 2);
 		if (transform.position.y <= lower_limit.y || transform.position.x >= upper_limit.x || transform.position.x <= lower_limit.x) {
 			if (tag == BasketGame_SceneVariables.fruitTag) {
-				Projectile ();
+                Debug.Log("Destroy when out of limit, fruit_id: " + gameObject.GetInstanceID());
+                if (!outOfLimit)
+                {
+                    Projectile();
+                    outOfLimit = true;
+                }
 			}
 		}
-	}
+        //else
+        //{
+        //    outOfLimit = false;
+        //}
+    }
 
 	public void OnComplete(){
-		
+        Debug.Log("OnComplete");
+        Camera.main.GetComponent<BasketGame_GameManager>().MaxChanceExceed();
+        //if (!Camera.main.GetComponent<BasketGame_GameManager>().MaxChanceExceed())
+        //{
+        //    StartCoroutine(Camera.main.GetComponent<BasketGame_GameManager>().MakeFruit());
+        //}
+        //else
+        //{
 
-		StartCoroutine(Camera.main.GetComponent<BasketGame_GameManager> ().MakeFruit ());
+        //}
 //		GetComponent<FruitBehavior> ().enabled = false;
 //		Destroy (gameObject);
 	}
@@ -74,6 +91,9 @@ public class FruitBehavior : MonoBehaviour {
 
 	public IEnumerator Fall(){
 //		transform.position = move
+		GetComponent<SpriteRenderer>().enabled = true;
+		yield return StartCoroutine (FadeCycle());
+		Debug.Log("fruit falling");
 		GetComponent<AudioSource>().PlayOneShot(FRUIT_FALLING);
 		GameObject bubble_gameobject = GameObject.FindGameObjectsWithTag (BasketGame_SceneVariables.bubbleTag)[0];
 		while (Mathf.Abs (transform.position.y - bubble_gameobject.transform.position.y) > 0.1f) {
@@ -122,8 +142,10 @@ public class FruitBehavior : MonoBehaviour {
 	}
 
 	public void Projectile(){
+        Debug.Log("Projectile");
 //			GetComponent<Rigidbody2D>().velocity = new Vector3(10,10,0);
 		Camera.main.GetComponent<BasketGame_GameManager>().IncreaseErrorCount();
+        
 		StartCoroutine(MovetoOriginalPosition());
 //		OnComplete();
 	}
@@ -131,21 +153,23 @@ public class FruitBehavior : MonoBehaviour {
 	public IEnumerator AfterTrappedinBubble(){
 		
 		var path_speed = 20;
-		GetComponent<BasketGame_DetectTouch>().SetBoxCollider();
+		var bubble_x = GetComponentInChildren<Transform> ().localScale.x;
+		GetComponent<BasketGame_DetectTouch>().SetBoxCollider(2);
 		StartCoroutine(Shared_ScriptForGeneralFunctions.ScaleUp (gameObject, 1f, .3f));
-		iTween.MoveTo(gameObject,iTween.Hash("path",iTweenPath.GetPath(fruitPath),"speed",path_speed,"easetype","linear","oncomplete","Projectile"));
+		iTween.MoveTo(gameObject,iTween.Hash("path",iTweenPath.GetPath(fruitPath),"speed",path_speed,"easetype","linear","oncomplete","Projectile")); //source of error?
 		yield return new WaitForSeconds (1f);
 		SetTouch (true);
 	}
 
 	public IEnumerator MovetoOriginalPosition(){
-		
+        Debug.Log("MovetoOriginalPosition");
 		ResetProperties ();
 		StartCoroutine(MoveToTarget (original_position));
 		yield return StartCoroutine(Shared_ScriptForGeneralFunctions.ScaleDown (this.gameObject, original_size.x, 0.3f));
+		GetComponent<SpriteRenderer> ().enabled = false;
+        outOfLimit = false;
 
-
-	}
+    }
 
 
 	public void ResetProperties(){
@@ -166,7 +190,8 @@ public class FruitBehavior : MonoBehaviour {
 
 	public IEnumerator MoveToTarget ( Vector3 target)
 	{
-		while(Vector3.Distance (transform.position, target) > Mathf.Min(minDistance,0.0001f)) {
+        Debug.Log("MoveToTarget start");
+		while(Vector3.Distance (transform.position, target) > Mathf.Min(minDistance,0.0001f) && !hasCollide) {
 			//			Debug.Log ("first if");
 			transform.position = Vector3.SmoothDamp (transform.position, target, ref velocity, smoothTime);
 			yield return null;
@@ -179,6 +204,8 @@ public class FruitBehavior : MonoBehaviour {
 			tag = BasketGame_SceneVariables.hangingFruitTag;
 
 		}
+		yield return new WaitForSeconds (0.5f);
+        Debug.Log("MoveToTarget end");
 		OnComplete ();
 //		}
 
@@ -194,20 +221,47 @@ public class FruitBehavior : MonoBehaviour {
 
 
 
-	public bool HasCollided(){
-		return hasCollide;
+	public IEnumerator DetectAnotherCollision(){
+        float rand = Random.Range(1f, 20f);
+        for(int i=0; i<(int)rand; i++)
+        {
+            yield return null;
+        }
+        Debug.Log("Rand: " + rand);
 	}
 
 	public IEnumerator EatFruit(){
-		Debug.Log ("Eating fruits");
-		transform.parent = null;
-		girl = GameObject.Find ("Girl");
-		var target = girl.transform.position;
-		while(Vector3.Distance (transform.position, target) > Mathf.Min(minDistance,0.0001f)) {
-			//			Debug.Log ("first if");
+		var value_for_pause = 6;
+		var variable_name = "StateValue";
+		yield return null;
+
+//		Debug.Log ("Eating fruits");
+//		transform.parent = null;
+		var Girl = GameObject.Find ("Girl");
+//		var value_for_play_from_Stand = 1; 
+//		var value_for_play_from_Clap = 4; 
+//		var state_stand = "Stand";
+//		var state_clap = "Clap";
+//		if (Girl.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName (state_stand)) {
+//			Debug.Log ("State is "+ state_stand);
+//			Girl.GetComponent<Animator> ().SetInteger (variable_name, value_for_play_from_Stand);
+//		} else if (Girl.GetComponent<Animator> ().GetCurrentAnimatorStateInfo (0).IsName (state_clap)) {
+//			Debug.Log ("State is "+ state_clap);
+//			Girl.GetComponent<Animator> ().SetInteger (variable_name, value_for_play_from_Clap);
+//		}
+		var target = Girl.transform.position;
+		target.y += 1f;
+		while(Vector3.Distance (transform.position, target) > Mathf.Max(minDistance,0.1f)) {
+
 			transform.position = Vector3.SmoothDamp (transform.position, target, ref velocity, smoothTime);
 			yield return null;
 		}
-		Destroy (gameObject);
+//		Destroy (gameObject);
+		GetComponent<SpriteRenderer>().enabled = false;
+
+		if(GameObject.FindGameObjectsWithTag(BasketGame_SceneVariables.inBasketFruitTag).Length <= 1){
+			Girl.GetComponent<Animator> ().SetInteger (variable_name, value_for_pause);
+		}
+		tag = BasketGame_SceneVariables.eatenFruitTag;
 	}
 }

@@ -12,7 +12,7 @@ public class ButtonControls : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		PauseOrExit ();
+		//PauseOrExit ();
 	}
 		
 	void PauseOrExit(){
@@ -32,7 +32,7 @@ public class ButtonControls : MonoBehaviour {
 	}
 
 	void ExitGame(){
-		SceneManager.LoadScene (Camera.main.GetComponent<SceneVariables>().Game_Name+"_HomeScreen");
+		SceneManager.LoadScene (SceneVariables.Game_Name+"_HomeScreen");
 	}
 
 

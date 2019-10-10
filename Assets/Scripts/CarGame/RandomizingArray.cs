@@ -87,4 +87,32 @@ class RandomizingArray
 		// Return copied array.
 		return result.ToList();
 	}
+
+    public static List<int> RandomizeInt(List<int> arr)
+    {
+        List<KeyValuePair<int, int>> list =
+            new List<KeyValuePair<int, int>>();
+        // Add all strings from array.
+        // ... Add new random int each time.
+        foreach (var s in arr)
+        {
+            list.Add(new KeyValuePair<int, int>(_random.Next(), s));
+        }
+        // Sort the list by the random number.
+        var sorted = from item in list
+                     orderby item.Key
+                     select item;
+        // Allocate new string array.
+        //string[] result = new string[arr.Count];
+        List<int> result = new List<int>();
+        // Copy values to array.
+        int index = 0;
+        foreach (KeyValuePair<int, int> pair in sorted)
+        {
+            result.Add(pair.Value);
+            index++;
+        }
+        // Return copied array.
+        return result;
+    }
 }
